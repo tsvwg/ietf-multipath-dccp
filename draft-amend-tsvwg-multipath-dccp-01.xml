@@ -1,9 +1,9 @@
-<?xml version='1.0' encoding='utf-8'?>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE rfc SYSTEM "rfc2629.dtd" [
-<!ENTITY I-D.amend-tsvwg-multipath-framework-mpdccp SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-amend-tsvwg-multipath-framework-mpdccp-00.xml">
+<!ENTITY I-D.amend-tsvwg-multipath-framework-mpdccp SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-amend-tsvwg-multipath-framework-mpdccp-01.xml">
 <!ENTITY I-D.lhwxz-hybrid-access-network-architecture SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-lhwxz-hybrid-access-network-architecture-02.xml">
 <!ENTITY I-D.muley-network-based-bonding-hybrid-access SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-muley-network-based-bonding-hybrid-access-03.xml">
-<!ENTITY I-D.amend-tsvwg-dccp-udp-header-conversion SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-amend-tsvwg-dccp-udp-header-conversion-00.xml">
+<!ENTITY I-D.amend-tsvwg-dccp-udp-header-conversion SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml3/reference.I-D.draft-amend-tsvwg-dccp-udp-header-conversion-01.xml">
 <!ENTITY RFC0793 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.0793.xml">
 <!ENTITY RFC2119 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.2119.xml">
 <!ENTITY RFC4340 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.4340.xml">
@@ -11,79 +11,93 @@
 <!ENTITY RFC6773 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6773.xml">
 <!ENTITY RFC6824 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6824.xml">
 ]>
-<rfc submissionType="IETF" docName="draft-amend-tsvwg-multipath-dccp-01" category="exp">
-	<?rfc compact="yes"?>
-	<?rfc text-list-symbols="o*+-"?>
-	<?rfc subcompact="no"?>
-	<?rfc sortrefs="yes"?>
-	<?rfc symrefs="yes"?>
-	<?rfc strict="yes"?>
-	<?rfc toc="yes"?>
-	<front>
-	<title abbrev="Multipath DCCP">DCCP Extensions for Multipath Operation with Multiple Addresses</title>
-	<author fullname="Markus Amend" initials="M." surname="Amend">
-	<organization>Deutsche Telekom</organization>
-	<address><postal><street>Deutsche-Telekom-Allee 7</street>
-	<street>64295 Darmstadt</street>
-	<street>Germany</street>
-	</postal>
-	<email>Markus.Amend@telekom.de</email>
-	</address>
-	</author>
-
-	<author fullname="Anna Brunstrom" initials="A." surname="Brunstrom">
-	<organization>Karlstad University</organization>
-	<address><postal><street>Universitetsgatan 2</street>
-	<street>651 88 Karlstad</street>
-	<street>Sweden</street>
-	</postal>
-	<email>anna.brunstrom@kau.se</email>
-	</address>
-	</author>
-
-	<author fullname="Andreas Kassler" initials="A." surname="Kassler">
-	<organization>Karlstad University</organization>
-	<address><postal><street>Universitetsgatan 2</street>
-	<street>651 88 Karlstad</street>
-	<street>Sweden</street>
-	</postal>
-	<email>andreas.kassler@kau.se</email>
-	</address>
-	</author>
-
-	<author fullname="Veselin Rakocevic" initials="V." surname="Rakocevic">
-	<organization>City University of London</organization>
-	<address><postal><street>Northampton Square</street>
-	<street>London</street>
-	<street>United Kingdom</street>
-	</postal>
-	<email>veselin.rakocevic.1@city.ac.uk</email>
-	</address>
-	</author>
-
-	<date day="11" month="March" year="2019"/>
-	<workgroup>Transport Area Working Group</workgroup>
-	<abstract><t>
+<rfc submissionType="IETF" docName="draft-amend-tsvwg-multipath-dccp-02" category="exp">
+  <?rfc compact="yes"?>
+  <?rfc text-list-symbols="o*+-"?>
+  <?rfc subcompact="no"?>
+  <?rfc sortrefs="yes"?>
+  <?rfc symrefs="yes"?>
+  <?rfc strict="yes"?>
+  <?rfc toc="yes"?>
+  <front>
+    <title abbrev="Multipath DCCP">DCCP Extensions for Multipath Operation with Multiple Addresses</title>
+    <author fullname="Markus Amend" initials="M." surname="Amend">
+      <organization>Deutsche Telekom</organization>
+      <address>
+        <postal>
+          <street>Deutsche-Telekom-Allee 7</street>
+          <street>64295 Darmstadt</street>
+          <street>Germany</street>
+        </postal>
+        <email>Markus.Amend@telekom.de</email>
+      </address>
+    </author>
+    <author fullname="Eckard Bogenfeld" initials="E." surname="Bogenfeld">
+      <organization>Deutsche Telekom</organization>
+      <address>
+        <postal>
+          <street>Deutsche-Telekom-Allee 7</street>
+          <street>64295 Darmstadt</street>
+          <street>Germany</street>
+        </postal>
+        <email>Eckard.Bogenfeld@telekom.de</email>
+      </address>
+    </author>
+    <author fullname="Anna Brunstrom" initials="A." surname="Brunstrom">
+      <organization>Karlstad University</organization>
+      <address>
+        <postal>
+          <street>Universitetsgatan 2</street>
+          <street>651 88 Karlstad</street>
+          <street>Sweden</street>
+        </postal>
+        <email>anna.brunstrom@kau.se</email>
+      </address>
+    </author>
+    <author fullname="Andreas Kassler" initials="A." surname="Kassler">
+      <organization>Karlstad University</organization>
+      <address>
+        <postal>
+          <street>Universitetsgatan 2</street>
+          <street>651 88 Karlstad</street>
+          <street>Sweden</street>
+        </postal>
+        <email>andreas.kassler@kau.se</email>
+      </address>
+    </author>
+    <author fullname="Veselin Rakocevic" initials="V." surname="Rakocevic">
+      <organization>City University of London</organization>
+      <address>
+        <postal>
+          <street>Northampton Square</street>
+          <street>London</street>
+          <street>United Kingdom</street>
+        </postal>
+        <email>veselin.rakocevic.1@city.ac.uk</email>
+      </address>
+    </author>
+    <date day="08" month="July" year="2019"/>
+    <workgroup>Transport Area Working Group</workgroup>
+    <abstract>
+      <t>
    DCCP communication is currently restricted to a single path per
    connection, yet multiple paths often exist between peers.  The
    simultaneous use of these multiple paths for a DCCP session could
    improve resource usage within the network and, thus, improve user
    experience through higher throughput and improved resilience to
    network failure.</t>
-
-	<t>
+      <t>
    Multipath DCCP provides the ability to simultaneously use multiple
    paths between peers.  This document presents a set of extensions to
    traditional DCCP to support multipath operation.  The protocol offers
    the same type of service to applications as DCCP and it provides the
    components necessary to establish and use multiple DCCP flows across
    potentially disjoint paths.</t>
-
-	</abstract>
-	</front>
-
-	<middle>
-	<section title="Introduction" anchor="section-1"><t>
+    </abstract>
+  </front>
+  <middle>
+    <section title="Introduction" anchor="section-1">
+      <t>
    Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
    <xref target="RFC4340"/>, which enables a transport connection to operate across
    multiple paths simultaneously.  DCCP multipath operations is
@@ -93,21 +107,20 @@
    can be applied for load-balancing, seamless session handover and
    aggregation purposes (referred to as steering, switching and
    splitting in 3GPP terminology <xref target="TR23.793"/>).</t>
-
-	<t>
+      <t>
    This document presents the protocol changes required to add multipath
    capability to DCCP; specifically, those for signaling and setting up
    multiple paths ("subflows"), managing these subflows, reassembly of
    data, and termination of sessions.</t>
-
-	<section title="Multipath DCCP in the Networking Stack" anchor="section-1.1"><t>
+      <section title="Multipath DCCP in the Networking Stack" anchor="section-1.1">
+        <t>
    MP-DCCP operates at the transport layer and aims to be transparent to
    both higher and lower layers.  It is a set of additional features on
    top of standard DCCP; Figure 1 illustrates this layering.  MP-DCCP is
    designed to be used by applications in the same way as DCCP with no
    changes.</t>
-
-	<figure title="Comparison of Standard DCCP and MP-DCCP Protocol Stacks" anchor="ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks"><artwork><![CDATA[
+        <figure title="Comparison of Standard DCCP and MP-DCCP Protocol Stacks" anchor="ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks">
+          <artwork><![CDATA[
                              +-------------------------------+
                              |           Application         |
 +---------------+            +-------------------------------+
@@ -118,15 +131,15 @@
 |      IP       |            |       IP      |      IP       |
 +---------------+            +-------------------------------+
 ]]></artwork>
-	</figure>
-	</section>
-
-	<section title="Terminology" anchor="section-1.2"><t>
+        </figure>
+      </section>
+      <section title="Terminology" anchor="section-1.2">
+        <t>
    [Tbd], could be similar to <xref target="RFC6824"/></t>
-
-	</section>
-
-	<section title="MP-DCCP Concept" anchor="section-1.3"><figure title="Example MP-DCCP Usage Scenario" anchor="ref-example-mp-dccp-usage-scenario"><artwork><![CDATA[
+      </section>
+      <section title="MP-DCCP Concept" anchor="section-1.3">
+        <figure title="Example MP-DCCP Usage Scenario" anchor="ref-example-mp-dccp-usage-scenario">
+          <artwork><![CDATA[
            Host A                               Host B
 ------------------------             ------------------------
 Address A1    Address A2             Address B1    Address B2
@@ -142,18 +155,16 @@ Address A1    Address A2             Address B1    Address B2
   | merge individual DCCP flows to one multipath connection
   |             |                      |             |
 ]]></artwork>
-	</figure>
-	</section>
-
-	<section title="Differences from Multipath TCP" anchor="section-1.4"><t>
+        </figure>
+      </section>
+      <section title="Differences from Multipath TCP" anchor="section-1.4">
+        <t>
    Multipath DCCP is similar to Multipath TCP <xref target="RFC6824"/>, in that it
    extends the related basic DCCP transport protocol <xref target="RFC4340"/> with
    multipath capabilities in the same way as Multipath TCP extends TCP
    <xref target="RFC0793"/>.  However, mainly dominated by the basic protocols TCP and
    DCPP, the transport characteristics are different.</t>
-
-	<t>
-   <xref target="table_tcp_dccp_comp"></xref> compares the protocol characteristics of TCP and DCCP, which
+        <t><xref target="table_tcp_dccp_comp"/> compares the protocol characteristics of TCP and DCCP, which
    are by nature inherited by their respective multipath extensions.  A
    major difference lies in the delivery of payload, which is for TCP an
    exact copy of the generated byte-stream.  DCCP behaves contrary and
@@ -163,97 +174,92 @@ Address A1    Address A2             Address B1    Address B2
    Both transport protocols share the 3-way initiation of a
    communication and both exploit a congestion control to adapt to path
    characteristics.</t>
-
-	<texttable style="all" title="TCP and DCCP protocol comparison" anchor="table_tcp_dccp_comp"><ttcol>Feature</ttcol>
-	<ttcol>TCP</ttcol>
-	<ttcol>DCCP</ttcol>
-	<c>Full-Duplex</c>
-	<c>yes</c>
-	<c>yes</c>
-	<c>Connection- Oriented</c>
-	<c>yes </c>
-	<c>yes </c>
-	<c>Header option space</c>
-	<c>40 bytes</c>
-	<c>&lt; 1008 bytes or PMTU</c>
-	<c>Data transfer</c>
-	<c>reliable</c>
-	<c>unreliable</c>
-	<c>Packet-loss handling</c>
-	<c>re- transmission</c>
-	<c>report only</c>
-	<c>Ordered data delivery</c>
-	<c>yes </c>
-	<c>no </c>
-	<c>Sequence numbers</c>
-	<c>one per byte</c>
-	<c>one per PDU</c>
-	<c>Flow control</c>
-	<c>yes</c>
-	<c>no</c>
-	<c>Congestion control</c>
-	<c>yes </c>
-	<c>yes </c>
-	<c>ECN support</c>
-	<c>yes</c>
-	<c>yes</c>
-	<c>Selecitve ACK</c>
-	<c>yes</c>
-	<c>depends on congestion control</c>
-	<c>Fix message boundaries</c>
-	<c>no</c>
-	<c>yes</c>
-	<c>Path MTU discovery</c>
-	<c>yes</c>
-	<c>yes</c>
-	<c>Fragmentation</c>
-	<c>yes</c>
-	<c>no</c>
-	<c>SYN flood protection</c>
-	<c>yes</c>
-	<c>no</c>
-	<c>Half-open connections</c>
-	<c>yes</c>
-	<c>no</c>
-	</texttable>
-	<t>
-   Consequently, the multipath features, shown in <xref target="table_mptpc_mpdccp_comp"></xref>, are the same
-   for support of volatile paths, session handover and path aggregation
-   capabilities.  All of them profit by the existence of congestion
-   control.</t>
-
-	<texttable style="all" title="MPTCP and MP-DCCP protocol comparison" anchor="table_mptpc_mpdccp_comp"><ttcol>Feature</ttcol>
-	<ttcol>MP-TCP</ttcol>
-	<ttcol>MP-DCCP</ttcol>
-	<c>Volatile paths</c>
-	<c>yes</c>
-	<c>yes</c>
-	<c>Robust session establishment</c>
-	<c>no</c>
-	<c>yes</c>
-	<c>Data reassembly</c>
-	<c>yes</c>
-	<c>optional / modular</c>
-	<c>Expandability</c>
-	<c>limited by TCP header</c>
-	<c>flexible</c>
-	<c>Session handover</c>
-	<c>yes</c>
-	<c>yes</c>
-	<c>Path aggregation</c>
-	<c>yes</c>
-	<c>yes</c>
-	</texttable>
-
-	<t>
+        <texttable style="all" title="TCP and DCCP protocol comparison" anchor="table_tcp_dccp_comp">
+          <ttcol>Feature</ttcol>
+          <ttcol>TCP</ttcol>
+          <ttcol>DCCP</ttcol>
+          <c>Full-Duplex</c>
+          <c>yes</c>
+          <c>yes</c>
+          <c>Connection- Oriented</c>
+          <c>yes </c>
+          <c>yes </c>
+          <c>Header option space</c>
+          <c>40 bytes</c>
+          <c>&lt; 1008 bytes or PMTU</c>
+          <c>Data transfer</c>
+          <c>reliable</c>
+          <c>unreliable</c>
+          <c>Packet-loss handling</c>
+          <c>re- transmission</c>
+          <c>report only</c>
+          <c>Ordered data delivery</c>
+          <c>yes </c>
+          <c>no </c>
+          <c>Sequence numbers</c>
+          <c>one per byte</c>
+          <c>one per PDU</c>
+          <c>Flow control</c>
+          <c>yes</c>
+          <c>no</c>
+          <c>Congestion control</c>
+          <c>yes </c>
+          <c>yes </c>
+          <c>ECN support</c>
+          <c>yes</c>
+          <c>yes</c>
+          <c>Selective ACK</c>
+          <c>yes</c>
+          <c>depends on congestion control</c>
+          <c>Fix message boundaries</c>
+          <c>no</c>
+          <c>yes</c>
+          <c>Path MTU discovery</c>
+          <c>yes</c>
+          <c>yes</c>
+          <c>Fragmentation</c>
+          <c>yes</c>
+          <c>no</c>
+          <c>SYN flood protection</c>
+          <c>yes</c>
+          <c>no</c>
+          <c>Half-open connections</c>
+          <c>yes</c>
+          <c>no</c>
+        </texttable>
+        <t>
+   Consequently, the multipath features, shown in <xref target="table_mptpc_mpdccp_comp"/>, are the same, supporting volatile paths, session handover and path aggregation capabilities. All of them profit by the existence of congestion control.</t>
+        <texttable style="all" title="MPTCP and MP-DCCP protocol comparison" anchor="table_mptpc_mpdccp_comp">
+          <ttcol>Feature</ttcol>
+          <ttcol>MP-TCP</ttcol>
+          <ttcol>MP-DCCP</ttcol>
+          <c>Volatile paths</c>
+          <c>yes</c>
+          <c>yes</c>
+          <c>Robust session establishment</c>
+          <c>no</c>
+          <c>yes</c>
+          <c>Data reassembly</c>
+          <c>yes</c>
+          <c>optional / modular</c>
+          <c>Expandability</c>
+          <c>limited by TCP header</c>
+          <c>flexible</c>
+          <c>Session handover</c>
+          <c>yes</c>
+          <c>yes</c>
+          <c>Path aggregation</c>
+          <c>yes</c>
+          <c>yes</c>
+        </texttable>
+        <t>
    Therefore the sender logic is not much different between MP-DCCP and
    MPTCP, even if the multipath session initiation differs.  MP-DCCP
    inherits a robust session establishment feature, which guarantees
    communication establishment if at least one functional path is
    available.  MP-TCP relies on an initial path, which has to work;
    otherwise no communication can be established.</t>
-
-	<t>
+        <t>
    The receiver side for MP-DCCP has to deal with the unreliable
    transport character of DCCP and a possible re-assembly of the data
    stream.  In practice, it is assumed that some sort of re-assembly has
@@ -268,109 +274,85 @@ Address A1    Address A2             Address B1    Address B2
    assumed to be very limited.  Therefore most services on top of DCCP
    are not expecting massive packet reordering and degrades their
    performance if it happens anyway.</t>
-
-	<t>
+        <t>
    The receiving process for MP-TCP is on the other hand a simple "just wait" approach, since TCP guarantees reliable delivery.</t>
-
-	</section>
-
-	<section title="Requirements Language" anchor="section-1.5"><t>
+      </section>
+      <section title="Requirements Language" anchor="section-1.5">
+        <t>
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
    document are to be interpreted as described in <xref target="RFC2119"/>.</t>
-
-	</section>
-
-	</section>
-
-	<section title="Operation Overview" anchor="section-2"><t>
+      </section>
+    </section>
+    <section title="Operation Overview" anchor="section-2">
+      <t>
    [Tbd], could be similar to <xref target="RFC6824"/></t>
-
-	</section>
-
-	<section title="MP-DCCP Protocol" anchor="section-3"><t>
+    </section>
+    <section title="MP-DCCP Protocol" anchor="section-3">
+      <t>
    [Tbd], could be similar to <xref target="RFC6824"/></t>
-
-	<t>
+      <t>
    [Tbd] On top it requires particular considerations for:</t>
-
-	<t><list style="symbols"><t>The minimum PMTU of the individual paths must be selected to
+      <t>
+        <list style="symbols">
+          <t>The minimum PMTU of the individual paths must be selected to
       announce to the application.  Changes of individual path PMTUs
       must be re-announced to the application if they are lower than the
       current announced PMTU.</t>
-
-	<t>Overall sequencing for optional reassembly procedure</t>
-
-	<t>Congestion control</t>
-
-	<t>Robust MP-DCCP session establishment (no dependency on an initial
+          <t>Overall sequencing for optional reassembly procedure</t>
+          <t>Congestion control</t>
+          <t>Robust MP-DCCP session establishment (no dependency on an initial
       path setup)</t>
-
-	</list>
-	</t>
-
-	</section>
-
-	<section title="Security Considerations" anchor="section-4"><t>
+        </list>
+      </t>
+    </section>
+    <section title="Security Considerations" anchor="section-4">
+      <t>
    [Tbd]</t>
-
-	</section>
-
-	<section title="Interactions with Middleboxes" anchor="section-5"><t>
+    </section>
+    <section title="Interactions with Middleboxes" anchor="section-5">
+      <t>
    [Tbd], should mention standardized technologies like <xref target="RFC5597"/> or
    <xref target="RFC6773"/> and U-DCCP <xref target="I-D.amend-tsvwg-dccp-udp-header-conversion"/></t>
-
-	</section>
-
-	<section title="Acknowledgments" anchor="section-6"><t><list style="numbers"><t>Notes</t>
-
-	</list>
-	</t>
-
-	<t>
+    </section>
+    <section title="Acknowledgments" anchor="section-6">
+      <t>
+        <list style="numbers">
+          <t>Notes</t>
+        </list>
+      </t>
+      <t>
    This document is inspired by Multipath TCP <xref target="RFC6824"/> and some text
    passages for the -00 version of the draft are copied almost
    unmodified.</t>
-
-	</section>
-
-	<section title="IANA Considerations" anchor="section-7"><t>
+    </section>
+    <section title="IANA Considerations" anchor="section-7">
+      <t>
    [Tbd], must include options for:</t>
-
-	<t><list style="symbols"><t>handshaking procedure to indicate MP support</t>
-
-	<t>handshaking procedure to indicate JOINING of an existing MP
+      <t>
+        <list style="symbols">
+          <t>handshaking procedure to indicate MP support</t>
+          <t>handshaking procedure to indicate JOINING of an existing MP
       connection</t>
-
-	<t>signaling of new or changed addresses</t>
-
-	<t>setting handover or aggregation mode</t>
-
-	<t>setting reordering on/off</t>
-
-	</list>
-	</t>
-
-	<t>
+          <t>signaling of new or changed addresses</t>
+          <t>setting handover or aggregation mode</t>
+          <t>setting reordering on/off</t>
+        </list>
+      </t>
+      <t>
    should include options carrying:</t>
-
-	<t><list style="symbols"><t>overall sequence number for restoring purposes</t>
-
-	<t>sender time measurements for restoring purposes</t>
-
-	<t>scheduler preferences</t>
-
-	<t>reordering preferences</t>
-
-	</list>
-	</t>
-
-	</section>
-
-	</middle>
-
-	<back>
-	<references title="Informative References">
+      <t>
+        <list style="symbols">
+          <t>overall sequence number for restoring purposes</t>
+          <t>sender time measurements for restoring purposes</t>
+          <t>scheduler preferences</t>
+          <t>reordering preferences</t>
+        </list>
+      </t>
+    </section>
+  </middle>
+  <back>
+    <references title="Informative References">
 	&I-D.amend-tsvwg-multipath-framework-mpdccp;
 	&I-D.lhwxz-hybrid-access-network-architecture;
 	&I-D.muley-network-based-bonding-hybrid-access;
@@ -381,16 +363,8 @@ Address A1    Address A2             Address B1    Address B2
 	&RFC5597;
 	&RFC6773;
 	&RFC6824;
-	<reference anchor="TR23.793" target=""><front>
-	<title>Study on access traffic steering, switch and splitting support in the 5G System (5GS) architecture</title>
-	<author fullname="3GPP">
-	</author>
-
-	<date day="19" month="December" year="2018"/>
-	</front>
-	</reference>
+	<reference anchor="TR23.793" target=""><front><title>Study on access traffic steering, switch and splitting support in the 5G System (5GS) architecture</title><author fullname="3GPP">
+	</author><date day="19" month="December" year="2018"/></front></reference>
 	</references>
-	</back>
-
-	</rfc>
-	
+  </back>
+</rfc>
