@@ -393,9 +393,9 @@
   <meta name="generator" content="xml2rfc version 2.22.3 - https://tools.ietf.org/tools/xml2rfc" />
   <link rel="schema.dct" href="http://purl.org/dc/terms/" />
 
-  <meta name="dct.creator" content="Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic" />
-  <meta name="dct.identifier" content="urn:ietf:id:draft-amend-tsvwg-multipath-dccp-01" />
-  <meta name="dct.issued" scheme="ISO8601" content="2019-03-11" />
+  <meta name="dct.creator" content="Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and V. Rakocevic" />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-amend-tsvwg-multipath-dccp-02" />
+  <meta name="dct.issued" scheme="ISO8601" content="2019-07-08" />
   <meta name="dct.abstract" content="DCCP communication is currently restricted to a single path per connection, yet multiple paths often exist between peers.  The simultaneous use of these multiple paths for a DCCP session could improve resource usage within the network and, thus, improve user experience through higher throughput and improved resilience to network failure.Multipath DCCP provides the ability to simultaneously use multiple paths between peers.  This document presents a set of extensions to traditional DCCP to support multipath operation.  The protocol offers the same type of service to applications as DCCP and it provides the components necessary to establish and use multiple DCCP flows across potentially disjoint paths." />
   <meta name="description" content="DCCP communication is currently restricted to a single path per connection, yet multiple paths often exist between peers.  The simultaneous use of these multiple paths for a DCCP session could improve resource usage within the network and, thus, improve user experience through higher throughput and improved resilience to network failure.Multipath DCCP provides the ability to simultaneously use multiple paths between peers.  This document presents a set of extensions to traditional DCCP to support multipath operation.  The protocol offers the same type of service to applications as DCCP and it provides the components necessary to establish and use multiple DCCP flows across potentially disjoint paths." />
 
@@ -412,14 +412,18 @@
 </tr>
 <tr>
 <td class="left">Internet-Draft</td>
-<td class="right">Deutsche Telekom</td>
+<td class="right">E. Bogenfeld</td>
 </tr>
 <tr>
 <td class="left">Intended status: Experimental</td>
+<td class="right">Deutsche Telekom</td>
+</tr>
+<tr>
+<td class="left">Expires: January 9, 2020</td>
 <td class="right">A. Brunstrom</td>
 </tr>
 <tr>
-<td class="left">Expires: September 12, 2019</td>
+<td class="left"></td>
 <td class="right">A. Kassler</td>
 </tr>
 <tr>
@@ -436,7 +440,7 @@
 </tr>
 <tr>
 <td class="left"></td>
-<td class="right">March 11, 2019</td>
+<td class="right">July 08, 2019</td>
 </tr>
 
     	
@@ -444,7 +448,7 @@
   </table>
 
   <p class="title">DCCP Extensions for Multipath Operation with Multiple Addresses<br />
-  <span class="filename">draft-amend-tsvwg-multipath-dccp-01</span></p>
+  <span class="filename">draft-amend-tsvwg-multipath-dccp-02</span></p>
   
   <h1 id="rfc.abstract"><a href="#rfc.abstract">Abstract</a></h1>
 <p>DCCP communication is currently restricted to a single path per connection, yet multiple paths often exist between peers.  The simultaneous use of these multiple paths for a DCCP session could improve resource usage within the network and, thus, improve user experience through higher throughput and improved resilience to network failure.</p>
@@ -453,7 +457,7 @@
 <p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
 <p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at https://datatracker.ietf.org/drafts/current/.</p>
 <p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
-<p>This Internet-Draft will expire on September 12, 2019.</p>
+<p>This Internet-Draft will expire on January 9, 2020.</p>
 <h1 id="rfc.copyrightnotice"><a href="#rfc.copyrightnotice">Copyright Notice</a></h1>
 <p>Copyright (c) 2019 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
 <p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (https://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
@@ -610,7 +614,7 @@ Address A1    Address A2             Address B1    Address B2
 <td class="left">yes</td>
 </tr>
 <tr>
-<td class="left">Selecitve ACK</td>
+<td class="left">Selective ACK</td>
 <td class="left">yes</td>
 <td class="left">depends on congestion control</td>
 </tr>
@@ -641,7 +645,7 @@ Address A1    Address A2             Address B1    Address B2
 </tr>
 </tbody>
 </table>
-<p id="rfc.section.1.4.p.3">Consequently, the multipath features, shown in <a href="#table_mptpc_mpdccp_comp" class="xref">Table 2</a>, are the same for support of volatile paths, session handover and path aggregation capabilities.  All of them profit by the existence of congestion control.</p>
+<p id="rfc.section.1.4.p.3">Consequently, the multipath features, shown in <a href="#table_mptpc_mpdccp_comp" class="xref">Table 2</a>, are the same, supporting volatile paths, session handover and path aggregation capabilities. All of them profit by the existence of congestion control.</p>
 <div id="rfc.table.2"></div>
 <div id="table_mptpc_mpdccp_comp"></div>
 <table cellpadding="3" cellspacing="0" class="tt all center">
@@ -759,12 +763,12 @@ Address A1    Address A2             Address B1    Address B2
 <tr>
 <td class="reference"><b id="I-D.amend-tsvwg-dccp-udp-header-conversion">[I-D.amend-tsvwg-dccp-udp-header-conversion]</b></td>
 <td class="top">
-<a>Amend, M.</a>, <a>Brunstrom, A.</a>, <a>Kassler, A.</a> and <a>V. Rakocevic</a>, "<a href="https://tools.ietf.org/html/draft-amend-tsvwg-dccp-udp-header-conversion-00">Lossless and overhead free DCCP - UDP header conversion (U-DCCP)</a>", Internet-Draft draft-amend-tsvwg-dccp-udp-header-conversion-00, March 2019.</td>
+<a>Amend, M.</a>, <a>Brunstrom, A.</a>, <a>Kassler, A.</a> and <a>V. Rakocevic</a>, "<a href="https://tools.ietf.org/html/draft-amend-tsvwg-dccp-udp-header-conversion-01">Lossless and overhead free DCCP - UDP header conversion (U-DCCP)</a>", Internet-Draft draft-amend-tsvwg-dccp-udp-header-conversion-01, July 2019.</td>
 </tr>
 <tr>
 <td class="reference"><b id="I-D.amend-tsvwg-multipath-framework-mpdccp">[I-D.amend-tsvwg-multipath-framework-mpdccp]</b></td>
 <td class="top">
-<a>Amend, M.</a>, <a>Brunstrom, A.</a>, <a>Kassler, A.</a> and <a>V. Rakocevic</a>, "<a href="https://tools.ietf.org/html/draft-amend-tsvwg-multipath-framework-mpdccp-00">IP compatible multipath framework for heterogeneous access networks</a>", Internet-Draft draft-amend-tsvwg-multipath-framework-mpdccp-00, March 2019.</td>
+<a>Amend, M.</a>, <a>Bogenfeld, E.</a>, <a>Brunstrom, A.</a>, <a>Kassler, A.</a> and <a>V. Rakocevic</a>, "<a href="https://tools.ietf.org/html/draft-amend-tsvwg-multipath-framework-mpdccp-01">A multipath framework for UDP traffic over heterogeneous access networks</a>", Internet-Draft draft-amend-tsvwg-multipath-framework-mpdccp-01, July 2019.</td>
 </tr>
 <tr>
 <td class="reference"><b id="I-D.lhwxz-hybrid-access-network-architecture">[I-D.lhwxz-hybrid-access-network-architecture]</b></td>
@@ -835,6 +839,30 @@ Address A1    Address A2             Address B1    Address B2
 	  <span class="country-name vcardline"></span>
 	</span>
 	<span class="vcardline">EMail: <a href="mailto:Markus.Amend@telekom.de">Markus.Amend@telekom.de</a></span>
+
+  </address>
+</div><div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Eckard Bogenfeld</span> 
+	  <span class="n hidden">
+		<span class="family-name">Bogenfeld</span>
+	  </span>
+	</span>
+	<span class="org vcardline">Deutsche Telekom</span>
+	<span class="adr">
+	  <span class="vcardline">Deutsche-Telekom-Allee 7</span>
+<span class="vcardline">64295 Darmstadt</span>
+<span class="vcardline">Germany</span>
+
+	  <span class="vcardline">
+		<span class="locality"></span> 
+		<span class="region"></span>
+		<span class="code"></span>
+	  </span>
+	  <span class="country-name vcardline"></span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:Eckard.Bogenfeld@telekom.de">Eckard.Bogenfeld@telekom.de</a></span>
 
   </address>
 </div><div class="avoidbreak">

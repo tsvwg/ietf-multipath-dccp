@@ -3,17 +3,18 @@
 
 
 Transport Area Working Group                                    M. Amend
-Internet-Draft                                          Deutsche Telekom
-Intended status: Experimental                               A. Brunstrom
-Expires: September 12, 2019                                   A. Kassler
+Internet-Draft                                              E. Bogenfeld
+Intended status: Experimental                           Deutsche Telekom
+Expires: January 9, 2020                                    A. Brunstrom
+                                                              A. Kassler
                                                      Karlstad University
                                                             V. Rakocevic
                                                City University of London
-                                                          March 11, 2019
+                                                           July 08, 2019
 
 
     DCCP Extensions for Multipath Operation with Multiple Addresses
-                  draft-amend-tsvwg-multipath-dccp-01
+                  draft-amend-tsvwg-multipath-dccp-02
 
 Abstract
 
@@ -46,16 +47,15 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on September 12, 2019.
+   This Internet-Draft will expire on January 9, 2020.
 
 
 
 
 
-
-Amend, et al.          Expires September 12, 2019               [Page 1]
+Amend, et al.            Expires January 9, 2020                [Page 1]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
 Copyright Notice
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 2]
+Amend, et al.            Expires January 9, 2020                [Page 2]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
    multiple paths ("subflows"), managing these subflows, reassembly of
@@ -165,9 +165,9 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 3]
+Amend, et al.            Expires January 9, 2020                [Page 3]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
 1.4.  Differences from Multipath TCP
@@ -221,9 +221,9 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 4]
+Amend, et al.            Expires January 9, 2020                [Page 4]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
    +----------------------+-----------------+--------------------------+
@@ -251,7 +251,7 @@ Internet-Draft               Multipath DCCP                   March 2019
    +----------------------+-----------------+--------------------------+
    | ECN support          | yes             | yes                      |
    +----------------------+-----------------+--------------------------+
-   | Selecitve ACK        | yes             | depends on congestion    |
+   | Selective ACK        | yes             | depends on congestion    |
    |                      |                 | control                  |
    +----------------------+-----------------+--------------------------+
    | Fix message          | no              | yes                      |
@@ -269,17 +269,17 @@ Internet-Draft               Multipath DCCP                   March 2019
 
                  Table 1: TCP and DCCP protocol comparison
 
-   Consequently, the multipath features, shown in Table 2, are the same
-   for support of volatile paths, session handover and path aggregation
+   Consequently, the multipath features, shown in Table 2, are the same,
+   supporting volatile paths, session handover and path aggregation
    capabilities.  All of them profit by the existence of congestion
    control.
 
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 5]
+Amend, et al.            Expires January 9, 2020                [Page 5]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
    +--------------------------+---------------------+------------------+
@@ -333,9 +333,9 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 6]
+Amend, et al.            Expires January 9, 2020                [Page 6]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
 1.5.  Requirements Language
@@ -389,9 +389,9 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 7]
+Amend, et al.            Expires January 9, 2020                [Page 7]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
 7.  IANA Considerations
@@ -424,14 +424,15 @@ Internet-Draft               Multipath DCCP                   March 2019
    [I-D.amend-tsvwg-dccp-udp-header-conversion]
               Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
               "Lossless and overhead free DCCP - UDP header conversion
-              (U-DCCP)", draft-amend-tsvwg-dccp-udp-header-conversion-00
-              (work in progress), March 2019.
+              (U-DCCP)", draft-amend-tsvwg-dccp-udp-header-conversion-01
+              (work in progress), July 2019.
 
    [I-D.amend-tsvwg-multipath-framework-mpdccp]
-              Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
-              "IP compatible multipath framework for heterogeneous
-              access networks", draft-amend-tsvwg-multipath-framework-
-              mpdccp-00 (work in progress), March 2019.
+              Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and
+              V. Rakocevic, "A multipath framework for UDP traffic over
+              heterogeneous access networks", draft-amend-tsvwg-
+              multipath-framework-mpdccp-01 (work in progress), July
+              2019.
 
    [I-D.lhwxz-hybrid-access-network-architecture]
               Leymann, N., Heidemann, C., Wasserman, M., Xue, L., and M.
@@ -444,10 +445,9 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-
-Amend, et al.          Expires September 12, 2019               [Page 8]
+Amend, et al.            Expires January 9, 2020                [Page 8]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
    [I-D.muley-network-based-bonding-hybrid-access]
@@ -501,9 +501,9 @@ Authors' Addresses
 
 
 
-Amend, et al.          Expires September 12, 2019               [Page 9]
+Amend, et al.            Expires January 9, 2020                [Page 9]
 
-Internet-Draft               Multipath DCCP                   March 2019
+Internet-Draft               Multipath DCCP                    July 2019
 
 
    Markus Amend
@@ -513,6 +513,15 @@ Internet-Draft               Multipath DCCP                   March 2019
    Germany
 
    Email: Markus.Amend@telekom.de
+
+
+   Eckard Bogenfeld
+   Deutsche Telekom
+   Deutsche-Telekom-Allee 7
+   64295 Darmstadt
+   Germany
+
+   Email: Eckard.Bogenfeld@telekom.de
 
 
    Anna Brunstrom
@@ -548,13 +557,4 @@ Internet-Draft               Multipath DCCP                   March 2019
 
 
 
-
-
-
-
-
-
-
-
-
-Amend, et al.          Expires September 12, 2019              [Page 10]
+Amend, et al.            Expires January 9, 2020               [Page 10]
