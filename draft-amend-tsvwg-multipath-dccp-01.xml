@@ -77,7 +77,7 @@
    traditional DCCP to support multipath operation.  The protocol offers
    the same type of service to applications as DCCP and it provides the
    components necessary to establish and use multiple DCCP flows across
-   potentially disjoint paths.</t>
+   potentially disjoint paths. Add a sentence. </t>
 
 	</abstract>
 	</front>
