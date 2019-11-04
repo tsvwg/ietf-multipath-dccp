@@ -11,7 +11,7 @@
 <!ENTITY RFC6773 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6773.xml">
 <!ENTITY RFC6824 SYSTEM "https://xml2rfc.ietf.org/public/rfc/bibxml/reference.RFC.6824.xml">
 ]>
-<rfc submissionType="IETF" docName="draft-amend-tsvwg-multipath-dccp-02" category="exp">
+<rfc submissionType="IETF" docName="draft-amend-tsvwg-multipath-dccp-03" category="exp">
   <?rfc compact="yes"?>
   <?rfc text-list-symbols="o*+-"?>
   <?rfc subcompact="no"?>
@@ -25,7 +25,7 @@
       <organization>Deutsche Telekom</organization>
       <address>
         <postal>
-          <street>Deutsche-Telekom-Allee 7</street>
+          <street>T-Online-Allee 1</street>
           <street>64295 Darmstadt</street>
           <street>Germany</street>
         </postal>
@@ -36,7 +36,7 @@
       <organization>Deutsche Telekom</organization>
       <address>
         <postal>
-          <street>Deutsche-Telekom-Allee 7</street>
+          <street>T-Online-Allee 1</street>
           <street>64295 Darmstadt</street>
           <street>Germany</street>
         </postal>
@@ -76,7 +76,7 @@
         <email>veselin.rakocevic.1@city.ac.uk</email>
       </address>
     </author>
-    <date day="08" month="July" year="2019"/>
+    <date day="04" month="November" year="2019"/>
     <workgroup>Transport Area Working Group</workgroup>
     <abstract>
       <t>
@@ -286,11 +286,70 @@ Address A1    Address A2             Address B1    Address B2
     </section>
     <section title="Operation Overview" anchor="section-2">
       <t>
-   [Tbd], could be similar to <xref target="RFC6824"/></t>
+       [Tbd], could be similar to <xref target="RFC6824"/></t>
+      <t>
+The Multipath Capability for MP-DCCP can be negotiated with a new DCCP feature, as described in <xref target="section-3"/>.
+Once negotiated, all subsequent MP-DCCP operations are signalled with a variable length multipath-related option, as described in <xref target="section-3-1"/>.
+</t>
     </section>
     <section title="MP-DCCP Protocol" anchor="section-3">
       <t>
-   [Tbd], could be similar to <xref target="RFC6824"/></t>
+   The DCCP protocol feature list (<xref target="RFC4340"/> section 6.4) will be enhanced
+by a new Multipath related feature with Feature number 10, as shown in <xref target="ref-feature-list"/>.
+              </t>
+      <figure title="Proposed Feature Set" anchor="ref-feature-list">
+        <artwork><![CDATA[
+
+                                                Rec'n Initial
+   Number   Meaning                       Rule   Value  Req'd
+   ------   -------                       -----  -----  -----
+      0     Reserved
+      1     Congestion Control ID (CCID)   SP      2      Y
+      2     Allow Short Seqnos             SP      0      Y
+      3     Sequence Window                NN     100     Y
+      4     ECN Incapable                  SP      0      N
+      5     Ack Ratio                      NN      2      N
+      6     Send Ack Vector                SP      0      N
+      7     Send NDP Count                 SP      0      N
+      8     Minimum Checksum Coverage      SP      0      N
+      9     Check Data Checksum            SP      0      N
+      10    Multipath Capable              SP      0      N
+    11-127  Reserved
+   128-255  CCID-specific features
+]]></artwork>
+      </figure>
+      <t>The DCCP protocol options (<xref target="RFC4340"/> section 5.8) will be enhanced
+by a new Multipath related variable-length option with option type 45, as shown in <xref target="ref-option-list"/>.
+</t>
+      <figure title="Proposed Option Set" anchor="ref-option-list">
+        <artwork><![CDATA[
+            Option                           DCCP-
+    Type    Length     Meaning               Data?
+    ----    ------     -------               -----
+      0        1       Padding                 Y
+      1        1       Mandatory               N
+      2        1       Slow Receiver           Y
+    3-31       1       Reserved
+     32     variable   Change L                N
+     33     variable   Confirm L               N
+     34     variable   Change R                N
+     35     variable   Confirm R               N
+     36     variable   Init Cookie             N
+     37       3-8      NDP Count               Y
+     38     variable   Ack Vector [Nonce 0]    N
+     39     variable   Ack Vector [Nonce 1]    N
+     40     variable   Data Dropped            N
+     41        6       Timestamp               Y
+     42      6/8/10    Timestamp Echo          Y
+     43       4/6      Elapsed Time            N
+     44        6       Data Checksum           Y
+     45     variable   Multipath               Y
+    46-127  variable   Reserved
+   128-255  variable   CCID-specific options   -
+]]></artwork>
+      </figure>
+      <t>
+</t>
       <t>
    [Tbd] On top it requires particular considerations for:</t>
       <t>
@@ -305,6 +364,229 @@ Address A1    Address A2             Address B1    Address B2
       path setup)</t>
         </list>
       </t>
+      <section title="Multipath Capable Feature" anchor="section-3-1">
+        <t>      DCCP endpoints are multipath-disabled by default and multipath capability can be negotiated with the
+        Multipath Capable Feature.
+  </t>
+        <t>
+  Multipath Capable has feature number 10 and is server-priority. It takes one-byte values.
+  The first four bits are used to specify compatible versions of the MP-DCCP implementation. The
+  following four bits are reserved for further use.
+  </t>
+      </section>
+      <section title="Multipath Option">
+        <t>
+</t>
+        <figure>
+          <artwork><![CDATA[
++--------+--------+--------+--------+--------
+|00101101| Length | MP_OPT | Value(s) ...
++--------+--------+--------+--------+--------
+ Type=45
+]]></artwork>
+        </figure>
+        <figure title="MP_OPT Option Types" anchor="ref-mp-option-list">
+          <artwork><![CDATA[
+         Option
+   Type  Length  MP_OPT        Meaning
+   ----  ------  -------       -----
+    45     7     0 =MP_CONFIRM Confirm reception and processing of
+                               an MP_OPT option
+    45     7     1 =MP_JOIN    Join path to an existing MP-DCCP flow
+    45     3     2 =MP_FAST_CLOSE Close MP-DCCP flow
+    45     var   3 =MP_KEY     Exchange key material for MP_HMAC
+    45     7     4 =MP_SEQ     Multipath Sequence Number
+    45     23    5 =MP_HMAC    HMA Code for authentication
+    45     12    6 =MP_RTT     Transmit RTT values
+    45     TBD   7 =MP_ADDADDR    TBD
+    45     TBD   8 =MP_REMOVEADDR TBD
+    45     TBD   9 =MP_PRIO       TBD
+]]></artwork>
+        </figure>
+        <section title="MP_CONFIRM">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+--------+
+  |00101101| Length |00000000| List of options ...
+  +--------+--------+--------+--------+--------+--------+--------+
+   Type=45           MP_OPT=0
+  ]]></artwork>
+          </figure>
+          <t>MP_CONFIRM can be used to send confirmation of received and
+          processed options. Confirmed options are copied verbatim and appended
+        as List of options.</t>
+        </section>
+        <section title="MP_JOIN">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+--------+
+  |00101101|00001011|00000001| Path Token                        |
+  +--------+--------+--------+--------+--------+--------+--------+
+  | Nonce                             |
+  +--------+--------+--------+--------+
+   Type=45  Length=11 MP_OPT=1
+  ]]></artwork>
+          </figure>
+          <t>The MP_JOIN option is used to add a new path to an existing MP-DCCP
+            flow. The Path Token is the SHA-1 HASH of the derived key (d-key),
+            which was previously exchanged with the MP_KEY option.
+            MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
+            MP_HMAC for details). Also MP_KEY must be set to provide key material
+          for authentication purposes.</t>
+        </section>
+        <section title="MP_FAST_CLOSE">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+
+  |00101101|00000011|00000010|
+  +--------+--------+--------+
+   Type=45  Length=3 MP_OPT=2
+  ]]></artwork>
+          </figure>
+          <t>MP_FAST_CLOSE terminates the MP-DCCP flow and all corresponding
+          subflows.</t>
+        </section>
+        <section title="MP_KEY">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+--------+
+  |00101101| Length |00000011|Key Type| Key Data
+  +--------+--------+--------+--------+--------+--------+--------+
+   Type=45           MP_OPT=3
+  ]]></artwork>
+          </figure>
+          <t>
+        The MP_KEY suboption is used to exchange key material between
+      hosts. The Key Type field is used to specify the key type. Key types are
+      shown in table <xref target="ref-key-type-list"/>.
+      <figure title="MP_KEY Key Types" anchor="ref-key-type-list"><artwork><![CDATA[
+          Option
+    Key Type               Key Length Meaning
+    ----                   ------     -----
+    0 =Plain Text          8          Plain Text Key
+    1 =ECDHE-C25519-SHA256 32         ECDHE with SHA256 and Curve25519
+    2 =ECDHE-C25519-SHA512 32         ECDHE with SHA512 and Curve25519
+    3-255                      Reserved
+]]></artwork></figure>
+<list style="hanging"><t hangText="Plain Text"><vspace/>
+            Key Material is exchanged in plain text between hosts and the key
+            parts (key-a, key-b) are concatenated to form the derived key (d-key).
+          </t><t hangText="ECDHE-SHA256-C25519"><vspace/>
+            Key Material is exchanged via ECDHE key exchange with SHA256 and
+            Curve 25519 to generate the derived key (d-key).
+          </t><t hangText="ECDHE-SHA512-C25519"><vspace/>
+            Key Material is exchanged via ECDHE key exchange with SHA512 and
+            Curve 25519 to generate the derived key (d-key).
+          </t></list>
+      </t>
+        </section>
+        <section title="MP_SEQ">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+--------+
+  |00101101|00000111|00000100| Multipath Sequence Number         |
+  +--------+--------+--------+--------+--------+--------+--------+
+   Type=45  Length=7 MP_OPT=4
+  ]]></artwork>
+          </figure>
+          <t>The MP_SEQ option is used for end-to-end datagram-based sequence
+            numbers of an MP-DCCP connection. The initial data sequence
+            number (IDSN) SHOULD be set randomly. </t>
+        </section>
+        <section title="MP_HMAC">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+
+  |00101101|00000111|00000101| HMAC-SHA1 (20 bytes) ...
+  +--------+--------+--------+--------+--------+--------+
+   Type=45  Length=23 MP_OPT=5
+  ]]></artwork>
+          </figure>
+          <t>The MP_HMAC option is used to provide authentication for the MP_JOIN option.
+            The HMAC is built using the derived key (d-key) calculated previously
+          from the handshake key material exchanged with the MP_KEY option. The
+          Message for the HMAC is the header of the MP_JOIN for which authentication
+          shall be performed. By including a nonce in these datagrams, possible replay-attacks
+          are remedied.
+        t</t>
+        </section>
+        <section title="MP_RTT">
+          <figure>
+            <artwork><![CDATA[
+  +--------+--------+--------+--------+--------+--------+--------+
+  |00101101|00000111|00000110|RTT Type| RTT
+  +--------+--------+--------+--------+--------+--------+--------+
+  |        | Age                               |
+  +--------+--------+--------+--------+--------+
+   Type=45  Length=12 MP_OPT=6
+  ]]></artwork>
+          </figure>
+          <t>The MP_RTT option is used to transmit RTT values in milliseconds.
+          Additionally, the age of the measurement is specified in milliseconds.
+          <list style="hanging"><t hangText="Raw RTT (=0)"><vspace/>
+                      Raw RTT value of the last Datagram Round-Trip. The Age
+                      parameter is set to the age of when the Ack for the datagram
+                      was received.
+                    </t><t hangText="Min RTT (=1)"><vspace/>
+                      Min RTT value. The period for computing the Minimum can be specified
+                      by the Age parameter.
+                    </t><t hangText="Max RTT (=2)"><vspace/>
+                      Max RTT value. The period for computing the Maximum can be specified
+                      by the Age parameter.
+                    </t><t hangText="Smooth RTT (=3)"><vspace/>
+                      Averaged RTT value. The period for computing the Minimum can be specified
+                      by the Age parameter.
+                    </t></list></t>
+        </section>
+        <section title="MP_ADDADDR">
+          <t>[TBD]</t>
+        </section>
+        <section title="MP_REMOVEADDR">
+          <t>[TBD]</t>
+        </section>
+        <section title="MP_PRIO">
+          <t>[TBD]</t>
+        </section>
+      </section>
+      <section title="MP-DCCP Handshaking Procedure">
+        <figure title="Example MP-DCCP Handshake" anchor="ref-mp-dccp-handshaking">
+          <artwork><![CDATA[
+            Host A                                         Host B
+   ------------------------                              ----------
+   Address A1    Address A2                              Address B1
+   ----------    ----------                              ----------
+       |             |                                       |
+       |   DCCP-Request + MP_CAPABLE                         |
+       |------- MP_KEY(Key-A) ------------------------------>|
+       |<---------------------- MP_KEY(Key-B) ---------------|
+       |   DCCP-Response + MP_CAPABLE agreed                 |
+       |             |                                       |
+       |   DCCP-Ack  |                                       |
+       |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
+       |             |                                       |
+       |             |DCCP-Request + MP_CAPABLE              |
+       |             |--- MP_JOIN(TB,RA) ------------------->|
+       |             |<------MP_JOIN(TB,RB) + MP_HMAC(A)-----|
+       |             |DCCP-Response                          |
+       |             |                                       |
+       |             |DCCP-Ack                               |
+       |             |-------- MP_HMAC(B) ------------------>|
+       |             |<--------------------------------------|
+       |             |DCCP-ACK                               |
+]]></artwork>
+        </figure>
+        <t>The basic initial handshake for the first flow is as follows:
+          <list style="symbols"><t>Host A sends a DCCP-Request with the MP-Capable feature Change
+              request and the MP_KEY option with Host-specific Key-A</t><t>Host B sends a DCCP-Response with Confirm feature for
+              MP-Capable and the MP_Key option with Host-specific Key-B</t><t>Host A sends a DCCP-Ack with both Keys echoed to Host B</t></list>
+          The handshake for subsequent flows based on a successful initial handshake is as follows:
+            <list style="symbols"><t>Host A sends a DCCP-Request with the MP-Capable feature Change
+                request and the MP_JOIN option with Token TB, derived from the
+              derived key by applying a SHA-1 hash and truncating to the first 32 bits.
+            Additionally, a random nonce RA is transmitted with the MP_JOIN.</t><t>Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response with Confirm feature option for
+                MP-Capable and the MP_JOIN option with the Token TB and a random nonce RB together with the computed MP_HMAC.</t><t>Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.</t><t>Host B sends a DCCP-Ack confirm the HMAC and to conclude the handshaking.</t></list>
+          </t>
+      </section>
     </section>
     <section title="Security Considerations" anchor="section-4">
       <t>
