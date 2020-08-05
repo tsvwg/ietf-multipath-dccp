@@ -32,6 +32,7 @@ author:
   ins: E. Bogenfeld
   name: Eckard Bogenfeld
   org: Deutsche Telekom
+  abbrev: DT
   street: Deutsche-Telekom-Allee 9
   city: Darmstadt
   code: 64295
@@ -273,59 +274,50 @@ The DCCP protocol feature list ({{RFC4340}} section 6.4) will be enhanced
 by a new Multipath related feature with Feature number 10, as shown in
 {{ref-feature-list}}.
 
-
-~~~~
-                                                Rec'n Initial
-   Number   Meaning                       Rule   Value  Req'd
-   ------   -------                       -----  -----  -----
-      0     Reserved
-      1     Congestion Control ID (CCID)   SP      2      Y
-      2     Allow Short Seqnos             SP      0      Y
-      3     Sequence Window                NN     100     Y
-      4     ECN Incapable                  SP      0      N
-      5     Ack Ratio                      NN      2      N
-      6     Send Ack Vector                SP      0      N
-      7     Send NDP Count                 SP      0      N
-      8     Minimum Checksum Coverage      SP      0      N
-      9     Check Data Checksum            SP      0      N
-      10    Multipath Capable              SP      0      N
-    11-127  Reserved
-   128-255  CCID-specific features
-~~~~
+|Number | Meaning                      | Rule | Rec'n Value | Initial Req'd |
+|:-----:|:-----------------------------|:----:|:-----------:|:-------------:|
+|   0   | Reserved                     |      |             |               |
+|   1   | Congestion Control ID (CCID) |  SP  |      2      |       Y       |
+|   2   | Allow Short Seqnos           |  SP  |      0      |       Y       |
+|   3   | Sequence Window              |  NN  |     100     |       Y       |
+|   4   | ECN Incapable                |  SP  |      0      |       N       |
+|   5   | Ack Ratio                    |  NN  |      2      |       N       |
+|   6   | Send Ack Vector              |  SP  |      0      |       N       |
+|   7   | Send NDP Count               |  SP  |      0      |       N       |
+|   8   | Minimum Checksum Coverage    |  SP  |      0      |       N       |
+|   9   | Check Data Checksum          |  SP  |      0      |       N       |
+|   10  | Multipath Capable            |  SP  |      0      |       N       |
+| 11-127| Reserved                     |      |             |               |
+|128-255| CCID-specific features       |      |             |               |
 {: #ref-feature-list title='Proposed Feature Set'}
 
 The DCCP protocol options ({{RFC4340}} section 5.8) will be enhanced
 by a new Multipath related variable-length option with option type 45, as
 shown in {{ref-option-list}}.
 
-
-~~~~
-            Option                           DCCP-
-    Type    Length     Meaning               Data?
-    ----    ------     -------               -----
-      0        1       Padding                 Y
-      1        1       Mandatory               N
-      2        1       Slow Receiver           Y
-    3-31       1       Reserved
-     32     variable   Change L                N
-     33     variable   Confirm L               N
-     34     variable   Change R                N
-     35     variable   Confirm R               N
-     36     variable   Init Cookie             N
-     37       3-8      NDP Count               Y
-     38     variable   Ack Vector [Nonce 0]    N
-     39     variable   Ack Vector [Nonce 1]    N
-     40     variable   Data Dropped            N
-     41        6       Timestamp               Y
-     42      6/8/10    Timestamp Echo          Y
-     43       4/6      Elapsed Time            N
-     44        6       Data Checksum           Y
-     45     variable   Multipath               Y
-    46-127  variable   Reserved
-   128-255  variable   CCID-specific options   -
-~~~~
+| Type  | Option Length | Meaning               | DCCP-Data? |
+|:-----:|:-------------:|:---------------------:|:----------:|
+|   0   |       1       | Padding               |     Y      |
+|   1   |       1       | Mandatory             |     N      |
+|   2   |       1       | Slow Receiver         |     Y      |
+| 3-31  |       1       | Reserved              |            |
+|  32   |    variable   | Change L              |     N      |
+|  33   |    variable   | Confirm L             |     N      |
+|  34   |    variable   | Change R              |     N      |
+|  35   |    variable   | Confirm R             |     N      |
+|  36   |    variable   | Init Cookie           |     N      |
+|  37   |      3-8      | NDP Count             |     Y      |
+|  38   |    variable   | Ack Vector [Nonce 0]  |     N      |
+|  39   |    variable   | Ack Vector [Nonce 1]  |     N      |
+|  40   |    variable   | Data Dropped          |     N      |
+|  41   |       6       | Timestamp             |     Y      |
+|  42   |     6/8/10    | Timestamp Echo        |     Y      |
+|  43   |      4/6      | Elapsed Time          |     N      |
+|  44   |       6       | Data Checksum         |     Y      |
+|  45   |    variable   | Multipath             |     Y      |
+| 46-127|    variable   | Reserved              |            |
+|128-255|    variable   | CCID-specific options |     -      |
 {: #ref-option-list title='Proposed Option Set'}
-
 
 
 [Tbd] On top it requires particular considerations for:
@@ -370,23 +362,18 @@ following four bits are reserved for further use.
  Type=45
 ~~~~
 
-
-~~~~
-         Option
-   Type  Length  MP_OPT        Meaning
-   ----  ------  -------       -----
-    45     7     0 =MP_CONFIRM Confirm reception and processing of
-                               an MP_OPT option
-    45     7     1 =MP_JOIN    Join path to an existing MP-DCCP flow
-    45     3     2 =MP_FAST_CLOSE Close MP-DCCP flow
-    45     var   3 =MP_KEY     Exchange key material for MP_HMAC
-    45     7     4 =MP_SEQ     Multipath Sequence Number
-    45     23    5 =MP_HMAC    HMA Code for authentication
-    45     12    6 =MP_RTT     Transmit RTT values
-    45     TBD   7 =MP_ADDADDR    TBD
-    45     TBD   8 =MP_REMOVEADDR TBD
-    45     TBD   9 =MP_PRIO       TBD
-~~~~
+|Type | Option Length | MP_OPT           | Meaning                                              |
+|:----|:--------------|:-----------------|:-----------------------------------------------------|
+| 45  |       7       | 0 =MP_CONFIRM    | Confirm reception and processing of an MP_OPT option |
+| 45  |       7       | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
+| 45  |       3       | 2 =MP_FAST_CLOSE | Close MP-DCCP flow                                   |
+| 45  |       var     | 3 =MP_KEY        | Exchange key material for MP_HMAC                    |
+| 45  |       7       | 4 =MP_SEQ        |Multipath Sequence Number                             |
+| 45  |       23      | 5 =MP_HMAC       | HMA Code for authentication                          |
+| 45  |       12      | 6 =MP_RTT        | Transmit RTT values                                  |
+| 45  |       TBD     | 7 =MP_ADDADDR    | TBD                                                  |
+| 45  |       TBD     | 8 =MP_REMOVEADDR | TBD                                                  |
+| 45  |       TBD     | 9 =MP_PRIO       | TBD                                                  |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 ### MP_CONFIRM
@@ -450,17 +437,14 @@ subflows.
 
 The MP_KEY suboption is used to exchange key material between
 hosts. The Key Type field is used to specify the key type. Key types are
-shown in table {{ref-key-type-list}}.
+shown in {{ref-key-type-list}}.
 
-~~~~
-          Option
-    Key Type               Key Length Meaning
-    ----                   ------     -----
-    0 =Plain Text          8          Plain Text Key
-    1 =ECDHE-C25519-SHA256 32         ECDHE with SHA256 and Curve25519
-    2 =ECDHE-C25519-SHA512 32         ECDHE with SHA512 and Curve25519
-    3-255                      Reserved
-~~~~
+| Key  Type              | Key Length | Meaning                          |
+|------------------------|------------|----------------------------------|
+| 0 =Plain Text          |          8 | Plain Text Key                   |
+| 1 =ECDHE-C25519-SHA256 |         32 | ECDHE with SHA256 and Curve25519 |
+| 2 =ECDHE-C25519-SHA512 |         32 | ECDHE with SHA512 and Curve25519 |
+| 3-255                  |            | Reserved                         |
 {: #ref-key-type-list title='MP_KEY Key Types'}
 
 
