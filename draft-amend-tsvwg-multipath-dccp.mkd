@@ -123,42 +123,44 @@ potentially disjoint paths.
 # Introduction {#intro}
 
 Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
-{{RFC4340}}, i.e. the Datagram Congestion Control Protocol denoting a transport
-protocol that provides bidirectional unicast connections of
-congestion-controlled unreliable datagrams.  A multipath extension to DCCP
-enables a transport connection suitable for applications that transfer fairly
-large amounts of data and that can benefit from control over the tradeoff
-between timeliness and reliability to operate across multiple paths
-simultaneously.  DCCP multipath operations is suggested in the context of
-ongoing 3GPP work on 5G multi-access solutions
-{{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access networks
-{{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
-It can be applied for load-balancing, seamless session handover, and aggregation
-purposes (referred to as steering, switching, and splitting in 3GPP terminology
-{{TR23.793}}).
+{{RFC4340}}, i.e. the Datagram Congestion Control Protocol denoting a
+transport protocol that provides bidirectional unicast connections of
+congestion-controlled unreliable datagrams.  A multipath extension to
+DCCP enables a transport connection suitable for applications that
+transfer fairly large amounts of data and that can benefit from control
+over the tradeoff between timeliness and reliability to operate across
+multiple paths simultaneously.  DCCP multipath operations is suggested
+in the context of ongoing 3GPP work on 5G multi-access solutions
+{{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
+networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
+It can be applied for load-balancing, seamless session handover, and
+aggregation purposes (referred to as steering, switching, and splitting
+in 3GPP terminology {{TR23.793}}).
 
 This document presents the protocol changes required to add multipath
 capability to DCCP; specifically, those for signaling and setting up
 multiple paths ("subflows"), managing these subflows, reassembly of
 data, and termination of sessions.
-DCCP, as stated in {{RFC4340}} does not provide reliable and ordered delivery, so
-multiple application subflows may be multiplexed over a single DCCP connection
-with no inherent performance penalty and DCCP needs and does not provide
-built-in support for those multiple subflows – different from SCTP (Stream
-Control Transmission Protocol) {{RFC4960}} which has been designed as a reliable
-transport protocol operating on top of a connectionless IP packet network
-offering corresponding services for data protection assurance in terms of
-error-free non-duplicated in-order data transfer avoiding congestion and
-fighting flooding and masquerade attacks.
+DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
+delivery, so multiple application subflows may be multiplexed over a
+single DCCP connection with no inherent performance penalty and DCCP
+needs and does not provide built-in support for those multiple subflows
+– different from SCTP (Stream Control Transmission Protocol) {{RFC4960}}
+which has been designed as a reliable transport protocol operating on
+top of a connectionless IP packet network offering corresponding
+services for data protection assurance in terms of error-free
+non-duplicated in-order data transfer avoiding congestion and fighting
+flooding and masquerade attacks.
 
-In the following use of the term subflow will refer to such physical separate
-DCCP subflows transmitted via different paths but not to application subflows.
-Application subflows are differing content-wise by source and destination
-application as e.g. enabled by Service Codes introduced to DCCP in {{RFC5595}}
-and could be multiplexed over a single DCCP connection.  For sake of consistency
-we assume that only a single application is served by a DCCP connection here as
-shown in Figure 1 while use of that feature should not impact DCCP operation on
-each single path as noted in ({{RFC5595}}, sect. 2.4).
+In the following use of the term subflow will refer to such physical
+separate DCCP subflows transmitted via different paths but not to
+application subflows. Application subflows are differing content-wise by
+source and destination application as e.g. enabled by Service Codes
+introduced to DCCP in {{RFC5595}} and could be multiplexed over a single
+DCCP connection. For sake of consistency we assume that only a single
+application is served by a DCCP connection here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} while use of that feature should not
+impact DCCP operation on each single path as noted in ({{RFC5595}},
+sect. 2.4).
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -185,28 +187,28 @@ changes.
 
 ## Terminology {#terminology}
 
-Throughout this document we make use of terms that are either specific for
-multipath transport or are defined in the context of MP-DCCP, similar to
-{{RFC8684}}, as follows:
+Throughout this document we make use of terms that are either specific
+for multipath transport or are defined in the context of MP-DCCP,
+similar to {{RFC8684}}, as follows:
  
-Path: A sequence of links between a sender and a receiver, defined in this
-context by a 4-tuple of source and destination address/ port pairs.
+Path: A sequence of links between a sender and a receiver, defined in
+this context by a 4-tuple of source and destination address/ port pairs.
 
-Subflow: A flow of DCCP segments operating over an individual path, which forms
-part of a larger MP-DCCP connection. A subflow is started and terminated similar
-to a regular (single-path) DCCP connection.
+Subflow: A flow of DCCP segments operating over an individual path,
+which forms part of a larger MP-DCCP connection. A subflow is started
+and terminated similar to a regular (single-path) DCCP connection.
 
-(MP-DCCP) Connection: A set of one or more subflows, over which an application
-can communicate between two hosts. There is a one-to-one mapping between a
-connection and an application socket.
+(MP-DCCP) Connection: A set of one or more subflows, over which an
+application can communicate between two hosts. There is a one-to-one
+mapping between a connection and an application socket.
 
-Token: A locally unique identifier given to a multipath connection by a host.
-May also be referred to as a "Connection ID".
+Token: A locally unique identifier given to a multipath connection by a
+host. May also be referred to as a "Connection ID".
 
-Host: An end host operating an MP-DCCP implementation, and either initiating or
-accepting an MP-DCCP connection. In addition to these terms, within framework of
-MP-DCCP the interpretation of, and effect on, regular single-path DCCP semantics
-is discussed in {{protocol}}.
+Host: An end host operating an MP-DCCP implementation, and either
+initiating or accepting an MP-DCCP connection. In addition to these
+terms, within framework of MP-DCCP the interpretation of, and effect on,
+regular single-path DCCP semantics is discussed in {{protocol}}.
 
 
 ## MP-DCCP Concept {#concept}
@@ -235,9 +237,10 @@ Address A1    Address A2             Address B1    Address B2
 
 Multipath DCCP is similar to Multipath TCP {{RFC6824}}, in that it
 extends the related basic DCCP transport protocol {{RFC4340}} with
-multipath capabilities in the same way as Multipath TCP extends TCP {{RFC0793}}.
-However, mainly dominated by the basic protocols TCP and
-DCPP, the transport characteristics are different.
+multipath capabilities in the same way as Multipath TCP extends TCP
+{{RFC0793}}.
+However, mainly dominated by the basic protocols TCP and DCPP, the
+transport characteristics are different.
 
 {{table_tcp_dccp_comp}} compares the protocol characteristics of TCP
 and DCCP, which
@@ -303,12 +306,12 @@ applications using DCCP certainly have to deal with packet
 reordering, since DCCP has no mechanisms to prevent it.  However, in
 practice, without any multipath extension, packet reordering can be
 assumed to be very limited.  Therefore, most services on top of DCCP
-are not expecting massive packet reordering and do not plan for corresponding
-countermeasures. As a consequence, in case reordering occurs it will degrade
-their service performance very likely.
+are not expecting massive packet reordering and do not plan for
+corresponding countermeasures. As a consequence, in case reordering
+occurs it will degrade their service performance very likely.
 
-The receiving process for MP-TCP is on the other hand a simple "just wait"
-approach, since TCP guarantees reliable delivery.
+The receiving process for MP-TCP is on the other hand a simple
+"just wait" approach, since TCP guarantees reliable delivery.
 
 
 ## Requirements Language
@@ -321,30 +324,29 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Operation Overview {#op_overview}
 
-RFC 4340 states that some applications might want to share congestion  control
-state among multiple DCCP flows between same source and destination addresses.
-This functionality could be provided by the Congestion Manager (CM) {{RFC3124}},
-a generic multiplexing facility.  However, the CM would not fully support DCCP
-without change; it does not gracefully handle multiple congestion control
-mechanisms, for example.
+RFC 4340 states that some applications might want to share congestion
+control state among multiple DCCP flows between same source and
+destination addresses. This functionality could be provided by the Congestion Manager (CM) {{RFC3124}}, a generic multiplexing facility.  However, the CM would not
+fully support DCCP without change; it does not gracefully handle
+multiple congestion control mechanisms, for example.
 
-The operation of MP-DCCP for data transfer takes one input data stream from an
-application, and splits it into one or more subflows, with sufficient control
-information to allow it to be reassembled and delivered reliably and in order to
-the recipient application.  The following subsections define this behavior in
-detail.
+The operation of MP-DCCP for data transfer takes one input data stream
+from an application, and splits it into one or more subflows, with
+sufficient control information to allow it to be reassembled and
+delivered reliably and in order to the recipient application. The
+following subsections define this behavior in detail.
 
-The Multipath Capability for MP-DCCP can be negotiated with a new DCCP feature,
-as described in {{protocol}}.
-Once negotiated, all subsequent MP-DCCP operations are signalled with a variable
-length multipath-related option, as described in {{mp_capable}}.
+The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
+feature, as described in {{protocol}}.
+Once negotiated, all subsequent MP-DCCP operations are signalled with a
+variable length multipath-related option, as described in {{mp_capable}}.
 
 
 # MP-DCCP Protocol {#protocol}
 
-The DCCP protocol feature list ({{RFC4340}} section 6.4) will be enhanced
-by a new Multipath related feature with Feature number 10, as shown in
-{{ref-feature-list}}.
+The DCCP protocol feature list ({{RFC4340}} section 6.4) will be
+enhanced by a new Multipath related feature with Feature number 10, as
+shown in {{ref-feature-list}}.
 
 |Number | Meaning                      | Rule | Rec'n Value | Initial Req'd |
 |:-----:|:-----------------------------|:----:|:-----------:|:-------------:|
@@ -411,15 +413,14 @@ shown in {{ref-option-list}}.
 
 ## Multipath Capable Feature {#mp_capable}
 
-DCCP endpoints are multipath-disabled by default and multipath capability
-can be negotiated with the
-Multipath Capable Feature.
+DCCP endpoints are multipath-disabled by default and multipath
+capability can be negotiated with the Multipath Capable Feature.
 
 Multipath Capable has feature number 10 and is server-priority. It takes
 one-byte values.
-The first four bits are used to specify compatible versions of the MP-DCCP
-implementation. The
-following four bits are reserved for further use.
+The first four bits are used to specify compatible versions of the
+MP-DCCP implementation. The following four bits are reserved for further
+use.
 
 
 ## Multipath Option
@@ -463,7 +464,7 @@ processed options. Confirmed options are copied verbatim and appended
 as List of options. The length varies dependent on the amount of options.
 
 
-### MP_JOIN
+### MP_JOIN {#MP_JOIN}
 
 
 ~~~~
@@ -564,12 +565,12 @@ number (IDSN) SHOULD be set randomly.
    Type=45  Length=23 MP_OPT=5
 ~~~~
 
-The MP_HMAC option is used to provide authentication for the MP_JOIN option.
-The HMAC is built using the derived key (d-key) calculated previously
-from the handshake key material exchanged with the MP_KEY option. The
-Message for the HMAC is the header of the MP_JOIN for which authentication
-shall be performed. By including a nonce in these datagrams, possible
-replay-attacks are remedied.
+The MP_HMAC option is used to provide authentication for the MP_JOIN
+option. The HMAC is built using the derived key (d-key) calculated
+previously from the handshake key material exchanged with the MP_KEY
+option. The Message for the HMAC is the header of the MP_JOIN for which
+authentication shall be performed. By including a nonce in these
+datagrams, possible replay-attacks are remedied.
 
 ### MP_RTT
 
@@ -614,11 +615,12 @@ Smooth RTT (=3)
 
 ### MP_ADDADDR
 
-The MP_ADDADDR option announces additional addresses (and, optionally, ports) on
-which a host can be reached.  This option can be used at any time during an
-existing DCCP connection, when the sender wishes to enable multiple paths and/or
-when additional paths become available. Length is variable depending on IPv4 or
-IPv6 and whether port number is used and is in range between 28 and 42 Bytes.
+The MP_ADDADDR option announces additional addresses (and, optionally,
+ports) on which a host can be reached. This option can be used at any
+time during an existing DCCP connection, when the sender wishes to
+enable multiple paths and/or when additional paths become available.
+Length is variable depending on IPv4 or IPv6 and whether port number is
+used and is in range between 28 and 42 Bytes.
 
 ~~~~
                       1                   2                   3
@@ -638,39 +640,43 @@ IPv6 and whether port number is used and is in range between 28 and 42 Bytes.
   |                               +-------------------------------+
   |                               |
   +-------------------------------+
- ~~~~
+~~~~
  
-Every address has an Address ID that can be used for uniquely identifying the
-address within a connection for address removal.  The Address ID is also used to
-identify MP_JOIN options (see Section 3.2.2) relating to the same address, even
-when address translators are in use.  The Address ID MUST uniquely identify the
-address for the sender of the option (within the scope of the connection); the
-mechanism for allocating such IDs is implementation specific.
+Every address has an Address ID that can be used for uniquely
+identifying the address within a connection for address removal. The
+Address ID is also used to identify MP_JOIN options (see {{MP_JOIN}})
+relating to the same address, even when address translators are in use.
+The Address ID MUST uniquely identify the address for the sender of the
+option (within the scope of the connection); the mechanism for
+allocating such IDs is implementation specific.
 
-All Address IDs learned via either MP_JOIN or ADD_ADDR SHOULD be stored by the
-receiver in a data structure that gathers all the Address-ID-to-address mappings
-for a connection (identified by a token pair). In this way, there is a stored
-mapping between the Address ID, observed source address, and token pair for
-future processing of control information for a connection.
+All Address IDs learned via either MP_JOIN or ADD_ADDR SHOULD be stored
+by the receiver in a data structure that gathers all the
+Address-ID-to-address mappings for a connection (identified by a token
+pair). In this way, there is a stored mapping between the Address ID,
+observed source address, and token pair for future processing of control
+information for a connection.
   
-Ideally, ADD_ADDR and REMOVE_ADDR options would be sent reliably, and in order,
-to the other end. This would ensure that this address management does not
-unnecessarily cause an outage in the connection when remove/add addresses are
-processed in reverse order, and also to ensure that all possible paths are used.
-Note, however, that losing reliability and ordering will not break the multipath
-connections, it will just reduce the opportunity to open multipath paths and to
-survive different patterns of path failures.
+Ideally, ADD_ADDR and REMOVE_ADDR options would be sent reliably, and in
+order, to the other end. This would ensure that this address management
+does not unnecessarily cause an outage in the connection when remove/add
+addresses are processed in reverse order, and also to ensure that all
+possible paths are used. Note, however, that losing reliability and
+ordering will not break the multipath connections, it will just reduce
+the opportunity to open multipath paths and to survive different
+patterns of path failures.
 
-Therefore, implementing reliability signals for these DCCP options is not
-necessary.  In order to minimize the impact of the loss of these options,
-however, it is RECOMMENDED that a sender should send these options on all
-available subflows.  If these options need to be received in order, an
-implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR option per RTT, to
-minimize the risk of misordering. A host that receives an ADD_ADDR but finds a
-connection set up to that IP address and port number is unsuccessful SHOULD NOT
-perform further connection attempts to this address/port combination for this
-connection.  A sender that wants to trigger a new incoming connection attempt on
-a previously advertised address/port combination can therefore refresh ADD_ADDR
+Therefore, implementing reliability signals for these DCCP options is
+not necessary.  In order to minimize the impact of the loss of these
+options, however, it is RECOMMENDED that a sender should send these
+options on all available subflows.  If these options need to be received
+in order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
+option per RTT, to minimize the risk of misordering. A host that
+receives an ADD_ADDR but finds a connection set up to that IP address
+and port number is unsuccessful SHOULD NOT perform further connection
+attempts to this address/port combination for this connection. A sender
+that wants to trigger a new incoming connection attempt on a previously
+advertised address/port combination can therefore refresh ADD_ADDR
 information by sending the option again.
 
 [TBD/TBV]
@@ -678,29 +684,30 @@ information by sending the option again.
 
 ### MP_REMOVEADDR
 
-If, during the lifetime of an MP-DCCP connection, a previously announced address
-becomes invalid (e.g., if the interface disappears), the affected host SHOULD
-announce this so that the peer can remove subflows related to this address.
+If, during the lifetime of an MP-DCCP connection, a previously announced
+address becomes invalid (e.g., if the interface disappears), the
+affected host SHOULD announce this so that the peer can remove subflows
+related to this address.
 
-This is achieved through the Remove Address (REMOVE_ADDR) option which will
-remove a previously added address (or list of addresses) from a connection and
-terminate any subflows currently using that address.
+This is achieved through the Remove Address (REMOVE_ADDR) option which
+will remove a previously added address (or list of addresses) from a
+connection and terminate any subflows currently using that address.
 
-For security purposes, if a host receives a REMOVE_ADDR option, it must ensure
-the affected path(s) are no longer in use before it instigates closure. Typical
-DCCP validity tests on the subflow (e.g., packet type specific sequence and
-acknowledgement number check) MUST also be undertaken.  An implementation can
-use indications of these test failures as part of intrusion detection or error
-logging.
+For security purposes, if a host receives a REMOVE_ADDR option, it must
+ensure the affected path(s) are no longer in use before it instigates
+closure. Typical DCCP validity tests on the subflow (e.g., packet type
+specific sequence and acknowledgement number check) MUST also be
+undertaken. An implementation can use indications of these test failures
+as part of intrusion detection or error logging.
 
-The sending and receipt of this message SHOULD trigger the sending of DCCP-Close
-and DCCP-Reset by client and server, respectively on the affected subflow(s)
-(if possible), as a courtesy to cleaning up middlebox state, before cleaning up
-any local state.
+The sending and receipt of this message SHOULD trigger the sending of
+DCCP-Close and DCCP-Reset by client and server, respectively on the
+affected subflow(s) (if possible), as a courtesy to cleaning up
+middlebox state, before cleaning up any local state.
 
-Address removal is undertaken by ID, so as to permit the use of NATs and other
-middleboxes that rewrite source addresses.  If there is no address at the
-requested ID, the receiver will silently ignore the request.
+Address removal is undertaken by ID, so as to permit the use of NATs and
+other middleboxes that rewrite source addresses.  If there is no address
+at the requested ID, the receiver will silently ignore the request.
 
  ~~~~
                        1                   2                   3
@@ -718,11 +725,11 @@ Minimum length of this option is 4 bytes (for one address to remove).
 
 ### MP_PRIO
 
-In the event that a single specific path out of the set of available paths shall
-be treated with higher priority compared to the others, a host may wish to
-signal such change in priority of subflows to the peer.  Therefore, the MP_PRIO
-option, shown below, can be used to set a priority flag for the subflow on which
-it is sent.
+In the event that a single specific path out of the set of available
+paths shall be treated with higher priority compared to the others, a
+host may wish to signal such change in priority of subflows to the peer.
+Therefore, the MP_PRIO option, shown below, can be used to set a
+priority flag for the subflow on which it is sent.
 
  ~~~~
                         1                   2                   3
@@ -733,8 +740,8 @@ it is sent.
  ~~~~
             
 Whether more than two values for priority (e.g., B for backup and P for
-prioritized path) are defined in case of more than two parallel paths is for
-further consideration.
+prioritized path) are defined in case of more than two parallel paths is
+for further consideration.
 
 [TBD/TBV]
 
@@ -742,28 +749,28 @@ further consideration.
 ## MP-DCCP Handshaking Procedure
 
 ~~~~
-            Host A                                         Host B
-   ------------------------                              ----------
-   Address A1    Address A2                              Address B1
-   ----------    ----------                              ----------
-       |             |                                       |
-       |             DCCP-Request +                          |
-       |------- MP_KEY(Key-A) ------------------------------>|
-       |<---------------------- MP_KEY(Key-B) ---------------|
-       |             DCCP-Response +  agreed                 |
-       |             |                                       |
-       |   DCCP-Ack  |                                       |
-       |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
-       |             |                                       |
-       |             |          DCCP-Request +               |
-       |             |--- MP_JOIN(TB,RA) ------------------->|
-       |             |<------MP_JOIN(TB,RB) + MP_HMAC(A)-----|
-       |             |DCCP-Response                          |
-       |             |                                       |
-       |             |DCCP-Ack                               |
-       |             |-------- MP_HMAC(B) ------------------>|
-       |             |<--------------------------------------|
-       |             |DCCP-ACK                               |
+          Host A                                         Host B 
+------------------------                              ----------
+Address A1    Address A2                              Address B1
+----------    ----------                              ----------
+     |             |                                       |
+     |             DCCP-Request +                          |
+     |------- MP_KEY(Key-A) ------------------------------>|
+     |<---------------------- MP_KEY(Key-B) ---------------|
+     |             DCCP-Response +  agreed                 |
+     |             |                                       |
+     |   DCCP-Ack  |                                       |
+     |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
+     |             |                                       |
+     |             |          DCCP-Request +               |
+     |             |--- MP_JOIN(TB,RA) ------------------->|
+     |             |<------MP_JOIN(TB,RB) + MP_HMAC(A)-----|
+     |             |DCCP-Response                          |
+     |             |                                       |
+     |             |DCCP-Ack                               |
+     |             |-------- MP_HMAC(B) ------------------>|
+     |             |<--------------------------------------|
+     |             |DCCP-ACK                               |
 ~~~~
 {: #ref-mp-dccp-handshaking title='Example MP-DCCP Handshake'}
 
@@ -776,67 +783,71 @@ The basic initial handshake for the first flow is as follows:
   MP-Capable and the MP_Key option with Host-specific Key-B
 
 * Host A sends a DCCP-Ack with both Keys echoed to Host B
-The handshake for subsequent flows based on a successful initial handshake
-is as follows:
+The handshake for subsequent flows based on a successful initial
+handshake is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
-  request and the MP_JOIN option with Host B’s Token TB, generated from the
-  derived key by applying a SHA-1 hash and truncating to the first 32 bits.
-  Additionally, an own random nonce RA is transmitted with the MP_JOIN.
+  request and the MP_JOIN option with Host B’s Token TB, generated from
+  the derived key by applying a SHA-1 hash and truncating to the first
+  32 bits. Additionally, an own random nonce RA is transmitted with the
+  MP_JOIN.
 
-* Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response with
-  Confirm feature option for
-  MP-Capable and the MP_JOIN option with the Token TB and a random nonce RB
-  together with the computed MP_HMAC.
+* Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response
+  with Confirm feature option for MP-Capable and the MP_JOIN option with
+  the Token TB and a random nonce RB together with the computed MP_HMAC.
 
 * Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.
 
-* Host B sends a DCCP-Ack confirm the HMAC and to conclude the handshaking.
+* Host B sends a DCCP-Ack confirm the HMAC and to conclude the
+  handshaking.
 
 
 
 
 # Security Considerations {#security}
 
-Similar to DCCP also MP-DCCP does not provide cryptographic security Guarantees
-inherently. Thus, if applications need cryptographic security (integrity,
-authentication, confidentiality, access control, and anti-replay protection)
-the use of IPsec or some other kind of end-to-end security of is recommended;
-Secure Real-time Transport Protocol (SRTP) {{RFC3711}} is one candidate protocol
-for authentication. Together with Encryption of Header Extensions in the SRTP as
-provided by {{RFC6904}} also integrity would be provided.
+Similar to DCCP also MP-DCCP does not provide cryptographic security
+Guarantees inherently. Thus, if applications need cryptographic security
+(integrity, authentication, confidentiality, access control, and
+anti-replay protection) the use of IPsec or some other kind of
+end-to-end security of is recommended;
+Secure Real-time Transport Protocol (SRTP) {{RFC3711}} is one candidate
+protocol for authentication. Together with Encryption of Header
+Extensions in the SRTP as provided by {{RFC6904}} also integrity would
+be provided.
 
-As described in {{RFC4340}}, DCCP provides protection against hijacking and
-limits the potential impact of some denial-of-service attacks, but DCCP provides
-no inherent protection against attackers’ snooping on data packets. Regarding
-the security of MP-DCCP no additional risks should be introduced compared to
-regular DCCP of today.  Thereof derived are the following key security
-requirements to be fulfilled by MP-DCCP:
-* Provide a mechanism to confirm that parties involved in a subflow handshake
-are identical to those in the original connection setup.
-* Provide verification that the new address to be included in a MP connection is
-valid for a peer to receive traffic at before using it.
-* Provide replay protection, i.e., ensure that a request to add/remove a subflow
-is 'fresh'. 
+As described in {{RFC4340}}, DCCP provides protection against hijacking
+and limits the potential impact of some denial-of-service attacks, but
+DCCP provides no inherent protection against attackers’ snooping on data
+packets. Regarding the security of MP-DCCP no additional risks should be
+introduced compared to regular DCCP of today. Thereof derived are the
+following key security requirements to be fulfilled by MP-DCCP:
+* Provide a mechanism to confirm that parties involved in a subflow
+handshake are identical to those in the original connection setup.
+* Provide verification that the new address to be included in a MP
+connection is valid for a peer to receive traffic at before using it.
+* Provide replay protection, i.e., ensure that a request to add/remove a
+subflow is 'fresh'. 
 
 In order to achieve these goals, MP-DCCP includes a hash-based handshake
-algorithm documented in Sections 3.2.3 and 3.3. The security of the MP-DCCP
-connection depends on the use of keys that are shared once at the start of the
-first subflow and are never sent again over the network. To ease demultiplexing
-while not giving away any cryptographic material, future subflows use a
-truncated cryptographic hash of this key as the connection identification
-"token". The keys are concatenated and used as keys for creating Hash-based
-Message Authentication Codes (HMACs) used on subflow setup, in order to verify
-that the parties in the handshake are the same as in the original connection
-setup. It also provides verification that the peer can receive traffic at this
-new address. Replay attacks would still be possible when only keys are used;
-therefore, the handshakes use single-use random numbers (nonces) at both ends --
-this ensures the HMAC will never be the same on two handshakes. Guidance on
-generating random numbers suitable for use as keys is given in {{RFC4086}}.
-During normal operation, regular DCCP protection mechanisms (such as header
-checksum to protect DCCP headers against corruption) will provide the same level
-of protection against attacks on individual DCCP subflows as exists for regular
-DCCP today. 
+algorithm documented in Sections 3.2.3 and 3.3. The security of the
+MP-DCCP connection depends on the use of keys that are shared once at
+the start of the first subflow and are never sent again over the
+network. To ease demultiplexing while not giving away any cryptographic
+material, future subflows use a truncated cryptographic hash of this key
+as the connection identification "token". The keys are concatenated and
+used as keys for creating Hash-based Message Authentication Codes
+(HMACs) used on subflow setup, in order to verify that the parties in
+the handshake are the same as in the original connection setup. It also
+provides verification that the peer can receive traffic at this new
+address. Replay attacks would still be possible when only keys are used;
+therefore, the handshakes use single-use random numbers (nonces) at both
+ends -- this ensures the HMAC will never be the same on two handshakes.
+Guidance on generating random numbers suitable for use as keys is given
+in {{RFC4086}}. During normal operation, regular DCCP protection
+mechanisms (such as header checksum to protect DCCP headers against
+corruption) will provide the same level of protection against attacks on
+individual DCCP subflows as exists for regular DCCP today. 
 
 
 # Interactions with Middleboxes {#middlebox}
@@ -907,4 +918,3 @@ should include options carrying:
 
 
 --- back
-
