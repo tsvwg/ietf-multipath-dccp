@@ -484,7 +484,7 @@ MP_HMAC for details). Also MP_KEY MUST be set to provide key material
 for authentication purposes.
 
 
-### MP_FAST_CLOSE
+### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
 
 ~~~~
@@ -498,7 +498,7 @@ MP_FAST_CLOSE terminates the MP-DCCP flow and all corresponding
 subflows.
 
 
-### MP_KEY
+### MP_KEY {#MP_KEY}
 
 
 ~~~~
@@ -709,14 +709,14 @@ Address removal is undertaken by ID, so as to permit the use of NATs and
 other middleboxes that rewrite source addresses.  If there is no address
 at the requested ID, the receiver will silently ignore the request.
 
- ~~~~
+~~~~
                        1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
   |     Kind      |  Length = 3+n |Subtype|(resvd)|   Address ID  | ...
   +---------------+---------------+-------+-------+---------------+
                               (followed by n-1 Address IDs, if required)
- ~~~~
+~~~~
  
 Minimum length of this option is 4 bytes (for one address to remove).
 
@@ -731,13 +731,13 @@ host may wish to signal such change in priority of subflows to the peer.
 Therefore, the MP_PRIO option, shown below, can be used to set a
 priority flag for the subflow on which it is sent.
 
- ~~~~
+~~~~
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
    |     Kind      |     Length    |Subtype| Prio  | AddrID (opt) |
    +---------------+---------------+-------+-------+--------------+
- ~~~~
+~~~~
             
 Whether more than two values for priority (e.g., B for backup and P for
 prioritized path) are defined in case of more than two parallel paths is
@@ -746,7 +746,7 @@ for further consideration.
 [TBD/TBV]
 
 
-## MP-DCCP Handshaking Procedure
+## MP-DCCP Handshaking Procedure {#handshaking}
 
 ~~~~
           Host A                                         Host B 
@@ -830,17 +830,18 @@ connection is valid for a peer to receive traffic at before using it.
 subflow is 'fresh'. 
 
 In order to achieve these goals, MP-DCCP includes a hash-based handshake
-algorithm documented in Sections 3.2.3 and 3.3. The security of the
-MP-DCCP connection depends on the use of keys that are shared once at
-the start of the first subflow and are never sent again over the
-network. To ease demultiplexing while not giving away any cryptographic
-material, future subflows use a truncated cryptographic hash of this key
-as the connection identification "token". The keys are concatenated and
-used as keys for creating Hash-based Message Authentication Codes
-(HMACs) used on subflow setup, in order to verify that the parties in
-the handshake are the same as in the original connection setup. It also
-provides verification that the peer can receive traffic at this new
-address. Replay attacks would still be possible when only keys are used;
+algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
+security of the MP-DCCP connection depends on the use of keys that are
+shared once at the start of the first subflow and are never sent again
+over the network. To ease demultiplexing while not giving away any
+cryptographic material, future subflows use a truncated cryptographic
+hash of this key as the connection identification "token". The keys are
+concatenated and used as keys for creating Hash-based Message
+Authentication Codes (HMACs) used on subflow setup, in order to verify
+that the parties in the handshake are the same as in the original
+connection setup. It also provides verification that the peer can
+receive traffic at this new address. Replay attacks would still be
+possible when only keys are used;
 therefore, the handshakes use single-use random numbers (nonces) at both
 ends -- this ensures the HMAC will never be the same on two handshakes.
 Guidance on generating random numbers suitable for use as keys is given
