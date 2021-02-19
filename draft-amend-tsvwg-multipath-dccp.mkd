@@ -147,7 +147,7 @@ single DCCP connection with no inherent performance penalty and DCCP
 needs and does not provide built-in support for those multiple subflows
 – different from SCTP (Stream Control Transmission Protocol) {{RFC4960}}
 which has been designed as a reliable transport protocol operating on
-top of a connectionless IP packet network offering corresponding
+top of a stateless IP packet network offering corresponding
 services for data protection assurance in terms of error-free
 non-duplicated in-order data transfer avoiding congestion and fighting
 flooding and masquerade attacks.
@@ -870,7 +870,7 @@ U-DCCP approach proposed in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} would
 reduce tunneling overhead. Although the handshaking procedure for DCPP-UDP
 header conversion or use of a DCCP-UDP negotiation procedure to signal support
 for DCCP-UDP header conversion would require encapsulation during the handshakes
-and use of two additional port numbers out of the UDPO port number space, but
+and use of two additional port numbers out of the UDP port number space, but
 zero overhead afterwards.
 
 

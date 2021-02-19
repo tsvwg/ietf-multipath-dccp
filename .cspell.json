@@ -52,6 +52,16 @@
        "Datagram",
        "Middleboxes",
        "middlebox",
-       "IANA"
+       "IANA",
+       "unicast",
+       "SCTP",
+       "misordering",
+       "NATs",
+       "resvd",
+       "Psec",
+       "SRTP",
+       "demultiplexing",
+       "HMACs",
+       "IDSs"
     ]
 }
