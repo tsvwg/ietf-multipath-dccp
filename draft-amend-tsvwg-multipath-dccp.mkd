@@ -279,11 +279,11 @@ congestion control.
 
 | Feature                      | MP-TCP                | MP-DCCP            |
 | Volatile paths               | yes                   | yes                |
+| Session handover             | yes                   | yes                |
+| Path aggregation             | yes                   | yes                |
 | Robust session establishment | no                    | yes                |
 | Data reassembly              | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
-| Session handover             | yes                   | yes                |
-| Path aggregation             | yes                   | yes                |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
 Therefore, the sender logic is not much different between MP-DCCP and
