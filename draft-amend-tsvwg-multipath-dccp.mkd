@@ -99,7 +99,7 @@ informative:
     author:
     - org: 3GPP
     date: '2020-12-17'
-	target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
+    target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
 
 --- abstract
 
