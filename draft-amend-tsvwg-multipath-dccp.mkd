@@ -85,7 +85,6 @@ informative:
   RFC4043:
   RFC4086:
   RFC4340:
-  RFC4960:
   RFC5595:
   RFC5596:
   RFC5597:
