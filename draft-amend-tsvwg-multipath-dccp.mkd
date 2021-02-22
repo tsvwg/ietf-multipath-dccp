@@ -707,12 +707,12 @@ other middleboxes that rewrite source addresses.  If there is no address
 at the requested ID, the receiver will silently ignore the request.
 
 ~~~~
-                       1                   2                   3
-   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-  +---------------+---------------+-------+-------+---------------+
-  |     Kind      |  Length = 3+n |Subtype|(resvd)|   Address ID  | ...
-  +---------------+---------------+-------+-------+---------------+
-                              (followed by n-1 Address IDs, if required)
+                     1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++---------------+---------------+-------+-------+---------------+
+|     Kind      |  Length = 3+n |Subtype|(resvd)|   Address ID  |...
++---------------+---------------+-------+-------+---------------+
+                          (followed by n-1 Address IDs, if required)
 ~~~~
  
 Minimum length of this option is 4 bytes (for one address to remove).
