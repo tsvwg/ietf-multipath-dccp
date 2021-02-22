@@ -272,9 +272,10 @@ rate to the path characteristics.
 {: #table_tcp_dccp_comp title='TCP and DCCP protocol comparison'}
 
 Consequently, the multipath features, shown in
-{{table_mptcp_mpdccp_comp}}, are the same, supporting volatile paths,
-session handover and path aggregation capabilities. All of them profit
-by the existence of congestion control.
+{{table_mptcp_mpdccp_comp}}, are the same, supporting volatile paths
+having varying capacity and latency, session handover and path
+aggregation capabilities. All of them profit by the existence of
+congestion control.
 
 | Feature                      | MP-TCP                | MP-DCCP            |
 | Volatile paths               | yes                   | yes                |
@@ -323,14 +324,15 @@ document are to be interpreted as described in {{RFC2119}}.
 
 RFC 4340 states that some applications might want to share congestion
 control state among multiple DCCP flows between same source and
-destination addresses. This functionality could be provided by the Congestion Manager (CM) {{RFC3124}}, a generic multiplexing facility.  However, the CM would not
-fully support DCCP without change; it does not gracefully handle
-multiple congestion control mechanisms, for example.
+destination addresses. This functionality could be provided by the
+Congestion Manager (CM) {{RFC3124}}, a generic multiplexing facility. 
+However, the CM would not fully support MP-DCCP without change; it does
+not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow it to be reassembled and
-delivered reliably and in order to the recipient application. The
+sufficient control information to allow it to be optionally reassembled
+and delivered reliably and in order to the recipient application. The
 following subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
@@ -460,6 +462,7 @@ MP_CONFIRM can be used to send confirmation of received and
 processed options. Confirmed options are copied verbatim and appended
 as List of options. The length varies dependent on the amount of options.
 
+[Tbd] Encoding "list of options"
 
 ### MP_JOIN {#MP_JOIN}
 
@@ -500,7 +503,7 @@ subflows.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101| Length |00000011|Key Type| Key Data
+  |00101101| Length |00000011|Key Type| Key Data ...
   +--------+--------+--------+--------+--------+--------+--------+
    Type=45           MP_OPT=3
 ~~~~
@@ -549,7 +552,8 @@ ECDHE-SHA512-C25519
 
 The MP_SEQ option is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
-number (IDSN) SHOULD be set randomly.
+number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
+different from path individual sequence number space.
 
 
 ### MP_HMAC
@@ -581,7 +585,8 @@ datagrams, possible replay-attacks are remedied.
    Type=45  Length=12 MP_OPT=6
 ~~~~
 
-The MP_RTT option is used to transmit RTT values in milliseconds.
+The MP_RTT option is used to transmit RTT values in milliseconds and
+MUST belong to the path over which this information is transmitted.
 Additionally, the age of the measurement is specified in milliseconds.
 
 Raw RTT (=0)
@@ -608,6 +613,9 @@ Smooth RTT (=3)
   by the Age parameter.
 {: vspace='0'}
 
+Age (=4)
+: [TBD]
+{: vspace='0'}
 
 
 ### MP_ADDADDR
@@ -779,7 +787,8 @@ The basic initial handshake for the first flow is as follows:
 * Host B sends a DCCP-Response with Confirm feature for
   MP-Capable and the MP_Key option with Host-specific Key-B
 
-* Host A sends a DCCP-Ack with both Keys echoed to Host B
+* Host A sends a DCCP-Ack with both Keys echoed to Host B.
+
 The handshake for subsequent flows based on a successful initial
 handshake is as follows:
 
@@ -804,10 +813,10 @@ handshake is as follows:
 # Security Considerations {#security}
 
 Similar to DCCP also MP-DCCP does not provide cryptographic security
-Guarantees inherently. Thus, if applications need cryptographic security
+guarantees inherently. Thus, if applications need cryptographic security
 (integrity, authentication, confidentiality, access control, and
 anti-replay protection) the use of IPsec or some other kind of
-end-to-end security of is recommended;
+end-to-end security is recommended;
 Secure Real-time Transport Protocol (SRTP) {{RFC3711}} is one candidate
 protocol for authentication. Together with Encryption of Header
 Extensions in the SRTP as provided by {{RFC6904}} also integrity would
@@ -819,12 +828,13 @@ DCCP provides no inherent protection against attackers’ snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
 introduced compared to regular DCCP of today. Thereof derived are the
 following key security requirements to be fulfilled by MP-DCCP:
+
 * Provide a mechanism to confirm that parties involved in a subflow
-handshake are identical to those in the original connection setup.
+  handshake are identical to those in the original connection setup.
 * Provide verification that the new address to be included in a MP
-connection is valid for a peer to receive traffic at before using it.
+  connection is valid for a peer to receive traffic at before using it.
 * Provide replay protection, i.e., ensure that a request to add/remove a
-subflow is 'fresh'. 
+  subflow is 'fresh'. 
 
 In order to achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
