@@ -813,14 +813,14 @@ handshake is as follows:
 
 # Security Considerations {#security}
 
-Similar to DCCP also MP-DCCP does not provide cryptographic security
+Similar to DCCP, MP-DCCP does not provide cryptographic security
 guarantees inherently. Thus, if applications need cryptographic security
 (integrity, authentication, confidentiality, access control, and
 anti-replay protection) the use of IPsec or some other kind of
 end-to-end security is recommended;
 Secure Real-time Transport Protocol (SRTP) {{RFC3711}} is one candidate
 protocol for authentication. Together with Encryption of Header
-Extensions in the SRTP as provided by {{RFC6904}} also integrity would
+Extensions in SRTP, as provided by {{RFC6904}}, also integrity would
 be provided.
 
 As described in {{RFC4340}}, DCCP provides protection against hijacking
@@ -851,7 +851,7 @@ connection setup. It also provides verification that the peer can
 receive traffic at this new address. Replay attacks would still be
 possible when only keys are used;
 therefore, the handshakes use single-use random numbers (nonces) at both
-ends -- this ensures the HMAC will never be the same on two handshakes.
+ends -- this ensures that the HMAC will never be the same on two handshakes.
 Guidance on generating random numbers suitable for use as keys is given
 in {{RFC4086}}. During normal operation, regular DCCP protection
 mechanisms (such as header checksum to protect DCCP headers against
@@ -861,25 +861,25 @@ individual DCCP subflows as exists for regular DCCP today.
 
 # Interactions with Middleboxes {#middlebox}
 
-Issues from interaction with on-path middleboxes as NATs, firewalls, proxies,
+Issues from interaction with on-path middleboxes such as NATs, firewalls, proxies,
 intrusion detection systems (IDSs), and others have to be considered for all
-extensions to standard protocols since otherwise unexpected reaction of
-middleboxes that would hinder its deployment. DCCP already provides means to
-leverage potential impact of middleboxes, also in comparison to TCP (see
+extensions to standard protocols since otherwise unexpected reactions of
+middleboxes may hinder its deployment. DCCP already provides means to
+mitigate the potential impact of middleboxes, also in comparison to TCP (see
 {{RFC4043}}, sect. 16). In case, however, both hosts are located behind a NAT or
-firewall entity, specific measures have to be applied as the {{RFC5596}}-specified
-simultaneous-open technique updating the (traditionally asymmetric)
+firewall entity, specific measures have to be applied such as the {{RFC5596}}-specified
+simultaneous-open technique that update the (traditionally asymmetric)
 connection-establishment procedures for DCCP.  Further standardized technologies
 addressing NAT type middleboxes are covered by {{RFC5597}}.
 
-{{RFC6773}} specifies UDP Encapsulation for NAT Traversal of DCCP sessions
-similar to other UDP encapsulation as for SCTP {{RFC6951}} whereas the alternative
+{{RFC6773}} specifies UDP Encapsulation for NAT Traversal of DCCP sessions,
+similar to other UDP encapsulations such as for SCTP {{RFC6951}}. The alternative
 U-DCCP approach proposed in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} would
-reduce tunneling overhead. Although the handshaking procedure for DCPP-UDP
+reduce tunneling overhead. The handshaking procedure for DCCP-UDP
 header conversion or use of a DCCP-UDP negotiation procedure to signal support
 for DCCP-UDP header conversion would require encapsulation during the handshakes
 and use of two additional port numbers out of the UDP port number space, but
-zero overhead afterwards.
+would require zero overhead afterwards.
 
 
 # Acknowledgments
