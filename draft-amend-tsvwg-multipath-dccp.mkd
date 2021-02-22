@@ -331,8 +331,8 @@ not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow it to be optionally reassembled
-and delivered reliably and in order to the recipient application. The
+sufficient control information to allow received data to be reassembled and
+delivered in order to the recipient application. The
 following subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
@@ -393,7 +393,8 @@ shown in {{ref-option-list}}.
 {: #ref-option-list title='Proposed Option Set'}
 
 
-[Tbd/tbv] On top it requires particular considerations for:
+[Tbd/tbv] In addition to the multipath option, MP-DCCP requires particular 
+considerations for:
 
 
 
@@ -609,7 +610,7 @@ Max RTT (=2)
 
 
 Smooth RTT (=3)
-: Averaged RTT value. The period for computing the Minimum can be specified
+: Averaged RTT value. The period for computing the smoothed RTT can be specified
   by the Age parameter.
 {: vspace='0'}
 
@@ -668,7 +669,7 @@ does not unnecessarily cause an outage in the connection when remove/add
 addresses are processed in reverse order, and also to ensure that all
 possible paths are used. Note, however, that losing reliability and
 ordering will not break the multipath connections, it will just reduce
-the opportunity to open multipath paths and to survive different
+the opportunity to open new paths and to survive different
 patterns of path failures.
 
 Therefore, implementing reliability signals for these DCCP options is
