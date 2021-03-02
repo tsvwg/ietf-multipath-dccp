@@ -234,7 +234,7 @@ Address A1    Address A2             Address B1    Address B2
 
 ## Differences from Multipath TCP {#diff_mptcp}
 
-Multipath DCCP is similar to Multipath TCP {{RFC6824}}, in that it
+Multipath DCCP is similar to Multipath TCP {{RFC8684}}, in that it
 extends the related basic DCCP transport protocol {{RFC4340}} with
 multipath capabilities in the same way as Multipath TCP extends TCP
 {{RFC0793}}.
