@@ -524,8 +524,10 @@ specify the key type. Key types are shown in {{ref-key-type-list}}.
 
 
 Plain Text
-: Key Material is exchanged in plain text between hosts and the key
-  parts (key-a, key-b) are concatenated to form the derived key (d-key).
+: Key Material is exchanged in plain text between hosts, and the key
+  parts (key-a, key-b) are used by each host to generate the derived
+  key (d-key) by concatenating the two parts with the local key
+  in front (e.g. hostA d-key=(key-a+key-b), hostB d-key=(key-b+key-a)).
 {: vspace='0'}
 
 
