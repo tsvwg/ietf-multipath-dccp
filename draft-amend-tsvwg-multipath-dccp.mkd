@@ -109,7 +109,7 @@ connection, yet multiple paths often exist between peers.  The
 simultaneous use of these multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
 experience through higher throughput and improved resilience to
-network failures.
+essential network failures.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
