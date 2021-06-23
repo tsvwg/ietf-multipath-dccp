@@ -101,7 +101,15 @@ informative:
     - org: 3GPP
     date: '2020-12-17'
     target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
-
+   website: 
+    title: Multipath extension for DCCP
+    target: https://multipath-dccp.org/
+   paper:
+    title: Cost optimized multipath traffic scheduling in 5G for Video-on-Demand traffic
+    author: Markus Amend, Veselin Rakocevic, and Joachim Habermann 
+    - org: IEEE
+    date: '2021-04-01'
+    target: https://ieeexplore.ieee.org/document/9417415
 --- abstract
 
 
@@ -111,6 +119,10 @@ simultaneous use of these multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
 experience through higher throughput and improved resilience to
 network failures.
+Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to disjunct paths as, e.g., 
+a cellular link and a WiFi link
+or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols as MPTCP, MP-DCCP provides specific support for non-TCP user
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}} and {{paper}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
@@ -890,6 +902,12 @@ header conversion or use of a DCCP-UDP negotiation procedure to signal support
 for DCCP-UDP header conversion would require encapsulation during the handshakes
 and use of two additional port numbers out of the UDP port number space, but
 would require zero overhead afterwards.
+
+
+# Implementation
+
+The approach described above has been implemented in open source at different testbeds and a new scheduling algorithm has been extensively tested. Also 
+demonstrations of a laboratory setup have been executed and have been published at {{website}}.
 
 
 # Acknowledgments
