@@ -105,11 +105,11 @@ informative:
     title: Multipath extension for DCCP
     target: https://multipath-dccp.org/
    paper:
-    title: Cost optimized multipath traffic scheduling in 5G for Video-on-Demand traffic
-    author: Markus Amend, Veselin Rakocevic, and Joachim Habermann 
+    title: A Framework for Multiaccess Support for Unreliable Internet Traffic using Multipath DCCP
+    author: Markus Amend, Eckard Bogenfeld, Milan Cvjetkovic, Veselin Rakocevic, Marcus Pieska, Andreas Kassler and Anna Brunstrom
     - org: IEEE
-    date: '2021-04-01'
-    target: https://ieeexplore.ieee.org/document/9417415
+    date: '2021-10-14'
+    target: https://doi.org/10.1109/LCN44214.2019.8990746
 --- abstract
 
 
