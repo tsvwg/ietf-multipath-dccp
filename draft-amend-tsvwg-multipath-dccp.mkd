@@ -298,13 +298,13 @@ congestion control.
 | Robust session establishment | no                    | yes                |
 | Data re-assembly             | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
-{: #table_mptcp_mpdccp_comp title='MP-TCP and MP-DCCP protocol comparison'}
+{: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
 Therefore, the sender logic is not much different between MP-DCCP and
-MP-TCP, even if the multipath session initiation differs.  MP-DCCP
+MPTCP, even if the multipath session initiation differs.  MP-DCCP
 inherits a robust session establishment feature, which guarantees
 communication establishment if at least one functional path is
-available.  MP-TCP relies on an initial path, which has to work;
+available.  MPTCP relies on an initial path, which has to work;
 otherwise no communication can be established.
 
 The receiver side for MP-DCCP has to deal with the unreliable
@@ -322,7 +322,7 @@ the different DCCP subflows are routed across paths with disjoint
 latencies. In theory, applications using DCCP are aware that packet 
 reordering might happen, since DCCP has no mechanisms to prevent it. 
 
-The receiving process for MP-TCP is on the other hand a rigid
+The receiving process for MPTCP is on the other hand a rigid
 "just wait" approach, since TCP guarantees reliable delivery.
 
 
