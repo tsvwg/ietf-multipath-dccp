@@ -98,18 +98,47 @@ informative:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
     author:
-    - org: 3GPP
+      org: 3GPP
     date: '2020-12-17'
     target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
-   website: 
+  website: 
     title: Multipath extension for DCCP
     target: https://multipath-dccp.org/
-   paper:
+  paper:
     title: A Framework for Multiaccess Support for Unreliable Internet Traffic using Multipath DCCP
-    author: Markus Amend, Eckard Bogenfeld, Milan Cvjetkovic, Veselin Rakocevic, Marcus Pieska, Andreas Kassler and Anna Brunstrom
-    - org: IEEE
+    author:
+      -
+         ins: M. Amend
+         name: Markus Amend
+      -
+         ins: E. Bogenfeld
+         name: Eckard Bogenfeld
+      -
+         ins: M. Cvjetkovic
+         name: Milan Cvjetkovic
+      -
+         ins: V. Rakocevic
+         name: Veselin Rakocevic
+      -
+         ins: M. Pieska
+         name: Marcus Pieska
+      -
+         ins: A. Kassler
+         name: Andreas Kassler
+      -
+         ins: A. Brunstrom
+         name: Anna Brunstrom
     date: '2021-10-14'
-    target: https://doi.org/10.1109/LCN44214.2019.8990746
+    seriesinfo:
+      DOI: 10.1109/LCN44214.2019.8990746
+  slide:
+    title: MP-DCCP for enabling transfer of UDP/IP traffic over multiple data paths in multi-connectivity networks
+    author:
+      -
+         ins: M. Amend
+         name: Markus Amend
+    seriesinfo: IETF105
+    target: https://datatracker.ietf.org/meeting/105/materials/slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-operation-00
 --- abstract
 
 
@@ -122,7 +151,7 @@ network failures.
 Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to disjunct paths as, e.g., 
 a cellular link and a WiFi link
 or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}} and {{paper}}.
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
