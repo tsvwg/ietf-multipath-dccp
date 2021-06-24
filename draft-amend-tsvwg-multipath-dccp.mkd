@@ -152,6 +152,7 @@ Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles)
 a cellular link and a WiFi link
 or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols as MPTCP, MP-DCCP provides specific support for non-TCP user
 traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
+All this use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
