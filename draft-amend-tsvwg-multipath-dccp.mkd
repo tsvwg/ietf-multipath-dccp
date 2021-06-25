@@ -128,7 +128,7 @@ informative:
       -
          ins: A. Brunstrom
          name: Anna Brunstrom
-    date: '2021-10-14'
+    date: '2019-10-14'
     seriesinfo:
       DOI: 10.1109/LCN44214.2019.8990746
   slide:
@@ -443,10 +443,9 @@ considerations for:
 
 
 
-* The minimum PMTU of the individual paths must be selected to be
-  announced to the application.  Changes of individual path PMTUs
-  must be re-announced to the application if they result in a value lower than the
-  currently announced PMTU.
+* The minimum PMTU of the individual paths must be announced to the application.
+  Changes of individual path PMTUs must be re-announced to the application
+  if they result in a value lower than the currently announced PMTU.
 
 * Overall sequencing for optional re-assembly procedure
 
@@ -663,7 +662,7 @@ Smooth RTT (=3)
 
 Age (=4)
 : The Age parameter is a 4-byte value which is set to the age or  
-  time stamp when the Ack for the datagram was received in case of  
+  timestamp when the Ack for the datagram was received in case of  
   RTT type = 0 and may contain the periods for computing of derived  
   RTT values depending on other RTT types, i.e., the Minimum (=1)  
   and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
@@ -936,7 +935,7 @@ would require zero overhead afterwards.
 
 # Implementation
 
-The approach described above has been implemented in open source at different testbeds and a new scheduling algorithm has been extensively tested. Also 
+The approach described above has been implemented in open source across different testbeds and a new scheduling algorithm has been extensively tested. Also 
 demonstrations of a laboratory setup have been executed and have been published at {{website}}.
 
 
@@ -955,7 +954,7 @@ unmodified.
 # IANA Considerations
 
 This document defines one new value to DCCP feature list and one new  
-DCCP Option with ten corresponding Subtypes as following. 
+DCCP Option with ten corresponding Subtypes as follows. 
 This document defines a new DCCP feature parameter for negotiating  
 the support of multipath capability for DCCP sessions between hosts  
 as described in Section 3. The following entry in {{ref-add-feature-list}} should be  
