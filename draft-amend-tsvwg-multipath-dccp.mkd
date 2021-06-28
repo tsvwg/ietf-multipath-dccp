@@ -322,7 +322,7 @@ having varying capacity and latency, session handover and path
 aggregation capabilities. All of them profit by the existence of
 congestion control.
 
-| Feature                      | MP-TCP                | MP-DCCP            |
+| Feature                      | MPTCP                 | MP-DCCP            |
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
