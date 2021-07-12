@@ -468,7 +468,7 @@ MP-DCCP implementation. The following four bits are reserved for further
 use.
 
 
-## Multipath Option
+## Multipath Option {#MP_OPT}
 
 
 
@@ -494,7 +494,7 @@ use.
 | 46  |       4       | 9 =MP_PRIO       | Change Subflow Priority                              |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
-### MP_CONFIRM
+### MP_CONFIRM {#MP_CONFIRM}
 
 
 ~~~~
@@ -588,7 +588,7 @@ ECDHE-SHA512-C25519
 
 
 
-### MP_SEQ
+### MP_SEQ {#MP_SEQ}
 
 
 ~~~~
@@ -604,7 +604,7 @@ number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
 different from path individual sequence number space.
 
 
-### MP_HMAC
+### MP_HMAC {#MP_HMAC}
 
 
 ~~~~
@@ -621,7 +621,7 @@ option. The Message for the HMAC is the header of the MP_JOIN for which
 authentication shall be performed. By including a nonce in these
 datagrams, possible replay-attacks are remedied.
 
-### MP_RTT
+### MP_RTT {#MP_RTT}
 
 
 ~~~~
@@ -671,7 +671,7 @@ Age (=4)
 {: vspace='0'}
 
 
-### MP_ADDADDR
+### MP_ADDADDR {#MP_ADDADDR}
 
 The MP_ADDADDR option announces additional addresses (and, optionally,
 ports) on which a host can be reached. This option can be used at any
@@ -740,7 +740,7 @@ information by sending the option again.
 [TBD/TBV]
 
 
-### MP_REMOVEADDR
+### MP_REMOVEADDR {#MP_REMOVEADDR}
 
 If, during the lifetime of an MP-DCCP connection, a previously announced
 address becomes invalid (e.g., if the interface disappears), the
@@ -781,7 +781,7 @@ Minimum length of this option is 4 bytes (for one address to remove).
 [TBD/TBV]
 
 
-### MP_PRIO
+### MP_PRIO {#MP_PRIO}
 
 In the event that a single specific path out of the set of available
 paths shall be treated with higher priority compared to the others, a
@@ -954,20 +954,16 @@ unmodified.
 
 # IANA Considerations
 
-This document defines one new value to DCCP feature list and one new  
+This document defines one new value to DCCP feature list and one new
 DCCP Option with ten corresponding Subtypes as follows. 
-This document defines a new DCCP feature parameter for negotiating  
-the support of multipath capability for DCCP sessions between hosts  
-as described in Section 3. The following entry in {{ref-add-feature-list}} should be  
-added to the "Feature Numbers Registry" according to ({{RFC4340}}  
-Section 19.4.) under the "DCCP Protocol" heading. 
+This document defines a new DCCP feature parameter for negotiating
+the support of multipath capability for DCCP sessions between hosts
+as described in Section 3. The following entry in {{ref-add-feature-list}} should be
+added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
-           +=======+============================+===============+ 
-           | Value | Feature Name               | Specification |  
-           +=======+============================+===============+  
-           | 0x10  | MP-DCCP capability feature | Section 3.1   |  
-           +-------+----------------------------+---------------+ 
-{: #ref-add-feature-list title='Addition to DCCP Feature list Entries'}
+| Value | Feature Name               | Specification   |
+| 0x10  | MP-DCCP capability feature | {{mp_capable}}  |
+{:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
 This document defines a new DCCP protocol option of type=46 as
        described in Section 3.2 together with 10 additional sub-options.
@@ -975,43 +971,19 @@ This document defines a new DCCP protocol option of type=46 as
        Protocol options" and assigned as "MP-DCCP sub-options",
        respectively.
       
-       +========+=================+===========================+============+
-       | Value  | Symbol          | Name                      | Reference  |
-       +========+=================+===========================+============+
-       | TBD or | MP_OPT          | DCCP Multipath option    | Sect. 3.2   |
-       |Type=46 |                 |                          |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or |  MP_CONFIRM     | Confirm reception/process| Sect. 3.2.1 |
-       |MP_OPT=0|                 | ing of an MP_OPT option  |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or |  MP_JOIN        | Join path to existing MP-| Sect. 3.2.2 |
-       |MP_OPT=1|                 | DCCP flow                |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_FAST_CLOSE   | Close MP-DCCP flow       | Sect. 3.2.3 |
-       |MP_OPT=2|                 |                          |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_KEY          | Exchange key material for| Sect. 3.2.4 |
-       |MP_OPT=3|                 | MP_HMAC                  |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_SEQ          | Multipath Sequence Number| Sect. 3.2.5 |
-       |MP_OPT=4|                 |                          |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_HMAC         | Hash-based Message Auth. | Sect. 3.2.6 |
-       |MP_OPT=5|                 | Code for MP-DCCP         |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_RTT          | Transmit RTT values and  | Sect. 3.2.7 |
-       |MP_OPT=6|                 | calculation parameters   |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_ADDADDR      | Advertise additional     | Sect. 3.2.8 |
-       |MP_OPT=7|                 | Address(es)/Port(s)      |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_REMOVEADDR   | Remove Address(es)/      | Sect. 3.2.9 |
-       |MP_OPT=8|                 | Port(s)                  |             |
-       +--------+-----------------+--------------------------+-------------+
-       | TBD or | MP_PRIO         | Change Subflow Priority  | Sect.3.2.10.|
-       |MP_OPT=9|                 |                          |             |
-       +--------+-----------------+--------------------------+-------------+
-{: #ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
+| Value           | Symbol          | Name                                             | Reference         |
+| TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
+| TBD or MP_OPT=0 |  MP_CONFIRM     | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
+| TBD or MP_OPT=1 |  MP_JOIN        | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
+| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP flow                               | {{MP_FAST_CLOSE}} |
+| TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}         |
+| TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
+| TBD or MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
+| TBD or MP_OPT=6 | MP_RTT          | Transmit RTT values and calculation parameters   | {{MP_RTT}}        |
+| TBD or MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
+| TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
+| TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
+{:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 [Tbd], must include options for:
 
