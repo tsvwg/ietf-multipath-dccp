@@ -89,6 +89,7 @@ informative:
   RFC5595:
   RFC5596:
   RFC5597:
+  RFC5634:
   RFC6773:
   RFC6824:
   RFC6904:
@@ -97,10 +98,47 @@ informative:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
     author:
-    - org: 3GPP
+      org: 3GPP
     date: '2020-12-17'
     target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
-
+  website: 
+    title: Multipath extension for DCCP
+    target: https://multipath-dccp.org/
+  paper:
+    title: A Framework for Multiaccess Support for Unreliable Internet Traffic using Multipath DCCP
+    author:
+      -
+         ins: M. Amend
+         name: Markus Amend
+      -
+         ins: E. Bogenfeld
+         name: Eckard Bogenfeld
+      -
+         ins: M. Cvjetkovic
+         name: Milan Cvjetkovic
+      -
+         ins: V. Rakocevic
+         name: Veselin Rakocevic
+      -
+         ins: M. Pieska
+         name: Marcus Pieska
+      -
+         ins: A. Kassler
+         name: Andreas Kassler
+      -
+         ins: A. Brunstrom
+         name: Anna Brunstrom
+    date: '2019-10-14'
+    seriesinfo:
+      DOI: 10.1109/LCN44214.2019.8990746
+  slide:
+    title: MP-DCCP for enabling transfer of UDP/IP traffic over multiple data paths in multi-connectivity networks
+    author:
+      -
+         ins: M. Amend
+         name: Markus Amend
+    seriesinfo: IETF105
+    target: https://datatracker.ietf.org/meeting/105/materials/slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-operation-00
 --- abstract
 
 
@@ -110,6 +148,11 @@ simultaneous use of these multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
 experience through higher throughput and improved resilience to
 network failures.
+Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to disjunct paths as, e.g., 
+a cellular link and a WiFi link
+or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols as MPTCP, MP-DCCP provides specific support for non-TCP user
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
+All this use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
@@ -143,7 +186,7 @@ in 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
 capability to DCCP; specifically, those for signaling and setting up
-multiple paths ("subflows"), managing these subflows, reassembly of
+multiple paths ("subflows"), managing these subflows, re-assembly of
 data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
@@ -153,13 +196,14 @@ does not provide built-in support for those multiple application subflows.
 
 In the following, use of the term subflow will refer to physical
 separate DCCP subflows transmitted via different paths, but not to
-application subflows. Application subflows are differing content-wise by
-source and destination application as e.g. enabled by Service Codes
-introduced to DCCP in {{RFC5595}} and could be multiplexed over a single
-DCCP connection. For sake of consistency we assume that only a single
-application is served by a DCCP connection here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} while use of that feature should not
-impact DCCP operation on each single path as noted in ({{RFC5595}},
-sect. 2.4).
+application subflows. Application subflows are differing content-wise
+by source and destination port per application as, for example, enabled
+by Service Codes introduced to DCCP in {{RFC5595}}, and those subflows
+can be multiplexed over a single DCCP connection. For sake of consistency
+we assume that only a single application is served by a DCCP connection
+here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
+while use of that feature should not impact DCCP operation on each single path
+as noted in ({{RFC5595}}, sect. 2.4).
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -255,10 +299,10 @@ rate to the path characteristics.
 
 | Feature                | TCP              | DCCP                          |
 | Full-Duplex            | yes              | yes                           |
-| Connection- Oriented   | yes              | yes                           |
+| Connection-Oriented    | yes              | yes                           |
 | Header option space    | 40 bytes         | \< 1008 bytes or PMTU         |
 | Data transfer          | reliable         | unreliable                    |
-| Packet-loss handling   | re- transmission | report only                   |
+| Packet-loss handling   | re-transmission  | report only                   |
 | Ordered data delivery  | yes              | no                            |
 | Sequence numbers       | one per byte     | one per PDU                   |
 | Flow control           | yes              | no                            |
@@ -278,25 +322,25 @@ having varying capacity and latency, session handover and path
 aggregation capabilities. All of them profit by the existence of
 congestion control.
 
-| Feature                      | MP-TCP                | MP-DCCP            |
+| Feature                      | MPTCP                 | MP-DCCP            |
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
 | Robust session establishment | no                    | yes                |
-| Data reassembly              | yes                   | optional / modular |
+| Data re-assembly             | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
 Therefore, the sender logic is not much different between MP-DCCP and
-MP-TCP, even if the multipath session initiation differs.  MP-DCCP
+MPTCP, even if the multipath session initiation differs.  MP-DCCP
 inherits a robust session establishment feature, which guarantees
 communication establishment if at least one functional path is
-available.  MP-TCP relies on an initial path, which has to work;
+available.  MPTCP relies on an initial path, which has to work;
 otherwise no communication can be established.
 
 The receiver side for MP-DCCP has to deal with the unreliable
 transport character of DCCP and a possible re-assembly of the data 
-stream while not advocating it. As many unreliable application have 
+stream while not advocating it. As many unreliable applications have 
 built-in application support for reordering (such as adaptive audio 
 and video buffers), those applications might not need support for 
 re-assembly. However, for applications that benefit from partial or 
@@ -309,7 +353,7 @@ the different DCCP subflows are routed across paths with disjoint
 latencies. In theory, applications using DCCP are aware that packet 
 reordering might happen, since DCCP has no mechanisms to prevent it. 
 
-The receiving process for MP-TCP is on the other hand a rigid
+The receiving process for MPTCP is on the other hand a rigid
 "just wait" approach, since TCP guarantees reliable delivery.
 
 
@@ -332,7 +376,7 @@ not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow received data to be reassembled and
+sufficient control information to allow received data to be re-assembled and
 delivered in order to the recipient application. The
 following subsections define this behavior in detail.
 
@@ -365,8 +409,8 @@ shown in {{ref-feature-list}}.
 |128-255| CCID-specific features       |      |             |               |
 {: #ref-feature-list title='Proposed Feature Set'}
 
-The DCCP protocol options ({{RFC4340}} section 5.8) will be enhanced
-by a new Multipath related variable-length option with option type 45, as
+The DCCP protocol options as defined in ({{RFC4340}} section 5.8) and ({{RFC5634}} section 2.2.1) will be enhanced
+by a new Multipath related variable-length option with option type 46, as
 shown in {{ref-option-list}}.
 
 | Type  | Option Length | Meaning               | DCCP-Data? |
@@ -388,8 +432,9 @@ shown in {{ref-option-list}}.
 |  42   |     6/8/10    | Timestamp Echo        |     Y      |
 |  43   |      4/6      | Elapsed Time          |     N      |
 |  44   |       6       | Data Checksum         |     Y      |
-|  45   |    variable   | Multipath             |     Y      |
-| 46-127|    variable   | Reserved              |            |
+|  45   |       8       | Quick-Start Response  |     ?      |
+|  46   |    variable   | Multipath             |     Y      |
+| 47-127|    variable   | Reserved              |            |
 |128-255|    variable   | CCID-specific options |     -      |
 {: #ref-option-list title='Proposed Option Set'}
 
@@ -399,12 +444,11 @@ considerations for:
 
 
 
-* The minimum PMTU of the individual paths must be selected to
-  announce to the application.  Changes of individual path PMTUs
-  must be re-announced to the application if they are lower than the
-  current announced PMTU.
+* The minimum PMTU of the individual paths must be announced to the application.
+  Changes of individual path PMTUs must be re-announced to the application
+  if they result in a value lower than the currently announced PMTU.
 
-* Overall sequencing for optional reassembly procedure
+* Overall sequencing for optional re-assembly procedure
 
 * Congestion control
 
@@ -431,23 +475,23 @@ use.
 
 ~~~~
 +--------+--------+--------+--------+--------
-|00101101| Length | MP_OPT | Value(s) ...
+|00101110| Length | MP_OPT | Value(s) ...
 +--------+--------+--------+--------+--------
- Type=45
+ Type=46
 ~~~~
 
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
-| 45  |       var     | 0 =MP_CONFIRM    | Confirm reception and processing of an MP_OPT option |
-| 45  |       11      | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
-| 45  |       3       | 2 =MP_FAST_CLOSE | Close MP-DCCP flow                                   |
-| 45  |       var     | 3 =MP_KEY        | Exchange key material for MP_HMAC                    |
-| 45  |       7       | 4 =MP_SEQ        |Multipath Sequence Number                             |
-| 45  |       23      | 5 =MP_HMAC       | HMA Code for authentication                          |
-| 45  |       12      | 6 =MP_RTT        | Transmit RTT values                                  |
-| 45  |       var     | 7 =MP_ADDADDR    | Advertise additional Address                         |
-| 45  |       var     | 8 =MP_REMOVEADDR | Remove Address                                       |
-| 45  |       4       | 9 =MP_PRIO       | Change Subflow Priority                              |
+| 46  |       var     | 0 =MP_CONFIRM    | Confirm reception and processing of an MP_OPT option |
+| 46  |       11      | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
+| 46  |       3       | 2 =MP_FAST_CLOSE | Close MP-DCCP flow                                   |
+| 46  |       var     | 3 =MP_KEY        | Exchange key material for MP_HMAC                    |
+| 46  |       7       | 4 =MP_SEQ        | Multipath Sequence Number                            |
+| 46  |       23      | 5 =MP_HMAC       | HMA Code for authentication                          |
+| 46  |       12      | 6 =MP_RTT        | Transmit RTT values                                  |
+| 46  |       var     | 7 =MP_ADDADDR    | Advertise additional Address                         |
+| 46  |       var     | 8 =MP_REMOVEADDR | Remove Address                                       |
+| 46  |       4       | 9 =MP_PRIO       | Change Subflow Priority                              |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 ### MP_CONFIRM
@@ -455,9 +499,9 @@ use.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101| Length |00000000| List of options ...
+  |00101110| Length |00000000| List of options ...
   +--------+--------+--------+--------+--------+--------+--------+
-   Type=45           MP_OPT=0
+   Type=46           MP_OPT=0
 ~~~~
 
 MP_CONFIRM can be used to send confirmation of received and
@@ -471,11 +515,11 @@ as List of options. The length varies dependent on the amount of options.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101|00001011|00000001| Path Token                        |
+  |00101110|00001011|00000001| Path Token                        |
   +--------+--------+--------+--------+--------+--------+--------+
   | Nonce                             |
   +--------+--------+--------+--------+
-   Type=45  Length=11 MP_OPT=1
+   Type=46  Length=11 MP_OPT=1
 ~~~~
 
 The MP_JOIN option is used to add a new path to an existing MP-DCCP
@@ -491,9 +535,9 @@ for authentication purposes.
 
 ~~~~
   +--------+--------+--------+
-  |00101101|00000011|00000010|
+  |00101110|00000011|00000010|
   +--------+--------+--------+
-   Type=45  Length=3 MP_OPT=2
+   Type=46  Length=3 MP_OPT=2
 ~~~~
 
 MP_FAST_CLOSE terminates the MP-DCCP flow and all corresponding
@@ -505,9 +549,9 @@ subflows.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101| Length |00000011|Key Type| Key Data ...
+  |00101110| Length |00000011|Key Type| Key Data ...
   +--------+--------+--------+--------+--------+--------+--------+
-   Type=45           MP_OPT=3
+   Type=46           MP_OPT=3
 ~~~~
 
 The MP_KEY suboption is used to exchange key material between
@@ -549,9 +593,9 @@ ECDHE-SHA512-C25519
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101|00000111|00000100| Multipath Sequence Number         |
+  |00101110|00000111|00000100| Multipath Sequence Number         |
   +--------+--------+--------+--------+--------+--------+--------+
-   Type=45  Length=7 MP_OPT=4
+   Type=46  Length=7 MP_OPT=4
 ~~~~
 
 The MP_SEQ option is used for end-to-end datagram-based sequence
@@ -565,9 +609,9 @@ different from path individual sequence number space.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+
-  |00101101|00000111|00000101| HMAC-SHA1 (20 bytes) ...
+  |00101110|00001011|00000101| HMAC-SHA1 (20 bytes) ...
   +--------+--------+--------+--------+--------+--------+
-   Type=45  Length=23 MP_OPT=5
+   Type=46  Length=23 MP_OPT=5
 ~~~~
 
 The MP_HMAC option is used to provide authentication for the MP_JOIN
@@ -582,11 +626,11 @@ datagrams, possible replay-attacks are remedied.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101101|00000111|00000110|RTT Type| RTT
+  |00101110|00001100|00000110|RTT Type| RTT
   +--------+--------+--------+--------+--------+--------+--------+
   |        | Age                               |
   +--------+--------+--------+--------+--------+
-   Type=45  Length=12 MP_OPT=6
+   Type=46  Length=12 MP_OPT=6
 ~~~~
 
 The MP_RTT option is used to transmit RTT values in milliseconds and
@@ -618,7 +662,12 @@ Smooth RTT (=3)
 {: vspace='0'}
 
 Age (=4)
-: [TBD]
+: The Age parameter is a 4-byte value which is set to the age or  
+  timestamp when the Ack for the datagram was received in case of  
+  RTT type = 0 and may contain the periods for computing of derived  
+  RTT values depending on other RTT types, i.e., the Minimum (=1)  
+  and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
+  [TBD/TBV] 
 {: vspace='0'}
 
 
@@ -629,7 +678,7 @@ ports) on which a host can be reached. This option can be used at any
 time during an existing DCCP connection, when the sender wishes to
 enable multiple paths and/or when additional paths become available.
 Length is variable depending on IPv4 or IPv6 and whether port number is
-used and is in range between 28 and 42 Bytes.
+used and is in range between 28 and 42 bytes.
 
 ~~~~
                       1                   2                   3
@@ -641,7 +690,7 @@ used and is in range between 28 and 42 Bytes.
   +-------------------------------+-------------------------------+
   |   Port (2 bytes, optional)    |                               |
   +-------------------------------+                               |
-  |                       HMAC (20 Bytes)                         |
+  |                       HMAC (20 bytes)                         |
   |                                                               |
   |                                                               |
   |                                                               |
@@ -885,6 +934,12 @@ and use of two additional port numbers out of the UDP port number space, but
 would require zero overhead afterwards.
 
 
+# Implementation
+
+The approach described above has been implemented in open source across different testbeds and a new scheduling algorithm has been extensively tested. Also 
+demonstrations of a laboratory setup have been executed and have been published at {{website}}.
+
+
 # Acknowledgments
 
 
@@ -898,6 +953,66 @@ unmodified.
 
 
 # IANA Considerations
+
+This document defines one new value to DCCP feature list and one new  
+DCCP Option with ten corresponding Subtypes as follows. 
+This document defines a new DCCP feature parameter for negotiating  
+the support of multipath capability for DCCP sessions between hosts  
+as described in Section 3. The following entry in {{ref-add-feature-list}} should be  
+added to the "Feature Numbers Registry" according to ({{RFC4340}}  
+Section 19.4.) under the "DCCP Protocol" heading. 
+
+           +=======+============================+===============+ 
+           | Value | Feature Name               | Specification |  
+           +=======+============================+===============+  
+           | 0x10  | MP-DCCP capability feature | Section 3.1   |  
+           +-------+----------------------------+---------------+ 
+{: #ref-add-feature-list title='Addition to DCCP Feature list Entries'}
+
+This document defines a new DCCP protocol option of type=46 as  
+       described in Section 3.2 together with 10 additional sub-options.  
+       The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP  
+       Protocol options" and assigned as "MP-DCCP sub-options",  
+       respectively.  
+      
+       +=======+=================+===========================+=============+  
+       | Value | Symbol          | Name                      | Reference   |  
+       +========+=================+==========================+=============+  
+       | TBD or | MP_OPT          | DCCP Multipath option    | Sect. 3.2   |  
+       |Type=46 |                 |                          |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or |  MP_CONFIRM     | Confirm reception/process| Sect. 3.2.1 |  
+       |MP_OPT=0|                 | ing of an MP_OPT option  |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or |  MP_JOIN        | Join path to existing MP-| Sect. 3.2.2 |  
+       |MP_OPT=1|                 | DCCP flow                |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_FAST_CLOSE   | Close MP-DCCP flow       | Sect. 3.2.3 |  
+       |MP_OPT=2|                 |                          |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_KEY          | Exchange key material for| Sect. 3.2.4 |  
+       |MP_OPT=3|                 | MP_HMAC                  |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_SEQ          | Multipath Sequence Number| Sect. 3.2.5 |  
+       |MP_OPT=4|                 |                          |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_HMAC         | Hash-based Message Auth. | Sect. 3.2.6 |  
+       |MP_OPT=5|                 | Code for MP-DCCP         |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_RTT          | Transmit RTT values and  | Sect. 3.2.7 |  
+       |MP_OPT=6|                 | calculation parameters   |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_ADDADDR      | Advertise additional     | Sect. 3.2.8 |  
+       |MP_OPT=7|                 | Address(es)/Port(s)      |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_REMOVEADDR   | Remove Address(es)/      | Sect. 3.2.9 |  
+       |MP_OPT=8|                 | Port(s)                  |             |  
+       +--------+-----------------+--------------------------+-------------+  
+       | TBD or | MP_PRIO         | Change Subflow Priority  | Sect.3.2.10.|  
+       |MP_OPT=9|                 |                          |             |  
+       +--------+-----------------+--------------------------+-------------+  
+      
+{:  #ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 [Tbd], must include options for:
 
