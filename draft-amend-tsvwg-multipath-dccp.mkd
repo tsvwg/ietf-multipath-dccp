@@ -974,10 +974,10 @@ This document defines a new DCCP protocol option of type=46 as
       
 | Value           | Symbol          | Name                                             | Reference         |
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
-| TBD or MP_OPT=0 |  MP_CONFIRM     | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 |  MP_JOIN        | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
+| TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
+| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
 | TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP flow                               | {{MP_FAST_CLOSE}} |
-| TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}         |
+| TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
 | TBD or MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
 | TBD or MP_OPT=6 | MP_RTT          | Transmit RTT values and calculation parameters   | {{MP_RTT}}        |
