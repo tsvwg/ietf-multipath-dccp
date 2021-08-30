@@ -28,6 +28,7 @@ author:
   code: 64295
   country: Germany
   email: Markus.Amend@telekom.de
+  role: editor
  -
   ins: D. Hugo
   name: Dirk von Hugo
