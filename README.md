@@ -11,10 +11,10 @@ Please ensure that the CI tests continue to succeed everytime you submit a pull 
 Get latest `.txt` and `.html` view from `markusa/ietf-multipath-dccp` `master`branch
 
 **`.txt`**
-[ietf-multipath-dccp.txt](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-amend-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii) [(Debug)](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-amend-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&type=toframe)
+[ietf-multipath-dccp.txt](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-ietf-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii) [(Debug)](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-ietf-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&type=toframe)
 
 **`.html`**
-[ietf-multipath-dccp.html](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-amend-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&mode=html) [(Debug)](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-amend-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&mode=html&type=toframe)
+[ietf-multipath-dccp.html](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-ietf-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&mode=html) [(Debug)](https://xml2rfc.tools.ietf.org/cgi-bin/xml2rfc-dev.cgi?url=https://raw.githubusercontent.com/markusa/ietf-multipath-dccp/master/draft-ietf-tsvwg-multipath-dccp.mkd&inputtype=kramdown&format=v3ascii&mode=html&type=toframe)
 
 `make` is used to automate the build process and supports:
 
