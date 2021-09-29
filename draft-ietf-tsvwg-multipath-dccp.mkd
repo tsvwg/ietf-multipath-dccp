@@ -673,8 +673,8 @@ Age (=4)
   RTT type = 0 and may contain the periods for computing of derived  
   RTT values depending on other RTT types, i.e., the Minimum (=1)  
   and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
-  [TBD/TBV] 
 {: vspace='0'}
+[TBD/TBV] 
 
 
 ### MP_ADDADDR {#MP_ADDADDR}
