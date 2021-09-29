@@ -300,6 +300,7 @@ communication and both employ congestion control to adapt the sending
 rate to the path characteristics.
 
 | Feature                | TCP              | DCCP                          |
+|:----------------------:|:----------------:|:-----------------------------:|
 | Full-Duplex            | yes              | yes                           |
 | Connection-Oriented    | yes              | yes                           |
 | Header option space    | 40 bytes         | \< 1008 bytes or PMTU         |
@@ -325,6 +326,7 @@ aggregation capabilities. All of them profit by the existence of
 congestion control.
 
 | Feature                      | MPTCP                 | MP-DCCP            |
+|:----------------------------:|:---------------------:|:------------------:|
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
