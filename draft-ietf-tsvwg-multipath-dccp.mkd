@@ -968,16 +968,16 @@ as described in Section 3. The following entry in {{ref-add-feature-list}} shoul
 added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
 | Value | Feature Name               | Specification   |
+|:-----:|:--------------------------:|:---------------:|
 | 0x10  | MP-DCCP capability feature | {{mp_capable}}  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
-This document defines a new DCCP protocol option of type=46 as
-       described in Section 3.2 together with 10 additional sub-options.
-       The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
-       Protocol options" and assigned as "MP-DCCP sub-options",
-       respectively.
+This document defines a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional sub-options.
+The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
+Protocol options" and assigned as "MP-DCCP sub-options", respectively.
       
 | Value           | Symbol          | Name                                             | Reference         |
+|:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
 | TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
