@@ -152,8 +152,8 @@ network failures.
 Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to distinct paths as, e.g., 
 a cellular link and a WiFi link
 or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
-All this use cases profit from an Open Source Linux reference implementation provided under {{website}}.
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
@@ -168,7 +168,7 @@ potentially disjoint paths.
 # Introduction {#intro}
 
 Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
-{{RFC4340}}, i.e. the Datagram Congestion Control Protocol denoting a
+{{RFC4340}}, i.e., the Datagram Congestion Control Protocol denoting a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. A multipath extension to 
 DCCP enables the transport of user data  across multiple paths 
@@ -452,7 +452,9 @@ considerations for:
 
 * Overall sequencing for optional re-assembly procedure
 
-* Congestion control
+* Congestion control covering specific mechanisms as, e.g., for detecting and
+  reporting congestion occurance on per-path level and for individual
+  adaptation of path-specific transmission rates (up to zero rate)
 
 * Robust MP-DCCP session establishment (no dependency on an initial
   path setup)
@@ -603,7 +605,7 @@ ECDHE-SHA512-C25519
 The MP_SEQ option is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
 number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
-different from path individual sequence number space.
+different from the path individual sequence number space.
 
 
 ### MP_HMAC {#MP_HMAC}
@@ -1002,14 +1004,16 @@ This document defines a new DCCP protocol option of type=46 as
 
 * setting reordering on/off
 
+* MP-specific congestion mechanisms
+
 
 should include options carrying:
 
 
 
-* overall sequence number for restoring purposes
+* overall sequence number for restoring/re-assembly/re-ordering purposes
 
-* sender time measurements for restoring purposes
+* sender time measurements for restoring/re-assembly/re-ordering purposes
 
 * scheduler preferences
 
