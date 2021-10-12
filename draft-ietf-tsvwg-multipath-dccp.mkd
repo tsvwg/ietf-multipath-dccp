@@ -187,7 +187,7 @@ in 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
 capability to DCCP; specifically, those for signaling and setting up
-multiple paths ("subflows"), managing these subflows, re-assembly of
+multiple paths ("subflows"), managing these subflows, reordering of
 data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
@@ -329,7 +329,7 @@ congestion control.
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
 | Robust session establishment | no                    | yes                |
-| Data re-assembly             | yes                   | optional / modular |
+| Data reordering              | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
@@ -341,16 +341,14 @@ available.  MPTCP relies on an initial path, which has to work;
 otherwise no communication can be established.
 
 The receiver side for MP-DCCP has to deal with the unreliable
-transport character of DCCP and a possible re-assembly of the data 
-stream while not advocating it. As many unreliable applications have 
-built-in application support for reordering (such as adaptive audio 
-and video buffers), those applications might not need support for 
-re-assembly. However, for applications that benefit from partial or 
-full support of reordering, MP-DCCP can provide flexible support for 
-re-assembly, even if for DCCP the order of delivery is unreliable 
-by nature. Such optional re-assembly mechanisms may account for the 
-fact that packet loss may occur for any of the DCCP subflows. 
-Another issue may occur as packet reordering may happen when 
+transport character of DCCP, and a possible reordering of the data 
+stream, while not advocating it. Many applications that also use unreliable transport
+protocols have built-in handling of out of sequence data (such as adaptive audio 
+and video buffers), and so additional reordering support may not be required.
+However, MP-DCCP can provide flexible handling of reordering for those applications
+where it is beneficial.
+
+Such optional reordering mechanisms are most likely to be required when 
 the different DCCP subflows are routed across paths with different 
 latencies. In theory, applications using DCCP are aware that packet 
 reordering might happen, since DCCP has no mechanisms to prevent it. 
@@ -450,7 +448,7 @@ considerations for:
   Changes of individual path PMTUs must be re-announced to the application
   if they result in a value lower than the currently announced PMTU.
 
-* Overall sequencing for optional re-assembly procedure
+* Overall sequencing for optional reordering procedure
 
 * Congestion control
 
