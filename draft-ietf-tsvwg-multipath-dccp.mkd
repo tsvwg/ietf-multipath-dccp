@@ -374,9 +374,9 @@ not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow received data to be re-assembled and
-delivered in order to the recipient application. The
-following subsections define this behavior in detail.
+sufficient control information to allow received data to be re-assembled 
+for in order delivery to the recipient application. The following 
+subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
 feature, as described in {{protocol}}.
