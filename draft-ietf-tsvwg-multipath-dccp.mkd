@@ -345,7 +345,7 @@ character of DCCP, and can provide flexible handling for data stream packet
 reordering for those applications where it is beneficial. However, many 
 applications that use unreliable transport protocols can inherently deal 
 with out of sequence data (e.g. through adaptive audio and video buffers), 
-and so additional reordering support may not be required. The optional 
+and so additional reordering support may not be necessary. The optional 
 reordering mechanisms in MP-DCCP are most likely to be required when the 
 different DCCP subflows are routed across paths with different latencies. 
 In theory, applications using DCCP are aware that packet reordering might 
