@@ -340,18 +340,16 @@ communication establishment if at least one functional path is
 available.  MPTCP relies on an initial path, which has to work;
 otherwise no communication can be established.
 
-The receiver side for MP-DCCP has to deal with the unreliable
-transport character of DCCP, and a possible reordering of the data 
-stream, while not advocating it. Many applications that also use unreliable transport
-protocols have built-in handling of out of sequence data (such as adaptive audio 
-and video buffers), and so additional reordering support may not be required.
-However, MP-DCCP can provide flexible handling of reordering for those applications
-where it is beneficial.
-
-Such optional reordering mechanisms are most likely to be required when 
-the different DCCP subflows are routed across paths with different 
-latencies. In theory, applications using DCCP are aware that packet 
-reordering might happen, since DCCP has no mechanisms to prevent it. 
+The receiver side for MP-DCCP has to deal with the unreliable transport 
+character of DCCP, and can provide flexible handling for data stream packet 
+reordering for those applications where it is beneficial. However, many 
+applications that use unreliable transport protocols can inherently deal 
+with out of sequence data (e.g. through adaptive audio and video buffers), 
+and so additional reordering support may not be required. The optional 
+reordering mechanisms in MP-DCCP are most likely to be required when the 
+different DCCP subflows are routed across paths with different latencies. 
+In theory, applications using DCCP are aware that packet reordering might 
+happen, since DCCP has no mechanisms to prevent it.
 
 The receiving process for MPTCP is on the other hand a rigid
 "just wait" approach, since TCP guarantees reliable delivery.
