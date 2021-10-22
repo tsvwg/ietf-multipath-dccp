@@ -873,7 +873,7 @@ subflow failing is loss of MP-DCCP options.
 At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-response or DCCP-Ack
-messages don’t have the MP-DCCP options, the MP_DCCP connection will not be 
+messages don’t have the MP-DCCP options, the MP-DCCP connection will not be 
 established and the handshake should fall back to regular DCCP. 
 
 If a path attempts to join an existing MP-DCCP connection, but MP-DCCP options 
