@@ -510,9 +510,21 @@ use.
    Type=46           MP_OPT=0
 ~~~~
 
-MP_CONFIRM can be used to send confirmation of received and
-processed options. Confirmed options are copied verbatim and appended
-as List of options. The length varies dependent on the amount of options.
+MP_CONFIRM is used to send confirmation of reception and processing of the multipath 
+options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
+until this receives the corresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
+on the confirmed options, which will be copied verbatim and appended as list of options.
+
+
+
+|Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
+|:----|:--------------|:-----------------|:--------------------------------------------------------------|
+| 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
+| 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
+| 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
+{: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
+
+
 
 [Tbd] Encoding "list of options"
 
@@ -806,7 +818,6 @@ priority flag for the subflow on which it is sent.
 Whether more than two values for priority (e.g., B for backup and P for
 prioritized path) are defined in case of more than two parallel paths is
 for further consideration.
-
 [TBD/TBV]
 
 
