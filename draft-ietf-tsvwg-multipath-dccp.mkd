@@ -344,7 +344,7 @@ The receiver side for MP-DCCP has to deal with the unreliable transport
 character of DCCP, and can provide flexible handling for data stream packet 
 reordering for those applications where it is beneficial. However, many 
 applications that use unreliable transport protocols can inherently deal 
-with out of sequence data (e.g. through adaptive audio and video buffers), 
+with out-of-sequence data (e.g., through adaptive audio and video buffers), 
 and so additional reordering support may not be necessary. The optional 
 reordering mechanisms in MP-DCCP are most likely to be required when the 
 different DCCP subflows are routed across paths with different latencies. 
@@ -375,7 +375,7 @@ not gracefully handle multiple congestion control mechanisms, for example.
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
 sufficient control information to allow received data to be re-assembled 
-for in order delivery to the recipient application. The following 
+for in-order delivery to the recipient application. The following 
 subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
@@ -726,7 +726,7 @@ Therefore, implementing reliability signals for these DCCP options is
 not necessary.  In order to minimize the impact of the loss of these
 options, however, it is RECOMMENDED that a sender should send these
 options on all available subflows.  If these options need to be received
-in order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
+in-order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
 option per RTT, to minimize the risk of misordering. A host that
 receives an ADD_ADDR but finds a connection set up to that IP address
 and port number is unsuccessful SHOULD NOT perform further connection
