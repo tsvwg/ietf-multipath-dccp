@@ -517,7 +517,7 @@ on the confirmed options, which will be copied verbatim and appended as List of 
 |:----|:--------------|:-----------------|:--------------------------------------------------------------|
 | 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
 | 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
-| 46  |       4       | 9 =MP_PRIO       | If sent with AddrID: Any available. Otherwise: Receiving path | 
+| 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
 
 
@@ -813,9 +813,7 @@ priority flag for the subflow on which it is sent.
             
 Whether more than two values for priority (e.g., B for backup and P for
 prioritized path) are defined in case of more than two parallel paths is
-for further consideration. This option can also be applied to other subflows 
-than the one on which it is sent, by setting the optional Address ID field
-
+for further consideration.
 [TBD/TBV]
 
 
