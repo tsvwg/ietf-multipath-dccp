@@ -789,7 +789,7 @@ In the event that a single specific path out of the set of available
 paths shall be treated with higher priority compared to the others, a
 host may wish to signal such change in priority  to the peer.
 One reason for such behavior is due to the different costs involved in
-using different paths (e.g. WiFi is free while cellular has limit on
+using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
 may be subject to dynamic changes, for example when the mobile runs out
 of battery only a single path may be preferred. Therefore, the path
