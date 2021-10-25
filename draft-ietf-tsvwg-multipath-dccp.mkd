@@ -507,9 +507,9 @@ use.
 ~~~~
 
 MP_CONFIRM is used to send confirmation of reception and processing of the multipath 
-options that require it (See {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until this receives the cooresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
-on the confirmed options, which will be copied verbatim and appended as List of options.
+options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
+until this receives the corresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
+on the confirmed options, which will be copied verbatim and appended as list of options.
 
 
 
