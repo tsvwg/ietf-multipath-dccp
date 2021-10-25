@@ -1,8 +1,8 @@
 ---
 title: DCCP Extensions for Multipath Operation with Multiple Addresses
 abbrev: Multipath DCCP
-docname: draft-ietf-tsvwg-multipath-dccp-00
-date: 2021-08-31
+docname: draft-ietf-tsvwg-multipath-dccp-01
+date: 2021-10-25
 cat: exp
 
 ipr: trust200902
@@ -29,16 +29,6 @@ author:
   country: Germany
   email: Markus.Amend@telekom.de
   role: editor
- -
-  ins: D. Hugo
-  name: Dirk von Hugo
-  org: Deutsche Telekom
-  abbrev: DT
-  street: Deutsche-Telekom-Allee 9
-  city: Darmstadt
-  code: 64295
-  country: Germany
-  email: Dirk.von-Hugo@telekom.de
  -
   ins: A. Brunstrom
   name: Anna Brunstrom
@@ -210,7 +200,7 @@ as noted in ({{RFC5595}}, sect. 2.4).
 
 MP-DCCP operates at the transport layer and aims to be transparent to
 both higher and lower layers.  It is a set of additional features on
-top of standard DCCP; Figure 1 illustrates this layering.  MP-DCCP is
+top of standard DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering.  MP-DCCP is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.
 
@@ -465,7 +455,7 @@ considerations for:
 * Overall sequencing for optional reordering procedure
 
 * Congestion control covering specific mechanisms as, e.g., for detecting and
-  reporting congestion occurance on per-path level and for individual
+  reporting congestion occurrence on per-path level and for individual
   adaptation of path-specific transmission rates (up to zero rate)
 
 * Robust MP-DCCP session establishment (no dependency on an initial
