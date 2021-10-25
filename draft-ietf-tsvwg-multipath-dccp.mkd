@@ -152,8 +152,8 @@ network failures.
 Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to distinct paths as, e.g., 
 a cellular link and a WiFi link
 or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
-All this use cases profit from an Open Source Linux reference implementation provided under {{website}}.
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
@@ -168,7 +168,7 @@ potentially disjoint paths.
 # Introduction {#intro}
 
 Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
-{{RFC4340}}, i.e. the Datagram Congestion Control Protocol denoting a
+{{RFC4340}}, i.e., the Datagram Congestion Control Protocol denoting a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. A multipath extension to 
 DCCP enables the transport of user data  across multiple paths 
@@ -300,6 +300,7 @@ communication and both employ congestion control to adapt the sending
 rate to the path characteristics.
 
 | Feature                | TCP              | DCCP                          |
+|:----------------------:|:----------------:|:-----------------------------:|
 | Full-Duplex            | yes              | yes                           |
 | Connection-Oriented    | yes              | yes                           |
 | Header option space    | 40 bytes         | \< 1008 bytes or PMTU         |
@@ -325,6 +326,7 @@ aggregation capabilities. All of them profit by the existence of
 congestion control.
 
 | Feature                      | MPTCP                 | MP-DCCP            |
+|:----------------------------:|:---------------------:|:------------------:|
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
@@ -452,7 +454,9 @@ considerations for:
 
 * Overall sequencing for optional re-assembly procedure
 
-* Congestion control
+* Congestion control covering specific mechanisms as, e.g., for detecting and
+  reporting congestion occurance on per-path level and for individual
+  adaptation of path-specific transmission rates (up to zero rate)
 
 * Robust MP-DCCP session establishment (no dependency on an initial
   path setup)
@@ -603,7 +607,7 @@ ECDHE-SHA512-C25519
 The MP_SEQ option is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
 number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
-different from path individual sequence number space.
+different from the path individual sequence number space.
 
 
 ### MP_HMAC {#MP_HMAC}
@@ -669,8 +673,8 @@ Age (=4)
   RTT type = 0 and may contain the periods for computing of derived  
   RTT values depending on other RTT types, i.e., the Minimum (=1)  
   and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
-  [TBD/TBV] 
 {: vspace='0'}
+[TBD/TBV] 
 
 
 ### MP_ADDADDR {#MP_ADDADDR}
@@ -964,16 +968,16 @@ as described in Section 3. The following entry in {{ref-add-feature-list}} shoul
 added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
 | Value | Feature Name               | Specification   |
+|:-----:|:--------------------------:|:---------------:|
 | 0x10  | MP-DCCP capability feature | {{mp_capable}}  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
-This document defines a new DCCP protocol option of type=46 as
-       described in Section 3.2 together with 10 additional sub-options.
-       The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
-       Protocol options" and assigned as "MP-DCCP sub-options",
-       respectively.
+This document defines a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional sub-options.
+The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
+Protocol options" and assigned as "MP-DCCP sub-options", respectively.
       
 | Value           | Symbol          | Name                                             | Reference         |
+|:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
 | TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
@@ -1002,14 +1006,16 @@ This document defines a new DCCP protocol option of type=46 as
 
 * setting reordering on/off
 
+* MP-specific congestion mechanisms
+
 
 should include options carrying:
 
 
 
-* overall sequence number for restoring purposes
+* overall sequence number for restoring/re-assembly/re-ordering purposes
 
-* sender time measurements for restoring purposes
+* sender time measurements for restoring/re-assembly/re-ordering purposes
 
 * scheduler preferences
 
