@@ -409,13 +409,15 @@ shown in {{ref-feature-list}}.
 |128-255| CCID-specific features       |      |             |               |
 {: #ref-feature-list title='Proposed Feature Set'}
 
-Rec'n Rule : The reconciliation rule used for the feature.
-SP means server-priority, NN means non-negotiable.
+Rec'n Rule:
+: The reconciliation rule used for the feature. SP means server-priority,
+  NN means non-negotiable.
 
-Initial Value: The initial value for the feature. 
-Every feature has a known initial value.
+Initial Value:
+: The initial value for the feature. Every feature has a known initial value.
 
-Req'd: This column is "Y" if and only if every DCCP implementation MUST
+Req'd:
+: This column is "Y" if and only if every DCCP implementation MUST
 understand the feature. If it is "N", then the feature behaves like an extension
 (see Section 15), and it is safe to respond to Change options for the feature
 with empty Confirm options. Of course, a CCID might require the feature; a DCCP
