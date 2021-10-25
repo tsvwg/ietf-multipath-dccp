@@ -187,7 +187,7 @@ in 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
 capability to DCCP; specifically, those for signaling and setting up
-multiple paths ("subflows"), managing these subflows, re-assembly of
+multiple paths ("subflows"), managing these subflows, reordering of
 data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
@@ -331,7 +331,7 @@ congestion control.
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
 | Robust session establishment | no                    | yes                |
-| Data re-assembly             | yes                   | optional / modular |
+| Data reordering              | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
@@ -342,20 +342,16 @@ communication establishment if at least one functional path is
 available.  MPTCP relies on an initial path, which has to work;
 otherwise no communication can be established.
 
-The receiver side for MP-DCCP has to deal with the unreliable
-transport character of DCCP and a possible re-assembly of the data 
-stream while not advocating it. As many unreliable applications have 
-built-in application support for reordering (such as adaptive audio 
-and video buffers), those applications might not need support for 
-re-assembly. However, for applications that benefit from partial or 
-full support of reordering, MP-DCCP can provide flexible support for 
-re-assembly, even if for DCCP the order of delivery is unreliable 
-by nature. Such optional re-assembly mechanisms may account for the 
-fact that packet loss may occur for any of the DCCP subflows. 
-Another issue may occur as packet reordering may happen when 
-the different DCCP subflows are routed across paths with different 
-latencies. In theory, applications using DCCP are aware that packet 
-reordering might happen, since DCCP has no mechanisms to prevent it. 
+The receiver side for MP-DCCP has to deal with the unreliable transport 
+character of DCCP, and can provide flexible handling for data stream packet 
+reordering for those applications where it is beneficial. However, many 
+applications that use unreliable transport protocols can inherently deal 
+with out-of-sequence data (e.g., through adaptive audio and video buffers), 
+and so additional reordering support may not be necessary. The optional 
+reordering mechanisms in MP-DCCP are most likely to be required when the 
+different DCCP subflows are routed across paths with different latencies. 
+In theory, applications using DCCP are aware that packet reordering might 
+happen, since DCCP has no mechanisms to prevent it.
 
 The receiving process for MPTCP is on the other hand a rigid
 "just wait" approach, since TCP guarantees reliable delivery.
@@ -380,9 +376,9 @@ not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow received data to be re-assembled and
-delivered in order to the recipient application. The
-following subsections define this behavior in detail.
+sufficient control information to allow received data to be re-assembled 
+for in-order delivery to the recipient application. The following 
+subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
 feature, as described in {{protocol}}.
@@ -452,7 +448,7 @@ considerations for:
   Changes of individual path PMTUs must be re-announced to the application
   if they result in a value lower than the currently announced PMTU.
 
-* Overall sequencing for optional re-assembly procedure
+* Overall sequencing for optional reordering procedure
 
 * Congestion control covering specific mechanisms as, e.g., for detecting and
   reporting congestion occurance on per-path level and for individual
@@ -746,7 +742,7 @@ Therefore, implementing reliability signals for these DCCP options is
 not necessary.  In order to minimize the impact of the loss of these
 options, however, it is RECOMMENDED that a sender should send these
 options on all available subflows.  If these options need to be received
-in order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
+in-order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
 option per RTT, to minimize the risk of misordering. A host that
 receives an ADD_ADDR but finds a connection set up to that IP address
 and port number is unsuccessful SHOULD NOT perform further connection
