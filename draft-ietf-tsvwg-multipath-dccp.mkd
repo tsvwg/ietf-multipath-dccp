@@ -874,6 +874,22 @@ handshake is as follows:
   handshaking.
 
 
+## Fallback
+
+When a subflow fails to operate within the MP-DCCP requirements, it is 
+necessary to fall back to the safe operation. This may be either falling back 
+to regular DCCP, or removing a problematic subflow. The main reason for 
+subflow failing is loss of MP-DCCP options. 
+
+At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP
+options and thus ensures that the path is fully MP-DCCP capable. If during the
+handshake procedure it appears that DCCP-Request or DCCP-response or DCCP-Ack
+messages don’t have the MP-DCCP options, the MP-DCCP connection will not be 
+established and the handshake should fall back to regular DCCP. 
+
+If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options 
+are not present in the handshake messages, that subflow will be closed.   
+
 
 
 # Security Considerations {#security}
