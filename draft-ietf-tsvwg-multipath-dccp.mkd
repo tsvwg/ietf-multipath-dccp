@@ -357,23 +357,40 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Operation Overview {#op_overview}
 
-RFC 4340 states that some applications might want to share congestion
-control state among multiple DCCP flows between same source and
-destination addresses. This functionality could be provided by the
-Congestion Manager (CM) {{RFC3124}}, a generic multiplexing facility. 
-However, the CM would not fully support MP-DCCP without change; it does
-not gracefully handle multiple congestion control mechanisms, for example.
+DCCP according to RFC 4340 {{RFC4330}} allows multiple application 
+subflows to be multiplexed over a single DCCP connection whith 
+potentially same performance. However, DCCP does not provide built-in 
+support for multiple subflows and the Congestion Manager (CM) 
+{{RFC3124}}, as a generic multiplexing facility, can not fully support 
+multiple congestion control mechanisms for multiple DCCP flows between 
+same source and destination addresses.
 
-The operation of MP-DCCP for data transfer takes one input data stream
-from an application, and splits it into one or more subflows, with
-sufficient control information to allow received data to be re-assembled 
-for in-order delivery to the recipient application. The following 
-subsections define this behavior in detail.
+The proposed extension of DCCP towards Multipath-DCCP (MP-DCCP) is 
+described in detail in {{protocol}}.
 
-The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
-feature, as described in {{protocol}}.
-Once negotiated, all subsequent MP-DCCP operations are signalled with a
+As a high level overview on the key functionality of MP-DCCP the data 
+stream from an application not requiring TCP-like transport, is split 
+by MP-DCCP operation into one or more subflows which can be 
+transmitted via different also physically isolated paths.
+Corresponding control information does allow received data to be 
+re-assembled and delivered in right order to the recipient application. 
+The following subsections define this behavior in detail.
+
+The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
+feature, as described and fully specified in {{protocol}}. Once 
+negotiated, all subsequent MP-DCCP operations are signalled with a 
 variable length multipath-related option, as described in {{mp_capable}}.
+
+A Multipath DCCP connection provides a bidirectional bytestream between 
+two hosts exchanging data as in standard DCCP manner thus not requiring 
+any change to the applications. However, Multipath DCCP enables the 
+hosts to use different paths with different IP addresses to transport 
+the packets of the MP-DCCP connection. MP-DCCP manages the request, 
+set-up, authentication, prioritization, modification, and removal of
+the DCCP subflows on different paths as well as exchange of performance 
+parameters. The number of concurrent DCCP subflows can vary during the 
+lifetime of the Multipath DCCP connection. All MP-DCCP operations are 
+signaled with MP-DCCP options described in detail in {#MP_OPT}.
 
 
 # MP-DCCP Protocol {#protocol}
