@@ -71,6 +71,7 @@ informative:
   I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-tsvwg-dccp-udp-header-conversion:
   RFC0793:
+  RFC2104:
   RFC2119:
   RFC3124:
   RFC3711:
@@ -81,6 +82,7 @@ informative:
   RFC5596:
   RFC5597:
   RFC5634:
+  RFC6234:
   RFC6773:
   RFC6824:
   RFC6904:
@@ -467,20 +469,57 @@ considerations for:
 DCCP endpoints are multipath-disabled by default and multipath
 capability can be negotiated with the Multipath Capable Feature.
 
-Multipath Capable has feature number 10 and is server-priority. It takes
-one-byte values.
-The first four bits are used to specify compatible versions of the
-MP-DCCP implementation. The following four bits are reserved for further
-use.
+Multipath Capable has feature number 10 and has length of one-byte.
+The leftmost four bits are used to specify a compatible version of the
+MP-DCCP implementation (0 for this specification).
+The following four bits are reserved for further use.
+
+~~~~
+    0  1  2  3   4  5  6  7
+   +------------------------+
+   |  Version  |  Reserved  |
+   +------------------------+
+    '0000'->v0
+    '0001'->v1
+    ........
+~~~~
+
+Multipath Capable follows the server-priority reconciliation rule described
+in ({{RFC4340}} section 6.3.1), which allows multiple versions to be
+specified in order of priority.
 
 The negotiation MUST be done as part of the initial handshake procedure
 as described in {{handshaking}}, and no subsequent re-negotiation of
 the Multipath Capable feature is allowed on the same MP connection.
 
-In case multiple versions supported by two endpoints, the receiver
-will signal during the handshake the preferred version to use which MUST
-be part of the list of supported versions provided by the transmitter
-with the first request.
+Client MUST include a Change R option during the initial handshake request to
+supply a list of supported protocol versions, ordered by preference.
+
+Server MUST include a Confirm L option in the subsequent response to agree on
+a version to be used chosen from the Client list, followed by its own
+supported version(s) ordered by preference.
+
+For example:
+
+~~~~
+      Client                                             Server
+      ------                                             ------
+      DCCP-Req + Change R(CAPABLE, 1 0)
+                     ----------------------------------->
+
+                      DCCP-Resp + Confirm L(CAPABLE, 1, 2 1 0)
+            <-----------------------------------
+
+                 * agreement on version = 1 *
+
+
+Client indicates support for both versions 1 and 0, with preference for version 1
+
+Server agrees on using version 1, and supply its own preference list
+~~~~
+
+If no agreement can be found, the Server MUST reply with an empty Confirm L option
+with feature number 10 and no values.
 
 Any subflow addition to an existing MP connection MUST use the same
 version negotiated for the first flow.
@@ -584,16 +623,16 @@ subflows.
 ~~~~
 
 The MP_KEY suboption is used to exchange key material between
-hosts. The Length varies between 12 and 36 Bytes for a single-key message, and up to
-78 bytes when multiple keys are provided. The Key Type field is used to
+hosts. The Length varies between 12 and 68 Bytes for a single-key message, and up to
+110 Bytes when all specified Key Types 0-2 are provided. The Key Type field is used to
 specify the type of the following key data. Key types are shown in {{ref-key-type-list}}.
 
-| Key  Type              | Key Length | Meaning                          |
-|------------------------|------------|----------------------------------|
-| 0 =Plain Text          |          8 | Plain Text Key                   |
-| 1 =ECDHE-C25519-SHA256 |         32 | ECDHE with SHA256 and Curve25519 |
-| 2 =ECDHE-C25519-SHA512 |         32 | ECDHE with SHA512 and Curve25519 |
-| 3-255                  |            | Reserved                         |
+| Key  Type              | Key Length (Bytes) | Meaning                          |
+|------------------------|--------------------|----------------------------------|
+| 0 =Plain Text          |                  8 | Plain Text Key                   |
+| 1 =ECDHE-C25519-SHA256 |                 32 | ECDHE with SHA256 and Curve25519 |
+| 2 =ECDHE-C25519-SHA512 |                 64 | ECDHE with SHA512 and Curve25519 |
+| 3-255                  |                    | Reserved                         |
 {: #ref-key-type-list title='MP_KEY Key Types'}
 
 
@@ -641,17 +680,19 @@ different from the path individual sequence number space.
 
 ~~~~
   +--------+--------+--------+--------+--------+--------+
-  |00101110|00001011|00000101| HMAC-SHA1 (20 bytes) ...
+  |00101110|00001011|00000101| HMAC-SHA256 (20 bytes) ...
   +--------+--------+--------+--------+--------+--------+
    Type=46  Length=23 MP_OPT=5
 ~~~~
 
 The MP_HMAC option is used to provide authentication for the MP_JOIN
-option. The HMAC is built using the derived key (d-key) calculated
-previously from the handshake key material exchanged with the MP_KEY
-option. The Message for the HMAC is the header of the MP_JOIN for which
-authentication shall be performed. By including a nonce in these
-datagrams, possible replay-attacks are remedied.
+option. The HMAC code is generated according to {{RFC2104}} in combination
+with the SHA-256 hash algorithm described in {{RFC6234}}, with the output
+truncated to the leftmost 160 bits (20 bytes).
+
+The "Key" used for the HMAC computation is the derived key (d-key)
+described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
+the token and nonce of the MP_JOIN for which authentication shall be performed.
 
 ### MP_RTT {#MP_RTT}
 
@@ -895,16 +936,18 @@ handshake is as follows:
 * Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response
   with Confirm feature option for MP-Capable and the MP_JOIN option with
   the Token TB and a random nonce RB together with the computed MP_HMAC.
-  The HMAC is calculated by taking the leftmost 20 bytes from the SHA1 hash
-  of a message created by concatenating the derived key described in {{MP_KEY}}
-  with token and nonce received with MP_JOIN(A):
-  MP_HMAC(A) = SHA1(d-key(B) + TB + RA)
+  The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
+  of a HMAC code created by using token and nonce received with MP_JOIN(A) as message
+  and the derived key described in {{MP_KEY}} as key:
+
+  MP_HMAC(A) = HMAC-SHA256(Key=d-key(B), Msg=TB+RA)
 
 * Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.
-  The HMAC is calculated by taking the leftmost 20 bytes from the SHA1 hash
-  of a message created by concatenating the derived key described in {{MP_KEY}}
-  with token and nonce received with MP_JOIN(B):
-  MP_HMAC(A) = SHA1(d-key(A) + TB + RB)
+  The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
+  of a HMAC code created by using token and nonce received with MP_JOIN(B) as message
+  and the derived key described in {{MP_KEY}} as key:
+
+  MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=TB+RB)
 
 * Host B sends a DCCP-Ack confirm the HMAC and to conclude the
   handshaking.
