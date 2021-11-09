@@ -591,7 +591,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 ~~~~
 
 The MP_JOIN option is used to add a new path to an existing MP-DCCP
-flow. The Path Token is the SHA-1 HASH of the derived key (d-key),
+flow. The Path Token is the SHA256 hash of the derived key (d-key),
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
@@ -687,7 +687,7 @@ different from the path individual sequence number space.
 
 The MP_HMAC option is used to provide authentication for the MP_JOIN
 option. The HMAC code is generated according to {{RFC2104}} in combination
-with the SHA-256 hash algorithm described in {{RFC6234}}, with the output
+with the SHA256 hash algorithm described in {{RFC6234}}, with the output
 truncated to the leftmost 160 bits (20 bytes).
 
 The "Key" used for the HMAC computation is the derived key (d-key)
@@ -929,7 +929,7 @@ handshake is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
   request and the MP_JOIN option with Host B’s Token TB, generated from
-  the derived key by applying a SHA-1 hash and truncating to the first
+  the derived key by applying a SHA256 hash and truncating to the first
   32 bits. Additionally, an own random nonce RA is transmitted with the
   MP_JOIN.
 
@@ -949,7 +949,7 @@ handshake is as follows:
 
   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=TB+RB)
 
-* Host B sends a DCCP-Ack confirm the HMAC and to conclude the
+* Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
 
 
@@ -962,7 +962,7 @@ subflow failing is loss of MP-DCCP options.
 
 At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP
 options and thus ensures that the path is fully MP-DCCP capable. If during the
-handshake procedure it appears that DCCP-Request or DCCP-response or DCCP-Ack
+handshake procedure it appears that DCCP-Request or DCCP-Response or DCCP-Ack
 messages don’t have the MP-DCCP options, the MP-DCCP connection will not be 
 established and the handshake should fall back to regular DCCP. The same
 fallback should take place if the endpoints fail to agree on a protocol
