@@ -884,20 +884,20 @@ for further consideration.
 Address A1    Address A2                              Address B1
 ----------    ----------                              ----------
      |             |                                       |
-     |             DCCP-Request +                          |
+     |             DCCP-Request + MP_CAPABLE               |
      |------- MP_KEY(Key-A(1), Key-A(2),...) ------------->|
      |<---------------------- MP_KEY(Key-B) ---------------|
-     |             DCCP-Response +  agreed                 |
+     |             DCCP-Response +  MP_CAPABLE             |
      |             |                                       |
      |   DCCP-Ack  |                                       |
      |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
      |<----------------------------------------------------|
      |   DCCP-Ack  |                                       |
      |             |                                       |
-     |             |          DCCP-Request +               |
+     |             |          DCCP-Request + MP_CAPABLE    |
      |             |--- MP_JOIN(TB,RA) ------------------->|
      |             |<------MP_JOIN(TB,RB) + MP_HMAC(A)-----|
-     |             |DCCP-Response                          |
+     |             |DCCP-Response  + MP_CAPABLE            |
      |             |                                       |
      |             |DCCP-Ack                               |
      |             |-------- MP_HMAC(B) ------------------>|
