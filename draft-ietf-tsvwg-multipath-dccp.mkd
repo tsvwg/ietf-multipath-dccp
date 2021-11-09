@@ -1,8 +1,8 @@
 ---
 title: DCCP Extensions for Multipath Operation with Multiple Addresses
 abbrev: Multipath DCCP
-docname: draft-ietf-tsvwg-multipath-dccp-00
-date: 2021-08-31
+docname: draft-ietf-tsvwg-multipath-dccp-01
+date: 2021-10-25
 cat: exp
 
 ipr: trust200902
@@ -29,16 +29,6 @@ author:
   country: Germany
   email: Markus.Amend@telekom.de
   role: editor
- -
-  ins: D. Hugo
-  name: Dirk von Hugo
-  org: Deutsche Telekom
-  abbrev: DT
-  street: Deutsche-Telekom-Allee 9
-  city: Darmstadt
-  code: 64295
-  country: Germany
-  email: Dirk.von-Hugo@telekom.de
  -
   ins: A. Brunstrom
   name: Anna Brunstrom
@@ -152,8 +142,8 @@ network failures.
 Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to distinct paths as, e.g., 
 a cellular link and a WiFi link
 or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}} and {{paper}}.
-All this use cases profit from an Open Source Linux reference implementation provided under {{website}}.
+traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
 This document presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
@@ -168,7 +158,7 @@ potentially disjoint paths.
 # Introduction {#intro}
 
 Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
-{{RFC4340}}, i.e. the Datagram Congestion Control Protocol denoting a
+{{RFC4340}}, i.e., the Datagram Congestion Control Protocol denoting a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. A multipath extension to 
 DCCP enables the transport of user data  across multiple paths 
@@ -187,7 +177,7 @@ in 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
 capability to DCCP; specifically, those for signaling and setting up
-multiple paths ("subflows"), managing these subflows, re-assembly of
+multiple paths ("subflows"), managing these subflows, reordering of
 data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
@@ -210,7 +200,7 @@ as noted in ({{RFC5595}}, sect. 2.4).
 
 MP-DCCP operates at the transport layer and aims to be transparent to
 both higher and lower layers.  It is a set of additional features on
-top of standard DCCP; Figure 1 illustrates this layering.  MP-DCCP is
+top of standard DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering.  MP-DCCP is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.
 
@@ -300,6 +290,7 @@ communication and both employ congestion control to adapt the sending
 rate to the path characteristics.
 
 | Feature                | TCP              | DCCP                          |
+|:----------------------:|:----------------:|:-----------------------------:|
 | Full-Duplex            | yes              | yes                           |
 | Connection-Oriented    | yes              | yes                           |
 | Header option space    | 40 bytes         | \< 1008 bytes or PMTU         |
@@ -325,35 +316,27 @@ aggregation capabilities. All of them profit by the existence of
 congestion control.
 
 | Feature                      | MPTCP                 | MP-DCCP            |
+|:----------------------------:|:---------------------:|:------------------:|
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
-| Robust session establishment | no                    | yes                |
-| Data re-assembly             | yes                   | optional / modular |
+| Data reordering              | yes                   | optional / modular |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
 Therefore, the sender logic is not much different between MP-DCCP and
-MPTCP, even if the multipath session initiation differs.  MP-DCCP
-inherits a robust session establishment feature, which guarantees
-communication establishment if at least one functional path is
-available.  MPTCP relies on an initial path, which has to work;
-otherwise no communication can be established.
+MPTCP.
 
-The receiver side for MP-DCCP has to deal with the unreliable
-transport character of DCCP and a possible re-assembly of the data 
-stream while not advocating it. As many unreliable applications have 
-built-in application support for reordering (such as adaptive audio 
-and video buffers), those applications might not need support for 
-re-assembly. However, for applications that benefit from partial or 
-full support of reordering, MP-DCCP can provide flexible support for 
-re-assembly, even if for DCCP the order of delivery is unreliable 
-by nature. Such optional re-assembly mechanisms may account for the 
-fact that packet loss may occur for any of the DCCP subflows. 
-Another issue may occur as packet reordering may happen when 
-the different DCCP subflows are routed across paths with different 
-latencies. In theory, applications using DCCP are aware that packet 
-reordering might happen, since DCCP has no mechanisms to prevent it. 
+The receiver side for MP-DCCP has to deal with the unreliable transport 
+character of DCCP, and can provide flexible handling for data stream packet 
+reordering for those applications where it is beneficial. However, many 
+applications that use unreliable transport protocols can inherently deal 
+with out-of-sequence data (e.g., through adaptive audio and video buffers), 
+and so additional reordering support may not be necessary. The optional 
+reordering mechanisms in MP-DCCP are most likely to be required when the 
+different DCCP subflows are routed across paths with different latencies. 
+In theory, applications using DCCP are aware that packet reordering might 
+happen, since DCCP has no mechanisms to prevent it.
 
 The receiving process for MPTCP is on the other hand a rigid
 "just wait" approach, since TCP guarantees reliable delivery.
@@ -378,9 +361,9 @@ not gracefully handle multiple congestion control mechanisms, for example.
 
 The operation of MP-DCCP for data transfer takes one input data stream
 from an application, and splits it into one or more subflows, with
-sufficient control information to allow received data to be re-assembled and
-delivered in order to the recipient application. The
-following subsections define this behavior in detail.
+sufficient control information to allow received data to be re-assembled 
+for in-order delivery to the recipient application. The following 
+subsections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP
 feature, as described in {{protocol}}.
@@ -410,6 +393,20 @@ shown in {{ref-feature-list}}.
 | 11-127| Reserved                     |      |             |               |
 |128-255| CCID-specific features       |      |             |               |
 {: #ref-feature-list title='Proposed Feature Set'}
+
+Rec'n Rule:
+: The reconciliation rule used for the feature. SP means server-priority,
+  NN means non-negotiable.
+
+Initial Value:
+: The initial value for the feature. Every feature has a known initial value.
+
+Req'd:
+: This column is "Y" if and only if every DCCP implementation MUST
+understand the feature. If it is "N", then the feature behaves like an extension
+(see Section 15), and it is safe to respond to Change options for the feature
+with empty Confirm options. Of course, a CCID might require the feature; a DCCP
+that implements CCID 2 MUST support Ack Ratio and Send Ack Vector, for example.
 
 The DCCP protocol options as defined in ({{RFC4340}} section 5.8) and ({{RFC5634}} section 2.2.1) will be enhanced
 by a new Multipath related variable-length option with option type 46, as
@@ -450,12 +447,11 @@ considerations for:
   Changes of individual path PMTUs must be re-announced to the application
   if they result in a value lower than the currently announced PMTU.
 
-* Overall sequencing for optional re-assembly procedure
+* Overall sequencing for optional reordering procedure
 
-* Congestion control
-
-* Robust MP-DCCP session establishment (no dependency on an initial
-  path setup)
+* Congestion control covering specific mechanisms as, e.g., for detecting and
+  reporting congestion occurrence on per-path level and for individual
+  adaptation of path-specific transmission rates (up to zero rate)
 
 
 ## Multipath Capable Feature {#mp_capable}
@@ -506,9 +502,21 @@ use.
    Type=46           MP_OPT=0
 ~~~~
 
-MP_CONFIRM can be used to send confirmation of received and
-processed options. Confirmed options are copied verbatim and appended
-as List of options. The length varies dependent on the amount of options.
+MP_CONFIRM is used to send confirmation of reception and processing of the multipath 
+options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
+until this receives the corresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
+on the confirmed options, which will be copied verbatim and appended as list of options.
+
+
+
+|Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
+|:----|:--------------|:-----------------|:--------------------------------------------------------------|
+| 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
+| 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
+| 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
+{: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
+
+
 
 [Tbd] Encoding "list of options"
 
@@ -603,7 +611,7 @@ ECDHE-SHA512-C25519
 The MP_SEQ option is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
 number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
-different from path individual sequence number space.
+different from the path individual sequence number space.
 
 
 ### MP_HMAC {#MP_HMAC}
@@ -669,8 +677,8 @@ Age (=4)
   RTT type = 0 and may contain the periods for computing of derived  
   RTT values depending on other RTT types, i.e., the Minimum (=1)  
   and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
-  [TBD/TBV] 
 {: vspace='0'}
+[TBD/TBV] 
 
 
 ### MP_ADDADDR {#MP_ADDADDR}
@@ -686,7 +694,7 @@ used and is in range between 28 and 42 bytes.
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
-  |     Kind      |     Length    |Subtype| IPVer |  Address ID   |
+  |     Type      |     Length    |Subtype| IPVer |  Address ID   |
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
@@ -730,7 +738,7 @@ Therefore, implementing reliability signals for these DCCP options is
 not necessary.  In order to minimize the impact of the loss of these
 options, however, it is RECOMMENDED that a sender should send these
 options on all available subflows.  If these options need to be received
-in order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
+in-order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
 option per RTT, to minimize the risk of misordering. A host that
 receives an ADD_ADDR but finds a connection set up to that IP address
 and port number is unsuccessful SHOULD NOT perform further connection
@@ -773,7 +781,7 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|     Kind      |  Length = 3+n |Subtype|(resvd)|   Address ID  |...
+|     Type      |  Length = 3+n |Subtype|(resvd)|   Address ID  |...
 +---------------+---------------+-------+-------+---------------+
                           (followed by n-1 Address IDs, if required)
 ~~~~
@@ -804,7 +812,7 @@ identifies the path. The option can be sent over any path.
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
-   |     Kind      |     Length    |Subtype| Prio  | AddrID       |
+   |     Type      |     Length    |Subtype| Prio  | AddrID       |
    +---------------+---------------+-------+-------+--------------+
 ~~~~
 
@@ -891,6 +899,22 @@ handshake is as follows:
 * Host B sends a DCCP-Ack confirm the HMAC and to conclude the
   handshaking.
 
+
+## Fallback
+
+When a subflow fails to operate within the MP-DCCP requirements, it is 
+necessary to fall back to the safe operation. This may be either falling back 
+to regular DCCP, or removing a problematic subflow. The main reason for 
+subflow failing is loss of MP-DCCP options. 
+
+At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP
+options and thus ensures that the path is fully MP-DCCP capable. If during the
+handshake procedure it appears that DCCP-Request or DCCP-response or DCCP-Ack
+messages don’t have the MP-DCCP options, the MP-DCCP connection will not be 
+established and the handshake should fall back to regular DCCP. 
+
+If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options 
+are not present in the handshake messages, that subflow will be closed.   
 
 
 
@@ -993,16 +1017,16 @@ as described in Section 3. The following entry in {{ref-add-feature-list}} shoul
 added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
 | Value | Feature Name               | Specification   |
+|:-----:|:--------------------------:|:---------------:|
 | 0x10  | MP-DCCP capability feature | {{mp_capable}}  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
-This document defines a new DCCP protocol option of type=46 as
-       described in Section 3.2 together with 10 additional sub-options.
-       The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
-       Protocol options" and assigned as "MP-DCCP sub-options",
-       respectively.
+This document defines a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional sub-options.
+The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
+Protocol options" and assigned as "MP-DCCP sub-options", respectively.
       
 | Value           | Symbol          | Name                                             | Reference         |
+|:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
 | TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
@@ -1031,14 +1055,16 @@ This document defines a new DCCP protocol option of type=46 as
 
 * setting reordering on/off
 
+* MP-specific congestion mechanisms
+
 
 should include options carrying:
 
 
 
-* overall sequence number for restoring purposes
+* overall sequence number for restoring/re-assembly/re-ordering purposes
 
-* sender time measurements for restoring purposes
+* sender time measurements for restoring/re-assembly/re-ordering purposes
 
 * scheduler preferences
 
