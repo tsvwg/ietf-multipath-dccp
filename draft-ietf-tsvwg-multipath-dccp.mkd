@@ -357,7 +357,7 @@ document are to be interpreted as described in {{RFC2119}}.
 
 # Operation Overview {#op_overview}
 
-DCCP according to RFC 4340 {{RFC4330}} allows multiple application 
+DCCP according to RFC 4340 {{RFC4340}} allows multiple application 
 subflows to be multiplexed over a single DCCP connection with 
 potentially same performance. However, DCCP does not provide built-in 
 support for multiple subflows and the Congestion Manager (CM) 
