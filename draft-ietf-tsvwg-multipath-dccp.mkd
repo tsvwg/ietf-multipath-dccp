@@ -335,11 +335,7 @@ congestion control.
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
 Therefore, the sender logic is not much different between MP-DCCP and
-MPTCP, even if the multipath session initiation differs.  MP-DCCP
-inherits a faster establishment of subsequent subflows already during the setup of the
-initial subflow.  MPTCP has more constraints on the initial path setup, which
-has to pass a 4-way handshake first; This leaves MPTCP with higher setup times of
-multiple flows and less robust against delays and packet loss on the initially selected path.
+MPTCP.
 
 The receiver side for MP-DCCP has to deal with the unreliable transport 
 character of DCCP, and can provide flexible handling for data stream packet 
