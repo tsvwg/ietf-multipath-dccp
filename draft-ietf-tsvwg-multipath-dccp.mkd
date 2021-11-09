@@ -369,7 +369,7 @@ The proposed extension of DCCP towards Multipath-DCCP (MP-DCCP) is
 described in detail in {{protocol}}.
 
 As a high level overview on the key functionality of MP-DCCP the data 
-stream from an application not requiring TCP-like transport, is split 
+stream from a DCCP application is split 
 by MP-DCCP operation into one or more subflows which can be 
 transmitted via different also physically isolated paths.
 Corresponding control information does allow received data to be 
