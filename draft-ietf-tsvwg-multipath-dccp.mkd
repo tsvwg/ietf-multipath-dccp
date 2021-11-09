@@ -795,22 +795,52 @@ Minimum length of this option is 4 bytes (for one address to remove).
 
 In the event that a single specific path out of the set of available
 paths shall be treated with higher priority compared to the others, a
-host may wish to signal such change in priority of subflows to the peer.
-Therefore, the MP_PRIO option, shown below, can be used to set a
-priority flag for the subflow on which it is sent.
+host may wish to signal such change in priority  to the peer.
+One reason for such behavior is due to the different costs involved in
+using different paths (e.g., WiFi is free while cellular has limit on
+volume, 5G has higher energy consumption). Also, the priority of a path
+may be subject to dynamic changes, for example when the mobile runs out
+of battery only a single path may be preferred. Therefore, the path
+priority should be considered when making packet scheduling decisions.
+
+
+The MP_PRIO option, shown below, can be used to set a priority flag
+for the path which is specified by the AddrID field that uniquely
+identifies the path. The option can be sent over any path.
 
 ~~~~
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
-   |     Type      |     Length    |Subtype| Prio  | AddrID (opt) |
+   |     Type      |     Length    |Subtype| Prio  | AddrID       |
    +---------------+---------------+-------+-------+--------------+
 ~~~~
-            
-Whether more than two values for priority (e.g., B for backup and P for
-prioritized path) are defined in case of more than two parallel paths is
-for further consideration.
-[TBD/TBV]
+
+The following values are available for Prio field:
+
+*   0: Do not use. The path is not available.
+*   1: Standby: do not use this path for traffic scheduling, if another
+       path (secondary or primary) is available.
+*   2: Secondary: do not use this path for traffic scheduling, if the other
+       paths are good enough. The path will be used occasionally, e.g. when
+       primary paths are congested or become not available..
+*   3: Always: can use the path in any way deemed reasonable by peer. Will
+       always be used for packet scheduling decisions.
+*   4 - 15: relative priority of one path over the other to give relative
+       path priority for primary paths. The peer should
+       consider sending more traffic over higher priority path.
+
+Example use cases include:
+1) Setting Wi-Fi path to Always and Cellular paths to Secondary. In this case
+   Wi-Fi will be used and Cellular only if the Wi-Fi path is congested or not
+   available.
+2) Setting Wi-Fi path to Always and Cellular to Standby. In this case Wi-Fi
+   will be used and Cellular only if the Wi-Fi is not available.
+3) Setting Wi-Fi path to Always and Cellular path to Always. In this case,
+   all packets can be scheduled  over all paths leading to high capacity and
+   and high energy efficiency.
+
+[TBD/TBV also consider rate limiting a given path]
 
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
