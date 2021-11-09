@@ -374,7 +374,7 @@ by MP-DCCP operation into one or more subflows which can be
 transmitted via different also physically isolated paths.
 Corresponding control information does allow received data to be 
 re-assembled and delivered in right order to the recipient application. 
-The following subsections define this behavior in detail.
+The following sections define this behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
 feature, as described and fully specified in {{protocol}}. Once 
