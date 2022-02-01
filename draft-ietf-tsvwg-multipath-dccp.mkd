@@ -917,6 +917,13 @@ Example use cases include:
    all packets can be scheduled  over all paths leading to high capacity and
    and high energy efficiency.
 
+The default behavior is, that a path can always be used for packet scheduling 
+decisions (MP_PRIO=3), if the path has been established and added to an 
+existing MP-DCCP. Setting all paths to not use (MP_PRIO=0) MUST be avoided. 
+MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
+(see {{ref-mp-option-confirm}}). 
+
+
 [TBD/TBV also consider rate limiting a given path]
 
 
