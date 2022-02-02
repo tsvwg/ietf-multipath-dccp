@@ -901,7 +901,7 @@ The following values are available for Prio field:
 *   2: Secondary: do not use this path for traffic scheduling, if the other
        paths are good enough. The path will be used occasionally, e.g. when
        primary paths are congested or become not available..
-*   3: Always: can use the path in any way deemed reasonable by peer. Will
+*   3: Primary: can use the path in any way deemed reasonable by peer. Will
        always be used for packet scheduling decisions.
 *   4 - 15: relative priority of one path over the other to give relative
        path priority for primary paths. The peer should
@@ -919,7 +919,8 @@ Example use cases include:
 
 The default behavior is, that a path can always be used for packet scheduling 
 decisions (MP_PRIO=3), if the path has been established and added to an 
-existing MP-DCCP. Setting all paths to not use (MP_PRIO=0) MUST be avoided. 
+existing MP-DCCP connection. At least one path MUST have a MP_PRIO value
+greater or equal to one for it to be allowed to send on the connection. 
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
 (see {{ref-mp-option-confirm}}). 
 
