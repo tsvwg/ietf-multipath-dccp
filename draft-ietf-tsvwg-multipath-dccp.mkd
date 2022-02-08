@@ -330,7 +330,7 @@ Therefore, the sender logic is not much different between MP-DCCP and
 MPTCP.
 
 The receiver side for MP-DCCP has to deal with the unreliable transport 
-character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}}) facilitates
+character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}} ) facilitates
 adding optional mechanisms for data stream packet reordering 
 at the receiver. Such mechanisms do, however, not affect interoperability
 and are not part of the MP-DCCP protocol.  Many 
