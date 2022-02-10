@@ -1096,14 +1096,10 @@ demonstrations of a laboratory setup have been executed and have been published 
 
 # Acknowledgments
 
+Due to the great spearheading work of the Multipath TCP authors in {{RFC6824}}/{{RFC8684}}, some text
+passages for the -00 version of the draft were copied almost unmodified.
 
-
-1. Notes
-
-
-This document is inspired by Multipath TCP {{RFC6824}}/{{RFC8684}} and some text
-passages for the -00 version of the draft are copied almost
-unmodified.
+The authors gratefully acknowledge significant input into this document from Dirk von Hugo.
 
 
 # IANA Considerations
