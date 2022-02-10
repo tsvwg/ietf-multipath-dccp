@@ -83,6 +83,7 @@ informative:
   RFC5597:
   RFC5634:
   RFC6234:
+  RFC6356:
   RFC6773:
   RFC6824:
   RFC6904:
@@ -132,6 +133,25 @@ informative:
          name: Markus Amend
     seriesinfo: IETF105
     target: https://datatracker.ietf.org/meeting/105/materials/slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-operation-00
+
+  OLIA:
+    title: "MPTCP is not pareto-optimal: performance issues and
+a possible solution"
+    date: "2012"
+    seriesinfo: "Proceedings of the 8th international conference on
+Emerging networking experiments and technologies, ACM"
+    author:
+    -
+      ins: R. Khalili
+    -
+      ins: N. Gast
+    -
+      ins: M. Popovic
+    -
+      ins: U. Upadhyay
+    -
+      ins: J.-Y. Le Boudec
+    
 --- abstract
 
 
@@ -1015,6 +1035,23 @@ version to use during the Multipath Capable feature negotiation.
 If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options 
 are not present in the handshake messages or the protocol version doesn't
 match the value negotiated for the first flow, that subflow will be closed.
+
+## Congestion Control Considerations
+
+Senders MUST manage per-path congestion status, and SHOULD avoid to send
+more data on a given path than congestion control on that path
+allows.
+
+When a Multipath DCCP connection uses two or more paths, there is no
+guarantee that these paths are fully disjoint.  When two (or more
+paths) share the same bottleneck, using a standard congestion control
+scheme could result in an unfair distribution of the bandwidth with
+the multipath connection getting more bandwidth than competing single
+paths connections.  Multipath TCP uses the LIA congestion control
+scheme specified in [RFC6356] to solve this problem.  This scheme can
+immediately be adapted to Multipath DCCP.  The same applies to other
+coupled congestion control schemes, which have been proposed for
+Multipath TCP such as [OLIA].
 
 
 # Security Considerations {#security}
