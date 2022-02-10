@@ -912,12 +912,12 @@ The following values are available for Prio field:
 Example use cases include:
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular only if the Wi-Fi path is congested or not
-   available.
+   available. Such setting results in using the Cellular path only temporally, 
+   if more capacity is needed than the WiFi path can provide, indicating a 
+   clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
+
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
-   will be used and Cellular only, if the Wi-Fi path is not available or congested. 
-   Such setting results in using the Cellular path only temporally, if more 
-   capacity is needed than the WiFi path can provide, indicating a clear priority
-   of the Wi-Fi path over the Cellular due to e.g. cost reasons.
+   will be used and Cellular only, if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
    all packets can be scheduled  over all paths at all time. 
 
