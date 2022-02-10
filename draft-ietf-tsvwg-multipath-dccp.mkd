@@ -878,7 +878,8 @@ using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
 may be subject to dynamic changes, for example when the mobile runs out
 of battery only a single path may be preferred. Therefore, the path
-priority should be considered when making packet scheduling decisions.
+priority should be considered as hints for the packet scheduler when
+making decisions which path to use for user plane traffic.
 
 
 The MP_PRIO option, shown below, can be used to set a priority flag
@@ -900,32 +901,31 @@ The following values are available for Prio field:
        path (secondary or primary) is available.
 *   2: Secondary: do not use this path for traffic scheduling, if the other
        paths are good enough. The path will be used occasionally, e.g. when
-       primary paths are congested or become not available..
+       primary paths are congested or become not available.
 *   3: Primary: can use the path in any way deemed reasonable by peer. Will
        always be used for packet scheduling decisions.
 *   4 - 15: relative priority of one path over the other to give relative
-       path priority for primary paths. The peer should
-       consider sending more traffic over higher priority path.
+       path priority for primary paths. The peer should consider sending 
+       more traffic over higher priority path. Higher numbers indicate 
+       higher priority.
 
 Example use cases include:
-1) Setting Wi-Fi path to Always and Cellular paths to Secondary. In this case
+1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular only if the Wi-Fi path is congested or not
    available.
-2) Setting Wi-Fi path to Always and Cellular to Standby. In this case Wi-Fi
-   will be used and Cellular only if the Wi-Fi is not available.
-3) Setting Wi-Fi path to Always and Cellular path to Always. In this case,
-   all packets can be scheduled  over all paths leading to high capacity and
-   and high energy efficiency.
+2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
+   will be used and Cellular only if the Wi-Fi is not available. Such setting 
+   results in using the Cellular path only temporally, if more capacity is 
+   needed than the WiFi path can provide.
+3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
+   all packets can be scheduled  over all paths at all time.
 
 The default behavior is, that a path can always be used for packet scheduling 
 decisions (MP_PRIO=3), if the path has been established and added to an 
-existing MP-DCCP connection. At least one path MUST have a MP_PRIO value
+existing MP-DCCP connection. At least one path should have a MP_PRIO value
 greater or equal to one for it to be allowed to send on the connection. 
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
 (see {{ref-mp-option-confirm}}). 
-
-
-[TBD/TBV also consider rate limiting a given path]
 
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
