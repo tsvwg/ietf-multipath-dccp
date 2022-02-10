@@ -724,10 +724,13 @@ The MP_RTT option is used to transmit RTT values in milliseconds and
 MUST belong to the path over which this information is transmitted.
 Additionally, the age of the measurement is specified in milliseconds.
 
+The RTT and Age information is a 32-bit integer that increases monotonically with
+time, at a rate of 1 unit per 1 millisecond.  At this rate,
+RTT/Age Value will cover approximately 1193 hours.
+
 Raw RTT (=0)
 : Raw RTT value of the last Datagram Round-Trip. The Age
-  parameter is set to the age of when the Ack for the datagram
-  was received.
+  parameter MUST be set to 0.
 {: vspace='0'}
 
 
@@ -748,14 +751,13 @@ Smooth RTT (=3)
   by the Age parameter.
 {: vspace='0'}
 
-Age (=4)
-: The Age parameter is a 4-byte value which is set to the age or  
-  timestamp when the Ack for the datagram was received in case of  
-  RTT type = 0 and may contain the periods for computing of derived  
-  RTT values depending on other RTT types, i.e., the Minimum (=1)  
-  and Maximum (=2) as well as the averaged smoothed RTT value (=3).  
+Age
+: The Age parameter is a 4-byte value which is set to the age and  
+  contains the periods for computing of derived  
+  RTT values for the Minimum (=1), Maximum (=2) and
+  as well as for the averaged smoothed RTT value (=3). An Age
+  parameter of zero MUST NOT be interpreted by the receiver.
 {: vspace='0'}
-[TBD/TBV] 
 
 
 ### MP_ADDADDR {#MP_ADDADDR}
