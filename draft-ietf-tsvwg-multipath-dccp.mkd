@@ -607,6 +607,8 @@ MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
 for authentication purposes.
 
+The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
+
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
