@@ -686,7 +686,8 @@ on a single key type to be used as described in {{handshaking}}
 The MP_SEQ option is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
 number (IDSN) SHOULD be set randomly. The MP_SEQ number space is
-different from the path individual sequence number space.
+different from the path individual sequence number space and MUST be
+sent with any DCCP-Data and DCCP-DataACK packet.
 
 
 ### MP_HMAC {#MP_HMAC}
