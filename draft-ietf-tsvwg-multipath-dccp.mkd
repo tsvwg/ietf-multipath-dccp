@@ -549,7 +549,7 @@ version negotiated for the first flow.
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     | 0 =MP_CONFIRM    | Confirm reception and processing of an MP_OPT option |
-| 46  |       11      | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
+| 46  |       12      | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
 | 46  |       3       | 2 =MP_FAST_CLOSE | Close MP-DCCP flow                                   |
 | 46  |       var     | 3 =MP_KEY        | Exchange key material for MP_HMAC                    |
 | 46  |       7       | 4 =MP_SEQ        | Multipath Sequence Number                            |
@@ -592,12 +592,14 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 
 
 ~~~~
-  +--------+--------+--------+--------+--------+--------+--------+
-  |00101110|00001011|00000001| Path Token                        |
-  +--------+--------+--------+--------+--------+--------+--------+
+  +--------+--------+--------+--------+
+  |00101110|00001011|00000001| Addr ID|
+  +--------+--------+--------+--------+
+  | Path Token                        |
+  +--------+--------+--------+--------+
   | Nonce                             |
   +--------+--------+--------+--------+
-   Type=46  Length=11 MP_OPT=1
+   Type=46  Length=12 MP_OPT=1
 ~~~~
 
 The MP_JOIN option is used to add a new path to an existing MP-DCCP
@@ -607,6 +609,13 @@ MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
 for authentication purposes.
 
+The Address IDs of the subflow used in the initial DCCP Request/Response exchange of
+the first subflow in the connection are implicit, and have the value
+zero.  A host MUST store the mappings between Address IDs and
+addresses both for itself and the remote host.  An implementation
+will also need to know which local and remote Address IDs are
+associated with which established subflows, for when addresses are
+removed from a local or remote host.
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
