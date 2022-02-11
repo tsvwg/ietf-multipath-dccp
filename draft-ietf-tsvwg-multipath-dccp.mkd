@@ -70,6 +70,7 @@ informative:
   I-D.lhwxz-hybrid-access-network-architecture:
   I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-tsvwg-dccp-udp-header-conversion:
+  I-D.amend-iccrg-multipath-reordering:
   RFC0793:
   RFC2104:
   RFC2119:
@@ -322,7 +323,7 @@ congestion control.
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
-| Data reordering              | yes                   | optional / modular |
+| Data reordering              | yes                   | optional           |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
@@ -330,12 +331,17 @@ Therefore, the sender logic is not much different between MP-DCCP and
 MPTCP.
 
 The receiver side for MP-DCCP has to deal with the unreliable transport 
-character of DCCP, and can provide flexible handling for data stream packet 
-reordering for those applications where it is beneficial. However, many 
-applications that use unreliable transport protocols can inherently deal 
+character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}}) facilitates
+adding optional mechanisms for data stream packet reordering 
+at the receiver.  Information from the MP_RTT multipath option ({{MP_RTT}}), 
+DCCP path sequencing and the DCCP Timestamp Option provide further means 
+for advanced reordering approaches, e.g., as described in {{I-D.amend-iccrg-multipath-reordering}}.
+Such mechanisms do, however, not affect interoperability
+and are not part of the MP-DCCP protocol.  Many 
+applications that use unreliable transport protocols can also inherently deal 
 with out-of-sequence data (e.g., through adaptive audio and video buffers), 
-and so additional reordering support may not be necessary. The optional 
-reordering mechanisms in MP-DCCP are most likely to be required when the 
+and so additional reordering support may not be necessary. The addition of optional 
+reordering mechanisms are most likely to be needed when the 
 different DCCP subflows are routed across paths with different latencies. 
 In theory, applications using DCCP are aware that packet reordering might 
 happen, since DCCP has no mechanisms to prevent it.
@@ -365,13 +371,16 @@ same source and destination addresses.
 The proposed extension of DCCP towards Multipath-DCCP (MP-DCCP) is 
 described in detail in {{protocol}}.
 
-As a high level overview on the key functionality of MP-DCCP the data 
+As a high level overview on the key functionality of MP-DCCP, the data 
 stream from a DCCP application is split 
 by MP-DCCP operation into one or more subflows which can be 
 transmitted via different also physically isolated paths.
-Corresponding control information does allow received data to be 
-re-assembled and delivered in right order to the recipient application. 
-The following sections define this behavior in detail.
+The corresponding control information allows the receiver to optionally 
+re-assemble and deliver the received data in the right order to the 
+recipient application. The details of the transmission scheduling mechanism and 
+optional reordering mechanism are up to the sender and receiver, respectively,
+and are outside the scope of the MP-DCCP protocol.
+The following sections define MP-DCCP behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
 feature, as described and fully specified in {{protocol}}. Once 
@@ -466,7 +475,7 @@ considerations for:
   Changes of individual path PMTUs must be re-announced to the application
   if they result in a value lower than the currently announced PMTU.
 
-* Overall sequencing for optional reordering procedure
+* Overall sequencing for optional external reordering procedures
 
 * Congestion control covering specific mechanisms as, e.g., for detecting and
   reporting congestion occurrence on per-path level and for individual
@@ -1161,8 +1170,6 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 
 * setting handover or aggregation mode
 
-* setting reordering on/off
-
 * MP-specific congestion mechanisms
 
 
@@ -1174,9 +1181,6 @@ should include options carrying:
 
 * sender time measurements for restoring/re-assembly/re-ordering purposes
 
-* scheduler preferences
-
-* reordering preferences
 
 
 
