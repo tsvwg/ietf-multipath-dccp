@@ -752,7 +752,7 @@ Smooth RTT (=3)
 {: vspace='0'}
 
 Age
-: The Age parameter is a 4-byte value which is set to the age and  
+: The Age parameter is set to a time and  
   contains the periods for computing of derived  
   RTT values for the Minimum (=1), Maximum (=2)
   as well as for the averaged smoothed RTT value (=3). An Age
