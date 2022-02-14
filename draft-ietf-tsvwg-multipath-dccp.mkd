@@ -608,6 +608,8 @@ MP_HMAC for details). Also MP_KEY MUST be set to provide key material
 for authentication purposes.
 
 The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
+Together with the Token, the Nonce value builds the basis to calculate the
+HMAC used in the handshaking process as described in {{handshaking}}.
 
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
