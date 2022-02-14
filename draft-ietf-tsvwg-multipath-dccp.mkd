@@ -70,6 +70,7 @@ informative:
   I-D.lhwxz-hybrid-access-network-architecture:
   I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-tsvwg-dccp-udp-header-conversion:
+  I-D.amend-iccrg-multipath-reordering:
   RFC0793:
   RFC2104:
   RFC2119:
@@ -322,7 +323,7 @@ congestion control.
 | Volatile paths               | yes                   | yes                |
 | Session handover             | yes                   | yes                |
 | Path aggregation             | yes                   | yes                |
-| Data reordering              | yes                   | optional / modular |
+| Data reordering              | yes                   | optional           |
 | Expandability                | limited by TCP header | flexible           |
 {: #table_mptcp_mpdccp_comp title='MPTCP and MP-DCCP protocol comparison'}
 
@@ -330,12 +331,17 @@ Therefore, the sender logic is not much different between MP-DCCP and
 MPTCP.
 
 The receiver side for MP-DCCP has to deal with the unreliable transport 
-character of DCCP, and can provide flexible handling for data stream packet 
-reordering for those applications where it is beneficial. However, many 
-applications that use unreliable transport protocols can inherently deal 
+character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}}) facilitates
+adding optional mechanisms for data stream packet reordering 
+at the receiver.  Information from the MP_RTT multipath option ({{MP_RTT}}), 
+DCCP path sequencing and the DCCP Timestamp Option provide further means 
+for advanced reordering approaches, e.g., as described in {{I-D.amend-iccrg-multipath-reordering}}.
+Such mechanisms do, however, not affect interoperability
+and are not part of the MP-DCCP protocol.  Many 
+applications that use unreliable transport protocols can also inherently deal 
 with out-of-sequence data (e.g., through adaptive audio and video buffers), 
-and so additional reordering support may not be necessary. The optional 
-reordering mechanisms in MP-DCCP are most likely to be required when the 
+and so additional reordering support may not be necessary. The addition of optional 
+reordering mechanisms are most likely to be needed when the 
 different DCCP subflows are routed across paths with different latencies. 
 In theory, applications using DCCP are aware that packet reordering might 
 happen, since DCCP has no mechanisms to prevent it.
@@ -365,13 +371,16 @@ same source and destination addresses.
 The proposed extension of DCCP towards Multipath-DCCP (MP-DCCP) is 
 described in detail in {{protocol}}.
 
-As a high level overview on the key functionality of MP-DCCP the data 
+As a high level overview on the key functionality of MP-DCCP, the data 
 stream from a DCCP application is split 
 by MP-DCCP operation into one or more subflows which can be 
 transmitted via different also physically isolated paths.
-Corresponding control information does allow received data to be 
-re-assembled and delivered in right order to the recipient application. 
-The following sections define this behavior in detail.
+The corresponding control information allows the receiver to optionally 
+re-assemble and deliver the received data in the right order to the 
+recipient application. The details of the transmission scheduling mechanism and 
+optional reordering mechanism are up to the sender and receiver, respectively,
+and are outside the scope of the MP-DCCP protocol.
+The following sections define MP-DCCP behavior in detail.
 
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
 feature, as described and fully specified in {{protocol}}. Once 
@@ -862,7 +871,8 @@ using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
 may be subject to dynamic changes, for example when the mobile runs out
 of battery only a single path may be preferred. Therefore, the path
-priority should be considered when making packet scheduling decisions.
+priority should be considered as hints for the packet scheduler when
+making decisions which path to use for user plane traffic.
 
 
 The MP_PRIO option, shown below, can be used to set a priority flag
@@ -884,24 +894,32 @@ The following values are available for Prio field:
        path (secondary or primary) is available.
 *   2: Secondary: do not use this path for traffic scheduling, if the other
        paths are good enough. The path will be used occasionally, e.g. when
-       primary paths are congested or become not available..
-*   3: Always: can use the path in any way deemed reasonable by peer. Will
+       primary paths are congested or become not available.
+*   3: Primary: can use the path in any way deemed reasonable by peer. Will
        always be used for packet scheduling decisions.
 *   4 - 15: relative priority of one path over the other to give relative
-       path priority for primary paths. The peer should
-       consider sending more traffic over higher priority path.
+       path priority for primary paths. The peer should consider sending 
+       more traffic over higher priority path. Higher numbers indicate 
+       higher priority.
 
 Example use cases include:
-1) Setting Wi-Fi path to Always and Cellular paths to Secondary. In this case
+1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular only if the Wi-Fi path is congested or not
-   available.
-2) Setting Wi-Fi path to Always and Cellular to Standby. In this case Wi-Fi
-   will be used and Cellular only if the Wi-Fi is not available.
-3) Setting Wi-Fi path to Always and Cellular path to Always. In this case,
-   all packets can be scheduled  over all paths leading to high capacity and
-   and high energy efficiency.
+   available. Such setting results in using the Cellular path only temporally, 
+   if more capacity is needed than the WiFi path can provide, indicating a 
+   clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
 
-[TBD/TBV also consider rate limiting a given path]
+2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
+   will be used and Cellular only, if the Wi-Fi path is not available. 
+3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
+   all packets can be scheduled  over all paths at all time. 
+
+The default behavior is, that a path can always be used for packet scheduling 
+decisions (MP_PRIO=3), if the path has been established and added to an 
+existing MP-DCCP connection. At least one path should have a MP_PRIO value
+greater or equal to one for it to be allowed to send on the connection. 
+MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
+(see {{ref-mp-option-confirm}}). 
 
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
@@ -1080,14 +1098,10 @@ demonstrations of a laboratory setup have been executed and have been published 
 
 # Acknowledgments
 
+Due to the great spearheading work of the Multipath TCP authors in {{RFC6824}}/{{RFC8684}}, some text
+passages for the -00 version of the draft were copied almost unmodified.
 
-
-1. Notes
-
-
-This document is inspired by Multipath TCP {{RFC6824}}/{{RFC8684}} and some text
-passages for the -00 version of the draft are copied almost
-unmodified.
+The authors gratefully acknowledge significant input into this document from Dirk von Hugo.
 
 
 # IANA Considerations
@@ -1136,8 +1150,6 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 
 * setting handover or aggregation mode
 
-* setting reordering on/off
-
 * MP-specific congestion mechanisms
 
 
@@ -1149,9 +1161,6 @@ should include options carrying:
 
 * sender time measurements for restoring/re-assembly/re-ordering purposes
 
-* scheduler preferences
-
-* reordering preferences
 
 
 
