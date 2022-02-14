@@ -598,9 +598,6 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
 
 
-
-[Tbd] Encoding "list of options"
-
 ### MP_JOIN {#MP_JOIN}
 
 
