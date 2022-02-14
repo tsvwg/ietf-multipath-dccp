@@ -1065,11 +1065,12 @@ guarantee that these paths are fully disjoint.  When two (or more
 paths) share the same bottleneck, using a standard congestion control
 scheme could result in an unfair distribution of the bandwidth with
 the multipath connection getting more bandwidth than competing single
-paths connections.  Multipath TCP uses the LIA congestion control
+paths connections.  Multipath TCP uses the coupled congestion control
+scheme Linked Increases Algorithm (LIA) congestion control
 scheme specified in [RFC6356] to solve this problem.  This scheme can
 immediately be adapted to Multipath DCCP.  The same applies to other
 coupled congestion control schemes, which have been proposed for
-Multipath TCP such as [OLIA].
+Multipath TCP such as Opportunistic Linked Increases Algorithm [OLIA].
 
 
 # Security Considerations {#security}
