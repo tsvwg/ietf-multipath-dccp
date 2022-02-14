@@ -466,22 +466,6 @@ shown in {{ref-option-list}}.
 {: #ref-option-list title='Proposed Option Set'}
 
 
-[Tbd/tbv] In addition to the multipath option, MP-DCCP requires particular 
-considerations for:
-
-
-
-* The minimum PMTU of the individual paths must be announced to the application.
-  Changes of individual path PMTUs must be re-announced to the application
-  if they result in a value lower than the currently announced PMTU.
-
-* Overall sequencing for optional external reordering procedures
-
-* Congestion control covering specific mechanisms as, e.g., for detecting and
-  reporting congestion occurrence on per-path level and for individual
-  adaptation of path-specific transmission rates (up to zero rate)
-
-
 ## Multipath Capable Feature {#mp_capable}
 
 DCCP endpoints are multipath-disabled by default and multipath
