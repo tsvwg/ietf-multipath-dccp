@@ -1,8 +1,8 @@
 ---
 title: DCCP Extensions for Multipath Operation with Multiple Addresses
 abbrev: Multipath DCCP
-docname: draft-ietf-tsvwg-multipath-dccp-02
-date: 2021-11-09
+docname: draft-ietf-tsvwg-multipath-dccp-03
+date: 2022-02-15
 cat: exp
 
 ipr: trust200902
