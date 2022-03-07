@@ -652,8 +652,8 @@ this is done via the MP_FAST_CLOSE option.
    Type=46           MP_OPT=2
 ~~~~
 
-For being effective, the MP_FAST_CLOSE must be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code 0. To protect unauthorised shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option. With completion of this step, the initiating host can tear down the subflows and the connection immediately.
-Upon reception of the MP_FAST_CLOSE and validation of the Key Data at the peer host, a DCCP Reset packet is replied on all subflows to the iniating host again with Reset Code 0. The peer host can now close the whole MPTCP connection (it transitions directly to CLOSED state).
+For being effective, the MP_FAST_CLOSE must be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code 0. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option. With completion of this step, the initiating host can tear down the subflows and the connection immediately.
+Upon reception of the MP_FAST_CLOSE and validation of the Key Data at the peer host, a DCCP Reset packet is replied on all subflows to the initiating host again with Reset Code 0. The peer host can now close the whole MPTCP connection (it transitions directly to CLOSED state).
 
 
 ### MP_KEY {#MP_KEY}
