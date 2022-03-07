@@ -312,13 +312,15 @@ Address A1    Address A2             Address B1    Address B2
       equally have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows will be achieved
-      through a path management method;
+      through a path management method, whose definition is out of the
+      scope of this document.
 
-   *  MPDCCP adds connection-level sequence numbers to enable optional
-      reordering functionalities.
+   *  MPDCCP adds connection-level sequence numbers and exchange of
+      RTT information to enable optional reordering functionalities.
 
-   *  The MPDCCP connection and their corresponding subflows are terminated as
-      regular DCCP connections, as described in ({{RFC4043}} section 8.3).
+   *  Subflows are terminated as regular DCCP connections, as described
+      in ({{RFC4340}} section 8.3). The MPDCCP connection is terminated by a
+      connection-level Close request.
 
 
 ## Differences from Multipath TCP {#diff_mptcp}
