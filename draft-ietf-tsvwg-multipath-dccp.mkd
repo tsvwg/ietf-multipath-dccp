@@ -1032,6 +1032,8 @@ handshake is as follows:
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
 
+## Close a MP-DCCP connection
+[tbd]
 
 ## Fallback
 
