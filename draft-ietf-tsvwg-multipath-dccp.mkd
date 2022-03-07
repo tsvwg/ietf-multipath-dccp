@@ -592,7 +592,6 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 
 |Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
 |:----|:--------------|:-----------------|:--------------------------------------------------------------|
-| 46  |       var     | 2 =MP_FAST_CLOSE | Any available                                                 |
 | 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
 | 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
 | 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
