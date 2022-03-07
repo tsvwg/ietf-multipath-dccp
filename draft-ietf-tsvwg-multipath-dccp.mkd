@@ -1072,7 +1072,7 @@ Increases Algorithm [OLIA].
 
 ## Maximum Packet Size Considerations
 
-A DCCP implementation MUST maintain the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions.l this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this defintion a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multi-path system. For compatibility reasons, a MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.
+A DCCP implementation MUST maintain the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions.l this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multi-path system. For compatibility reasons, a MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.
 
 
 # Security Considerations {#security}
