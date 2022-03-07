@@ -270,6 +270,9 @@ regular single-path DCCP semantics is discussed in {{protocol}}.
 
 ## MP-DCCP Concept {#concept}
 
+{{ref-example-mp-dccp-usage-scenario}} provides a general overview of the MP-DCCP working mode, whose main 
+characteristics are summarized within this section.
+
 
 ~~~~
            Host A                               Host B
@@ -288,6 +291,35 @@ Address A1    Address A2             Address B1    Address B2
   |             |                      |             |
 ~~~~
 {: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP Usage Scenario'}
+ 
+
+   *  An MPDCCP connection begins with a 4-way handshaking procedure, between 
+      2 hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}}
+      an MPDCCP connection is established between addresses A1 and B1 on Hosts
+      A and B, respectively.
+
+   *  If extra paths are available, additional DCCP subflows are created on 
+      these paths and are attached to the existing MPDCCP session, which
+      continues to appear as a single connection to the applications at both
+      ends. The creation of an additional DCCP subflow is illustrated between Address A2
+      on Host A and Address B1 on Host B.
+
+   *  MPDCCP identifies multiple paths by the presence of multiple
+      addresses at hosts.  Combinations of these multiple addresses
+      equate to the additional paths.  In the example, other potential
+      paths that could be set up are A1<->B2 and A2<->B2.  Although this
+      additional session is shown as being initiated from A2, it could
+      equally have been initiated from B1 or B2.
+
+   *  The discovery and setup of additional subflows will be achieved
+      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
+
+   *  MPDCCP adds connection-level sequence numbers and exchange of
+      RTT information to enable optional reordering functionalities.
+
+   *  Subflows are terminated as regular DCCP connections, as described
+      in ({{RFC4340}} section 8.3). The MPDCCP connection is terminated by a
+      connection-level DCCP-CloseReq or DCCP-Close message.
 
 
 ## Requirements Language
