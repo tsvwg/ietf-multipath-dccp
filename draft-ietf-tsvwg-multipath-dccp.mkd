@@ -561,16 +561,17 @@ version negotiated for the first flow.
 
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
-| 46  |       var     | 0 =MP_CONFIRM    | Confirm reception and processing of an MP_OPT option |
-| 46  |       12      | 1 =MP_JOIN       | Join path to an existing MP-DCCP flow                |
-| 46  |       3       | 2 =MP_FAST_CLOSE | Close MP-DCCP flow                                   |
-| 46  |       var     | 3 =MP_KEY        | Exchange key material for MP_HMAC                    |
-| 46  |       7       | 4 =MP_SEQ        | Multipath Sequence Number                            |
-| 46  |       23      | 5 =MP_HMAC       | HMA Code for authentication                          |
-| 46  |       12      | 6 =MP_RTT        | Transmit RTT values                                  |
-| 46  |       var     | 7 =MP_ADDADDR    | Advertise additional Address                         |
-| 46  |       var     | 8 =MP_REMOVEADDR | Remove Address                                       |
-| 46  |       4       | 9 =MP_PRIO       | Change Subflow Priority                              |
+| 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
+| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP flow                |
+| 46  |       3       |  2 =MP_FAST_CLOSE| Close MP-DCCP flow unconditionally                   |
+| 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
+| 46  |       7       |  4 =MP_SEQ       | Multipath Sequence Number                            |
+| 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
+| 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
+| 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
+| 46  |       var     |  8 =MP_REMOVEADDR| Remove Address                                       |
+| 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
+| 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP flow                                   |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 ### MP_CONFIRM {#MP_CONFIRM}
@@ -955,6 +956,19 @@ greater or equal to one for it to be allowed to send on the connection.
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
 (see {{ref-mp-option-confirm}}). 
 
+### MP_CLOSE {#MP_CLOSE}
+
+
+~~~~
+  +--------+--------+--------+--------+--------+
+  |00101110| Length |00001010| Key Data ...
+  +--------+--------+--------+--------+--------+
+   Type=46           MP_OPT=2
+~~~~
+
+If the MP_CLOSE is present in a DCCP-CloseReq or DCCP-Close, the MP-DCCP connection is closed using the regular procedure of single-path DCCP termination on all subflows. Only in case all subflows are succesfully terminated, the overall MP-DCCP connection passes to a closed state.
+
+Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
