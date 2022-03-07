@@ -312,8 +312,7 @@ Address A1    Address A2             Address B1    Address B2
       equally have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows will be achieved
-      through a path management method, whose definition is out of the
-      scope of this document.
+      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
 
    *  MPDCCP adds connection-level sequence numbers and exchange of
       RTT information to enable optional reordering functionalities.
