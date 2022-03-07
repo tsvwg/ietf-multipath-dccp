@@ -966,7 +966,7 @@ MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms
    Type=46           MP_OPT=2
 ~~~~
 
-If the MP_CLOSE is present in a DCCP-CloseReq or DCCP-Close, the MP-DCCP connection is closed using the regular procedure of single-path DCCP termination on all subflows. Only in case all subflows are succesfully terminated, the overall MP-DCCP connection passes to a closed state.
+If the MP_CLOSE is present in a DCCP-CloseReq or DCCP-Close, the MP-DCCP connection is closed using the regular procedure of single-path DCCP termination on all subflows. Only in case all subflows are successfully terminated, the overall MP-DCCP connection passes to a closed state.
 
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
