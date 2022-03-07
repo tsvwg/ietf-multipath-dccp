@@ -315,7 +315,7 @@ Address A1    Address A2             Address B1    Address B2
       through a path management method;
 
    *  MPDCCP adds connection-level sequence numbers to enable optional
-      reordering fuctionalities.
+      reordering functionalities.
 
    *  The MPDCCP connection and their corresponding subflows are terminated as
       regular DCCP connections, as described in ({{RFC4043}} section 8.3).
