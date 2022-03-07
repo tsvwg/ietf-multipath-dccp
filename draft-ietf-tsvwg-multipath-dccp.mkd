@@ -320,7 +320,7 @@ Address A1    Address A2             Address B1    Address B2
 
    *  Subflows are terminated as regular DCCP connections, as described
       in ({{RFC4340}} section 8.3). The MPDCCP connection is terminated by a
-      connection-level Close request.
+      connection-level DCCP-CloseReq or DCCP-Close message.
 
 
 ## Differences from Multipath TCP {#diff_mptcp}
