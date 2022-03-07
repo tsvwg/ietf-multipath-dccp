@@ -555,16 +555,24 @@ HMAC used in the handshaking process as described in {{handshaking}}.
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
+Regular DCCP has the means of sending a Close or Reset signal to abruptly close a
+connection.  With MP-DCCP, a regular Close or Reset only has the scope of the
+subflow; it will only close the applicable subflow and will not
+affect the remaining subflows concurrently in use on other paths.  MP-DCCP's connection will stay alive at
+the data level, in order to permit break-before-make handover between
+subflows.  It is therefore necessary to provide an MP-DCCP-level
+"Reset" to allow the abrupt closure of the whole MP-DCCP connection;
+this is done via the MP_FAST_CLOSE option.
 
 ~~~~
-  +--------+--------+--------+
-  |00101110|00000011|00000010|
-  +--------+--------+--------+
-   Type=46  Length=3 MP_OPT=2
+  +--------+--------+--------+--------+--------+
+  |00101110| Length |00000010| Key Data ...
+  +--------+--------+--------+--------+--------+
+   Type=46           MP_OPT=2
 ~~~~
 
-MP_FAST_CLOSE terminates the MP-DCCP flow and all corresponding
-subflows.
+For being effective, the MP_FAST_CLOSE must be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code 12. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option. With completion of this step, the initiating host can tear down the subflows and the multi-path connection immediately terminates.
+Upon reception of the MP_FAST_CLOSE and validation of the Key Data at the peer host, a DCCP Reset packet is replied on all subflows to the initiating host again with Reset Code 12. The peer host can now close the whole MP-DCCP connection (it transitions directly to CLOSED state).
 
 
 ### MP_KEY {#MP_KEY}
@@ -1110,6 +1118,8 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
+
+According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 12 with the name "Abrupt MP termination" should be added.
 
 [Tbd], must include options for:
 
