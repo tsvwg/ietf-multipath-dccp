@@ -314,7 +314,7 @@ Address A1    Address A2             Address B1    Address B2
    *  The discovery and setup of additional subflows will be achieved
       through a path management method;
 
-   *  MPDCCP adds connection-level sequence numbers to enabke optional
+   *  MPDCCP adds connection-level sequence numbers to enable optional
       reordering fuctionalities.
 
    *  The MPDCCP connection and their corresponding Subflows are terminated as
