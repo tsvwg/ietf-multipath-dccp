@@ -1133,7 +1133,10 @@ should include options carrying:
 
 * sender time measurements for restoring/re-assembly/re-ordering purposes
 
-# Appendix: Differences from Multipath TCP {#diff_mptcp}
+--- back
+
+
+# Differences from Multipath TCP {#diff_mptcp}
 
 Multipath DCCP is similar to Multipath TCP {{RFC8684}}, in that it
 extends the related basic DCCP transport protocol {{RFC4340}} with
