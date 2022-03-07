@@ -641,7 +641,7 @@ subflow; it will only close the applicable subflow and will not
 affect the remaining subflows.  MP-DCCP's connection will stay alive at
 the data level, in order to permit break-before-make handover between
 subflows.  It is therefore necessary to provide an MP-DCCP-level
-"reset" to allow the abrupt closure of the whole MP-DCCP connection;
+"Reset" to allow the abrupt closure of the whole MP-DCCP connection;
 this is done via the MP_FAST_CLOSE option.
 
 ~~~~
