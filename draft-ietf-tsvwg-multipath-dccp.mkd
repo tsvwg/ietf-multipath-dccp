@@ -859,16 +859,17 @@ Minimum length of this option is 4 bytes (for one address to remove).
 ### MP_PRIO {#MP_PRIO}
 
 In the event that a single specific path out of the set of available
-paths shall be treated with higher priority compared to the others, a
-host may wish to signal such change in priority  to the peer.
+paths shall be treated with higher priority compared to the others
+when making scheduling decisions for user plane traffic, a host may 
+wish to signal such change in priority  to the peer.
 One reason for such behavior is due to the different costs involved in
 using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
 may be subject to dynamic changes, for example when the mobile runs out
-of battery only a single path may be preferred. Therefore, the path
-priority should be considered as hints for the packet scheduler when
-making decisions which path to use for user plane traffic.
-
+of battery, the usage of only a single path may be the preferred choice
+of the user. Therefore, the path priority should be considered as hints 
+for the packet scheduler when making decisions which path to use for 
+user plane traffic.
 
 The MP_PRIO option, shown below, can be used to set a priority flag
 for the path which is specified by the AddrID field that uniquely
@@ -886,16 +887,21 @@ The following values are available for Prio field:
 
 *   0: Do not use. The path is not available.
 *   1: Standby: do not use this path for traffic scheduling, if another
-       path (secondary or primary) is available.
+       path (secondary or primary) is available. The path will only be used if 
+       other secondary or primary paths are not established. 
 *   2: Secondary: do not use this path for traffic scheduling, if the other
-       paths are good enough. The path will be used occasionally, e.g. when
-       primary paths are congested or become not available.
-*   3: Primary: can use the path in any way deemed reasonable by peer. Will
-       always be used for packet scheduling decisions.
-*   4 - 15: relative priority of one path over the other to give relative
-       path priority for primary paths. The peer should consider sending 
-       more traffic over higher priority path. Higher numbers indicate 
-       higher priority.
+       paths are good enough. The path will be used occasionally for increasing 
+       temporarily the available capacity, e.g. when primary paths are 
+       congested or are not available. This is the recommended setting for
+       paths that have costs or data caps as these paths will be used less
+       frequently then primary paths.
+*   3 - 15: Primary: can use the path in any way deemed reasonable by peer. 
+       The path will always be used for packet scheduling decisions. The 
+       priority number indicates the relative priority of one path over the 
+       other to give relative path priority for primary paths. The peer should 
+       consider sending more traffic over higher priority path. Higher numbers 
+       indicate higher priority. This is the recommended setting for paths
+       that do not have a cost or volume based limit associated with it.
 
 Example use cases include:
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
@@ -903,7 +909,6 @@ Example use cases include:
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
    clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
-
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
    will be used and Cellular only, if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
