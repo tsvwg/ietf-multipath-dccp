@@ -898,10 +898,10 @@ The following values are available for Prio field:
 *   3 - 15: Primary: can use the path in any way deemed reasonable by peer. 
        The path will always be used for packet scheduling decisions. The 
        priority number indicates the relative priority of one path over the 
-       other to give relative path priority for primary paths. The peer should 
-       consider sending more traffic over higher priority path. Higher numbers 
-       indicate higher priority. This is the recommended setting for paths
-       that do not have a cost or volume based limit associated with it.
+       other for primary paths. Higher numbers indicate higher priority. 
+       The peer should consider sending more traffic over higher priority path. 
+       This is the recommended setting for paths that do not have a cost or 
+       data caps associated with it as these paths will be frequently used.
 
 Example use cases include:
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
@@ -914,12 +914,12 @@ Example use cases include:
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
    all packets can be scheduled  over all paths at all time. 
 
-The default behavior is, that a path can always be used for packet scheduling 
-decisions (MP_PRIO=3), if the path has been established and added to an 
-existing MP-DCCP connection. At least one path should have a MP_PRIO value
-greater or equal to one for it to be allowed to send on the connection. 
-MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms 
-(see {{ref-mp-option-confirm}}). 
+If not specified, the default behavior is, that a path can always be used for 
+packet scheduling decisions (MP_PRIO=3), if the path has been established and 
+added to an existing MP-DCCP connection. At least one path should have a 
+MP_PRIO value greater or equal to one for it to be allowed to send on the 
+connection. MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
+mechanisms (see {{ref-mp-option-confirm}}). 
 
 ### MP_CLOSE {#MP_CLOSE}
 
