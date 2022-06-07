@@ -1171,10 +1171,12 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP flow                               | {{MP_OPT}}        |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
-According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 13 with the name "Abrupt MP termination" should be added
-since Reset Code 12, "Encapsulated Port Reuse"  is already defined in {{6773}}.
+[Tbd] According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 13 with the name "Abrupt MP termination" should be added
+since Reset Code 12, "Encapsulated Port Reuse" is already defined in {{6773}}. Further instead of proposing Reset Code value 13 we may rename it to 'TBD' or 'TBD13'??. Proposed text below:
 
-[Tbd] whether MP_KEY Key types as specified in {{MP_KEY}} have also to be assigned by IANA? 
+In addition IANA is requested to assign a new DCCP Reset Code value TBD in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+
+[Tbd] whether MP_KEY Key types as specified in {{MP_KEY}} have also to be assigned by IANA? Currently no sub option registry for DCCP exists ...
 
 [Tbd], must include (MP sub)options for:
 
