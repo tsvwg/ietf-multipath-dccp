@@ -89,6 +89,7 @@ informative:
   RFC6824:
   RFC6904:
   RFC6951:
+  RFC8126:
   RFC8684:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
@@ -1139,7 +1140,7 @@ The authors gratefully acknowledge significant input into this document from Dir
 # IANA Considerations
 
 This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
-in accordance with {{8126}}.  This document defines one new value to DCCP feature list and one new
+in accordance with {{RFC8126}}.  This document defines one new value to DCCP feature list and one new
 DCCP Option with ten corresponding Subtypes as follows. 
 This document defines a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
@@ -1172,7 +1173,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 [Tbd] According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 13 with the name "Abrupt MP termination" should be added
-since Reset Code 12, "Encapsulated Port Reuse" is already defined in {{6773}}. Further instead of proposing Reset Code value 13 we may rename it to 'TBD' or 'TBD13'??. Proposed text below:
+since Reset Code 12, "Encapsulated Port Reuse" is already defined in {{RFC6773}}. Further instead of proposing Reset Code value 13 we may rename it to 'TBD' or 'TBD13'??. Proposed text below:
 
 In addition IANA is requested to assign a new DCCP Reset Code value TBD in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
