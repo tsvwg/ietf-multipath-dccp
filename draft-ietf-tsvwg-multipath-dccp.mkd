@@ -709,7 +709,7 @@ the token and nonce of the MP_JOIN for which authentication shall be performed.
 
 The MP_RTT option is used to transmit RTT values in milliseconds and
 MUST belong to the path over which this information is transmitted.
-Additionally, the age of the measurement is specified in milliseconds.
+Additionally, the age of the last measurement is specified in milliseconds.
 
 The RTT and Age information is a 32-bit integer, which allows to cover a period of
 approximately 1193 hours.
@@ -738,11 +738,9 @@ Smooth RTT (=3)
 {: vspace='0'}
 
 Age
-: The Age parameter is set to a time and  
-  contains the periods for computing of derived  
-  RTT values for the Minimum (=1), Maximum (=2)
-  as well as for the averaged smoothed RTT value (=3). An Age
-  parameter of zero MUST NOT be interpreted by the receiver.
+: The Age parameter defines the time difference between the current measurement
+   and the last conducted measurement in milliseconds. If no previous measurement
+   exists, e.g., when initialized, the value is 0.
 {: vspace='0'}
 
 
