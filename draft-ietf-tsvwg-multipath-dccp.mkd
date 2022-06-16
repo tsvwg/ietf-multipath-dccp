@@ -1007,7 +1007,19 @@ handshake is as follows:
   handshaking.
 
 ## Close a MP-DCCP connection
-[tbd]
+
+When a host wants to close an existing subflow but not the whole
+connection, it can initiate the regular DCCP connection termination procedure 
+as described in {{RFC4340}}, by using a DCCP-Close/DCCP-Reset on the subflow. This
+can optionally be preceded by a DCCP-CloseReq.
+
+When a host wants to terminate the MP-DCCP connection, it must initiate the 
+regular DCCP connection termination on each subflow with the first packet on 
+each flow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
+
+Additionally, a MP-DCCP connection may be closed using the "Fast Close"
+procedure described in {{MP_FAST_CLOSE}}, where a DCCP-Reset is sent on all
+subflows, each carrying the MP_FAST_CLOSE option.
 
 ## Fallback
 
