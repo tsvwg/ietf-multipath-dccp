@@ -1013,8 +1013,8 @@ connection, it can initiate the regular DCCP connection termination procedure
 as described in {{RFC4340}}, by using a DCCP-Close/DCCP-Reset on the subflow. This
 can optionally be preceded by a DCCP-CloseReq.
 
-When a host wants to terminate the MP-DCCP connection, it must initiate the 
-regular DCCP connection termination on each subflow with the first packet on 
+When a host wants to terminate the MP-DCCP connection, the recommended approach is to
+initiate the standard DCCP connection termination on each subflow with the first packet on 
 each flow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
 
 Additionally, a MP-DCCP connection may be closed using the "Fast Close"
