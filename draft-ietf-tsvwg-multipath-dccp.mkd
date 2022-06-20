@@ -663,10 +663,10 @@ on a single key type to be used as described in {{handshaking}}
 
 
 ~~~~
-  +--------+--------+--------+--------+--------+--------+--------+
-  |00101110|00000111|00000100| Multipath Sequence Number         |
-  +--------+--------+--------+--------+--------+--------+--------+
-   Type=46  Length=7 MP_OPT=4
+  +--------+--------+--------+--------+--------+--------+--------+--------+--------+
+  |00101110|00000111|00000100| Multipath Sequence Number                           |
+  +--------+--------+--------+--------+--------+--------+--------+--------+--------+
+   Type=46  Length=9 MP_OPT=4
 ~~~~
 
 The MP_SEQ option is used for end-to-end datagram-based sequence
