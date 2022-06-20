@@ -1017,7 +1017,7 @@ When a host wants to terminate the MP-DCCP connection, the recommended approach 
 initiate the standard DCCP connection termination on each subflow with the first packet on 
 each flow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
 
-Additionally, a MP-DCCP connection may be closed using the "Fast Close"
+Additionally, a MP-DCCP connection may be closed abruptly using the "Fast Close"
 procedure described in {{MP_FAST_CLOSE}}, where a DCCP-Reset is sent on all
 subflows, each carrying the MP_FAST_CLOSE option.
 
