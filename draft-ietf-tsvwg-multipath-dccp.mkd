@@ -715,31 +715,27 @@ The RTT and Age information is a 32-bit integer, which allows to cover a period 
 approximately 1193 hours.
 
 Raw RTT (=0)
-: Raw RTT value of the last Datagram Round-Trip. The Age
-  parameter MUST be set to 0.
+: Raw RTT value of the last Datagram Round-Trip preferably provided by the CCID in use.
 {: vspace='0'}
 
 
 Min RTT (=1)
-: Min RTT value. The period for computing the Minimum can be specified
-  by the Age parameter.
+: Min RTT value over a given period preferably provided by the CCID in use.
 {: vspace='0'}
 
 
 Max RTT (=2)
-: Max RTT value. The period for computing the Maximum can be specified
-  by the Age parameter.
+: Max RTT value over a given period preferably provided by the CCID in use.
 {: vspace='0'}
 
 
 Smooth RTT (=3)
-: Averaged RTT value. The period for computing the smoothed RTT can be specified
-  by the Age parameter.
+: Averaged RTT value over a given period preferably provided by the CCID in use.
 {: vspace='0'}
 
 Age
-: The Age parameter defines the time difference between the current measurement
-   and the last conducted measurement in milliseconds. If no previous measurement
+: The Age parameter defines the time difference between now - creation of the MP_RTT option -
+   and the conducted RTT measurement in milliseconds. If no previous measurement
    exists, e.g., when initialized, the value is 0.
 {: vspace='0'}
 
