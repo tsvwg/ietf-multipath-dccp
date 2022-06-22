@@ -962,11 +962,11 @@ Address A1    Address A2                              Address B1
      |             |                                       |
      |             |          DCCP-Request + MP_CAPABLE    |
      |             |--- MP_JOIN(TB,RA) ------------------->|
-     |             |<------MP_JOIN(TB,RB) + MP_HMAC(A)-----|
+     |             |<------MP_JOIN(TB,RB) + MP_HMAC(B)-----|
      |             |DCCP-Response  + MP_CAPABLE            |
      |             |                                       |
      |             |DCCP-Ack                               |
-     |             |-------- MP_HMAC(B) ------------------>|
+     |             |-------- MP_HMAC(A) ------------------>|
      |             |<--------------------------------------|
      |             |DCCP-ACK                               |
 ~~~~
@@ -1006,14 +1006,14 @@ handshake is as follows:
   of a HMAC code created by using token and nonce received with MP_JOIN(A) as message
   and the derived key described in {{MP_KEY}} as key:
 
-  MP_HMAC(A) = HMAC-SHA256(Key=d-key(B), Msg=TB+RA)
+  MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RA+RB)
 
 * Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.
   The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
   of a HMAC code created by using token and nonce received with MP_JOIN(B) as message
   and the derived key described in {{MP_KEY}} as key:
 
-  MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=TB+RB)
+  MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RB+RA)
 
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
