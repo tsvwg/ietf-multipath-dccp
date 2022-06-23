@@ -1031,8 +1031,9 @@ each flow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
 
       Host A                                   Host B
       ------                                   ------
-                                       <-      Optional DCCP-CloseReq + MP_CLOSE 
-                                               [A's key] [on all subflows]
+                                       <-      Optional DCCP-CloseReq +
+                                               MP_CLOSE [A's key] 
+                                               [on all subflows]
       DCCP-Close + MP_CLOSE            ->
       [B's key] [on all subflows]
                                        <-      DCCP-Reset
