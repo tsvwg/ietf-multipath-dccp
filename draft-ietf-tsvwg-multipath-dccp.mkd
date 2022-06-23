@@ -653,14 +653,14 @@ Plain Text
 
 
 ECDHE-SHA256-C25519
-: Key Material is exchanged via ECDHE key exchange with SHA256 and
-  Curve 25519 to generate the derived key (d-key).
+: Public Key Material is exchanged via ECDHE key exchange with SHA256 and
+  Curve 25519 to generate the derived key (d-key) from the shared secret.
 {: vspace='0'}
 
 
 ECDHE-SHA512-C25519
-: Key Material is exchanged via ECDHE key exchange with SHA512 and
-  Curve 25519 to generate the derived key (d-key).
+: Public Key Material is exchanged via ECDHE key exchange with SHA512 and
+  Curve 25519 to generate the derived key (d-key) from the shared secret.
 {: vspace='0'}
 
 Providing multiple keys is only permitted in the DCCP-Request message
