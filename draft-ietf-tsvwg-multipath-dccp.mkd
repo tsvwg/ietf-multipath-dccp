@@ -1144,7 +1144,7 @@ in accordance with {{RFC8126}}.  This document defines one new value to DCCP fea
 DCCP Option with ten corresponding Subtypes as follows. 
 This document defines a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
-as described in Section {#protocol}. The following entry in {{ref-add-feature-list}} should be
+as described in {{protocol}}. The following entry in {{ref-add-feature-list}} should be
 added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
 | Value | Feature Name               | Specification   |
