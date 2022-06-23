@@ -1172,39 +1172,20 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP flow                               | {{MP_OPT}}        |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
-[Tbd] According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 13 with the name "Abrupt MP termination" should be added
-since Reset Code 12, "Encapsulated Port Reuse" is already defined in {{RFC6773}}. Further instead of proposing Reset Code value 13 we may rename it to 'TBD' or 'TBD13'??. Proposed text below:
+In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign a new DCCP Reset Code value 13 in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+In addition IANA is requested to assign for this version of the MP-DCCP protocol three different sub options to the MP-KEY option to identify the 
+MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below.
+Values in range 3-255 remain unspecified and are reserved for use in potential future versions of the MP-DCCP protocol.
 
-[Tbd] whether MP_KEY Key types as specified in {{MP_KEY}} have also to be assigned by IANA? Currently no sub option registry for DCCP exists ...
-
-[Tbd], must include (MP sub)options for:
-
-
-
-* handshaking procedure to indicate MP support
-
-* handshaking procedure to indicate JOINING of an existing MP
-  connection
-
-* signaling of new or changed addresses
-
-* setting handover or aggregation mode
-
-* MP-specific congestion mechanisms (e.g., to support multiple congestion mechanisms for multiple paths?) 
-
-
-should include options carrying:
-
-
-
-* overall sequence number for restoring/re-assembly/re-ordering purposes
-
-* sender time measurements for restoring/re-assembly/re-ordering purposes
+| Value    | Key Type             | Name or Meaning                  | Reference  |
+|:--------:|:--------------------:|:--------------------------------:|:-----------|
+| TBD or 0 | Plain Text           | Plain Text Key                   | {{MP_KEY}} |
+| TBD or 1 | ECDHE-C25519-SHA256  | ECDHE with SHA256 and Curve25519 | {{MP_KEY}} |
+| TBD or 2 | ECDHE-C25519-SHA512  | ECDHE with SHA512 and Curve25519 | {{MP_KEY}} |
+{:#ref-mp_key-sub-opt-list title='MP_KEY Key type sub-options for key data exchange on different paths'}
 
 --- back
-
 
 # Differences from Multipath TCP {#diff_mptcp}
 
