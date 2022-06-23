@@ -1175,7 +1175,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 [Tbd] According to the definition of the MP_FAST_CLOSE option in {{MP_FAST_CLOSE}}, a new Reset Code value 13 with the name "Abrupt MP termination" should be added
 since Reset Code 12, "Encapsulated Port Reuse" is already defined in {{RFC6773}}. Further instead of proposing Reset Code value 13 we may rename it to 'TBD' or 'TBD13'??. Proposed text below:
 
-In addition IANA is requested to assign a new DCCP Reset Code value TBD in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+In addition IANA is requested to assign a new DCCP Reset Code value 13 in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
 [Tbd] whether MP_KEY Key types as specified in {{MP_KEY}} have also to be assigned by IANA? Currently no sub option registry for DCCP exists ...
 
