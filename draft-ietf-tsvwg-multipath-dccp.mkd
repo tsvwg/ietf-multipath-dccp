@@ -972,6 +972,8 @@ On reception of a first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data, o
 
 Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data at the peer host, all subflows, including the application socket, move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 must be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.
 
+When application socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN must be ignored.
+
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
