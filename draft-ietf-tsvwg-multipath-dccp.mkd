@@ -156,7 +156,7 @@ Emerging networking experiments and technologies, ACM"
 --- abstract
 
 
-DCCP communication is currently restricted to a single path per
+DCCP communication as defined in {{RFC4340}} is restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
 simultaneous use of these multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
@@ -190,8 +190,8 @@ large amounts of data, due to the possibility to aggregate capacity of the
 multiple paths. In addition, it enables to tradeoff timeliness and reliability, 
 which is important for low latency applications that do not require 
 guaranteed delivery services such as Audio/Video streaming.
-DCCP multipath operation is suggested
-in the context of ongoing 3GPP work on 5G multi-access solutions
+DCCP multipath operation has been suggested
+in the context of 3GPP work on 5G multi-access solutions
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
 networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
 It can be applied for load-balancing, seamless session handover, and
@@ -1108,7 +1108,7 @@ As described in {{RFC4340}}, DCCP provides protection against hijacking
 and limits the potential impact of some denial-of-service attacks, but
 DCCP provides no inherent protection against attackers’ snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
-introduced compared to regular DCCP of today. Thereof derived are the
+introduced compared to regular DCCP. Thereof derived are the
 following key security requirements to be fulfilled by MP-DCCP:
 
 * Provide a mechanism to confirm that parties involved in a subflow
@@ -1137,7 +1137,7 @@ Guidance on generating random numbers suitable for use as keys is given
 in {{RFC4086}}. During normal operation, regular DCCP protection
 mechanisms (such as header checksum to protect DCCP headers against
 corruption) will provide the same level of protection against attacks on
-individual DCCP subflows as exists for regular DCCP today. 
+individual DCCP subflows as exists for regular DCCP. 
 
 
 # Interactions with Middleboxes {#middlebox}
