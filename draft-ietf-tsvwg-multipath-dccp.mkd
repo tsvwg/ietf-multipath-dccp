@@ -173,7 +173,7 @@ traditional DCCP to support multipath operation.  Multipath DCCP provides
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
-components necessary to establish and use multiple DCCP flows across
+components necessary to establish and use multiple DCCP subflows across
 potentially disjoint paths.
 
 --- middle
@@ -205,14 +205,14 @@ data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
 single DCCP connection with no inherent performance penalty 
-for flows that do not require in-ordered delivery. DCCP
+for said subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
 In the following, use of the term subflow will refer to physical
 separate DCCP subflows transmitted via different paths, but not to
 application subflows. Application subflows are differing content-wise
 by source and destination port per application as, for example, enabled
-by Service Codes introduced to DCCP in {{RFC5595}}, and those subflows
+by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
 can be multiplexed over a single DCCP connection. For sake of consistency
 we assume that only a single application is served by a DCCP connection
 here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
@@ -284,10 +284,10 @@ Address A1    Address A2             Address B1    Address B2
   |----------------------------------->|             |
   |<-----------------------------------|             |
   |             |                      |             |
-  |             |  (DCCP flow setup)   |             |
+  |             |  (DCCP subflow setup)|             |
   |             |--------------------->|             |
   |             |<---------------------|             |
-  | merge individual DCCP flows to one multipath connection
+  | merge individual DCCP subflows to one multipath connection
   |             |                      |             |
 ~~~~
 {: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP Usage Scenario'}
@@ -578,13 +578,13 @@ MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
 for authentication purposes.
 
-The Address IDs of the subflow used in the initial DCCP Request/Response exchange of
-the first subflow in the connection are implicit, and have the value
+The Address IDs of the flow used in the initial DCCP Request/Response exchange 
+in the connection are implicit, and have the value
 zero.  A host MUST store the mappings between Address IDs and
 addresses both for itself and the remote host.  An implementation
 will also need to know which local and remote Address IDs are
 associated with which established subflows, for when addresses are
-removed from a local or remote host. An Address ID has always to be unique
+removed from a local or remote host. An Address ID always has to be unique
 over the lifetime of a subflow and can only be re-assigned if sender and
 receiver no longer have them in use.
 
@@ -938,7 +938,7 @@ MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM mechanisms
    Type=46           MP_OPT=10
 ~~~~
 
-If the MP_CLOSE is present in a DCCP-CloseReq or DCCP-Close, the MP-DCCP connection is closed using the regular procedure of single-path DCCP termination on all subflows. Only in case all subflows are successfully terminated, the overall MP-DCCP connection passes to a closed state.
+If the MP_CLOSE is present in a DCCP-CloseReq or DCCP-Close, the MP-DCCP connection is closed using the regular procedure of single-path DCCP termination on all subflows. Only in the case that all subflows are successfully terminated, the overall MP-DCCP connection passes to a closed state.
 
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
@@ -990,7 +990,7 @@ The basic initial handshake for the first flow is as follows:
 Host A MUST wait the final DCCP-Ack from host B before starting any
 establishment of additional subflow connections.
 
-The handshake for subsequent flows based on a successful initial
+The handshake for subsequent subflows based on a successful initial
 handshake is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
@@ -1092,7 +1092,7 @@ following key security requirements to be fulfilled by MP-DCCP:
 In order to achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
-shared once at the start of the first subflow and are never sent again
+shared once at the start of the first flow and are never sent again
 over the network. To ease demultiplexing while not giving away any
 cryptographic material, future subflows use a truncated cryptographic
 hash of this key as the connection identification "token". The keys are
