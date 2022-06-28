@@ -206,7 +206,7 @@ data, and termination of sessions.
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
 single DCCP connection with no inherent performance penalty 
-for said subflows that do not require in-ordered delivery. DCCP
+for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
 In the following, use of the term subflow will refer to physical
