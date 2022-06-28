@@ -899,9 +899,9 @@ The following values are available for Prio field:
        The path will always be used for packet scheduling decisions. The 
        priority number indicates the relative priority of one path over the 
        other for primary paths. Higher numbers indicate higher priority. 
-       The peer should consider sending more traffic over higher priority path. 
+       The peer should consider sending more traffic over higher priority paths. 
        This is the recommended setting for paths that do not have a cost or 
-       data caps associated with it as these paths will be frequently used.
+       data caps associated with them as these paths will be frequently used.
 
 Example use cases include:
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
