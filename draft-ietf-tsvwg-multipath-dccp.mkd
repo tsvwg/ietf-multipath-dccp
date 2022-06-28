@@ -281,7 +281,7 @@ characteristics are summarized within this section.
 Address A1    Address A2             Address B1    Address B2
 ----------    ----------             ----------    ----------
   |             |                      |             |
-  |         (DCCP flow setup)          |             |
+  |         (DCCP subflow setup)       |             |
   |----------------------------------->|             |
   |<-----------------------------------|             |
   |             |                      |             |
@@ -498,7 +498,7 @@ If no agreement can be found, the Server MUST reply with an empty Confirm L opti
 with feature number 10 and no values.
 
 Any subflow addition to an existing MP connection MUST use the same
-version negotiated for the first flow.
+version negotiated for the first subflow.
 
 ## Multipath Option {#MP_OPT}
 
@@ -517,8 +517,8 @@ version negotiated for the first flow.
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
-| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP flow                |
-| 46  |       3       |  2 =MP_FAST_CLOSE| Close MP-DCCP flow unconditionally                   |
+| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP subflow             |
+| 46  |       3       |  2 =MP_FAST_CLOSE| Close MP-DCCP subflow unconditionally                |
 | 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
 | 46  |       7       |  4 =MP_SEQ       | Multipath Sequence Number                            |
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
@@ -526,7 +526,7 @@ version negotiated for the first flow.
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
 | 46  |       var     |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
-| 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP flow                                   |
+| 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP subflow                                |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 ### MP_CONFIRM {#MP_CONFIRM}
@@ -573,7 +573,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 ~~~~
 
 The MP_JOIN option is used to add a new path to an existing MP-DCCP
-flow. The Path Token is the SHA256 hash of the derived key (d-key),
+subflow. The Path Token is the SHA256 hash of the derived key (d-key),
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
@@ -678,7 +678,7 @@ ECDHE-SHA512-C25519
 {: vspace='0'}
 
 Providing multiple keys is only permitted in the DCCP-Request message
-of the handshake procedure for the first flow, and allows the hosts to agree
+of the handshake procedure for the first subflow, and allows the hosts to agree
 on a single key type to be used as described in {{handshaking}}
 
 ### MP_SEQ {#MP_SEQ}
@@ -997,7 +997,7 @@ Address A1    Address A2                              Address B1
 ~~~~
 {: #ref-mp-dccp-handshaking title='Example MP-DCCP Handshake'}
 
-The basic initial handshake for the first flow is as follows:
+The basic initial handshake for the first subflow is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
   request and the MP_KEY option with an Host-specific Key-A for
@@ -1052,7 +1052,7 @@ can optionally be preceded by a DCCP-CloseReq.
 
 When a host wants to terminate the MP-DCCP connection, the recommended approach is to
 initiate the standard DCCP connection termination on each subflow with the first packet on 
-each flow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
+each subflow carrying MP_CLOSE, as described in {{MP_CLOSE}}.
 
       Host A                                   Host B
       ------                                   ------
@@ -1092,7 +1092,7 @@ version to use during the Multipath Capable feature negotiation.
 
 If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options 
 are not present in the handshake messages or the protocol version doesn't
-match the value negotiated for the first flow, that subflow will be closed.
+match the value negotiated for the first subflow, that subflow will be closed.
 
 ## Congestion Control Considerations
 
@@ -1146,7 +1146,7 @@ following key security requirements to be fulfilled by MP-DCCP:
 In order to achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
-shared once at the start of the first flow and are never sent again
+shared once at the start of the first subflow and are never sent again
 over the network. To ease demultiplexing while not giving away any
 cryptographic material, future subflows use a truncated cryptographic
 hash of this key as the connection identification "token". The keys are
@@ -1225,8 +1225,8 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP flow               | {{MP_JOIN}}       |
-| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP flow                               | {{MP_FAST_CLOSE}} |
+| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP subflow            | {{MP_JOIN}}       |
+| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP subflow                            | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
 | TBD or MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
@@ -1234,7 +1234,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
 | TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
-| TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP flow                               | {{MP_OPT}}        |
+| TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
