@@ -255,7 +255,7 @@ this context by a 4-tuple of source and destination address/ port pairs.
 Subflow: A flow of DCCP segments operating over an individual path,
 which forms part of a larger MP-DCCP connection. A subflow is started
 and terminated similar to a regular (single-path) DCCP connection. The term subflow
-can be used for one or more paths in an MP-DCCP connection.
+can also be used to refer to an MP-DCCP connection with a single path.
 
 (MP-DCCP) Connection: A set of one or more subflows, over which an
 application can communicate between two hosts. There is a one-to-one
@@ -518,8 +518,8 @@ version negotiated for the first subflow.
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
-| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP subflow             |
-| 46  |       3       |  2 =MP_FAST_CLOSE| Close MP-DCCP subflow unconditionally                |
+| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP connection          |
+| 46  |       3       |  2 =MP_FAST_CLOSE| Close MP-DCCP connection unconditionally             |
 | 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
 | 46  |       7       |  4 =MP_SEQ       | Multipath Sequence Number                            |
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
@@ -574,7 +574,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 ~~~~
 
 The MP_JOIN option is used to add a new path to an existing MP-DCCP
-subflow. The Path Token is the SHA256 hash of the derived key (d-key),
+connection. The Path Token is the SHA256 hash of the derived key (d-key),
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 MP_HMAC for details). Also MP_KEY MUST be set to provide key material
@@ -958,11 +958,11 @@ mechanisms (see {{ref-mp-option-confirm}}).
    Type=46           MP_OPT=10
 ~~~~
 
-For a graceful shutdown of a MP-DCCP connection, MP_CLOSE is used to communicate this to a peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well. At the initiator of the DCCP-CloseReq all sockets, including MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note, Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
+For a graceful shutdown of a MP-DCCP connection, MP_CLOSE is used to communicate this to a peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well. At the initiator of the DCCP-CloseReq all sockets, including the MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note, Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
 
 On reception of a first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data, or due to a local decision, all subflows transition to the CLOSING state before transmitting a DCCP-Close carrying MP_CLOSE. In this case, the MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of the initial subflow used during handshake with MP_KEY option. If the initial subflow no longer exists, the state moves immediately to CLOSED.
 
-Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data at the peer host, all subflows, including the MP-DCCP connection socket, move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 MUST be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.
+Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data at the peer host, all subflows, as well as the MP-DCCP connection socket, move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 MUST be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.
 
 When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.
 
@@ -1226,8 +1226,8 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP subflow            | {{MP_JOIN}}       |
-| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP subflow                            | {{MP_FAST_CLOSE}} |
+| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP connection         | {{MP_JOIN}}       |
+| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
 | TBD or MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
