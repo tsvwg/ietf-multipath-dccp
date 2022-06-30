@@ -1042,8 +1042,7 @@ lead to a subflow closing.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
-fail if the data has been changed in any way. This will also detect if the data 
-sequence mapping is no longer valid. All data from the start of the segment that
+fail if the data has been changed in any way. All data from the start of the segment that
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
