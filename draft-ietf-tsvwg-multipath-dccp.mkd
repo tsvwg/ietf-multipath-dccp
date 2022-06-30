@@ -1022,7 +1022,7 @@ At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCC
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
 messages don’t carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fall back to regular DCCP or MUST closed. 
+established and the handshake SHOULD fall back to regular DCCP or MUST be closed. 
 
 The same fallback SHOULD take place if the endpoints fail to agree on a protocol
 version to use during the Multipath Capable feature negotiation, which is described
@@ -1041,7 +1041,7 @@ version is used. Also non-verifiable MP_HMAC {{MP_HMAC}} or MP_JOIN Path Token {
 lead to a subflow closing.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
-checksum to protest the data, as described in section 9 of {{RFC4340}}. A checksum will 
+checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
 fail if the data has been changed in any way. This will also detect if the data 
 sequence mapping is no longer valid. All data from the start of the segment that
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
