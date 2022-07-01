@@ -1079,20 +1079,40 @@ subflows, each carrying the MP_FAST_CLOSE option.
 
 When a subflow fails to operate within the MP-DCCP requirements, it is 
 necessary to fall back to the safe operation. This may be either falling back 
-to regular DCCP, or removing a problematic subflow. The main reason for 
-subflow failing is loss of MP-DCCP options. 
+to regular DCCP, or removing a problematic subflow. The main reasons for 
+subflow failing include: no MP support at peer host, failure to negotiate protocol
+version, loss of MP-DCCP options, faulty/non-supported MP-DCCP options or modification
+of payload data. 
 
-At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP
+At the start of the MP-DCCP connection, the handshake ensures exchange of MP-DCCP feature and
 options and thus ensures that the path is fully MP-DCCP capable. If during the
-handshake procedure it appears that DCCP-Request or DCCP-Response or DCCP-Ack
-messages don’t have the MP-DCCP options, the MP-DCCP connection will not be 
-established and the handshake should fall back to regular DCCP. The same
-fallback should take place if the endpoints fail to agree on a protocol
-version to use during the Multipath Capable feature negotiation.
+handshake procedure it appears that DCCP-Request or DCCP-Response
+messages don’t carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
+established and the handshake SHOULD fall back to regular DCCP or MUST be closed. 
 
-If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options 
-are not present in the handshake messages or the protocol version doesn't
-match the value negotiated for the first flow, that subflow will be closed.
+The same fallback SHOULD take place if the endpoints fail to agree on a protocol
+version to use during the Multipath Capable feature negotiation, which is described
+in {{mp_capable}}. The protocol version negotiation distinguishes between negotiation
+for the initial connection establishment, and addition of subsequent subflows. If
+protocol version negotiation is not successful during the initial connection establishment,
+MP-DCCP connection will fall back to regular DCCP. 
+
+Similar procedure MUST be applied if the MP_KEY {{MP_KEY}} Key Type cannot be negotiated,
+a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.
+
+If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
+feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
+This is especially the case if a different MP_CAPABLE version than the originally negotiated
+version is used. Also non-verifiable MP_HMAC {{MP_HMAC}} or MP_JOIN Path Token {{MP_JOIN}} MUST
+lead to a subflow closing.
+
+Another relevant case is when payload data is modified by middleboxes. DCCP uses 
+checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
+fail if the data has been changed in any way. All data from the start of the segment that
+failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
+the checksum fails, the receiving endpoint MUST drop the application data and report 
+that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
+Corrupt). If this happens in an MP-DCCP connection, the affected subflow can either be closed or other action can be taken. 
 
 ## Congestion Control Considerations
 
