@@ -777,7 +777,7 @@ The MP_ADDADDR option announces additional addresses (and, optionally,
 ports) on which a host can be reached. This option can be used at any
 time during an existing DCCP connection, when the sender wishes to
 enable multiple paths and/or when additional paths become available.
-Multiplace instances of this option within a packet advertise simultaneously
+Multiple instances of this option within a packet advertise simultaneously
 new addresses.
 
 Length is variable depending on IPv4 (IPVer = 4) or IPv6 (IPVer = 6) and
