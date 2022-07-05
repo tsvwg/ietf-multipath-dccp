@@ -847,21 +847,24 @@ address becomes invalid (e.g., if the interface disappears), the
 affected host SHOULD announce this so that the peer can remove subflows
 related to this address.
 
-This is achieved through the Remove Address (REMOVE_ADDR) option which
+This is achieved through the Remove Address (MP_REMOVEADDR) option which
 will remove a previously added address (or list of addresses) from a
 connection and terminate any subflows currently using that address.
 
-For security purposes, if a host receives a REMOVE_ADDR option, it must
+For security purposes, if a host receives a MP_REMOVEADDR option, it must
 ensure the affected path(s) are no longer in use before it instigates
-closure. Typical DCCP validity tests on the subflow (e.g., packet type
-specific sequence and acknowledgement number check) MUST also be
-undertaken. An implementation can use indications of these test failures
-as part of intrusion detection or error logging.
+closure. The receipt of MP_REMOVEADDR SHOULD first trigger
+the sending of a DCCP keepalive on the path, and if a response is
+received the path SHOULD NOT be removed. Typical DCCP validity tests
+on the subflow (e.g., packet type specific sequence and acknowledgement
+number check) MUST also be undertaken. An implementation can use
+indications of these test failures as part of intrusion detection or
+error logging.
 
-The sending and receipt of this message SHOULD trigger the sending of
-DCCP-Close and DCCP-Reset by client and server, respectively on the
-affected subflow(s) (if possible), as a courtesy to cleaning up
-middlebox state, before cleaning up any local state.
+The sending and receipt (if no keepalive response was received) of this
+message SHOULD trigger the sending of DCCP-Close and DCCP-Reset by client
+and server, respectively on the affected subflow(s) (if possible), as a
+courtesy to cleaning up middlebox state, before cleaning up any local state.
 
 Address removal is undertaken by ID, so as to permit the use of NATs and
 other middleboxes that rewrite source addresses.  If there is no address
@@ -878,7 +881,9 @@ at the requested ID, the receiver will silently ignore the request.
  
 Minimum length of this option is 4 bytes (for one address to remove).
 
-[TBD/TBV]
+A subflow that is still functioning MUST be closed with a DCCP-Close or
+exchange as in regular TCP, rather than using this option. For more
+information, see Section {{closing}}.
 
 
 ### MP_PRIO {#MP_PRIO}
@@ -1044,7 +1049,7 @@ handshake is as follows:
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
 
-## Close a MP-DCCP connection
+## Close a MP-DCCP connection {#closing}
 
 When a host wants to close an existing subflow but not the whole
 connection, it can initiate the regular DCCP connection termination procedure 
@@ -1076,7 +1081,7 @@ subflows, each carrying the MP_FAST_CLOSE option.
                                        <-      DCCP-Reset
                                                [on all subflows]
                                                
-## Fallback
+## Fallback {#fallback}
 
 When a subflow fails to operate within the MP-DCCP requirements, it is 
 necessary to fall back to the safe operation. This may be either falling back 
