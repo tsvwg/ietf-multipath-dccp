@@ -258,8 +258,8 @@ and terminated similar to a regular (single-path) DCCP connection. The term subf
 can also be used to refer to an MP-DCCP connection with a single path.
 
 (MP-DCCP) Connection: A set of one or more subflows, over which an
-application can communicate between two hosts. There is a one-to-one
-mapping between a connection and an MP-DCCP connection socket.
+application can communicate between two hosts. The MP-DCCP connection is
+exposed as single DCCP socket to the application.
 
 Token: A locally unique identifier given to a multipath connection by a
 host. May also be referred to as a "Connection ID".
@@ -573,7 +573,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
    Type=46  Length=12 MP_OPT=1
 ~~~~
 
-The MP_JOIN option is used to add a new path to an existing MP-DCCP
+The MP_JOIN option is used to add a new subflow to an existing MP-DCCP
 connection. The Path Token is the SHA256 hash of the derived key (d-key),
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
@@ -1226,7 +1226,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join path to existing MP-DCCP connection         | {{MP_JOIN}}       |
+| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection         | {{MP_JOIN}}       |
 | TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
