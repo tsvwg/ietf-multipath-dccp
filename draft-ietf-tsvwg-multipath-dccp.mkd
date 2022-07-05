@@ -426,8 +426,8 @@ shown in {{ref-option-list}}.
 |  35   |    variable   | Confirm R             |     N      |
 |  36   |    variable   | Init Cookie           |     N      |
 |  37   |      3-8      | NDP Count             |     Y      |
-|  38   |    variable   | Ack Vector [Nonce 0]  |     N      |
-|  39   |    variable   | Ack Vector [Nonce 1]  |     N      |
+|  38   |    variable   | Ack Vector \[Nonce 0\]|     N      |
+|  39   |    variable   | Ack Vector \[Nonce 1\]|     N      |
 |  40   |    variable   | Data Dropped          |     N      |
 |  41   |       6       | Timestamp             |     Y      |
 |  42   |     6/8/10    | Timestamp Echo        |     Y      |
