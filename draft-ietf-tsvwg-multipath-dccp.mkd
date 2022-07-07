@@ -897,9 +897,10 @@ This is achieved through the Remove Address (MP_REMOVEADDR) option which
 will remove a previously added address with an Address ID from a
 connection and terminate any subflows currently using that address.
 
-The Truncated HMAC parameter present in this option is the leftmost
-20 bytes of an HMAC, negotiated and calculated in the same way as for
-MP_HMAC as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
+Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
+authentication. The truncated HMAC parameter present in this MP_HMAC
+option is the leftmost 20 bytes of an HMAC, negotiated and calculated
+as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
 the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
@@ -933,14 +934,9 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |...
+|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |
 +---------------+---------------+-------+-------+---------------+
-|                                                               |
-|                                                               |
-|                        HMAC (20 bytes)                        |
-|                                                               |
-|                                                               |
-+---------------------------------------------------------------+
++ MP_HMAC option {{MP_HMAC}}
 ~~~~
  
 A subflow that is still functioning MUST be closed with a DCCP-Close or
