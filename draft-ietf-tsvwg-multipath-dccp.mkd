@@ -858,8 +858,8 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID, IP address, and port that are stored in the local host
-along with the Adress ID and previously negotiated using MP_ADDADDR or
+the Address ID and IP address, and port that are stored in the local host
+along with the Address ID and previously negotiated using MP_ADDADDR or
 MP_JOIN. In case no port information is present the HMAC message will
 nevertheless include 2 octets of value zero, similar to MP_ADDADDR HMAC
 calculation ({{MP_ADDADDR}}).
