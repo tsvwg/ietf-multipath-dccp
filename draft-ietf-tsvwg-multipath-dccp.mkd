@@ -897,7 +897,7 @@ This is achieved through the Remove Address (MP_REMOVEADDR) option which
 will remove a previously added address with an Address ID from a
 connection and terminate any subflows currently using that address.
 
-Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
+Along with the MP_REMOVEADDR option a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
