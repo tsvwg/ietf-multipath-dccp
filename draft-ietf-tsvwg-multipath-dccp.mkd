@@ -564,7 +564,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
               1          2          3
    01234567 89012345 67890123 45678901
   +--------+--------+--------+--------+
-  |00101110|00001011|00000001| Addr ID|
+  |00101110|00001100|00000001| Addr ID|
   +--------+--------+--------+--------+
   | Path Token                        |
   +--------+--------+--------+--------+
@@ -689,7 +689,7 @@ on a single key type to be used as described in {{handshaking}}
               1          2          3           4          5
    01234567 89012345 67890123 45678901 23456789 01234567 89012345
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101110|00000111|00000100| Multipath Sequence Number         
+  |00101110|00001001|00000100| Multipath Sequence Number         
   +--------+--------+--------+--------+--------+--------+--------+
   |                 |
   +--------+--------+
@@ -710,7 +710,7 @@ sent with any DCCP-Data and DCCP-DataACK packet.
               1          2          3           4
    01234567 89012345 67890123 45678901 23456789 01234567
   +--------+--------+--------+--------+--------+--------+
-  |00101110|00001011|00000101| HMAC-SHA256 (20 bytes) ...
+  |00101110|00010111|00000101| HMAC-SHA256 (20 bytes) ...
   +--------+--------+--------+--------+--------+--------+
    Type=46  Length=23 MP_OPT=5
 ~~~~
@@ -815,7 +815,7 @@ cannot validate the HMAC, it SHOULD silently ignore the option.
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
-  |     Type      |     Length    |Subtype| IPVer |  Address ID   |
+  |     Type      |     Length    |0 0 0 0 0 1 1 1|  Address ID   |
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
@@ -829,6 +829,7 @@ cannot validate the HMAC, it SHOULD silently ignore the option.
   |                               +-------------------------------+
   |                               |
   +-------------------------------+
+       Type=46       Length=var       MP_OPT=7
 ~~~~
  
 Every address has an Address ID that can be used for uniquely
@@ -933,7 +934,7 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|     Type      |  Length = 24  |Subtype|(resvd)|   Address ID  |
+|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |...
 +---------------+---------------+-------+-------+---------------+
 |                                                               |
 |                                                               |
@@ -971,8 +972,10 @@ identifies the path. The option can be sent over any path.
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
-   |     Type      |     Length    |Subtype| Prio  | AddrID       |
+   |   Type = 46   |  Length = 4   |   MP_OPT = 9  |    AddrID    |
    +---------------+---------------+-------+-------+--------------+
+   |(resvd)|  Prio |
+   +---------------+
 ~~~~
 
 The following values are available for Prio field:
