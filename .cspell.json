@@ -83,7 +83,8 @@
        "Nathalie",
        "Romo",
        "Nassef",
-       "CLOSEREQ"
+       "CLOSEREQ",
+       "keepalive"
 
     ]
 }

@@ -525,7 +525,7 @@ version negotiated for the first subflow.
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
-| 46  |       var     |  8 =MP_REMOVEADDR| Remove Address                                       |
+| 46  |       24      |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
 | 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP subflow                                |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
@@ -590,7 +590,7 @@ without needing to know what the source address at the receiver is,
 thus allowing address removal through NATs.  The Address ID also
 allows correlation between new subflow setup attempts and address
 signaling ({{MP_ADDADDR}}), to prevent setting up duplicate subflows
-on the same path, if an MP_JOIN and ADD_ADDR are sent at the same
+on the same path, if an MP_JOIN and MP_ADDADDR are sent at the same
 time.
 
 The Address IDs of the subflow used in the initial DCCP Request/Response exchange of
@@ -777,8 +777,39 @@ The MP_ADDADDR option announces additional addresses (and, optionally,
 ports) on which a host can be reached. This option can be used at any
 time during an existing DCCP connection, when the sender wishes to
 enable multiple paths and/or when additional paths become available.
+Multiple instances of this option within a packet advertise simultaneously
+new addresses.
+
 Length is variable depending on IPv4 or IPv6 and whether port number is
 used and is in range between 28 and 42 bytes.
+
+The presence of the final 2 octets, specifying the DCCP port number to
+use, are optional and can be inferred from the length of the option.
+Although it is expected that the majority of use cases will use the
+same port pairs as used for the initial subflow (e.g., port 80
+remains port 80 on all subflows, as does the ephemeral port at the
+client), there may be cases (such as port-based load balancing) where
+the explicit specification of a different port is required.  If no
+port is specified, MP-DCCP SHOULD attempt to connect to the specified
+address on the same port as is already in use by the subflow on which
+the MP_ADDADDR signal was sent.
+
+The Truncated HMAC parameter present in this option is the leftmost
+20 bytes of an HMAC, negotiated and calculated in the same way as for
+MP_HMAC as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
+the key for the HMAC algorithm, in the case of the message transmitted
+by Host A, will be Key-A followed by Key-B, and in the case of Host B,
+Key-B followed by Key-A.  These are the keys that were exchanged and
+selected in the original MP_KEY handshake. The message for the HMAC is
+the Address ID, IP address, and port that precede the HMAC in the
+MP_ADDADDR option.  If the port is not present in the MP_ADDADDR option,
+the HMAC message will nevertheless include 2 octets of value zero.
+The rationale for the HMAC is to prevent unauthorized entities from
+injecting MP_ADDADDR signals in an attempt to hijack a connection.
+Note that, additionally, the presence of this HMAC prevents the
+address from being changed in flight unless the key is known by an
+intermediary.  If a host receives an MP_ADDADDR option for which it
+cannot validate the HMAC, it SHOULD silently ignore the option.
 
 ~~~~
                       1                   2                   3
@@ -809,37 +840,52 @@ The Address ID MUST uniquely identify the address for the sender of the
 option (within the scope of the connection); the mechanism for
 allocating such IDs is implementation specific.
 
-All Address IDs learned via either MP_JOIN or ADD_ADDR SHOULD be stored
+All Address IDs learned via either MP_JOIN or MP_ADDADDR SHOULD be stored
 by the receiver in a data structure that gathers all the
 Address-ID-to-address mappings for a connection (identified by a token
 pair). In this way, there is a stored mapping between the Address ID,
 observed source address, and token pair for future processing of control
-information for a connection.
-  
-Ideally, ADD_ADDR and REMOVE_ADDR options would be sent reliably, and in
-order, to the other end. This would ensure that this address management
-does not unnecessarily cause an outage in the connection when remove/add
-addresses are processed in reverse order, and also to ensure that all
-possible paths are used. Note, however, that losing reliability and
-ordering will not break the multipath connections, it will just reduce
-the opportunity to open new paths and to survive different
-patterns of path failures.
+information for a connection. Note that an implementation
+MAY discard incoming address advertisements at will, for example, for
+avoiding the required mapping state, or because advertised addresses
+are of no use to it (for example, IPv6 addresses when it has IPv4
+only).  Therefore, a host MUST treat address advertisements as soft
+state, and it MAY choose to refresh advertisements periodically.
 
-Therefore, implementing reliability signals for these DCCP options is
-not necessary.  In order to minimize the impact of the loss of these
-options, however, it is RECOMMENDED that a sender should send these
-options on all available subflows.  If these options need to be received
-in-order, an implementation SHOULD only send one ADD_ADDR/REMOVE_ADDR
-option per RTT, to minimize the risk of misordering. A host that
-receives an ADD_ADDR but finds a connection set up to that IP address
-and port number is unsuccessful SHOULD NOT perform further connection
-attempts to this address/port combination for this connection. A sender
-that wants to trigger a new incoming connection attempt on a previously
-advertised address/port combination can therefore refresh ADD_ADDR
-information by sending the option again.
+Due to the proliferation of NATs, it is reasonably likely that one
+host may attempt to advertise private addresses.  It is not
+desirable to prohibit this, since there may be cases where both hosts
+have additional interfaces on the same private network, and a host
+MAY want to advertise such addresses. The MP_JOIN handshake to
+create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
+security risks.  The MP_JOIN message contains a 32-bit token that
+uniquely identifies the connection to the receiving host. If the
+token is unknown, the host will return with a DCCP-Reset. In the unlikely
+event that the token is known, subflow setup will continue, but the
+HMAC exchange must occur for authentication.  This will fail, and
+will provide sufficient protection against two unconnected hosts
+accidentally setting up a new subflow upon the signal of a private
+address.  Further security considerations around the issue of
+MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
+new MP_JOIN attempts are discussed in {{security}}.
 
-[TBD/TBV]
+The reception of an MP_ADDADDR message is acknowledged using MP_CONFIRM
+({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
+information is ensured.
 
+A host can send an MP_ADDADDR message with an already assigned Address
+ID, but the Address MUST be the same as previously assigned to this
+Address ID, and the Port MUST be different from one already in use
+for this Address ID.  If these conditions are not met, the receiver
+SHOULD silently ignore the MP_ADDADDR.  A host wishing to replace an
+existing Address ID MUST first remove the existing one ({{MP_REMOVEADDR}}).
+
+A host that receives an MP_ADDADDR but finds a connection set up to
+that IP address and port number is unsuccessful SHOULD NOT perform
+further connection attempts to this address/port combination for this
+connection. However, a sender that wants to trigger a new incoming
+connection attempt on a previously advertised address/port combination
+can therefore refresh MP_ADDADDR information by sending the option again.
 
 ### MP_REMOVEADDR {#MP_REMOVEADDR}
 
@@ -848,21 +894,37 @@ address becomes invalid (e.g., if the interface disappears), the
 affected host SHOULD announce this so that the peer can remove subflows
 related to this address.
 
-This is achieved through the Remove Address (REMOVE_ADDR) option which
-will remove a previously added address (or list of addresses) from a
+This is achieved through the Remove Address (MP_REMOVEADDR) option which
+will remove a previously added address with an Address ID from a
 connection and terminate any subflows currently using that address.
 
-For security purposes, if a host receives a REMOVE_ADDR option, it must
-ensure the affected path(s) are no longer in use before it instigates
-closure. Typical DCCP validity tests on the subflow (e.g., packet type
-specific sequence and acknowledgement number check) MUST also be
-undertaken. An implementation can use indications of these test failures
-as part of intrusion detection or error logging.
+The Truncated HMAC parameter present in this option is the leftmost
+20 bytes of an HMAC, negotiated and calculated in the same way as for
+MP_HMAC as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
+the key for the HMAC algorithm, in the case of the message transmitted
+by Host A, will be Key-A followed by Key-B, and in the case of Host B,
+Key-B followed by Key-A.  These are the keys that were exchanged and
+selected in the original MP_KEY handshake. The message for the HMAC is
+the Address ID and IP address, and port that are stored in the local host
+along with the Address ID and previously negotiated using MP_ADDADDR or
+MP_JOIN. In case no port information is present the HMAC message will
+nevertheless include 2 octets of value zero, similar to MP_ADDADDR HMAC
+calculation ({{MP_ADDADDR}}).
+The rationale for the HMAC is to prevent unauthorized entities from
+injecting MP_REMOVEADDR signals in an attempt to hijack a connection.
+Note that, additionally, the presence of this HMAC prevents the
+address from being removed in flight unless the key is known by an
+intermediary.  If a host receives an MP_REMOVEADDR option for which it
+cannot validate the HMAC, it SHOULD silently ignore the option.
+
+The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
+({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
+information is ensured.
 
 The sending and receipt of this message SHOULD trigger the sending of
-DCCP-Close and DCCP-Reset by client and server, respectively on the
-affected subflow(s) (if possible), as a courtesy to cleaning up
-middlebox state, before cleaning up any local state.
+DCCP-Close and DCCP-Reset by client and server, respectively on the affected
+subflow(s) (if possible), as a courtesy to cleaning up middlebox state, before
+cleaning up any local state.
 
 Address removal is undertaken by ID, so as to permit the use of NATs and
 other middleboxes that rewrite source addresses.  If there is no address
@@ -872,14 +934,19 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 3+n |   MP_OPT = 8  |   Address ID  |...
+|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |...
 +---------------+---------------+-------+-------+---------------+
-                          (followed by n-1 Address IDs, if required)
+|                                                               |
+|                                                               |
+|                        HMAC (20 bytes)                        |
+|                                                               |
+|                                                               |
++---------------------------------------------------------------+
 ~~~~
  
-Minimum length of this option is 4 bytes (for one address to remove).
-
-[TBD/TBV]
+A subflow that is still functioning MUST be closed with a DCCP-Close or
+exchange as in regular DCCP, rather than using this option. For more
+information, see Section {{closing}}.
 
 
 ### MP_PRIO {#MP_PRIO}
@@ -1047,7 +1114,7 @@ handshake is as follows:
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
 
-## Close a MP-DCCP connection
+## Close a MP-DCCP connection {#closing}
 
 When a host wants to close an existing subflow but not the whole
 connection, it can initiate the regular DCCP connection termination procedure 
@@ -1079,7 +1146,7 @@ subflows, each carrying the MP_FAST_CLOSE option.
                                        <-      DCCP-Reset
                                                [on all subflows]
                                                
-## Fallback
+## Fallback {#fallback}
 
 When a subflow fails to operate within the MP-DCCP requirements, it is 
 necessary to fall back to the safe operation. This may be either falling back 
@@ -1188,6 +1255,16 @@ mechanisms (such as header checksum to protect DCCP headers against
 corruption) will provide the same level of protection against attacks on
 individual DCCP subflows as exists for regular DCCP. 
 
+As discussed in {{MP_ADDADDR}}, a host may advertise its private
+addresses, but these might point to different hosts in the receiver's
+network.  The MP_JOIN handshake ({{MP_JOIN}}) will ensure that this
+does not succeed in setting up a subflow to the incorrect host.
+However, it could still create unwanted DCCP handshake traffic.  This
+feature of MP-DCCP could be a target for denial-of-service exploits,
+with malicious participants in MP-DCCP connections encouraging the
+recipient to target other hosts in the network.  Therefore,
+implementations should consider heuristics at both the
+sender and receiver to reduce the impact of this.
 
 # Interactions with Middleboxes {#middlebox}
 
