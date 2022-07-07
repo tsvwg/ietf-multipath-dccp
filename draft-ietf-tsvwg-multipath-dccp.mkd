@@ -882,9 +882,9 @@ existing Address ID MUST first remove the existing one ({{MP_REMOVEADDR}}).
 A host that receives an MP_ADDADDR but finds a connection set up to
 that IP address and port number is unsuccessful SHOULD NOT perform
 further connection attempts to this address/port combination for this
-connection.  A sender that wants to trigger a new incoming connection
-attempt on a previously advertised address/port combination can
-therefore refresh MP_ADDADDR information by sending the option again.
+connection. However, a sender that wants to trigger a new incoming
+connection attempt on a previously advertised address/port combination
+can therefore refresh MP_ADDADDR information by sending the option again.
 
 ### MP_REMOVEADDR {#MP_REMOVEADDR}
 
