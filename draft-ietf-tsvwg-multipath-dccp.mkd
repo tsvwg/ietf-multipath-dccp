@@ -715,14 +715,20 @@ sent with any DCCP-Data and DCCP-DataACK packet.
    Type=46  Length=23 MP_OPT=5
 ~~~~
 
-The MP_HMAC option is used to provide authentication for the MP_JOIN
-option. The HMAC code is generated according to {{RFC2104}} in combination
-with the SHA256 hash algorithm described in {{RFC6234}}, with the output
-truncated to the leftmost 160 bits (20 bytes).
+The MP_HMAC option is used to provide authentication for the MP_JOIN,
+MP_ADDADDR and MP_REMOVEADDR option. The HMAC code is generated according
+to {{RFC2104}} in combination with the SHA256 hash algorithm described in
+{{RFC6234}}, with the output truncated to the leftmost 160 bits (20 bytes).
 
 The "Key" used for the HMAC computation is the derived key (d-key)
 described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
-the token and nonce of the MP_JOIN for which authentication shall be performed.
+
+   * MP_JOIN: The token and nonce of the MP_JOIN for which authentication
+   shall be performed.
+
+   * MP_ADDADDR or MP_REMOVEADDR: The Address ID with associated IP address
+   and if defined port, otherwise two octets of value 0.
+
 
 ### MP_RTT {#MP_RTT}
 
