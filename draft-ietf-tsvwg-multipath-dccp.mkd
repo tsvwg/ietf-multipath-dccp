@@ -783,7 +783,7 @@ new addresses.
 Length is variable depending on IPv4 (IPVer = 4) or IPv6 (IPVer = 6) and
 whether port number is used and is in range between 28 and 42 bytes.
 
-The presence of the final 2 octets, specifying the TCP port number to
+The presence of the final 2 octets, specifying the DCCP port number to
 use, are optional and can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
