@@ -826,7 +826,7 @@ cannot validate the HMAC, it SHOULD silently ignore the option.
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
-  |   Port (2 bytes, optional)    |
+  |   Port (2 bytes, optional)    | + MP_HMAC option {{MP_HMAC}}
   +-------------------------------+
        Type=46       Length=var       MP_OPT=7
 ~~~~
