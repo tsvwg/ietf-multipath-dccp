@@ -780,8 +780,8 @@ enable multiple paths and/or when additional paths become available.
 Multiple instances of this option within a packet advertise simultaneously
 new addresses.
 
-Length is variable depending on IPv4 (IPVer = 4) or IPv6 (IPVer = 6) and
-whether port number is used and is in range between 28 and 42 bytes.
+Length is variable depending on IPv4 or IPv6 and whether port number is
+used and is in range between 28 and 42 bytes.
 
 The presence of the final 2 octets, specifying the DCCP port number to
 use, are optional and can be inferred from the length of the option.
