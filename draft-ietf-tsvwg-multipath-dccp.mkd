@@ -715,14 +715,20 @@ sent with any DCCP-Data and DCCP-DataACK packet.
    Type=46  Length=23 MP_OPT=5
 ~~~~
 
-The MP_HMAC option is used to provide authentication for the MP_JOIN
-option. The HMAC code is generated according to {{RFC2104}} in combination
-with the SHA256 hash algorithm described in {{RFC6234}}, with the output
-truncated to the leftmost 160 bits (20 bytes).
+The MP_HMAC option is used to provide authentication for the MP_JOIN,
+MP_ADDADDR and MP_REMOVEADDR option. The HMAC code is generated according
+to {{RFC2104}} in combination with the SHA256 hash algorithm described in
+{{RFC6234}}, with the output truncated to the leftmost 160 bits (20 bytes).
 
 The "Key" used for the HMAC computation is the derived key (d-key)
 described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
-the token and nonce of the MP_JOIN for which authentication shall be performed.
+
+   * MP_JOIN: The token and nonce of the MP_JOIN for which authentication
+   shall be performed.
+
+   * MP_ADDADDR or MP_REMOVEADDR: The Address ID with associated IP address
+   and if defined port, otherwise two octets of value 0.
+
 
 ### MP_RTT {#MP_RTT}
 
@@ -794,9 +800,10 @@ port is specified, MP-DCCP SHOULD attempt to connect to the specified
 address on the same port as is already in use by the subflow on which
 the MP_ADDADDR signal was sent.
 
-The Truncated HMAC parameter present in this option is the leftmost
-20 bytes of an HMAC, negotiated and calculated in the same way as for
-MP_HMAC as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
+Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
+authentication. The truncated HMAC parameter present in this MP_HMAC
+option is the leftmost 20 bytes of an HMAC, negotiated and calculated
+as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
 the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
@@ -819,15 +826,7 @@ cannot validate the HMAC, it SHOULD silently ignore the option.
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
-  |   Port (2 bytes, optional)    |                               |
-  +-------------------------------+                               |
-  |                       HMAC (20 bytes)                         |
-  |                                                               |
-  |                                                               |
-  |                                                               |
-  |                                                               |
-  |                               +-------------------------------+
-  |                               |
+  |   Port (2 bytes, optional)    | + MP_HMAC option {{MP_HMAC}}
   +-------------------------------+
        Type=46       Length=var       MP_OPT=7
 ~~~~
@@ -898,9 +897,10 @@ This is achieved through the Remove Address (MP_REMOVEADDR) option which
 will remove a previously added address with an Address ID from a
 connection and terminate any subflows currently using that address.
 
-The Truncated HMAC parameter present in this option is the leftmost
-20 bytes of an HMAC, negotiated and calculated in the same way as for
-MP_HMAC as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
+Along with the MP_REMOVEADDR option a MP_HMAC option MUST be sent for
+authentication. The truncated HMAC parameter present in this MP_HMAC
+option is the leftmost 20 bytes of an HMAC, negotiated and calculated
+as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
 the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
@@ -934,14 +934,9 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |...
+|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |
 +---------------+---------------+-------+-------+---------------+
-|                                                               |
-|                                                               |
-|                        HMAC (20 bytes)                        |
-|                                                               |
-|                                                               |
-+---------------------------------------------------------------+
++ MP_HMAC option {{MP_HMAC}}
 ~~~~
  
 A subflow that is still functioning MUST be closed with a DCCP-Close or
