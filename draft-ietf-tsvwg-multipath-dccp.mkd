@@ -726,8 +726,10 @@ described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
    * MP_JOIN: The token and nonce of the MP_JOIN for which authentication
    shall be performed.
 
-   * MP_ADDADDR or MP_REMOVEADDR: The Address ID with associated IP address
+   * MP_ADDADDR: The Address ID with associated IP address
    and if defined port, otherwise two octets of value 0.
+   
+   * MP_REMOVEADDR: Solely the Address ID.
 
 
 ### MP_RTT {#MP_RTT}
@@ -905,11 +907,7 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID and IP address, and port that are stored in the local host
-along with the Address ID and previously negotiated using MP_ADDADDR or
-MP_JOIN. In case no port information is present the HMAC message will
-nevertheless include 2 octets of value zero, similar to MP_ADDADDR HMAC
-calculation ({{MP_ADDADDR}}).
+the Address ID.
 The rationale for the HMAC is to prevent unauthorized entities from
 injecting MP_REMOVEADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
