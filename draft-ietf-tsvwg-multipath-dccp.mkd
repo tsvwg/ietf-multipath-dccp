@@ -525,7 +525,7 @@ version negotiated for the first subflow.
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
-| 46  |       24      |  8 =MP_REMOVEADDR| Remove Address                                       |
+| 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
 | 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP subflow                                |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
@@ -787,7 +787,7 @@ Multiple instances of this option within a packet advertise simultaneously
 new addresses.
 
 Length is variable depending on IPv4 or IPv6 and whether port number is
-used and is in range between 28 and 42 bytes.
+used and is in range between 8 and 22 bytes.
 
 The presence of the final 2 octets, specifying the DCCP port number to
 use, are optional and can be inferred from the length of the option.
@@ -934,7 +934,7 @@ at the requested ID, the receiver will silently ignore the request.
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 24  |   MP_OPT = 8  |   Address ID  |
+|   Type = 46   |  Length = 4   |   MP_OPT = 8  |   Address ID  |
 +---------------+---------------+-------+-------+---------------+
 + MP_HMAC option
 ~~~~
