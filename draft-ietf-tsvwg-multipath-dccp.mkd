@@ -196,7 +196,7 @@ in the context of 3GPP work on 5G multi-access solutions
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
 networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
 It can be applied for load-balancing, seamless session handover, and
-aggregation purposes (referred to as ATSSS; Access steering, switching, and splitting
+aggregation purposes (referred to as ATSSS; Access traffic steering, switching, and splitting
 in 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
