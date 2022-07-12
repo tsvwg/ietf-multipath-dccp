@@ -442,7 +442,7 @@ shown in {{ref-option-list}}.
 
 ## Multipath Capable Feature {#mp_capable}
 
-DCCP endpoints uses the Multipath Capable Feature to deicde whether mutlipath extensions can be enabled for a DCCP connection.
+DCCP endpoints uses the Multipath Capable Feature to decide whether multipath extensions can be enabled for a DCCP connection.
 
 Multipath Capable feature has feature number 10 and has length of one-byte.
 The leftmost four bits are used to specify a compatible version of the
@@ -494,7 +494,7 @@ for version 1.
 
 2. Server agrees on using MP-DCCP version 1, and supplies its own preference list.
 
-3. MP-DCCPO is then enabled between the Client and Server with version.
+3. MP-DCCP is then enabled between the Client and Server with version.
 
 
 ## Multipath Option {#MP_OPT}
