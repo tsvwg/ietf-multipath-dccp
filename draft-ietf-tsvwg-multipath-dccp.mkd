@@ -731,6 +731,12 @@ described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
    
    * MP_REMOVEADDR: Solely the Address ID.
 
+MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or used multiple times
+within a single DCCP packet. As all this multipath options come along with an
+individual MP_HASH option, this requires the MP_HASH to be correctly associated.
+Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
+MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
+option.
 
 ### MP_RTT {#MP_RTT}
 
