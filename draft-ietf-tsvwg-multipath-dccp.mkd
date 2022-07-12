@@ -503,7 +503,7 @@ version negotiated for the first subflow.
 
 ## Multipath Option {#MP_OPT}
 
-MP-DCCP uses one signle option to signal various multipath-related operations. The format of this option is shown in {{ref-mp-option-format}}.  
+MP-DCCP uses one single option to signal various multipath-related operations. The format of this option is shown in {{ref-mp-option-format}}.  
 
 ~~~~
             1          2          3         
@@ -532,7 +532,7 @@ The description of the fields of the multipath option is shown in {{ref-mp-optio
 | 46  |       3       | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
-These opertations are largely inspired by the signals defined in {{RFC8684}}. 
+These operations are largely inspired by the signals defined in {{RFC8684}}. 
 
 
 ### MP_CONFIRM {#MP_CONFIRM}
