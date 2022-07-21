@@ -834,6 +834,9 @@ address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
+
 ~~~~
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -929,6 +932,9 @@ address from being removed in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_REMOVEADDR is sent. Further details are given in {{MP_CONFIRM}}.
+
 The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
 information is ensured.
@@ -1021,7 +1027,10 @@ packet scheduling decisions (MP_PRIO=3), if the path has been established and
 added to an existing MP-DCCP connection. At least one path should have a 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
 connection. MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
-mechanisms (see {{ref-mp-option-confirm}}). 
+mechanisms (see {{ref-mp-option-confirm}}).
+
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 
 ### MP_CLOSE {#MP_CLOSE}
 
