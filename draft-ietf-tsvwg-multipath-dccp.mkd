@@ -542,9 +542,10 @@ version negotiated for the first subflow.
    Type=46           MP_OPT=0
 ~~~~
 
-MP_CONFIRM is used to send confirmation of reception and processing of the multipath 
+MP_CONFIRM is used to send confirmation of reception of the valid multipath 
 options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until this receives the corresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
+until this receives the corresponding MP_CONFIRM. The further processing of the multipath options in the
+receiving host is not the subject of MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
 on the confirmed options, which will be copied verbatim and appended as list of options.
 
 
