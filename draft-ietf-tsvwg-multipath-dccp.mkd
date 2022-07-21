@@ -1167,8 +1167,8 @@ a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option 
 If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
-version is used. Also non-verifiable MP_HMAC {{MP_HMAC}} or MP_JOIN Path Token {{MP_JOIN}} MUST
-lead to a subflow closing.
+version is used. Also non-verifiable MP_HMAC {{MP_HMAC}} or MP_JOIN Path Token {{MP_JOIN}} as
+part of the subsequent flow establishment MUST lead to a subflow closing.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
@@ -1176,7 +1176,8 @@ fail if the data has been changed in any way. All data from the start of the seg
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
-Corrupt). If this happens in an MP-DCCP connection, the affected subflow can either be closed or other action can be taken. 
+Corrupt). If this happens in an MP-DCCP connection, the affected subflow can either be closed
+or other action can be taken. 
 
 ## Congestion Control Considerations
 
