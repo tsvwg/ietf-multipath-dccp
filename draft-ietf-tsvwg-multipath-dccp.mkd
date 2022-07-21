@@ -537,15 +537,28 @@ version negotiated for the first subflow.
               1          2          3           4          5
    01234567 89012345 67890123 45678901 23456789 01234567 89012345
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101110| Length |00000000| List of options ...
+  |00101110| Length |00000000| List of confirmations ...
   +--------+--------+--------+--------+--------+--------+--------+
    Type=46           MP_OPT=0
 ~~~~
 
 MP_CONFIRM is used to send confirmation of reception and processing of the multipath 
 options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until this receives the corresponding MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
-on the confirmed options, which will be copied verbatim and appended as list of options.
+until this receives the corresponding MP_CONFIRM or options are outdated.
+
+As the transmission of multipath options is subject to out-of-order arrival, options defined in {{ref-mp-option-confirm}}
+SHALL be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows to identify outdated options which updates the same
+dataset. In case of MP_ADDADDR, MP_REMOVEADDR and MP_PRIO the same dataset is identified based on AddressID. An outdated
+option is detected at the receiver if a previous option referring to the same dataset contained a higher sequence number
+carried by MP_SEQ. Generating a MP_CONFIRM for outdated options is OPTIONAL.
+
+Similarly MP_CONFIRM is subject to out-of-order arrival. To ensure that the most recent option is confirmed the associated
+MP_SEQ received MUST be echoed. Otherwise inconsistency happens if between updates of a dataset with the same value, another value
+is sent. If the MP_CONFIRM of the second update and the third update itself gets lost, the value of the second update is applied on
+receiver side without being detected by the sender.
+
+The length and sending path of the MP_CONFIRM are dependent on the confirmed options and the received MP_SEQ, which will be both copied verbatim and
+appended as list of confirmations. The order within this list is the confirmed option first followed by the received MP_SEQ.
 
 
 
@@ -555,6 +568,7 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 | 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
 | 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
+
 
 
 ### MP_JOIN {#MP_JOIN}
