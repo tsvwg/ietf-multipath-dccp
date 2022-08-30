@@ -169,7 +169,7 @@ or to a mobile radio station and a fixed access network.  Compared to existing m
 traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
-This document presents a set of extensions to
+This document defines Version 0 of MP-DCCP and presents a set of extensions to
 traditional DCCP to support multipath operation.  Multipath DCCP provides 
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
@@ -219,6 +219,12 @@ we assume that only a single application is served by a DCCP connection
 here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
 while use of that feature should not impact DCCP operation on each single path
 as noted in ({{RFC5595}}, sect. 2.4).
+The term physical separate DCCP subflow as used in MP-DCCP refers to an individual DCCP flow within an MP-DCCP connection as defined below characterised by
+an own subflow end point identified in terms of a separate 4-tuple where source address/port in case of sending or destination address/port in case of receiving
+side, respectively.  Note that not the complete path needs to be completely disjoint as described in sect. {{Congestion Control Considerations}}
+(although this may be desirable for improved overall performance), but rather
+at least the so-called first/last mile links, i.e., typically the (radio) link between host and point of network attachment, e.g., cellular base station or WiFi
+access point.    
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -311,10 +317,11 @@ Address A1    Address A2             Address B1    Address B2
       equate to the additional paths.  In the example, other potential
       paths that could be set up are A1<->B2 and A2<->B2.  Although this
       additional session is shown as being initiated from A2, it could
-      equally have been initiated from B1 or B2.
+      equally have been initiated from B1 or B2.  It should be noted that MP-DCCP does not require the presence of more than one address in both peers concurrently.
 
    *  The discovery and setup of additional subflows will be achieved
-      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
+      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method including the logic and details of the procedures for adding/removing subflows is, however, out of scope of this document and subject to a corresponding operator policy and the specifics of the implementation.
+
 
    *  MP-DCCP adds connection-level sequence numbers and exchange of
       RTT information to enable optional reordering functionalities.
@@ -322,7 +329,12 @@ Address A1    Address A2             Address B1    Address B2
    *  Subflows are terminated as regular DCCP connections, as described
       in ({{RFC4340}} section 8.3). The MP-DCCP connection is terminated by a
       connection-level DCCP-CloseReq or DCCP-Close message.
-
+      
+   *  Depending on the actual implementation and the environment the MP-DCCP protocol is operated in, an optimal amount of paths used between the hosts may exist.
+      This number could depend on factors as, e.g., the single paths' individual performance, the required overhead for path management, the degree of 
+      'disjointness' of the different paths, various underlaying layers constraints as a function of used access technologies etc.  Means to signal such a number
+      to the hosts and thus limit the amount of simultaneous paths are seen as optimization specific aspects to be handled in future versions of this protocol.
+      
 
 ## Requirements Language
 
@@ -528,6 +540,7 @@ version negotiated for the first subflow.
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
 | 46  |       3       | 10 =MP_CLOSE     | Close MP-DCCP subflow                                |
+| 46  |       TBD     | 11 =MP_TBD       | Reserved for future MP Option defined in Version > 0 |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 ### MP_CONFIRM {#MP_CONFIRM}
@@ -1031,6 +1044,21 @@ When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow re
 
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
+### Further Future MP-DCCP Sub-Options to be defined in future protocol versions {#MP_TBD}
+
+In order to enable flexible addition of further sub-options for improving and optimization of MP-DCCP protocol according to potential new requirements
+as arising, e.g., from new applications and being assessed to be useful and required for future versions of MP-DCCP protocol implementations additional sub-options
+may be specified with an MP_OPT feature number larger than 10 as exemplarily described below for MP_OPT=11:
+
+~~~~
+              1          2          3           
+   01234567 89012345 67890123 45678901 23456789 
+  +--------+--------+--------+--------+--------+
+  |00101110| Length |00001011| Key Data ...
+  +--------+--------+--------+--------+--------+
+   Type=46           MP_OPT=11
+~~~~
+
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
 ~~~~
@@ -1311,6 +1339,8 @@ added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. 
 | 0x10  | MP-DCCP capability feature | {{mp_capable}}  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
+As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation.  
+
 This document defines a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional sub-options.
 The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
 Protocol options" and assigned as "MP-DCCP sub-options", respectively.
@@ -1319,7 +1349,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection         | {{MP_JOIN}}       |
+| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
 | TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
@@ -1329,6 +1359,8 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
+| TBD or MP_OPT>10| TBD             | Reserved for future MP-DCCP suboptions           | {{MP_TBD}}        |
+
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
