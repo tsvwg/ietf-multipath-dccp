@@ -157,20 +157,20 @@ Emerging networking experiments and technologies, ACM"
 --- abstract
 
 
-DCCP communication as defined in {{RFC4340}} is restricted to a single path per
+DCCP communications as defined in {{RFC4340}} are restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
-simultaneous use of these multiple paths for a DCCP session could
+simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
 experience through higher throughput and improved resilience to
 network failures.
-Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (handsets, vehicles) and residential home gateways simultaneously connected to distinct paths as, e.g., 
-a cellular link and a WiFi link
-or to a mobile radio station and a fixed access network.  Compared to existing multipath protocols such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic as UDP or plain IP.  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
+Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
+a cellular and a Wireless Local Area (WLAN) networks
+or a cellular and a fixed access networks. Compared to existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
+traffic (e.g., UDP or plain IP).  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
 
-This document presents a set of extensions to
-traditional DCCP to support multipath operation.  Multipath DCCP provides 
+This document specifies a set of extensions to
+DCCP to support multipath operations.  Multipath DCCP provides 
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
@@ -181,50 +181,52 @@ potentially disjoint paths.
 
 # Introduction {#intro}
 
-Multipath DCCP (MP-DCCP) is a set of extensions to regular DCCP
-{{RFC4340}}, i.e., the Datagram Congestion Control Protocol denoting a
+Datagram Congestion Control Protocol (DCCP) {{RFC4340}} is a
 transport protocol that provides bidirectional unicast connections of
-congestion-controlled unreliable datagrams. A multipath extension to 
-DCCP enables the transport of user data  across multiple paths 
-simultaneously. This is beneficial to applications that transfer fairly 
+congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
+Multipath DCCP (MP-DCCP) is a set of extensions to DCCP  to 
+enable DCCP flows to be established across multiple paths 
+simultaneously. Such extensions are beneficial to applications that transfer  
 large amounts of data, due to the possibility to aggregate capacity of the 
-multiple paths. In addition, it enables to tradeoff timeliness and reliability, 
-which is important for low latency applications that do not require 
-guaranteed delivery services such as Audio/Video streaming.
-DCCP multipath operation has been suggested
-in the context of 3GPP work on 5G multi-access solutions
+multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability, 
+which is important for low-latency applications that do not require 
+guaranteed delivery services, such as Audio/Video streaming.
+
+MP-DCCP has been first suggested
+in the context of the 3GPP work on 5G multi-access solutions
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
 networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
-It can be applied for load-balancing, seamless session handover, and
-aggregation purposes (referred to as ATSSS; Access traffic steering, switching, and splitting
-in 3GPP terminology {{TS23.501}}).
+MP-DCCP can be applied for load-balancing, seamless session handover, and
+aggregation purposes (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
+in the 3GPP terminology {{TS23.501}}).
 
 This document presents the protocol changes required to add multipath
-capability to DCCP; specifically, those for signaling and setting up
-multiple paths ("subflows"), managing these subflows, reordering of
+support to DCCP; specifically, those for signaling and setting up
+multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
 data, and termination of sessions.
+
 DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
 delivery. Consequently, multiple application subflows may be multiplexed over a
 single DCCP connection with no inherent performance penalty 
 for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
-In the following, use of the term subflow will refer to physical
+In the following, the term "subflow" refers to physical
 separate DCCP subflows transmitted via different paths, but not to
 application subflows. Application subflows are differing content-wise
 by source and destination port per application as, for example, enabled
 by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
-can be multiplexed over a single DCCP connection. For sake of consistency
+can be multiplexed over a single DCCP connection. For the sake of consistency
 we assume that only a single application is served by a DCCP connection
 here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
 while use of that feature should not impact DCCP operation on each single path
-as noted in ({{RFC5595}}, sect. 2.4).
+as noted in (Section 2.4 of {{RFC5595}}).
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
 MP-DCCP operates at the transport layer and aims to be transparent to
 both higher and lower layers.  It is a set of additional features on
-top of standard DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering.  MP-DCCP is
+top of DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering.  MP-DCCP is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.
 
@@ -265,7 +267,9 @@ Token: A locally unique identifier given to a multipath connection by a
 host. May also be referred to as a "Connection ID".
 
 Host: An end host operating an MP-DCCP implementation, and either
-initiating or accepting an MP-DCCP connection. In addition to these
+initiating or accepting an MP-DCCP connection. 
+
+In addition to these
 terms, within framework of MP-DCCP the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in {{protocol}}.
 
@@ -273,7 +277,7 @@ regular single-path DCCP semantics is discussed in {{protocol}}.
 ## MP-DCCP Concept {#concept}
 
 {{ref-example-mp-dccp-usage-scenario}} provides a general overview of the MP-DCCP working mode, whose main 
-characteristics are summarized within this section.
+characteristics are summarized in this section.
 
 
 ~~~~
@@ -296,7 +300,7 @@ Address A1    Address A2             Address B1    Address B2
  
 
    *  An MP-DCCP connection begins with a 4-way handshaking procedure, between 
-      2 hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}}
+      two hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}},
       an MP-DCCP connection is established between addresses A1 and B1 on Hosts
       A and B, respectively.
 
@@ -317,18 +321,20 @@ Address A1    Address A2             Address B1    Address B2
       through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
 
    *  MP-DCCP adds connection-level sequence numbers and exchange of
-      RTT information to enable optional reordering functionalities.
+      Round-Trip Time (RTT) information to enable optional reordering features.
 
    *  Subflows are terminated as regular DCCP connections, as described
-      in ({{RFC4340}} section 8.3). The MP-DCCP connection is terminated by a
+      in ({{RFC4340}}, Section 8.3). The MP-DCCP connection is terminated by a
       connection-level DCCP-CloseReq or DCCP-Close message.
 
 
 ## Requirements Language
 
-The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-"SHOULD", "SHOULD NOT", "RECOMMENDED", "MAY", and "OPTIONAL" in this
-document are to be interpreted as described in {{RFC2119}}.
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   capitals, as shown here.
 
 
 
@@ -1291,9 +1297,9 @@ demonstrations of a laboratory setup have been executed and have been published 
 # Acknowledgments
 
 Due to the great spearheading work of the Multipath TCP authors in {{RFC6824}}/{{RFC8684}}, some text
-passages for the -00 version of the draft were copied almost unmodified.
+passages were copied almost unmodified from these documents.
 
-The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno and Omar Nassef.
+The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, and Omar Nassef.
 
 
 # IANA Considerations
