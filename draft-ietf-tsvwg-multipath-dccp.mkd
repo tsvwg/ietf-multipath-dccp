@@ -414,7 +414,6 @@ shown in {{ref-option-list}}.
 | Type  | Option Length | Meaning               | DCCP-Data? |
 |:-----:|:-------------:|:---------------------:|:----------:|
 |  46   |    variable   | Multipath             |     Y      |
-
 {: #ref-option-list title='Multipath Option Set'}
 
 
