@@ -546,19 +546,19 @@ MP_CONFIRM is used to send confirmation of reception and processing of the multi
 options that require it (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
 until this receives the corresponding MP_CONFIRM or options are outdated.
 
-As the transmission of multipath options is subject to out-of-order arrival, options defined in {{ref-mp-option-confirm}}
-SHALL be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows to identify outdated options which updates the same
-dataset. In case of MP_ADDADDR, MP_REMOVEADDR and MP_PRIO the same dataset is identified based on AddressID. An outdated
-option is detected at the receiver if a previous option referring to the same dataset contained a higher sequence number
-carried by MP_SEQ. Generating a MP_CONFIRM for outdated options is OPTIONAL.
+As the transmission of multipath suboptions is subject to out-of-order arrival, suboptions defined in {{ref-mp-option-confirm}}
+SHALL be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows to identify outdated suboptions which updates the same
+dataset. In case of MP_ADDADDR, MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
+suboption is detected at the receiver if a previous suboption referring to the same dataset contained a higher sequence number
+carried by MP_SEQ. Generating a MP_CONFIRM for suboptions identified outdated is optional.
 
-Similarly MP_CONFIRM is subject to out-of-order arrival. To ensure that the most recent option is confirmed the associated
+Similarly MP_CONFIRM is subject to out-of-order arrival. To ensure that the most recent suboption is confirmed the associated
 MP_SEQ received MUST be echoed. Otherwise inconsistency happens if between updates of a dataset with the same value, another value
 is sent. If the MP_CONFIRM of the second update and the third update itself gets lost, the value of the second update is applied on
 receiver side without being detected by the sender.
 
-The length and sending path of the MP_CONFIRM are dependent on the confirmed options and the received MP_SEQ, which will be both copied verbatim and
-appended as list of confirmations. The order within this list is the confirmed option first followed by the received MP_SEQ.
+The length and sending path of the MP_CONFIRM are dependent on the confirmed suboptions and the received MP_SEQ, which will be both copied verbatim and
+appended as list of confirmations. The order within this list is the confirmed suboption first followed by the received MP_SEQ.
 
 
 
