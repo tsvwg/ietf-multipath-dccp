@@ -525,8 +525,11 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
 ~~~~
 
 Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until a MP_CONFIRM is received. The length and sending path of the MP_CONFIRM are dependent 
+until a MP_CONFIRM is received. The further processing of the multipath options in the
+receiving host is not the subject of MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
 on the confirmed options, which will be copied verbatim and appended as list of options.
+The validation for those options using MP_HMAC {{MP_HMAC}} for authentication MUST include verification of
+MP_HMAC before generating MP_CONFIRM. However, the received MP_HMAC is not copied into the MP_CONFIRM.
 
 
 |Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
@@ -914,7 +917,8 @@ cannot validate the HMAC, it SHOULD silently ignore the option.
 
 The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
-information is ensured.
+information is ensured. To avoid inconsistent states, it is recommended to
+release the sender address ID only after MP_REMOVEADDR has been confirmed. 
 
 The sending and receipt of this message SHOULD trigger the sending of
 DCCP-Close and DCCP-Reset by client and server, respectively on the affected
