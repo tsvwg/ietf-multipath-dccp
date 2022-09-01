@@ -529,8 +529,8 @@ on the confirmed options, which will be copied verbatim and appended as list of 
 |Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
 |:----|:--------------|:-----------------|:--------------------------------------------------------------|
 | 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
-| 46  |       var     | 8 =MP_REMOVEADDR | Any available                                                 |
-| 46  |       4       | 9 =MP_PRIO       | Any available                                                 | 
+| 46  |       4       | 8 =MP_REMOVEADDR | Any available                                                 |
+| 46  |       5       | 9 =MP_PRIO       | Any available                                                 |
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
 
 
@@ -941,14 +941,14 @@ for the packet scheduler when making decisions which path to use for
 user plane traffic.
 
 The MP_PRIO option, shown below, can be used to set a priority flag
-for the path which is specified by the AddrID field that uniquely
+for the path which is specified by the Address ID field that uniquely
 identifies the path. The option can be sent over any path.
 
 ~~~~
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
-   |   Type = 46   |  Length = 4   |   MP_OPT = 9  |    AddrID    |
+   |   Type = 46   |  Length = 5   |   MP_OPT = 9  |  Address ID  |
    +---------------+---------------+-------+-------+--------------+
    |(resvd)|  Prio |
    +---------------+
