@@ -85,7 +85,8 @@
        "Nassef",
        "CLOSEREQ",
        "keepalive",
-       "suboption"
+       "suboption",
+       "WLAN"
 
     ]
 }
