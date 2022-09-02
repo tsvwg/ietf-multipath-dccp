@@ -419,40 +419,40 @@ shown in {{ref-option-list}}.
 
 ## Multipath Capable Feature {#mp_capable}
 
-DCCP endpoints are multipath-disabled by default and multipath
-capability can be negotiated with the Multipath Capable Feature.
+DCCP endpoints uses the Multipath Capable Feature to decide whether multipath extensions can be enabled for a DCCP connection.
 
-Multipath Capable has feature number 10 and has length of one-byte.
+Multipath Capable feature has feature number 10 and has length of one-byte.
 The leftmost four bits are used to specify a compatible version of the
-MP-DCCP implementation (0 for this specification).
-The following four bits are reserved for further use.
+MP-DCCP implementation (0000 for this specification). The following four bits are unassigned in version 0. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
     0  1  2  3   4  5  6  7
-   +------------------------+
-   |  Version  |  Reserved  |
-   +------------------------+
-    '0000'->v0
-    '0001'->v1
-    ........
+   +-----------+------------+
+   |  Version  | Unassigned |
+   +-----------+------------+
 ~~~~
 
-Multipath Capable follows the server-priority reconciliation rule described
-in ({{RFC4340}} section 6.3.1), which allows multiple versions to be
+The setting of Multipath Capable MUST follow the server-priority reconciliation rule described
+in ({{RFC4340}}, Section 6.3.1), which allows multiple versions to be
 specified in order of priority.
 
 The negotiation MUST be done as part of the initial handshake procedure
 as described in {{handshaking}}, and no subsequent re-negotiation of
-the Multipath Capable feature is allowed on the same MP connection.
+the Multipath Capable feature is allowed on the same MP-DCCP connection.
 
-Client MUST include a Change R option during the initial handshake request to
-supply a list of supported protocol versions, ordered by preference.
+Clients MUST include a Change R option during the initial handshake request to
+supply a list of supported MP-DCCP protocol versions, ordered by preference.
 
-Server MUST include a Confirm L option in the subsequent response to agree on
-a version to be used chosen from the Client list, followed by its own
-supported version(s) ordered by preference.
+Servers MUST include a Confirm L option in the subsequent response to agree on
+an MP-DCCP version to be used from the Client list, followed by its own
+supported version(s) ordered by preference. Any subflow addition to an existing MP-DCCP connection MUST use the same
+version negotiated for the first subflow.
 
-For example:
+If no agreement is found, the Server MUST reply with an empty Confirm L option
+with feature number 10 and no values.
+
+
+An example of successful version negotiation is shown hereafter: 
 
 ~~~~
       Client                                             Server
@@ -466,17 +466,13 @@ For example:
                  * agreement on version = 1 *
 ~~~~
 
-1. Client indicates support for both versions 1 and 0, with preference
-for version 1
+1. The Client indicates support for both MP-DCCP versions 1 and 0, with a preference
+for version 1.
 
-2. Server agrees on using version 1, and supply its own preference list.
+2. Server agrees on using MP-DCCP version 1, and supplies its own preference list.
 
+3. MP-DCCP is then enabled between the Client and Server with version 1.
 
-If no agreement can be found, the Server MUST reply with an empty Confirm L option
-with feature number 10 and no values.
-
-Any subflow addition to an existing MP connection MUST use the same
-version negotiated for the first subflow.
 
 ## Multipath Option {#MP_OPT}
 
