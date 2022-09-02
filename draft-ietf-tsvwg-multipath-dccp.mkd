@@ -494,7 +494,7 @@ for version 1.
 
 2. Server agrees on using MP-DCCP version 1, and supplies its own preference list.
 
-3. MP-DCCP is then enabled between the Client and Server with version.
+3. MP-DCCP is then enabled between the Client and Server with version 1.
 
 
 ## Multipath Option {#MP_OPT}
