@@ -1340,6 +1340,8 @@ added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. 
 | 0x10  | MP-DCCP capability feature | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
+As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation.
+
 This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.
 
 IANA is requested to The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
