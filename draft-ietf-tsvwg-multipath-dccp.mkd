@@ -211,9 +211,9 @@ single DCCP connection with no inherent performance penalty
 for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
-In the following, the term "subflow" refers to physical
-separate DCCP subflows transmitted via different paths, but not to
-application subflows. Application subflows are differing content-wise
+In the following, use of the term subflow will refer to disjoint DCCP subflows transmitted 
+via different paths (4-tuple), but not to application subflows. 
+Application subflows are differing content-wise
 by source and destination port per application as, for example, enabled
 by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
 can be multiplexed over a single DCCP connection. For the sake of consistency
