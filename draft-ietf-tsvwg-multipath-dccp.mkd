@@ -209,8 +209,7 @@ single DCCP connection with no inherent performance penalty
 for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
-In the following, use of the term subflow will refer to physical
-separate DCCP subflows transmitted via different paths, but not to
+In the following, use of the term subflow will refer to disjoint DCCP subflows transmitted via different paths (4-tuple), but not to
 application subflows. Application subflows are differing content-wise
 by source and destination port per application as, for example, enabled
 by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
@@ -219,12 +218,7 @@ we assume that only a single application is served by a DCCP connection
 here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
 while use of that feature should not impact DCCP operation on each single path
 as noted in ({{RFC5595}}, sect. 2.4).
-The term physical separate DCCP subflow as used in MP-DCCP refers to an individual DCCP flow within an MP-DCCP connection as defined below characterised by
-an own subflow end point identified in terms of a separate 4-tuple where source address/port in case of sending or destination address/port in case of receiving
-side, respectively.  Note that not the complete path needs to be completely disjoint as described in sect. {{Congestion Control Considerations}}
-(although this may be desirable for improved overall performance), but rather
-at least the so-called first/last mile links, i.e., typically the (radio) link between host and point of network attachment, e.g., cellular base station or WiFi
-access point.    
+ 
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
