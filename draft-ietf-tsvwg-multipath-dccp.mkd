@@ -503,6 +503,7 @@ The description of the fields of the multipath option is shown in {{ref-mp-optio
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
 | 46  |       3       | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
+| 46  |       TBD     | >10              | Reserved for future MP suboptions defined in Version > 0 or extension|
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 These operations are largely inspired by the signals defined in {{RFC8684}}. 
@@ -1359,6 +1360,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
+| TBD or MP_OPT>10| TBD             | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
