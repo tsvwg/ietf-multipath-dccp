@@ -515,17 +515,29 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
               1          2          3           4          5
    01234567 89012345 67890123 45678901 23456789 01234567 89012345
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101110| Length |00000000| List of options ...
+  |00101110| Length |00000000| List of confirmations ...
   +--------+--------+--------+--------+--------+--------+--------+
    Type=46           MP_OPT=0
 ~~~~
 
 Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until a MP_CONFIRM is received. The further processing of the multipath options in the
-receiving host is not the subject of MP_CONFIRM. The length and sending path of the MP_CONFIRM are dependent 
-on the confirmed options, which will be copied verbatim and appended as list of options.
-The validation for those options using MP_HMAC {{MP_HMAC}} for authentication MUST include verification of
-MP_HMAC before generating MP_CONFIRM. However, the received MP_HMAC is not copied into the MP_CONFIRM.
+until a MP_CONFIRM is received or confirmation of options is identified outdated. The further processing of the multipath options in the
+receiving host is not the subject of MP_CONFIRM.
+
+As the transmission of multipath suboptions is subject to out-of-order arrival, suboptions defined in {{ref-mp-option-confirm}}
+SHALL be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows to identify outdated suboptions which updates the same
+dataset. In case of MP_ADDADDR, MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
+suboption is detected at the receiver if a previous suboption referring to the same dataset contained a higher sequence number
+carried by MP_SEQ. Generating a MP_CONFIRM for suboptions identified outdated is optional.
+
+Similarly MP_CONFIRM is subject to out-of-order arrival. To ensure that the most recent suboption is confirmed the associated
+MP_SEQ received MUST be echoed. Otherwise inconsistency happens if between updates of a dataset with the same value, another value
+is sent. If the MP_CONFIRM of the second update and the third update itself gets lost, the value of the second update is applied on
+receiver side without being detected by the sender.
+
+The length and sending path of the MP_CONFIRM are dependent on the confirmed suboptions and the received MP_SEQ, which will be both copied verbatim and
+appended as list of confirmations. The order within this list is the confirmed suboption first followed by the received MP_SEQ.
+
 
 
 |Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
@@ -534,6 +546,7 @@ MP_HMAC before generating MP_CONFIRM. However, the received MP_HMAC is not copie
 | 46  |       4       | 8 =MP_REMOVEADDR | Any available                                                 |
 | 46  |       5       | 9 =MP_PRIO       | Any available                                                 |
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
+
 
 
 ### MP_JOIN {#MP_JOIN}
@@ -815,6 +828,9 @@ address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
+
 ~~~~
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -910,6 +926,9 @@ Note that, additionally, the presence of this HMAC prevents the
 address from being removed in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
+
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_REMOVEADDR is sent. Further details are given in {{MP_CONFIRM}}.
 
 The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
@@ -1007,7 +1026,10 @@ packet scheduling decisions (MP_PRIO=3), if the path has been established and
 added to an existing MP-DCCP connection. At least one path should have a 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
 connection. MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
-mechanisms (see {{ref-mp-option-confirm}}). 
+mechanisms (see {{ref-mp-option-confirm}}).
+
+The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 
 ### MP_CLOSE {#MP_CLOSE}
 
