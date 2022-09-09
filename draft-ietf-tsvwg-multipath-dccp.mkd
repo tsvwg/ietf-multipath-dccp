@@ -372,13 +372,11 @@ set-up, authentication, prioritization, modification, and removal of
 the DCCP subflows on different paths as well as the exchange of performance 
 parameters. 
 
-All MP-DCCP operations are 
-signaled with MP-DCCP options described in {#MP_OPT}.
-
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
-feature, as specified in {{protocol}}. Once 
+feature, as specified in {{mp_capable}}. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
-variable length multipath-related option, as described in {{mp_capable}}.
+variable length multipath-related option, as described in {{protocol}}.
+All MP-DCCP operations are signaled with MP-DCCP suboptions described in {#MP_OPT}.
 
 The number of concurrent DCCP subflows can vary during the 
 lifetime of a Multipath DCCP connection. 
