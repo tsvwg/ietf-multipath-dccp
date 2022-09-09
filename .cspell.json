@@ -84,7 +84,8 @@
        "Romo",
        "Nassef",
        "CLOSEREQ",
-       "keepalive"
+       "keepalive",
+       "suboptions"
 
     ]
 }
