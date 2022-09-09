@@ -1360,7 +1360,8 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
-| TBD or MP_OPT>10| TBD             | Reserved for future MP-DCCP suboptions           |                   |
+| TBD or MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
+| TBD or MP_OPT>11| TBD             | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
