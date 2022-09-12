@@ -494,15 +494,15 @@ The description of the fields of the multipath option is shown in {{ref-mp-optio
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
 | 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP connection          |
-| 46  |       3       |  2 =MP_FAST_CLOSE| Close an MP-DCCP connection unconditionally          |
+| 46  |       var     |  2 =MP_FAST_CLOSE| Close an MP-DCCP connection unconditionally          |
 | 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
-| 46  |       7       |  4 =MP_SEQ       | Multipath Sequence Number                            |
+| 46  |       9       |  4 =MP_SEQ       | Multipath Sequence Number                            |
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
-| 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
-| 46  |       3       | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
+| 46  |       5       |  9 =MP_PRIO      | Change Subflow Priority                              |
+| 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 These operations are largely inspired by the signals defined in {{RFC8684}}. 
@@ -515,9 +515,9 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
               1          2          3           4          5
    01234567 89012345 67890123 45678901 23456789 01234567 89012345
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101110| Length |00000000| List of confirmations ...
+  |00101110|  var   |00000000| List of confirmations ...
   +--------+--------+--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=0
+   Type=46   Length  MP_OPT=0
 ~~~~
 
 Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
@@ -614,9 +614,9 @@ this is done via the MP_FAST_CLOSE suboption.
               1          2          3
    01234567 89012345 67890123 45678901 23456789
   +--------+--------+--------+--------+--------+
-  |00101110| Length |00000010| Key Data ...
+  |00101110|  var   |00000010| Key Data ...
   +--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=2
+   Type=46   Length  MP_OPT=2
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
@@ -634,11 +634,11 @@ Upon reception of the MP_FAST_CLOSE and successful validation of the Key Data at
                        1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+---------------+---------------+
-  |0 0 1 0 1 1 1 0|     Length    |0 0 0 0 0 0 1 1| Key Type (1)  | 
+  |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 0 1 1| Key Type (1)  | 
   +---------------+---------------+---------------+---------------+
   |  Key Data (1) |  Key Type (2) |  Key Data (2) | ....
   +---------------+---------------+---------------+---------------+
-      Type=46                         MP_OPT=3
+      Type=46          Length         MP_OPT=3
 ~~~~
 {: #ref-MP_KEY title='Format of the MP_KEY Suboption'}
 
@@ -835,13 +835,13 @@ in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
-  |     Type      |     Length    |0 0 0 0 0 1 1 1|  Address ID   |
+  |     Type      |      var      |0 0 0 0 0 1 1 1|  Address ID   |
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
   |   Port (2 bytes, optional)    | + MP_HMAC option
   +-------------------------------+
-       Type=46       Length=var       MP_OPT=7
+       Type=46         Length         MP_OPT=7
 ~~~~
 {: #refMP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
  
@@ -947,10 +947,12 @@ at the requested ID, the receiver will silently ignore the request.
 ~~~~
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 4   |   MP_OPT = 8  |   Address ID  |
-+---------------+---------------+-------+-------+---------------+
-+ MP_HMAC option
++---------------+---------------+---------------+---------------+
+|      Type     |0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 0|   Address ID  |
++---------------+---------------+---------------+---------------+
+     Type=46        Length=4         MP_OPT=8
+
+-> followed by MP_HMAC option
 ~~~~
 {: #refMP_REMOVEADDR title='Format of theMP_REMOVEADDR Suboption'}
  
@@ -983,10 +985,11 @@ identifies the path. The option can be sent over any path.
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+-------+-------+--------------+
-   |   Type = 46   |  Length = 5   |   MP_OPT = 9  |  Address ID  |
+   |      Type     |0 0 0 0 0 1 0 1|0 0 0 0 1 0 0 1|  Address ID  |
    +---------------+---------------+-------+-------+--------------+
    |(resvd)|  Prio |
    +---------------+
+       Type=46        Length=5         MP_OPT=9
 ~~~~
 {: #ref-MP_PRIO title='Format of the MP_PRIO Suboption'}
 
@@ -1038,9 +1041,9 @@ in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
               1          2          3           
    01234567 89012345 67890123 45678901 23456789 
   +--------+--------+--------+--------+--------+
-  |00101110| Length |00001010| Key Data ...
+  |00101110|  var   |00001010| Key Data ...
   +--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=10
+   Type=46   Length  MP_OPT=10
 ~~~~
 {: #ref-MP_CLOSE title='Format of the MP_CLOSE Suboption'}
 
