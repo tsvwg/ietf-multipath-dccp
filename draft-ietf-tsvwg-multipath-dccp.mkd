@@ -90,6 +90,7 @@ informative:
   RFC6904:
   RFC6951:
   RFC8126:
+  RFC8174
   RFC8684:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
@@ -333,7 +334,7 @@ Address A1    Address A2             Address B1    Address B2
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
    capitals, as shown here.
 
 
