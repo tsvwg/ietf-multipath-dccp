@@ -1299,7 +1299,7 @@ demonstrations of a laboratory setup have been executed and have been published 
 Due to the great spearheading work of the Multipath TCP authors in {{RFC6824}}/{{RFC8684}}, some text
 passages were copied almost unmodified from these documents.
 
-The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, and Mohamed Boucadair.
+The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, and Behcet Sarikaya.
 
 
 # IANA Considerations
