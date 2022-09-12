@@ -804,9 +804,9 @@ same port pairs as used for the initial subflow (e.g., port 80
 remains port 80 on all subflows, as does the ephemeral port at the
 client), there may be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
-port is specified, MP-DCCP SHOULD attempt to connect to the specified
-address on the same port as is already in use by the subflow on which
-the MP_ADDADDR signal was sent.
+port is specified, the receiving peer SHOULD assume that any attempt to
+connect to the specified address has to be on the same port as is already
+in use by the subflow on which the MP_ADDADDR signal was sent.
 
 Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
