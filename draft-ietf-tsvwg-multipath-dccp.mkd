@@ -1363,8 +1363,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
 | TBD or MP_OPT>11| TBD             | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
-
-Experimental Sub-option MP_EXP (MP_OPT=11) is assigned in this registry upon the Expert Review policy (Section 4.5 of {{RFC8126}}). 
+ 
 Future MP-DCCP suboptions with MP_OPT>11 are assigned in this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
