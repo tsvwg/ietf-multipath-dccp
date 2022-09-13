@@ -307,9 +307,10 @@ Address A1    Address A2             Address B1    Address B2
    *  An MP-DCCP connection begins with a 4-way handshaking procedure, between 
       two hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}},
       an MP-DCCP connection is established between addresses A1 and B1 on Hosts
-      A and B, respectively.
+      A and B, respectively. It should be noted that MP-DCCP does not require the presence of 
+      more than one address in both peers.
 
-   *  If extra paths are available, additional DCCP subflows are created on 
+   *  In case extra paths and corresponding addresses are available, additional DCCP subflows are created on 
       these paths and are attached to the existing MP-DCCP session, which
       continues to appear as a single connection to the applications at both
       ends. The creation of an additional DCCP subflow is illustrated between Address A2
@@ -323,7 +324,10 @@ Address A1    Address A2             Address B1    Address B2
       equally have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows will be achieved
-      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
+      through a path management method including the logic and details of the procedures for adding/removing subflows;
+      this document describes supportive measures by which a host can initiate new subflows and signal available addresses 
+      between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
+      corresponding policy and the specifics of the implementation.
 
    *  MP-DCCP adds connection-level sequence numbers and exchange of
       Round-Trip Time (RTT) information to enable optional reordering features.
