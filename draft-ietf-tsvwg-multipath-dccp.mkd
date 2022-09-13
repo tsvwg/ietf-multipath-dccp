@@ -506,6 +506,7 @@ The description of the fields of the multipath option is shown in {{ref-mp-optio
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       5       |  9 =MP_PRIO      | Change Subflow Priority                              |
 | 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
+| 46  |       var     | 11 =MP_EXP       | Experimental suboption for private use               |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
 These operations are largely inspired by the signals defined in {{RFC8684}}. 
@@ -1056,6 +1057,27 @@ Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data a
 When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.
 
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
+
+
+### Experimental MP-DCCP Sub-Option MP_EXP for private use {#MP_EXP}
+
+This section reserves a MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of MP-DCCP protocol. This
+option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only at this stage. MP_OPT 
+feature number 11 is foreseen with an exemplary description as below:
+
+~~~~
+                     1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++---------------+---------------+---------------+---------------+
+|0 0 1 0 1 1 1 0|      var      |0 0 0 0 1 0 1 1|   Data TBD    |
++---------------+---------------+---------------+---------------+
+|   ...                                                         
++---------------------------------------------------------------+
+     Type=46         Length         MP_OPT=11
+~~~~
+{: #ref-MP_EXP title='Format of the MP_EXP Suboption'}
+ 
+Details as length and type of data remain to be defined according to the foreseen use by the experimenters.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
