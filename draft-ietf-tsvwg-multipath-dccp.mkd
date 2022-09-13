@@ -1342,7 +1342,14 @@ added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. 
 
 As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new sub-registry under the MP-DCCP registry to track the MP-DCCP version. The initial content of this sub-registry is as follows: 
 
-<<<Table with the value that is assigned in this document + list of values for future assignments>>>
+
+   |  Version  | Unassigned | Specification  |
+   |:---------:|:----------:|:--------------:|
+   |   0000    |   0000     | [ThisDocument] |
+   |0001 - 1111|   0000     |      TBD       |
+{:#ref-add-version-list title='Sub-registry for tracking the MP-DCCP version'}
+
+Future MP-DCCP versions 1 to 15 are assigned in this sub-registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
 This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.
 
@@ -1353,7 +1360,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection         | {{MP_JOIN}}       |
+| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
 | TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
