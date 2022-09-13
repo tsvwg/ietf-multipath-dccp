@@ -90,6 +90,7 @@ informative:
   RFC6904:
   RFC6951:
   RFC8126:
+  RFC8174:
   RFC8684:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
@@ -333,7 +334,7 @@ Address A1    Address A2             Address B1    Address B2
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
    capitals, as shown here.
 
 
@@ -372,13 +373,11 @@ set-up, authentication, prioritization, modification, and removal of
 the DCCP subflows on different paths as well as the exchange of performance 
 parameters. 
 
-All MP-DCCP operations are 
-signaled with MP-DCCP options described in {#MP_OPT}.
-
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
-feature, as specified in {{protocol}}. Once 
+feature, as specified in {{mp_capable}}. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
-variable length multipath-related option, as described in {{mp_capable}}.
+variable length multipath-related option, as described in {{protocol}}.
+All MP-DCCP operations are signaled with MP-DCCP suboptions described in {#MP_OPT}.
 
 The number of concurrent DCCP subflows can vary during the 
 lifetime of a Multipath DCCP connection. 
@@ -544,7 +543,7 @@ appended as list of confirmations. The order within this list is the confirmed s
 |:----|:--------------|:-----------------|:--------------------------------------------------------------|
 | 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
 | 46  |       4       | 8 =MP_REMOVEADDR | Any available                                                 |
-| 46  |       5       | 9 =MP_PRIO       | Any available                                                 |
+| 46  |       4       | 9 =MP_PRIO       | Any available                                                 |
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
 
 
@@ -806,9 +805,9 @@ same port pairs as used for the initial subflow (e.g., port 80
 remains port 80 on all subflows, as does the ephemeral port at the
 client), there may be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
-port is specified, MP-DCCP SHOULD attempt to connect to the specified
-address on the same port as is already in use by the subflow on which
-the MP_ADDADDR signal was sent.
+port is specified, the receiving peer SHOULD assume that any attempt to
+connect to the specified address has to be on the same port as is already
+in use by the subflow on which the MP_ADDADDR signal was sent.
 
 Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
@@ -977,19 +976,16 @@ for the packet scheduler when making decisions which path to use for
 user plane traffic.
 
 
-The MP_PRIO option, shown below, can be used to set a priority flag
-for the path which is specified by the Address ID field that uniquely
-identifies the path. The option can be sent over any path.
+The MP_PRIO suboption, shown below, can be used to set a priority flag
+for the path over which the suboption is received.
 
 ~~~~
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +---------------+---------------+-------+-------+--------------+
-   |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 1|0 0 0 0 1 0 0 1|  Address ID  |
-   +---------------+---------------+-------+-------+--------------+
-   |(resvd)|  Prio |
-   +---------------+
-       Type=46        Length=5         MP_OPT=9
+   +---------------+---------------+---------------+--------------+
+   |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|  Address ID  |
+   +---------------+---------------+---------------+--------------+
+       Type=46         Length=4        MP_OPT=9
 ~~~~
 {: #ref-MP_PRIO title='Format of the MP_PRIO Suboption'}
 
