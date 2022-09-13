@@ -201,6 +201,10 @@ MP-DCCP can be applied for load-balancing, seamless session handover, and
 aggregation purposes (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
 in the 3GPP terminology {{TS23.501}}).
 
+As pointed out in {{I-D.amend-tsvwg-multipath-framework-mpdccp}} the proposed encapsulation in terms of 
+lightweight DCCP flow headers is more appropriate for unreliable 
+IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
+Such considerations are not detailed in the present specification. 
 This document presents the protocol changes required to add multipath
 support to DCCP; specifically, those for signaling and setting up
 multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
