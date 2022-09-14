@@ -327,7 +327,7 @@ Address A1    Address A2             Address B1    Address B2
       through a path management method including the logic and details of the procedures for adding/removing subflows;
       this document describes supportive measures by which a host can initiate new subflows and signal available addresses 
       between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
-      corresponding policy and the specifics of the implementation. In the same context, if any of the MP-DCCP peer hosts has a limit on the maximum number of paths that can be maintained, the creation of new subflows from that peer host should be avoided and incoming subflow requests should be terminated.
+      corresponding policy and the specifics of the implementation. In the same context, if any of the MP-DCCP peer hosts has a limit on the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of {{rfc8041}}, the creation of new subflows from that peer host should be avoided and incoming subflow requests should be terminated.
 
    *  MP-DCCP adds connection-level sequence numbers and exchange of
       Round-Trip Time (RTT) information to enable optional reordering features.
