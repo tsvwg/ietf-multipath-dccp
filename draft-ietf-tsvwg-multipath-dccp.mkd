@@ -90,6 +90,7 @@ informative:
   RFC6904:
   RFC6951:
   RFC8126:
+  RFC8174:
   RFC8684:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
@@ -200,6 +201,10 @@ MP-DCCP can be applied for load-balancing, seamless session handover, and
 aggregation purposes (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
 in the 3GPP terminology {{TS23.501}}).
 
+As pointed out in {{I-D.amend-tsvwg-multipath-framework-mpdccp}} the proposed encapsulation in terms of 
+lightweight DCCP flow headers is more appropriate for unreliable 
+IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
+Such considerations are not detailed in the present specification. 
 This document presents the protocol changes required to add multipath
 support to DCCP; specifically, those for signaling and setting up
 multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
@@ -302,9 +307,10 @@ Address A1    Address A2             Address B1    Address B2
    *  An MP-DCCP connection begins with a 4-way handshaking procedure, between 
       two hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}},
       an MP-DCCP connection is established between addresses A1 and B1 on Hosts
-      A and B, respectively.
+      A and B, respectively. It should be noted that MP-DCCP does not require the presence of 
+      more than one address in both peers.
 
-   *  If extra paths are available, additional DCCP subflows are created on 
+   *  In case extra paths and corresponding addresses are available, additional DCCP subflows are created on 
       these paths and are attached to the existing MP-DCCP session, which
       continues to appear as a single connection to the applications at both
       ends. The creation of an additional DCCP subflow is illustrated between Address A2
@@ -318,7 +324,10 @@ Address A1    Address A2             Address B1    Address B2
       equally have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows will be achieved
-      through a path management method; this document describes supportive measures by which a host can initiate new subflows and available addresses can be signaled between peers. The definition of a path management method is however out of scope of this document.
+      through a path management method including the logic and details of the procedures for adding/removing subflows;
+      this document describes supportive measures by which a host can initiate new subflows and signal available addresses 
+      between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
+      corresponding policy and the specifics of the implementation.
 
    *  MP-DCCP adds connection-level sequence numbers and exchange of
       Round-Trip Time (RTT) information to enable optional reordering features.
@@ -333,7 +342,7 @@ Address A1    Address A2             Address B1    Address B2
    The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
    "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
    "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 [RFC2119] [RFC8174] when, and only when, they appear in all
+   BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
    capitals, as shown here.
 
 
@@ -372,13 +381,11 @@ set-up, authentication, prioritization, modification, and removal of
 the DCCP subflows on different paths as well as the exchange of performance 
 parameters. 
 
-All MP-DCCP operations are 
-signaled with MP-DCCP options described in {#MP_OPT}.
-
 The Multipath Capability for MP-DCCP can be negotiated with a new DCCP 
-feature, as specified in {{protocol}}. Once 
+feature, as specified in {{mp_capable}}. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
-variable length multipath-related option, as described in {{mp_capable}}.
+variable length multipath-related option, as described in {{protocol}}.
+All MP-DCCP operations are signaled with MP-DCCP suboptions described in {#MP_OPT}.
 
 The number of concurrent DCCP subflows can vary during the 
 lifetime of a Multipath DCCP connection. 
@@ -494,15 +501,15 @@ The description of the fields of the multipath option is shown in {{ref-mp-optio
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
 | 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP connection          |
-| 46  |       3       |  2 =MP_FAST_CLOSE| Close an MP-DCCP connection unconditionally          |
+| 46  |       var     |  2 =MP_FAST_CLOSE| Close an MP-DCCP connection unconditionally          |
 | 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
-| 46  |       7       |  4 =MP_SEQ       | Multipath Sequence Number                            |
+| 46  |       9       |  4 =MP_SEQ       | Multipath Sequence Number                            |
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
-| 46  |       3       | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
+| 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 | 46  |       TBD     | >10              | Reserved for future MP suboptions defined in Version > 0 or extension|
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
@@ -516,9 +523,9 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
               1          2          3           4          5
    01234567 89012345 67890123 45678901 23456789 01234567 89012345
   +--------+--------+--------+--------+--------+--------+--------+
-  |00101110| Length |00000000| List of confirmations ...
+  |00101110|  var   |00000000| List of confirmations ...
   +--------+--------+--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=0
+   Type=46   Length  MP_OPT=0
 ~~~~
 
 Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
@@ -545,7 +552,7 @@ appended as list of confirmations. The order within this list is the confirmed s
 |:----|:--------------|:-----------------|:--------------------------------------------------------------|
 | 46  |       var     | 7 =MP_ADDADDR    | Any available                                                 |
 | 46  |       4       | 8 =MP_REMOVEADDR | Any available                                                 |
-| 46  |       5       | 9 =MP_PRIO       | Any available                                                 |
+| 46  |       4       | 9 =MP_PRIO       | Any available                                                 |
 {: #ref-mp-option-confirm title='Multipath options requiring confirmation'}
 
 
@@ -615,9 +622,9 @@ this is done via the MP_FAST_CLOSE suboption.
               1          2          3
    01234567 89012345 67890123 45678901 23456789
   +--------+--------+--------+--------+--------+
-  |00101110| Length |00000010| Key Data ...
+  |00101110|  var   |00000010| Key Data ...
   +--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=2
+   Type=46   Length  MP_OPT=2
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
@@ -635,11 +642,11 @@ Upon reception of the MP_FAST_CLOSE and successful validation of the Key Data at
                        1                   2                   3
    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+---------------+---------------+
-  |0 0 1 0 1 1 1 0|     Length    |0 0 0 0 0 0 1 1| Key Type (1)  | 
+  |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 0 1 1| Key Type (1)  | 
   +---------------+---------------+---------------+---------------+
   |  Key Data (1) |  Key Type (2) |  Key Data (2) | ....
   +---------------+---------------+---------------+---------------+
-      Type=46                         MP_OPT=3
+      Type=46          Length         MP_OPT=3
 ~~~~
 {: #ref-MP_KEY title='Format of the MP_KEY Suboption'}
 
@@ -653,7 +660,7 @@ specify the type of the following key data. Key types are shown in {{ref-key-typ
 | 0 =Plain Text          |                  8 | Plain Text Key                   |
 | 1 =ECDHE-C25519-SHA256 |                 32 | ECDHE with SHA256 and Curve25519 |
 | 2 =ECDHE-C25519-SHA512 |                 64 | ECDHE with SHA512 and Curve25519 |
-| 3-255                  |                    | Reserved                         |
+| 3-255                  |                    | Unassigned                       |
 {: #ref-key-type-list title='MP_KEY Key Types'}
 
 
@@ -807,9 +814,9 @@ same port pairs as used for the initial subflow (e.g., port 80
 remains port 80 on all subflows, as does the ephemeral port at the
 client), there may be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
-port is specified, MP-DCCP SHOULD attempt to connect to the specified
-address on the same port as is already in use by the subflow on which
-the MP_ADDADDR signal was sent.
+port is specified, the receiving peer SHOULD assume that any attempt to
+connect to the specified address has to be on the same port as is already
+in use by the subflow on which the MP_ADDADDR signal was sent.
 
 Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
@@ -836,13 +843,13 @@ in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
-  |     Type      |     Length    |0 0 0 0 0 1 1 1|  Address ID   |
+  |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 1 1 1|  Address ID   |
   +---------------+---------------+-------+-------+---------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
   |   Port (2 bytes, optional)    | + MP_HMAC option
   +-------------------------------+
-       Type=46       Length=var       MP_OPT=7
+       Type=46         Length         MP_OPT=7
 ~~~~
 {: #refMP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
  
@@ -948,10 +955,12 @@ at the requested ID, the receiver will silently ignore the request.
 ~~~~
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-+---------------+---------------+-------+-------+---------------+
-|   Type = 46   |  Length = 4   |   MP_OPT = 8  |   Address ID  |
-+---------------+---------------+-------+-------+---------------+
-+ MP_HMAC option
++---------------+---------------+---------------+---------------+
+|0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 0|   Address ID  |
++---------------+---------------+---------------+---------------+
+     Type=46        Length=4         MP_OPT=8
+
+-> followed by MP_HMAC option
 ~~~~
 {: #refMP_REMOVEADDR title='Format of theMP_REMOVEADDR Suboption'}
  
@@ -976,18 +985,16 @@ for the packet scheduler when making decisions which path to use for
 user plane traffic.
 
 
-The MP_PRIO option, shown below, can be used to set a priority flag
-for the path which is specified by the Address ID field that uniquely
-identifies the path. The option can be sent over any path.
+The MP_PRIO suboption, shown below, can be used to set a priority flag
+for the path over which the suboption is received.
 
 ~~~~
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
-   +---------------+---------------+-------+-------+--------------+
-   |   Type = 46   |  Length = 5   |   MP_OPT = 9  |  Address ID  |
-   +---------------+---------------+-------+-------+--------------+
-   |(resvd)|  Prio |
-   +---------------+
+   +---------------+---------------+---------------+--------------+
+   |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|  Address ID  |
+   +---------------+---------------+---------------+--------------+
+       Type=46         Length=4        MP_OPT=9
 ~~~~
 {: #ref-MP_PRIO title='Format of the MP_PRIO Suboption'}
 
@@ -1039,9 +1046,9 @@ in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
               1          2          3           
    01234567 89012345 67890123 45678901 23456789 
   +--------+--------+--------+--------+--------+
-  |00101110| Length |00001010| Key Data ...
+  |00101110|  var   |00001010| Key Data ...
   +--------+--------+--------+--------+--------+
-   Type=46           MP_OPT=10
+   Type=46   Length  MP_OPT=10
 ~~~~
 {: #ref-MP_CLOSE title='Format of the MP_CLOSE Suboption'}
 
@@ -1054,6 +1061,27 @@ Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data a
 When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.
 
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
+
+
+### Experimental MP-DCCP Sub-Option MP_EXP for private use {#MP_EXP}
+
+This section reserves a MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of MP-DCCP protocol. This
+option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only at this stage. MP_OPT 
+feature number 11 is foreseen with an exemplary description as below:
+
+~~~~
+                     1                   2                   3
+ 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
++---------------+---------------+---------------+---------------+
+|0 0 1 0 1 1 1 0|      var      |0 0 0 0 1 0 1 1|   Data TBD    |
++---------------+---------------+---------------+---------------+
+|   ...                                                         
++---------------------------------------------------------------+
+     Type=46         Length         MP_OPT=11
+~~~~
+{: #ref-MP_EXP title='Format of the MP_EXP Suboption'}
+ 
+Details as length and type of data remain to be defined according to the foreseen use by the experimenters.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
@@ -1341,6 +1369,17 @@ added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. 
 | 0x10  | MP-DCCP capability feature | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
 
+As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new sub-registry under the MP-DCCP registry to track the MP-DCCP version. The initial content of this sub-registry is as follows: 
+
+
+   |  Version  | Description | Specification  |
+   |:---------:|:----------:|:--------------:|
+   |   0000    |   Version 0| [ThisDocument] |
+   |0001 - 1111|   Unassigned     |                 |
+{:#ref-add-version-list title='Sub-registry for tracking the MP-DCCP version'}
+
+Future MP-DCCP versions 1 to 15 are assigned from this sub-registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+
 This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.
 
 IANA is requested to The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
@@ -1350,7 +1389,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
 | TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection         | {{MP_JOIN}}       |
+| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
 | TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
@@ -1370,7 +1409,8 @@ In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) 
 
 In addition IANA is requested to assign for this version of the MP-DCCP protocol three different sub options to the MP-KEY option to identify the 
 MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below.
-Values in range 3-255 remain unspecified and are reserved for use in potential future versions of the MP-DCCP protocol.
+Values in range 3-255 (decimal) inclusive remain unassigned in this version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
+in potential future versions of the MP-DCCP protocol.
 
 | Value    | Key Type             | Name or Meaning                  | Reference  |
 |:--------:|:--------------------:|:--------------------------------:|:-----------|
