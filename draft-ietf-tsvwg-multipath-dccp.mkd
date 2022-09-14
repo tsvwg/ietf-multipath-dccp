@@ -789,6 +789,25 @@ Age
    exists, e.g., when initialized, the value is 0.
 {: vspace='0'}
 
+In {{ref-MP_RTT_example}} an exemplary flow shows the exchange of path individual 
+RTT information with RTT1 pointing to a first path and RTT2 to a second path. Those
+RTT values might be extracted from the sender Congestion Control and carried to the receiving host
+using MP_RTT suboption. With the reception of RTT1 and RTT2, the receiver is able to
+calculate the path_delta which corresponds to the absolute difference of both values.
+In case of symmetrical path latency, packets with missing sequence number MP_SEQ, e.g.,
+in a reordering process, can be assumed lost after path_delta/2.
+
+~~~~
+   MP-DCCP                   MP-DCCP
+   Sender                    Receiver
+   +--------+  MP_RTT(RTT1)  +-------------+
+   |   RTT1 |----------------|             |
+   |        |                | path_delta= |
+   |        |  MP_RTT(RTT2)  | |RTT1-RTT2| |
+   |   RTT2 |----------------|             |
+   +--------+                +-------------+
+~~~~
+{: #ref-MP_RTT_example title='Exemplary flow of MP_RTT exchange and usage'}
 
 ### MP_ADDADDR {#MP_ADDADDR}
 
