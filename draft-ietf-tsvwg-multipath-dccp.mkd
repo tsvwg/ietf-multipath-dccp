@@ -1349,7 +1349,7 @@ As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit 
    |0001 - 1111|   0000     |      TBD       |
 {:#ref-add-version-list title='Sub-registry for tracking the MP-DCCP version'}
 
-Future MP-DCCP versions 1 to 15 are assigned in this sub-registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future MP-DCCP versions 1 to 15 are assigned from this sub-registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
 This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.
 
