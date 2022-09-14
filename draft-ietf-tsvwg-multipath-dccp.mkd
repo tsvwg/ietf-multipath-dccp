@@ -1343,7 +1343,7 @@ added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. 
 As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new sub-registry under the MP-DCCP registry to track the MP-DCCP version. The initial content of this sub-registry is as follows: 
 
 
-   |  Version  | Unassigned | Specification  |
+   |  Version  | Description | Specification  |
    |:---------:|:----------:|:--------------:|
    |   0000    |   0000     | [ThisDocument] |
    |0001 - 1111|   0000     |      TBD       |
