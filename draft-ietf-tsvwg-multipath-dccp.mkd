@@ -1345,7 +1345,7 @@ As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit 
 
    |  Version  | Description | Specification  |
    |:---------:|:----------:|:--------------:|
-   |   0000    |   0000     | [ThisDocument] |
+   |   0000    |   Version 0| [ThisDocument] |
    |0001 - 1111|   Unassigned     |                 |
 {:#ref-add-version-list title='Sub-registry for tracking the MP-DCCP version'}
 
