@@ -1190,7 +1190,11 @@ handshake is as follows:
 When a host wants to close an existing subflow but not the whole MP-DCCP
 connection, it initiates the regular DCCP connection termination procedure 
 as described in {{RFC4340}}, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
-may be preceded by a DCCP-CloseReq.
+may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
+e.g. during establishment, it is recommended to use a DCCP reset code as specified in
+Table 2 of {{RFC4340}}. This could be, for example, sending reset code 5 when an MP-DCCP
+option provides invalid data, or reset code 9 when the maximum number of maintainable paths
+is reached.
 
 When a host wants to terminate an  MP-DCCP connection, it is RECOMMENDED that the host
 initiates the DCCP connection termination as per {{RFC4340}} on each subflow with the first packet on 
