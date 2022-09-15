@@ -914,6 +914,13 @@ accidentally setting up a new subflow upon the signal of a private
 address.  Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
 new MP_JOIN attempts are discussed in {{security}}.
+In case a sending host of a MP_ADDADDR knows about the inability
+to establish incoming subflows on a particular address, a MP_ADDADDR
+SHOULD NOT advertise this address unless sending host has new knowledge
+about the ability. Such ability information can be obtained from local
+firewall or routing settings, knowledge about availability of external
+NAT or firewall, or from connectivity checks performed by the
+host/application.
 
 The reception of an MP_ADDADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
@@ -932,6 +939,7 @@ further connection attempts to this address/port combination for this
 connection. However, a sender that wants to trigger a new incoming
 connection attempt on a previously advertised address/port combination
 can therefore refresh MP_ADDADDR information by sending the option again.
+
 
 ### MP_REMOVEADDR {#MP_REMOVEADDR}
 
