@@ -12,6 +12,9 @@ jobs:
         with:
           python-version: '3.10'
       - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.0'
+          bundler-cache: true
       - run: sudo npm install cspell@cspell4 -g
       - run: gem install kramdown-rfc2629
       - run: sudo pip install xml2rfc
