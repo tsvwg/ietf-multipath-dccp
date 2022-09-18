@@ -1,4 +1,4 @@
-# ietf-multipath-dccp ![Build Status](https://github.com/markusa/ietf-multipath-dccp/actions/workflows/verify.yml/badge.svg?event=push)
+# ietf-multipath-dccp ![Build Status](https://github.com/markusa/ietf-multipath-dccp/actions/workflows/verify.yml/badge.svg)
 IETF draft extending the DCCP protocol with multipath capabilities.
 
 This is work in progress and uses "xml2rfc" v3 vocabulary. Travis has been configured to verify:
