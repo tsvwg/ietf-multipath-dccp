@@ -1,0 +1,18 @@
+name: markdown-to-rfc
+on: [push]
+jobs:
+  make-rfc:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+	  - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+	  - uses: ruby/setup-ruby@v1
+      - run: sudo npm install cspell@cspell4 -g
+      - run: gem install kramdown-rfc2629
+	  - run: sudo pip install xml2rfc
+	  - run: make full
