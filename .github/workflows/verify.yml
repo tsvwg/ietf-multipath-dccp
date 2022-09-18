@@ -8,11 +8,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: '14'
-	  - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-	  - uses: ruby/setup-ruby@v1
+      - uses: ruby/setup-ruby@v1
       - run: sudo npm install cspell@cspell4 -g
       - run: gem install kramdown-rfc2629
-	  - run: sudo pip install xml2rfc
-	  - run: make full
+      - run: sudo pip install xml2rfc
+      - run: make full
