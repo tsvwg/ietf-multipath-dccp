@@ -39,4 +39,4 @@ delete all generated files and remain with the Markdown file solely
 * **`make full`** (used for travis)
 check spelling and creates XML, TXT and HTML files
 
-A minimal requirement list of packets to be installed based on Ubuntu "Focal Fossa" can be found in .travis.yml
+A minimal requirement list of packets to be installed based on latest Ubuntu can be found in .github/workflows/verify.yml
