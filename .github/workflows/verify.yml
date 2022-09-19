@@ -51,14 +51,11 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: "RFC"
-      - name: "Print received files"
+      - name: "Deploy to Github Pages"
         shell: "bash"
         run: |
           ls *.html *.txt
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
           git add ./\*.txt
           git add ./\*.html
-          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
-          git push
-      - name: Deploy to Github Pages
-        run: exit 0
+          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}" && git push
