@@ -48,5 +48,10 @@ jobs:
         shell: "bash"
         run: |
           ls *.html *.txt
+          commit_hash=$(git rev-parse --short HEAD)
+          git checkout gh-pages
+          git add ./\*.txt
+          git add ./\*.html
+          git commit -m "${commit_hash}"
       - name: Deploy to Github Pages
         run: exit 0
