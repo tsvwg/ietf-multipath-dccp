@@ -4,18 +4,33 @@ jobs:
   make-rfc:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: "Checkout"
+        uses: actions/checkout@v3
+
+      - name: "Setup Node"
+        uses: actions/setup-node@v3
         with:
           node-version: '14'
-      - uses: actions/setup-python@v4
+
+      - name: "Setup Python"
+        uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-      - uses: ruby/setup-ruby@v1
+
+      - name: "Setup Ruby"
+        uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.0'
           bundler-cache: true
+
       - run: sudo npm install cspell@cspell4 -g
       - run: gem install kramdown-rfc2629
       - run: sudo pip install xml2rfc
       - run: make full
+  deploy:
+    runs-on: ubuntu-latest
+    needs: make-rfc
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Deploy to Github Pages
+        run: exit 0
