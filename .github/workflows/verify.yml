@@ -37,9 +37,16 @@ jobs:
             draft-*.txt
   deploy:
     runs-on: ubuntu-latest
+    env: 
+      CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
+      CI_COMMIT_AUTHOR: Continuous Integration
     needs: make-rfc
     if: github.ref == 'refs/heads/master'
     steps:
+      - name: "Checkout gh-pages"
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
       - name: "Receive converted documents"
         uses: actions/download-artifact@v3
         with:
@@ -48,10 +55,10 @@ jobs:
         shell: "bash"
         run: |
           ls *.html *.txt
-          commit_hash=$(git rev-parse --short HEAD)
-          git checkout gh-pages
+          git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
           git add ./\*.txt
           git add ./\*.html
-          git commit -m "${commit_hash}"
+          git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}"
+          git push
       - name: Deploy to Github Pages
         run: exit 0
