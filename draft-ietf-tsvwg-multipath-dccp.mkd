@@ -175,7 +175,7 @@ the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
 components necessary to establish and use multiple DCCP subflows across
-potentially disjoint paths.
+different paths.
 
 --- middle
 
@@ -211,8 +211,8 @@ single DCCP connection with no inherent performance penalty
 for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
-In the following, use of the term subflow will refer to disjoint DCCP subflows transmitted 
-via different paths (4-tuple), but not to application subflows. 
+In the following, use of the term subflow will refer to DCCP subflows transmitted 
+via different paths (4-tuple), not to be mixed up with application subflows (sub-flows) as used in {{RFC4340}}. 
 Application subflows are differing content-wise
 by source and destination port per application as, for example, enabled
 by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
@@ -221,6 +221,7 @@ we assume that only a single application is served by a DCCP connection
 here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
 while use of that feature should not impact DCCP operation on each single path
 as noted in (Section 2.4 of {{RFC5595}}).
+Application subflows can co-exist with MP-DCCP operation as defined in this document.
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
