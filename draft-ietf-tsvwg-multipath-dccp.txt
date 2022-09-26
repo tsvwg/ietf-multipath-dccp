@@ -40,7 +40,7 @@ Abstract
    simultaneously use multiple paths between peers.  The protocol offers
    the same type of service to applications as DCCP and it provides the
    components necessary to establish and use multiple DCCP subflows
-   across potentially disjoint paths.
+   across different paths.
 
 Status of This Memo
 
@@ -187,16 +187,19 @@ Internet-Draft               Multipath DCCP                    July 2022
    ordered delivery.  DCCP does not provide built-in support for those
    multiple application subflows.
 
-   In the following, the term "subflow" refers to physical separate DCCP
-   subflows transmitted via different paths, but not to application
-   subflows.  Application subflows are differing content-wise by source
-   and destination port per application as, for example, enabled by
-   Service Codes introduced to DCCP in [RFC5595], and those application
-   subflows can be multiplexed over a single DCCP connection.  For the
-   sake of consistency we assume that only a single application is
-   served by a DCCP connection here as shown in Figure 1 while use of
-   that feature should not impact DCCP operation on each single path as
-   noted in (Section 2.4 of [RFC5595]).
+   In the following, the term subflow refers to DCCP subflows
+   transmitted via different paths (4-tuple of source and destination
+   address/port pairs), not to be mixed up with the "application sub-
+   flows" mentioned in Section 17.2 of [RFC4340].  Application subflows
+   are differing content-wise by source and destination port per
+   application as, for example, enabled by Service Codes introduced to
+   DCCP in [RFC5595], and those application subflows can be multiplexed
+   over a single DCCP connection.  For the sake of consistency we assume
+   that only a single application is served by a DCCP connection here as
+   shown in Figure 1 while use of that feature should not impact DCCP
+   operation on each single path as noted in (Section 2.4 of [RFC5595]).
+   Application subflows can co-exist with MP-DCCP operation as defined
+   in this document.
 
 1.1.  Multipath DCCP in the Networking Stack
 
@@ -216,15 +219,14 @@ Internet-Draft               Multipath DCCP                    July 2022
    |      IP       |            |       IP      |      IP       |
    +---------------+            +-------------------------------+
 
-     Figure 1: Comparison of Standard DCCP and MP-DCCP Protocol Stacks
-
-
 
 
 Amend, et al.            Expires 9 January 2023                 [Page 4]
 
 Internet-Draft               Multipath DCCP                    July 2022
 
+
+     Figure 1: Comparison of Standard DCCP and MP-DCCP Protocol Stacks
 
 1.2.  Terminology
 
@@ -260,8 +262,6 @@ Internet-Draft               Multipath DCCP                    July 2022
 
    Figure 2 provides a general overview of the MP-DCCP working mode,
    whose main characteristics are summarized in this section.
-
-
 
 
 
@@ -1963,7 +1963,7 @@ Internet-Draft               Multipath DCCP                    July 2022
 
 
    [I-D.lhwxz-hybrid-access-network-architecture]
-              Leymann, N., Heidemann, C., Wesserman, M., Xue, L., and M.
+              Leymann, N., Heidemann, C., Cullen, M., Xue, L., and M.
               Zhang, "Hybrid Access Network Architecture", Work in
               Progress, Internet-Draft, draft-lhwxz-hybrid-access-
               network-architecture-02, 13 January 2015,
@@ -1971,7 +1971,7 @@ Internet-Draft               Multipath DCCP                    July 2022
               access-network-architecture-02.txt>.
 
    [I-D.muley-network-based-bonding-hybrid-access]
-              Muley, P., Henderickx, W., Liang, G., Liu, H., Cardullo,
+              Muley, P., Henderickx, W., Geng, L., Liu, H., Cardullo,
               L., Newton, J., Seo, S., Draznin, S., and B. Patil,
               "Network based Bonding solution for Hybrid Access", Work
               in Progress, Internet-Draft, draft-muley-network-based-
