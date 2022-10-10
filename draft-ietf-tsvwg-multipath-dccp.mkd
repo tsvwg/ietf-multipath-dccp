@@ -176,7 +176,7 @@ DCCP to support multipath operations.  Multipath DCCP provides
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
-components necessary to establish and use multiple DCCP subflows across
+components necessary to establish and use multiple DCCP flows in parallel across
 different paths.
 
 --- middle
@@ -198,14 +198,10 @@ MP-DCCP has been first suggested
 in the context of the 3GPP work on 5G multi-access solutions
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
 networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}.
-MP-DCCP can be applied for load-balancing, seamless session handover, and
+MP-DCCP can be applied for load-balancing, seamless session handover, and bandwidth
 aggregation purposes (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
 in the 3GPP terminology {{TS23.501}}).
 
-As pointed out in {{I-D.amend-tsvwg-multipath-framework-mpdccp}} the proposed encapsulation in terms of 
-lightweight DCCP flow headers is more appropriate for unreliable 
-IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
-Such considerations are not detailed in the present specification. 
 This document presents the protocol changes required to add multipath
 support to DCCP; specifically, those for signaling and setting up
 multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
@@ -230,6 +226,11 @@ here as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}
 while use of that feature should not impact DCCP operation on each single path
 as noted in (Section 2.4 of {{RFC5595}}).
 Application subflows can co-exist with MP-DCCP operation as defined in this document.
+
+As pointed out in {{I-D.amend-tsvwg-multipath-framework-mpdccp}} the proposed encapsulation in terms of 
+lightweight DCCP flow headers is more appropriate for unreliable 
+IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
+Such considerations are not detailed in the present specification. 
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -302,7 +303,7 @@ Address A1    Address A2             Address B1    Address B2
   |             |  (DCCP subflow setup)|             |
   |             |--------------------->|             |
   |             |<---------------------|             |
-  | merge individual DCCP subflows to one multipath connection
+  | merge individual DCCP subflows to one MP-DCCP connection
   |             |                      |             |
 ~~~~
 {: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP Usage Scenario'}
@@ -314,17 +315,17 @@ Address A1    Address A2             Address B1    Address B2
       A and B, respectively. It should be noted that MP-DCCP does not require the presence of 
       more than one address in both peers.
 
-   *  In case extra paths and corresponding addresses are available, additional DCCP subflows are created on 
+   *  In case extra paths and corresponding addresses/ports are available, additional DCCP subflows are created on 
       these paths and are attached to the existing MP-DCCP session, which
       continues to appear as a single connection to the applications at both
       ends. The creation of an additional DCCP subflow is illustrated between Address A2
       on Host A and Address B1 on Host B.
 
    *  MP-DCCP identifies multiple paths by the presence of multiple
-      addresses at hosts.  Combinations of these multiple addresses
+      addresses/ports at hosts.  Combinations of these multiple addresses/ports
       equate to the additional paths.  In the example, other potential
       paths that could be set up are A1<->B2 and A2<->B2.  Although this
-      additional session is shown as being initiated from A2, it could
+      additional subflow is shown as being initiated from A2, it could
       equally have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows will be achieved
