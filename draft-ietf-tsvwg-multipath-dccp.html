@@ -30,11 +30,11 @@ the same type of service to applications as DCCP and it provides the
 components necessary to establish and use multiple DCCP subflows across
 different paths. 
     " name="description">
-<meta content="xml2rfc 3.15.0" name="generator">
+<meta content="xml2rfc 3.15.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-06" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.0
+  xml2rfc 3.15.1
     Python 3.8.10
     appdirs 1.4.4
     ConfigArgParse 1.5.3
@@ -270,7 +270,7 @@ a.selfRef:hover {
 } */
 
 /* Figures */
-tt, code, pre, code {
+tt, code, pre {
   background-color: #f9f9f9;
   font-family: 'Roboto Mono', monospace;
 }
@@ -842,7 +842,7 @@ section {
 }
 
 /* prevent monospace from becoming overly large */
-tt, code, pre, code {
+tt, code, pre {
   font-size: 95%;
 }
 
@@ -1065,6 +1065,7 @@ aside > p {
 /* Sourcecode margin in print, when there's no pilcrow */
 @media print {
   .artwork,
+  .artwork > pre,
   .sourcecode {
     margin-bottom: 1em;
   }
@@ -2552,7 +2553,7 @@ for the path over which the suboption is received.<a href="#section-3.2.10-2" cl
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+---------------+--------------+
-   |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|  Address ID  |
+   |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|(resvd)| prio |
    +---------------+---------------+---------------+--------------+
        Type=46         Length=4        MP_OPT=9
 </pre>
@@ -3230,7 +3231,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dl class="references">
 <dt id="I-D.amend-iccrg-multipath-reordering">[I-D.amend-iccrg-multipath-reordering]</dt>
       <dd>
-<span class="refAuthor">Amend, M.</span> and <span class="refAuthor">D. V. Hugo</span>, <span class="refTitle">"Multipath sequence maintenance"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-iccrg-multipath-reordering-03</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt">https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Amend, M.</span> and <span class="refAuthor">D. Von Hugo</span>, <span class="refTitle">"Multipath sequence maintenance"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-iccrg-multipath-reordering-03</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt">https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.amend-tsvwg-dccp-udp-header-conversion">[I-D.amend-tsvwg-dccp-udp-header-conversion]</dt>
       <dd>

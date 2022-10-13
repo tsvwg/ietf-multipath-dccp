@@ -1255,7 +1255,7 @@ Internet-Draft               Multipath DCCP               September 2022
                            1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
       +---------------+---------------+---------------+--------------+
-      |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|  Address ID  |
+      |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 1|(resvd)| prio |
       +---------------+---------------+---------------+--------------+
           Type=46         Length=4        MP_OPT=9
 
@@ -1930,7 +1930,7 @@ Internet-Draft               Multipath DCCP               September 2022
 9.  Informative References
 
    [I-D.amend-iccrg-multipath-reordering]
-              Amend, M. and D. V. Hugo, "Multipath sequence
+              Amend, M. and D. Von Hugo, "Multipath sequence
               maintenance", Work in Progress, Internet-Draft, draft-
               amend-iccrg-multipath-reordering-03, 25 October 2021,
               <https://www.ietf.org/archive/id/draft-amend-iccrg-
