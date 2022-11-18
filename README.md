@@ -36,7 +36,7 @@ check spelling and returns list of unknown/incorrect words with line numbers
 generates according to `make spell` a well shaped list ready to be copied to the .cspell.json "words" list
 * `make clean`
 delete all generated files and remain with the Markdown file solely
-* **`make full`** (used for travis)
-check spelling and creates XML, TXT and HTML files
+* **`make full`**
+check spelling and creates XML, TXT and HTML files. (Also used for CI)
 
-A minimal requirement list of packets to be installed based on latest Ubuntu can be found in .github/workflows/verify.yml
+A minimal requirement list of packets to be installed based on latest Ubuntu can be found in the Github workflow for CI: `.github/workflows/verify.yml`
