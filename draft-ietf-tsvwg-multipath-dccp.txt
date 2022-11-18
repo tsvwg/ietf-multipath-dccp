@@ -652,14 +652,14 @@ Internet-Draft               Multipath DCCP               September 2022
 
    The length and sending path of the MP_CONFIRM are dependent on the
    confirmed suboptions and the received MP_SEQ, which will be both
-   copied verbatim and appended as list of confirmations.  The order
-   within this list is the confirmed suboption first followed by the
-   received MP_SEQ.
-
-
-
-
-
+   copied verbatim and appended as list of confirmations.  The list
+   structures by first listing the received MP_SEQ followed by the
+   confirmed suboption or suboptions.  The same rules apply when
+   suboptions with different MP_SEQs are confirmed at once.  This might
+   happen if a datagram with MP_PRIO and a first MP_SEQ_1 and another
+   datagram with MP_ADDADDR and a second MP_SEQ_2 are received in short
+   succession.  In this case, the structure described above is
+   concatenated resulting in MP_SEQ_1 + MP_PRIO + MP_SEQ_2 + MP_ADDADDR.
 
 
 
