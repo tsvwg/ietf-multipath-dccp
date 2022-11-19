@@ -359,7 +359,9 @@ potentially same performance. However, DCCP does not provide built-in
 support for multiple subflows and the Congestion Manager (CM) 
 {{RFC3124}}, as a generic multiplexing facility, can not fully support 
 multiple congestion control mechanisms for multiple DCCP flows between 
-same source and destination addresses.
+same source and destination addresses. Various congestion control mechanisms 
+have been specified to optimize DCCP performance for specific traffic types 
+in terms of profiles denoted by a Congestion Control IDentifier (CCID).
 
 The extension of DCCP towards Multipath-DCCP (MP-DCCP) is 
 described in detail in {{protocol}}.
