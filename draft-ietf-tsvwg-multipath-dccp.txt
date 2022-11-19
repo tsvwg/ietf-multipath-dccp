@@ -376,16 +376,16 @@ Internet-Draft               Multipath DCCP               September 2022
    in support for multiple subflows and the Congestion Manager (CM)
    [RFC3124], as a generic multiplexing facility, can not fully support
    multiple congestion control mechanisms for multiple DCCP flows
-   between same source and destination addresses.
+   between same source and destination addresses.  Various congestion
+   control mechanisms have been specified to optimize DCCP performance
+   for specific traffic types in terms of profiles denoted by a
+   Congestion Control IDentifier (CCID).
 
    The extension of DCCP towards Multipath-DCCP (MP-DCCP) is described
    in detail in Section 3.
 
-   As a high level overview of the MP-DCCP operation, the data stream
-   from a DCCP application is split by MP-DCCP operation into one or
-   more subflows which can be transmitted via different also physically
-   isolated paths.  The corresponding control information allows the
-   receiver to optionally re-assemble and deliver the received data in
+
+
 
 
 
@@ -394,6 +394,11 @@ Amend, et al.             Expires 30 March 2023                 [Page 7]
 Internet-Draft               Multipath DCCP               September 2022
 
 
+   As a high level overview of the MP-DCCP operation, the data stream
+   from a DCCP application is split by MP-DCCP operation into one or
+   more subflows which can be transmitted via different also physically
+   isolated paths.  The corresponding control information allows the
+   receiver to optionally re-assemble and deliver the received data in
    the right order to the recipient application.  The details of the
    transmission scheduling mechanism and optional reordering mechanism
    are up to the sender and receiver, respectively, and are outside the
@@ -437,11 +442,6 @@ Internet-Draft               Multipath DCCP               September 2022
    Rec'n Rule:  The reconciliation rule used for the feature.  SP means
       server-priority, NN means non-negotiable.
 
-   Initial Value:  The initial value for the feature.  Every feature has
-      a known initial value.
-
-   Req'd:  This column is "Y" if and only if every DCCP implementation
-
 
 
 
@@ -450,6 +450,10 @@ Amend, et al.             Expires 30 March 2023                 [Page 8]
 Internet-Draft               Multipath DCCP               September 2022
 
 
+   Initial Value:  The initial value for the feature.  Every feature has
+      a known initial value.
+
+   Req'd:  This column is "Y" if and only if every DCCP implementation
       MUST understand the feature.  If it is "N", then the feature
       behaves like an extension, and it is safe to respond to Change
       options for the feature with empty Confirm options.
@@ -492,10 +496,6 @@ Internet-Draft               Multipath DCCP               September 2022
    negotiation of the Multipath Capable feature is allowed on the same
    MP-DCCP connection.
 
-   Clients MUST include a Change R option during the initial handshake
-   request to supply a list of supported MP-DCCP protocol versions,
-   ordered by preference.
-
 
 
 
@@ -505,6 +505,10 @@ Amend, et al.             Expires 30 March 2023                 [Page 9]
 
 Internet-Draft               Multipath DCCP               September 2022
 
+
+   Clients MUST include a Change R option during the initial handshake
+   request to supply a list of supported MP-DCCP protocol versions,
+   ordered by preference.
 
    Servers MUST include a Confirm L option in the subsequent response to
    agree on an MP-DCCP version to be used from the Client list, followed
@@ -550,10 +554,6 @@ Internet-Draft               Multipath DCCP               September 2022
 
                      Figure 3: Multipath Option Format
 
-   The description of the fields of the multipath option is shown in
-   Table 3.  MP_OPT refers to an MP-DCCP suboption.
-
-
 
 
 
@@ -561,6 +561,9 @@ Amend, et al.             Expires 30 March 2023                [Page 10]
 
 Internet-Draft               Multipath DCCP               September 2022
 
+
+   The description of the fields of the multipath option is shown in
+   Table 3.  MP_OPT refers to an MP-DCCP suboption.
 
     +======+========+================+================================+
     | Type | Option | MP_OPT         | Meaning                        |
@@ -604,9 +607,6 @@ Internet-Draft               Multipath DCCP               September 2022
    [RFC8684].
 
 3.2.1.  MP_CONFIRM
-
-
-
 
 
 
