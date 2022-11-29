@@ -563,6 +563,52 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
 
 
 
+An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm}}. The host A sends a 
+DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
+this instance (but could be any path) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
+together with the associated option (MP_PRIO)
+
+~~~~
+          Host A                                         Host B 
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
+     |             |---------------------------------------------->|
+     |             |                                       |       |
+     |             |  DCCP-Response +                      |       |
+     |             |<----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
+     |             |                                       |       |
+~~~~
+{: #ref-mp-dccp-confirm-good title='Example MP-DCCP CONFIRM procedure'}
+    
+A second example to illustrate the same MP-DCCP confirm procedure but where an out of date option is also delivered is shown in ({{ref-mp-dccp-confirm-outdated}}.
+Here, a first DCCP-Request is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues a second DCCP-Request with option MP_PRIO
+set to 1. The delivery of the first MP_PRIO request is delayed in the network between Host A and Host B and arrives after the second MP_PRIO request. Host B
+ignores this second MP_PRIO request as the associated sequence number is earlier than the first. Host B sends a DCCP-Response confiming receipt of the MP_PRIO(1) with sequence number 2.
+
+~~~~
+          Host A                                         Host B 
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Request(seqno 1) +  MP_PRIO(4)  |       |
+     |             |-------------                          |       |
+     |             |             \                         |       |
+     |             |  DCCP-Request(seqno 2) +  MP_PRIO(1)  |       |
+     |             |---------------\------------------------------>|
+     |             |                \                      |       |
+     |             |                 ----------------------------->|
+     |             |                                       |       |
+     |             |  DCCP-Response +                      |       |
+     |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
+     |             |                                       |       |
+~~~~
+{: #ref-mp-dccp-confirm-outdated title='Example MP-DCCP CONFIRM procedure with outdated suboption'}
+
+
 ### MP_JOIN {#MP_JOIN}
 
 
