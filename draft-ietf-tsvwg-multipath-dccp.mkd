@@ -586,7 +586,7 @@ Address A1    Address A2                         Address B1    Address B2
 A second example to illustrate the same MP-DCCP confirm procedure but where an out of date option is also delivered is shown in ({{ref-mp-dccp-confirm-outdated}}.
 Here, a first DCCP-Request is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues a second DCCP-Request with option MP_PRIO
 set to 1. The delivery of the first MP_PRIO request is delayed in the network between Host A and Host B and arrives after the second MP_PRIO request. Host B
-ignores this second MP_PRIO request as the associated sequence number is earlier than the first. Host B sends a DCCP-Response confiming receipt of the MP_PRIO(1) with sequence number 2.
+ignores this second MP_PRIO request as the associated sequence number is earlier than the first. Host B sends a DCCP-Response confirming receipt of the MP_PRIO(1) with sequence number 2.
 
 ~~~~
           Host A                                         Host B 
