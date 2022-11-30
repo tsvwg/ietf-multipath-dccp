@@ -1291,6 +1291,7 @@ Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Response co
 response are as follows:
 * an MP_CONFIRM containing the sequence number (seqno 33) of the request that we are responding to together with the MP_REMOVEADDR option
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
+
 ~~~~
           Host A                                         Host B 
 ------------------------                              -----------
