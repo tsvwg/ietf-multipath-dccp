@@ -563,7 +563,7 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
 
 
 
-An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm}}. The host A sends a 
+An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm-good}}. The host A sends a 
 DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
 this instance (but could be any path) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
 together with the associated option (MP_PRIO)
@@ -1244,6 +1244,67 @@ handshake is as follows:
 
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
+
+## Address knowledge exchange
+### Advertising a new path ({{MP_ADDADDR}})
+
+When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
+shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Request contains the following parameters:
+* an identifier (id 1) for the new IP address which is used as a reference in subsequent control exchanges.
+* the IP address of the new path (A2_IP)
+* A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
+  as that used for the initial subflow address A1_IP
+
+This DCCP-Request must also supply:
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
+* the sequence number (seqno 12) for this message
+
+Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Response containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containting the sequence number (seqno 12) of the request that we are responding to together with the MP_ADDADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
+
+~~~~
+          Host A                                         Host B 
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Request +  MP_ADDADDR(id 1, A2_IP, 00) +     |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
+     |             |                                       |      
+     |   DCCP-Response + MP_HMAC(B) +                      |
+     |<----- MP_CONFIRM(seqno 12, MP_ADDADDR) -------------|
+~~~~
+{: #ref-mp-dccp-add-address title='Example MP-DCCP ADDADDR procedure'}
+
+### Removing a path ({{MP_REMOVEADDR}})
+When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
+shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Request contains the following parameters:
+* an identifier (id 1) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
+
+This DCCP-Request must also supply:
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
+* the sequence number (seqno 33) for this message
+
+Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Response containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containting the sequence number (seqno 33) of the request that we are responding to together with the MP_REMOVEADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
+~~~~
+          Host A                                         Host B 
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Request +  MP_REMOVEADDR(id 1) +             |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
+     |             |                                       |      
+     |   DCCP-Response + MP_HMAC(B) +                      |
+     |<----- MP_CONFIRM(seqno 33, MP_REMOVEADDR) ----------|
+~~~~
+{: #ref-mp-dccp-remove-address title='Example MP-DCCP REMOVEADDR procedure'}
+
 
 ## Close a MP-DCCP connection {#closing}
 
