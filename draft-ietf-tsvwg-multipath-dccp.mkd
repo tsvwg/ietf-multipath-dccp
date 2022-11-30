@@ -1250,7 +1250,7 @@ handshake is as follows:
 
 When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
 shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Request contains the following parameters:
-* an identifier (id 1) for the new IP address which is used as a reference in subsequent control exchanges.
+* an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
 * the IP address of the new path (A2_IP)
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
   as that used for the initial subflow address A1_IP
@@ -1261,7 +1261,7 @@ This DCCP-Request must also supply:
 
 Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Response containing the MP_CONFIRM option. The parameters supplied in this
 response are as follows:
-* an MP_CONFIRM containting the sequence number (seqno 12) of the request that we are responding to together with the MP_ADDADDR option
+* an MP_CONFIRM containing the sequence number (seqno 12) of the request that we are responding to together with the MP_ADDADDR option
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
 
 ~~~~
@@ -1270,7 +1270,7 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Request +  MP_ADDADDR(id 1, A2_IP, 00) +     |
+     |   DCCP-Request +  MP_ADDADDR(id 2, A2_IP, 00) +     |
      |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
      |             |                                       |      
      |   DCCP-Response + MP_HMAC(B) +                      |
@@ -1281,7 +1281,7 @@ Address A1    Address A2                               Address B1
 ### Removing a path ({{MP_REMOVEADDR}})
 When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
 shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Request contains the following parameters:
-* an identifier (id 1) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
+* an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
 
 This DCCP-Request must also supply:
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
@@ -1289,7 +1289,7 @@ This DCCP-Request must also supply:
 
 Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Response containing the MP_CONFIRM option. The parameters supplied in this
 response are as follows:
-* an MP_CONFIRM containting the sequence number (seqno 33) of the request that we are responding to together with the MP_REMOVEADDR option
+* an MP_CONFIRM containing the sequence number (seqno 33) of the request that we are responding to together with the MP_REMOVEADDR option
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
 ~~~~
           Host A                                         Host B 
@@ -1297,7 +1297,7 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Request +  MP_REMOVEADDR(id 1) +             |
+     |   DCCP-Request +  MP_REMOVEADDR(id 2) +             |
      |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
      |             |                                       |      
      |   DCCP-Response + MP_HMAC(B) +                      |
