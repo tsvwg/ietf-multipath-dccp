@@ -615,8 +615,8 @@ The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
 Together with the Token, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in {{handshaking}}.
 
-If the path token can not be verified by the recieving host during a handshake negotiation, 
-the new sublflow MUST be closed, as specified in {{fallback}}.
+If the path token can not be verified by the receiving host during a handshake negotiation, 
+the new subflow MUST be closed, as specified in {{fallback}}.
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
@@ -764,7 +764,7 @@ option.
 
 If the HMAC can not be validated by a receiving host, the subsequent handling depends
 on which suboption was being authenticated. If the suboption to be authenticated was either
-MP_ADDADDR or MP_REMOVEADDR, the receiving host SHOULD silently ingore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
+MP_ADDADDR or MP_REMOVEADDR, the receiving host SHOULD silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
 If the suboption to be authenticated was MP_JOIN, it MUST lead to a subflow closing (see {{fallback}})
 
 ### MP_RTT {#MP_RTT}
