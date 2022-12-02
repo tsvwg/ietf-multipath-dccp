@@ -486,6 +486,8 @@ for version 1.
 
 3. MP-DCCP is then enabled between the Client and Server with version 1.
 
+If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fall back to regular DCCP or MUST be closed. Further details are specified in {{fallback}}
+
 
 ## Multipath Option {#MP_OPT}
 
@@ -613,6 +615,9 @@ The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
 Together with the Token, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in {{handshaking}}.
 
+If the path token can not be verified by the recieving host during a handshake negotiation, 
+the new sublflow MUST be closed, as specified in {{fallback}}.
+
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
 
 Regular DCCP has the means of sending a Close or Reset signals to abruptly close a
@@ -693,6 +698,10 @@ Providing multiple keys is only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow, and allows the hosts to agree
 on a single key type to be used as described in {{handshaking}}
 
+If the key type can not be agreed when the MP_KEY option is sent as part of the 
+handshake procedure, the MP-DCCP connection should fallback to regular DCCP as 
+indicated in {{fallback}}
+
 ### MP_SEQ {#MP_SEQ}
 
 
@@ -752,6 +761,11 @@ individual MP_HASH option, this requires the MP_HASH to be correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
 option.
+
+If the HMAC can not be validated by a receiving host, the subsequent handling depends
+on which suboption was being authenticated. If the suboption to be authenticated was either
+MP_ADDADDR or MP_REMOVEADDR, the receiving host SHOULD silently ingore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
+If the suboption to be authenticated was MP_JOIN, it MUST lead to a subflow closing (see {{fallback}})
 
 ### MP_RTT {#MP_RTT}
 
