@@ -1283,7 +1283,7 @@ When a host (Host A) wants to indicate that a path is no longer available, it sh
 shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
 
-This DCCP-Request must also supply:
+The following options must be included in a packet carrying MP_REMOVEADDR
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 * the sequence number (seqno 33) for this message
 
