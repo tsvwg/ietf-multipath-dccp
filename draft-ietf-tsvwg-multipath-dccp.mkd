@@ -1280,7 +1280,7 @@ Address A1    Address A2                               Address B1
 
 ### Removing a path ({{MP_REMOVEADDR}})
 When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
-shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Request contains the following parameters:
+shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
 
 This DCCP-Request must also supply:
