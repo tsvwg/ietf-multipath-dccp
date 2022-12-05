@@ -594,15 +594,15 @@ ignores this second MP_PRIO as the associated sequence number is earlier than th
 Address A1    Address A2                         Address B1    Address B2
 ----------    ----------                         ----------    ----------
      |             |                                       |       |
-     |             |  DCCP-Request(seqno 1) +  MP_PRIO(4)  |       |
+     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
      |             |-------------                          |       |
      |             |             \                         |       |
-     |             |  DCCP-Request(seqno 2) +  MP_PRIO(1)  |       |
+     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)  |       |
      |             |---------------\------------------------------>|
      |             |                \                      |       |
      |             |                 ----------------------------->|
      |             |                                       |       |
-     |             |  DCCP-Response +                      |       |
+     |             |  DCCP-Ack +                      |       |
      |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
      |             |                                       |       |
 ~~~~
