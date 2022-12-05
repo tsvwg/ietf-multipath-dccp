@@ -597,12 +597,12 @@ Address A1    Address A2                         Address B1    Address B2
      |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
      |             |-------------                          |       |
      |             |             \                         |       |
-     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)  |       |
+     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
      |             |---------------\------------------------------>|
      |             |                \                      |       |
      |             |                 ----------------------------->|
      |             |                                       |       |
-     |             |  DCCP-Ack +                      |       |
+     |             |  DCCP-Ack +                           |       |
      |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
      |             |                                       |       |
 ~~~~
@@ -1270,10 +1270,10 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +     |
+     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +        |
      |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
      |             |                                       |      
-     |   DCCP-Ack + MP_HMAC(B) +                      |
+     |   DCCP-Ack + MP_HMAC(B) +                           |
      |<----- MP_CONFIRM(seqno 12, MP_ADDADDR) -------------|
 ~~~~
 {: #ref-mp-dccp-add-address title='Example MP-DCCP ADDADDR procedure'}
@@ -1298,10 +1298,10 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_REMOVEADDR(id 2) +             |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2) +                |
      |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
      |             |                                       |      
-     |   DCCP-Ack + MP_HMAC(B) +                      |
+     |   DCCP-Ack + MP_HMAC(B) +                           |
      |<----- MP_CONFIRM(seqno 33, MP_REMOVEADDR) ----------|
 ~~~~
 {: #ref-mp-dccp-remove-address title='Example MP-DCCP REMOVEADDR procedure'}
