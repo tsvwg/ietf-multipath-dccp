@@ -1270,10 +1270,10 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Request +  MP_ADDADDR(id 2, A2_IP, 00) +     |
+     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +     |
      |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
      |             |                                       |      
-     |   DCCP-Response + MP_HMAC(B) +                      |
+     |   DCCP-Ack + MP_HMAC(B) +                      |
      |<----- MP_CONFIRM(seqno 12, MP_ADDADDR) -------------|
 ~~~~
 {: #ref-mp-dccp-add-address title='Example MP-DCCP ADDADDR procedure'}
