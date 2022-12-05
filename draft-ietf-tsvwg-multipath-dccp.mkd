@@ -1249,7 +1249,7 @@ handshake is as follows:
 ### Advertising a new path ({{MP_ADDADDR}})
 
 When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
-shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Request contains the following parameters:
+shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
 * an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
 * the IP address of the new path (A2_IP)
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
