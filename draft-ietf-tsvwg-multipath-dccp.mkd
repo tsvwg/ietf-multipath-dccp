@@ -1255,7 +1255,7 @@ shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passe
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
-This DCCP-Request must also supply:
+The following options must be included in a packet carrying MP_ADDADDR:
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 * the sequence number (seqno 12) for this message
 
