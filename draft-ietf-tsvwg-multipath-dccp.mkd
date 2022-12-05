@@ -1298,10 +1298,10 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Request +  MP_REMOVEADDR(id 2) +             |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2) +             |
      |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
      |             |                                       |      
-     |   DCCP-Response + MP_HMAC(B) +                      |
+     |   DCCP-Ack + MP_HMAC(B) +                      |
      |<----- MP_CONFIRM(seqno 33, MP_REMOVEADDR) ----------|
 ~~~~
 {: #ref-mp-dccp-remove-address title='Example MP-DCCP REMOVEADDR procedure'}
