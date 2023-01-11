@@ -1400,35 +1400,33 @@ The authors gratefully acknowledge significant input into this document from Dir
 # IANA Considerations
 
 This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
-in accordance with {{RFC8126}}.  This document defines one new value to DCCP feature list and one new
-DCCP Option with ten corresponding Subtypes as follows. 
+in accordance with {{RFC8126}}.  This document defines one new value to be added to the DCCP Feature Numbers registry and two new registries to be added to the DCCP registry group. 
 
 This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
 as described in {{protocol}}. The following entry in {{ref-add-feature-list}} should be
-added to the "Feature Numbers Registry" according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
+added to the Feature Numbers registry in the DCCP registry group according to {{RFC4340}}, Section 19.4. under the "DCCP Protocol" heading. 
 
 | Value            | Feature Name               | Specification   |
 |:----------------:|:--------------------------:|:---------------:|
 |  10 (suggested)  | MP-DCCP capability feature | [ThisDocument]  |
-{:#ref-add-feature-list title='Addition to DCCP Feature list Entries'}
+{:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
-As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new sub-registry under the MP-DCCP registry to track the MP-DCCP version. The initial content of this sub-registry is as follows: 
+As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
    |  Version  | Description | Specification  |
    |:---------:|:----------:|:--------------:|
    |   0000    |   Version 0| [ThisDocument] |
    |0001 - 1111|   Unassigned     |                 |
-{:#ref-add-version-list title='Sub-registry for tracking the MP-DCCP version'}
+{:#ref-add-version-list title='MP-DCCP Registry'}
 
-Future MP-DCCP versions 1 to 15 are assigned from this sub-registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
-This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.
+This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2.
 
-IANA is requested to The following entries in {{ref-add-proto-opt-list}} should be added to the "DCCP
-Protocol options" and assigned as "MP-DCCP sub-options", respectively.
-      
+IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in {{ref-add-proto-opt-list}} should be added to the new 'MP-DCCP Suboptions' registry. The registry in {{ref-add-proto-opt-list}} has an upper boundary of 255 in the numeric value field. 
+
 | Value           | Symbol          | Name                                             | Reference         |
 |:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
@@ -1445,7 +1443,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.
 | TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
 | TBD or MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
 | TBD or MP_OPT>11| Unassigned   | Reserved for future MP-DCCP suboptions           |                   |
-{:#ref-add-proto-opt-list title='Addition to DCCP Protocol options and corresponding sub-options'}
+{:#ref-add-proto-opt-list title='MP-DCCP Suboptions registry'}
  
 Future MP-DCCP sub-options with MP_OPT>11 can be assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
