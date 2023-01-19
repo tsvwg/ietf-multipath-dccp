@@ -1427,22 +1427,22 @@ This document requests IANA to assign a new DCCP protocol option of type=46 as d
 
 IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in {{ref-add-proto-opt-list}} should be added to the new 'MP-DCCP Suboptions' registry. The registry in {{ref-add-proto-opt-list}} has an upper boundary of 255 in the numeric value field. 
 
-| Value           | Symbol          | Name                                             | Reference         |
-|:---------------:|:---------------:|:------------------------------------------------:|:-----------------:|
-| TBD or Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
-| TBD or MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| TBD or MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
-| TBD or MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
-| TBD or MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
-| TBD or MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
-| TBD or MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
-| TBD or MP_OPT=6 | MP_RTT          | Transmit RTT values and calculation parameters   | {{MP_RTT}}        |
-| TBD or MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
-| TBD or MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
-| TBD or MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
-| TBD or MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
-| TBD or MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
-| TBD or MP_OPT>11| Unassigned   | Reserved for future MP-DCCP suboptions           |                   |
+| Value    | Symbol          | Name                                             | Reference         |
+|:--------:|:---------------:|:------------------------------------------------:|:-----------------:|
+| Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
+| MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
+| MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
+| MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
+| MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
+| MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
+| MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
+| MP_OPT=6 | MP_RTT          | Transmit RTT values and calculation parameters   | {{MP_RTT}}        |
+| MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
+| MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
+| MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
+| MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
+| MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
+| MP_OPT>11| Unassigned      | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='MP-DCCP Suboptions registry'}
  
 Future MP-DCCP sub-options with MP_OPT>11 can be assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
