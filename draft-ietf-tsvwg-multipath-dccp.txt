@@ -1765,24 +1765,24 @@ Internet-Draft               Multipath DCCP               September 2022
    This section provides guidance to the Internet Assigned Numbers
    Authority (IANA) regarding registration of values related to the MP
    extension of the DCCP protocol in accordance with [RFC8126].  This
-   document defines one new value to DCCP feature list and one new DCCP
-   Option with ten corresponding Subtypes as follows.
+   document defines one new value to be added to the DCCP Feature
+   Numbers registry and two new registries to be added to the DCCP
+   registry group.
 
    This document requests IANA to assign a new DCCP feature parameter
    for negotiating the support of multipath capability for DCCP sessions
    between hosts as described in Section 3.  The following entry in
-   Table 6 should be added to the "Feature Numbers Registry" according
-   to [RFC4340], Section 19.4. under the "DCCP Protocol" heading.
+   Table 6 should be added to the Feature Numbers registry in the DCCP
+   registry group according to [RFC4340], Section 19.4. under the "DCCP
+   Protocol" heading.
 
-          +=======+============================+================+
-          | Value |        Feature Name        | Specification  |
-          +=======+============================+================+
-          |   10  | MP-DCCP capability feature | [ThisDocument] |
-          +-------+----------------------------+----------------+
+     +================+============================+================+
+     |     Value      |        Feature Name        | Specification  |
+     +================+============================+================+
+     | 10 (suggested) | MP-DCCP capability feature | [ThisDocument] |
+     +----------------+----------------------------+----------------+
 
-               Table 6: Addition to DCCP Feature list Entries
-
-
+            Table 6: Addition to DCCP Feature Numbers registry
 
 
 
@@ -1796,9 +1796,9 @@ Internet-Draft               Multipath DCCP               September 2022
 
    As outlined in sect.  Section 3.1 the new 1-Byte entry above includes
    a 4-bit part to specify the version of the used MP-DCCP
-   implementation.  This document requests IANA to create a new sub-
-   registry under the MP-DCCP registry to track the MP-DCCP version.
-   The initial content of this sub-registry is as follows:
+   implementation.  This document requests IANA to create a new 'MP-DCCP
+   Versions' registry within the DCCP registry group to track the MP-
+   DCCP version.  The initial content of this registry is as follows:
 
               +=============+=============+================+
               |   Version   | Description | Specification  |
@@ -1808,39 +1808,39 @@ Internet-Draft               Multipath DCCP               September 2022
               | 0001 - 1111 |  Unassigned |                |
               +-------------+-------------+----------------+
 
-                Table 7: Sub-registry for tracking the MP-
-                               DCCP version
+                        Table 7: MP-DCCP Registry
 
-   Future MP-DCCP versions 1 to 15 are assigned from this sub-registry
-   using the Specification Required policy (Section 4.6 of [RFC8126]).
+   Future MP-DCCP versions 1 to 15 are assigned from this registry using
+   the Specification Required policy (Section 4.6 of [RFC8126]).
 
    This document requests IANA to assign a new DCCP protocol option of
-   type=46 as described in Section 3.2 together with 10 additional
-   suboptions.
+   type=46 as described in Section 3.2.
 
-   IANA is requested to The following entries in Table 8 should be added
-   to the "DCCP Protocol options" and assigned as "MP-DCCP sub-options",
-   respectively.
+   IANA is requested to create a new 'MP-DCCP Suboptions' registry
+   within the DCCP registry group.  The following entries in Table 8
+   should be added to the new 'MP-DCCP Suboptions' registry.  The
+   registry in Table 8 has an upper boundary of 255 in the numeric value
+   field.
 
       +===========+===============+=====================+===========+
       |   Value   |     Symbol    |         Name        | Reference |
       +===========+===============+=====================+===========+
-      |   TBD or  |     MP_OPT    |    DCCP Multipath   |  Section  |
-      |  Type=46  |               |        option       |    3.2    |
+      |  Type=46  |     MP_OPT    |    DCCP Multipath   |  Section  |
+      |           |               |        option       |    3.2    |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |   MP_CONFIRM  |  Confirm reception/ |  Section  |
-      |  MP_OPT=0 |               |   processing of an  |   3.2.1   |
+      |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
+      |           |               |   processing of an  |   3.2.1   |
       |           |               |    MP_OPT option    |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |    MP_JOIN    |   Join subflow to   |  Section  |
-      |  MP_OPT=1 |               |   existing MP-DCCP  |   3.2.2   |
+      |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
+      |           |               |   existing MP-DCCP  |   3.2.2   |
       |           |               |      connection     |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  | MP_FAST_CLOSE |    Close MP-DCCP    |  Section  |
-      |  MP_OPT=2 |               |      connection     |   3.2.3   |
+      |  MP_OPT=2 | MP_FAST_CLOSE |    Close MP-DCCP    |  Section  |
+      |           |               |      connection     |   3.2.3   |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |     MP_KEY    |     Exchange key    |  Section  |
-      |  MP_OPT=3 |               |     material for    |   3.2.4   |
+      |  MP_OPT=3 |     MP_KEY    |     Exchange key    |  Section  |
+      |           |               |     material for    |   3.2.4   |
       |           |               |       MP_HMAC       |           |
 
 
@@ -1851,40 +1851,39 @@ Internet-Draft               Multipath DCCP               September 2022
 
 
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |     MP_SEQ    |  Multipath Sequence |  Section  |
-      |  MP_OPT=4 |               |        Number       |   3.2.5   |
+      |  MP_OPT=4 |     MP_SEQ    |  Multipath Sequence |  Section  |
+      |           |               |        Number       |   3.2.5   |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |    MP_HMAC    |  Hash-based Message |  Section  |
-      |  MP_OPT=5 |               | Auth.  Code for MP- |   3.2.6   |
+      |  MP_OPT=5 |    MP_HMAC    |  Hash-based Message |  Section  |
+      |           |               | Auth.  Code for MP- |   3.2.6   |
       |           |               |         DCCP        |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |     MP_RTT    | Transmit RTT values |  Section  |
-      |  MP_OPT=6 |               |   and calculation   |   3.2.7   |
+      |  MP_OPT=6 |     MP_RTT    | Transmit RTT values |  Section  |
+      |           |               |   and calculation   |   3.2.7   |
       |           |               |      parameters     |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |   MP_ADDADDR  |      Advertise      |  Section  |
-      |  MP_OPT=7 |               |      additional     |   3.2.8   |
+      |  MP_OPT=7 |   MP_ADDADDR  |      Advertise      |  Section  |
+      |           |               |      additional     |   3.2.8   |
       |           |               | Address(es)/Port(s) |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  | MP_REMOVEADDR | Remove Address(es)/ |  Section  |
-      |  MP_OPT=8 |               |       Port(s)       |   3.2.9   |
+      |  MP_OPT=8 | MP_REMOVEADDR | Remove Address(es)/ |  Section  |
+      |           |               |       Port(s)       |   3.2.9   |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |    MP_PRIO    |    Change Subflow   |  Section  |
-      |  MP_OPT=9 |               |       Priority      |   3.2.10  |
+      |  MP_OPT=9 |    MP_PRIO    |    Change Subflow   |  Section  |
+      |           |               |       Priority      |   3.2.10  |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
-      | MP_OPT=10 |               |       subflow       |    3.2    |
+      | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
+      |           |               |       subflow       |    3.2    |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |     MP_EXP    |  Experimental Sub-  |  Section  |
-      | MP_OPT=11 |               |  Option for private |   3.2.12  |
+      | MP_OPT=11 |     MP_EXP    |  Experimental Sub-  |  Section  |
+      |           |               |  Option for private |   3.2.12  |
       |           |               |         use         |           |
       +-----------+---------------+---------------------+-----------+
-      |   TBD or  |   Unassigned  | Reserved for future |           |
-      | MP_OPT>11 |               |  MP-DCCP suboptions |           |
+      | MP_OPT>11 |   Unassigned  | Reserved for future |           |
+      |           |               |  MP-DCCP suboptions |           |
       +-----------+---------------+---------------------+-----------+
 
-               Table 8: Addition to DCCP Protocol options and
-                         corresponding sub-options
+                    Table 8: MP-DCCP Suboptions registry
 
    Future MP-DCCP sub-options with MP_OPT>11 can be assigned from this
    registry using the Specification Required policy (Section 4.6 of
@@ -1898,6 +1897,7 @@ Internet-Draft               Multipath DCCP               September 2022
    In addition IANA is requested to assign for this version of the MP-
    DCCP protocol three different sub options to the MP-KEY option to
    identify the MP_KEY Key types in terms of 8-bit values as specified
+   in Section 3.2.4 according to the entries in Table 9 below.  Values
 
 
 
@@ -1906,7 +1906,6 @@ Amend, et al.             Expires 30 March 2023                [Page 34]
 Internet-Draft               Multipath DCCP               September 2022
 
 
-   in Section 3.2.4 according to the entries in Table 9 below.  Values
    in range 3-255 (decimal) inclusive remain unassigned in this version
    0 of the protocol and are assigned via Specification Required
    [RFC8126] in potential future versions of the MP-DCCP protocol.
@@ -1933,24 +1932,25 @@ Internet-Draft               Multipath DCCP               September 2022
               Amend, M. and D. Von Hugo, "Multipath sequence
               maintenance", Work in Progress, Internet-Draft, draft-
               amend-iccrg-multipath-reordering-03, 25 October 2021,
-              <https://www.ietf.org/archive/id/draft-amend-iccrg-
-              multipath-reordering-03.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
+              multipath-reordering-03>.
 
    [I-D.amend-tsvwg-dccp-udp-header-conversion]
               Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
               "Lossless and overhead free DCCP - UDP header conversion
               (U-DCCP)", Work in Progress, Internet-Draft, draft-amend-
               tsvwg-dccp-udp-header-conversion-01, 8 July 2019,
-              <https://www.ietf.org/archive/id/draft-amend-tsvwg-dccp-
-              udp-header-conversion-01.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
+              dccp-udp-header-conversion-01>.
 
    [I-D.amend-tsvwg-multipath-framework-mpdccp]
               Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and
               V. Rakocevic, "A multipath framework for UDP traffic over
               heterogeneous access networks", Work in Progress,
               Internet-Draft, draft-amend-tsvwg-multipath-framework-
-              mpdccp-01, 8 July 2019, <https://www.ietf.org/archive/id/
-              draft-amend-tsvwg-multipath-framework-mpdccp-01.txt>.
+              mpdccp-01, 8 July 2019,
+              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
+              multipath-framework-mpdccp-01>.
 
 
 
@@ -1967,8 +1967,8 @@ Internet-Draft               Multipath DCCP               September 2022
               Zhang, "Hybrid Access Network Architecture", Work in
               Progress, Internet-Draft, draft-lhwxz-hybrid-access-
               network-architecture-02, 13 January 2015,
-              <https://www.ietf.org/archive/id/draft-lhwxz-hybrid-
-              access-network-architecture-02.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-
+              access-network-architecture-02>.
 
    [I-D.muley-network-based-bonding-hybrid-access]
               Muley, P., Henderickx, W., Geng, L., Liu, H., Cardullo,
@@ -1976,8 +1976,8 @@ Internet-Draft               Multipath DCCP               September 2022
               "Network based Bonding solution for Hybrid Access", Work
               in Progress, Internet-Draft, draft-muley-network-based-
               bonding-hybrid-access-03, 22 October 2018,
-              <https://www.ietf.org/archive/id/draft-muley-network-
-              based-bonding-hybrid-access-03.txt>.
+              <https://datatracker.ietf.org/doc/html/draft-muley-
+              network-based-bonding-hybrid-access-03>.
 
    [OLIA]     Khalili, R., Gast, N., Popovic, M., Upadhyay, U., and J.
               Le Boudec, "MPTCP is not pareto-optimal: performance
@@ -1994,21 +1994,21 @@ Internet-Draft               Multipath DCCP               September 2022
 
    [RFC0793]  Postel, J., "Transmission Control Protocol", RFC 793,
               DOI 10.17487/RFC0793, September 1981,
-              <https://www.rfc-editor.org/info/rfc793>.
+              <https://www.rfc-editor.org/rfc/rfc793>.
 
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
               DOI 10.17487/RFC2104, February 1997,
-              <https://www.rfc-editor.org/info/rfc2104>.
+              <https://www.rfc-editor.org/rfc/rfc2104>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
-              <https://www.rfc-editor.org/info/rfc2119>.
+              <https://www.rfc-editor.org/rfc/rfc2119>.
 
    [RFC3124]  Balakrishnan, H. and S. Seshan, "The Congestion Manager",
               RFC 3124, DOI 10.17487/RFC3124, June 2001,
-              <https://www.rfc-editor.org/info/rfc3124>.
+              <https://www.rfc-editor.org/rfc/rfc3124>.
 
 
 
@@ -2021,47 +2021,47 @@ Internet-Draft               Multipath DCCP               September 2022
    [RFC3711]  Baugher, M., McGrew, D., Naslund, M., Carrara, E., and K.
               Norrman, "The Secure Real-time Transport Protocol (SRTP)",
               RFC 3711, DOI 10.17487/RFC3711, March 2004,
-              <https://www.rfc-editor.org/info/rfc3711>.
+              <https://www.rfc-editor.org/rfc/rfc3711>.
 
    [RFC4043]  Pinkas, D. and T. Gindin, "Internet X.509 Public Key
               Infrastructure Permanent Identifier", RFC 4043,
               DOI 10.17487/RFC4043, May 2005,
-              <https://www.rfc-editor.org/info/rfc4043>.
+              <https://www.rfc-editor.org/rfc/rfc4043>.
 
    [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
               "Randomness Requirements for Security", BCP 106, RFC 4086,
               DOI 10.17487/RFC4086, June 2005,
-              <https://www.rfc-editor.org/info/rfc4086>.
+              <https://www.rfc-editor.org/rfc/rfc4086>.
 
    [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
               Congestion Control Protocol (DCCP)", RFC 4340,
               DOI 10.17487/RFC4340, March 2006,
-              <https://www.rfc-editor.org/info/rfc4340>.
+              <https://www.rfc-editor.org/rfc/rfc4340>.
 
    [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
               (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
-              September 2009, <https://www.rfc-editor.org/info/rfc5595>.
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
 
    [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
               (DCCP) Simultaneous-Open Technique to Facilitate NAT/
               Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
-              September 2009, <https://www.rfc-editor.org/info/rfc5596>.
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
    [RFC5597]  Denis-Courmont, R., "Network Address Translation (NAT)
               Behavioral Requirements for the Datagram Congestion
               Control Protocol", BCP 150, RFC 5597,
               DOI 10.17487/RFC5597, September 2009,
-              <https://www.rfc-editor.org/info/rfc5597>.
+              <https://www.rfc-editor.org/rfc/rfc5597>.
 
    [RFC5634]  Fairhurst, G. and A. Sathiaseelan, "Quick-Start for the
               Datagram Congestion Control Protocol (DCCP)", RFC 5634,
               DOI 10.17487/RFC5634, August 2009,
-              <https://www.rfc-editor.org/info/rfc5634>.
+              <https://www.rfc-editor.org/rfc/rfc5634>.
 
    [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
               (SHA and SHA-based HMAC and HKDF)", RFC 6234,
               DOI 10.17487/RFC6234, May 2011,
-              <https://www.rfc-editor.org/info/rfc6234>.
+              <https://www.rfc-editor.org/rfc/rfc6234>.
 
 
 
@@ -2077,47 +2077,47 @@ Internet-Draft               Multipath DCCP               September 2022
    [RFC6356]  Raiciu, C., Handley, M., and D. Wischik, "Coupled
               Congestion Control for Multipath Transport Protocols",
               RFC 6356, DOI 10.17487/RFC6356, October 2011,
-              <https://www.rfc-editor.org/info/rfc6356>.
+              <https://www.rfc-editor.org/rfc/rfc6356>.
 
    [RFC6773]  Phelan, T., Fairhurst, G., and C. Perkins, "DCCP-UDP: A
               Datagram Congestion Control Protocol UDP Encapsulation for
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
-              2012, <https://www.rfc-editor.org/info/rfc6773>.
+              2012, <https://www.rfc-editor.org/rfc/rfc6773>.
 
    [RFC6824]  Ford, A., Raiciu, C., Handley, M., and O. Bonaventure,
               "TCP Extensions for Multipath Operation with Multiple
               Addresses", RFC 6824, DOI 10.17487/RFC6824, January 2013,
-              <https://www.rfc-editor.org/info/rfc6824>.
+              <https://www.rfc-editor.org/rfc/rfc6824>.
 
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
               DOI 10.17487/RFC6904, April 2013,
-              <https://www.rfc-editor.org/info/rfc6904>.
+              <https://www.rfc-editor.org/rfc/rfc6904>.
 
    [RFC6951]  Tuexen, M. and R. Stewart, "UDP Encapsulation of Stream
               Control Transmission Protocol (SCTP) Packets for End-Host
               to End-Host Communication", RFC 6951,
               DOI 10.17487/RFC6951, May 2013,
-              <https://www.rfc-editor.org/info/rfc6951>.
+              <https://www.rfc-editor.org/rfc/rfc6951>.
 
    [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
               Operational Experience with Multipath TCP", RFC 8041,
               DOI 10.17487/RFC8041, January 2017,
-              <https://www.rfc-editor.org/info/rfc8041>.
+              <https://www.rfc-editor.org/rfc/rfc8041>.
 
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/info/rfc8126>.
+              <https://www.rfc-editor.org/rfc/rfc8126>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/info/rfc8174>.
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
               Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
-              2020, <https://www.rfc-editor.org/info/rfc8684>.
+              2020, <https://www.rfc-editor.org/rfc/rfc8684>.
 
    [slide]    Amend, M., "MP-DCCP for enabling transfer of UDP/IP
               traffic over multiple data paths in multi-connectivity

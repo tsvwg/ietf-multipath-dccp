@@ -30,26 +30,26 @@ the same type of service to applications as DCCP and it provides the
 components necessary to establish and use multiple DCCP subflows across
 different paths. 
     " name="description">
-<meta content="xml2rfc 3.15.2" name="generator">
+<meta content="xml2rfc 3.16.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-06" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.15.2
-    Python 3.8.10
+  xml2rfc 3.16.0
+    Python 3.10.6
     appdirs 1.4.4
     ConfigArgParse 1.5.3
     google-i18n-address 2.5.2
     html5lib 1.1
     intervaltree 3.1.0
     Jinja2 3.1.2
-    lxml 4.9.1
-    MarkupSafe 2.1.1
+    lxml 4.9.2
+    MarkupSafe 2.1.2
     pycountry 22.3.5
-    PyYAML 5.3.1
-    requests 2.22.0
-    setuptools 45.2.0
-    six 1.14.0
-    wcwidth 0.2.5
+    PyYAML 5.4.1
+    requests 2.25.1
+    setuptools 59.6.0
+    six 1.16.0
+    wcwidth 0.2.6
 -->
 <link href="draft-ietf-tsvwg-multipath-dccp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -71,6 +71,12 @@ different paths.
 @import url('https://fonts.googleapis.com/css?family=Noto+Serif'); /* Serif (print) */
 @import url('https://fonts.googleapis.com/css?family=Roboto+Mono'); /* Monospace */
 
+:root {
+  --font-sans: 'Noto Sans', Arial, Helvetica, sans-serif;
+  --font-serif: 'Noto Serif', 'Times', 'Times New Roman', serif;
+  --font-mono: 'Roboto Mono', Courier, 'Courier New', monospace;
+}
+
 @viewport {
   zoom: 1.0;
   width: extend-to-zoom;
@@ -88,7 +94,7 @@ body {
   color: #222;
   background-color: #fff;
   font-size: 14px;
-  font-family: 'Noto Sans', Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.6;
   scroll-behavior: smooth;
 }
@@ -176,6 +182,15 @@ div {
 }
 svg {
   display: block;
+}
+svg[font-family~="serif" i], svg [font-family~="serif" i] {
+  font-family: var(--font-serif);
+}
+svg[font-family~="sans-serif" i], svg [font-family~="sans-serif" i] {
+  font-family: var(--font-sans);
+}
+svg[font-family~="monospace" i], svg [font-family~="monospace" i] {
+  font-family: var(--font-mono);
 }
 .alignCenter.art-text {
   background-color: #f9f9f9;
@@ -272,7 +287,7 @@ a.selfRef:hover {
 /* Figures */
 tt, code, pre {
   background-color: #f9f9f9;
-  font-family: 'Roboto Mono', monospace;
+  font-family: var(--font-mono);
 }
 pre {
   border: 1px solid #eee;
@@ -509,7 +524,7 @@ address.vcard .nameRole {
   margin-left: 0;
 }
 address.vcard .label {
-  font-family: "Noto Sans",Arial,Helvetica,sans-serif;
+  font-family: var(--font-sans);
   margin: 0.5em 0;
 }
 address.vcard .type {
@@ -672,7 +687,7 @@ hr.addr {
   figure {
     overflow: scroll;
   }
-  pre.breakable {
+  .breakable pre {
     break-inside: auto;
   }
   h1, h2, h3, h4, h5, h6 {
@@ -847,7 +862,7 @@ tt, code, pre {
 }
 
 /* Fix the height/width aspect for ascii art*/
-pre.sourcecode,
+.sourcecode pre,
 .art-text pre {
   line-height: 1.12;
 }
@@ -1183,7 +1198,7 @@ dd > div.artwork:first-child,
 dd > aside:first-child,
 dd > figure:first-child,
 dd > ol:first-child,
-dd > div:first-child > pre.sourcecode,
+dd > div.sourcecode:first-child,
 dd > table:first-child,
 dd > ul:first-child {
   clear: left;
@@ -1197,7 +1212,7 @@ li > p {
   margin-bottom: 0.5em
 }
 /* Don't let p margin spill out from inside list items */
-li > p:last-of-type {
+li > p:last-of-type:only-child {
   margin-bottom: 0;
 }
 </style>
@@ -2989,17 +3004,16 @@ passages were copied almost unmodified from these documents.<a href="#section-7-
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-8-1">This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
-in accordance with <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>.  This document defines one new value to DCCP feature list and one new
-DCCP Option with ten corresponding Subtypes as follows.<a href="#section-8-1" class="pilcrow">¶</a></p>
+in accordance with <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>.  This document defines one new value to be added to the DCCP Feature Numbers registry and two new registries to be added to the DCCP registry group.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
 as described in <a href="#protocol" class="auto internal xref">Section 3</a>. The following entry in <a href="#ref-add-feature-list" class="auto internal xref">Table 6</a> should be
-added to the "Feature Numbers Registry" according to <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 19.4. under the "DCCP Protocol" heading.<a href="#section-8-2" class="pilcrow">¶</a></p>
-<span id="name-addition-to-dccp-feature-li"></span><div id="ref-add-feature-list">
+added to the Feature Numbers registry in the DCCP registry group according to <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 19.4. under the "DCCP Protocol" heading.<a href="#section-8-2" class="pilcrow">¶</a></p>
+<span id="name-addition-to-dccp-feature-nu"></span><div id="ref-add-feature-list">
 <table class="center" id="table-6">
         <caption>
 <a href="#table-6" class="selfRef">Table 6</a>:
-<a href="#name-addition-to-dccp-feature-li" class="selfRef">Addition to DCCP Feature list Entries</a>
+<a href="#name-addition-to-dccp-feature-nu" class="selfRef">Addition to DCCP Feature Numbers registry</a>
         </caption>
 <thead>
           <tr>
@@ -3010,19 +3024,19 @@ added to the "Feature Numbers Registry" according to <span>[<a href="#RFC4340" c
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">10</td>
+            <td class="text-center" rowspan="1" colspan="1">10 (suggested)</td>
             <td class="text-center" rowspan="1" colspan="1">MP-DCCP capability feature</td>
             <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
           </tr>
         </tbody>
       </table>
 </div>
-<p id="section-8-4">As outlined in sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new sub-registry under the MP-DCCP registry to track the MP-DCCP version. The initial content of this sub-registry is as follows:<a href="#section-8-4" class="pilcrow">¶</a></p>
-<span id="name-sub-registry-for-tracking-t"></span><div id="ref-add-version-list">
+<p id="section-8-4">As outlined in sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-4" class="pilcrow">¶</a></p>
+<span id="name-mp-dccp-registry"></span><div id="ref-add-version-list">
 <table class="center" id="table-7">
         <caption>
 <a href="#table-7" class="selfRef">Table 7</a>:
-<a href="#name-sub-registry-for-tracking-t" class="selfRef">Sub-registry for tracking the MP-DCCP version</a>
+<a href="#name-mp-dccp-registry" class="selfRef">MP-DCCP Registry</a>
         </caption>
 <thead>
           <tr>
@@ -3045,15 +3059,14 @@ added to the "Feature Numbers Registry" according to <span>[<a href="#RFC4340" c
         </tbody>
       </table>
 </div>
-<p id="section-8-6">Future MP-DCCP versions 1 to 15 are assigned from this sub-registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-6" class="pilcrow">¶</a></p>
-<p id="section-8-7">This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2 together with 10 additional suboptions.<a href="#section-8-7" class="pilcrow">¶</a></p>
-<p id="section-8-8">IANA is requested to The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the "DCCP
-Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#section-8-8" class="pilcrow">¶</a></p>
-<span id="name-addition-to-dccp-protocol-o"></span><div id="ref-add-proto-opt-list">
+<p id="section-8-6">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-6" class="pilcrow">¶</a></p>
+<p id="section-8-7">This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2.<a href="#section-8-7" class="pilcrow">¶</a></p>
+<p id="section-8-8">IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'MP-DCCP Suboptions' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-8" class="pilcrow">¶</a></p>
+<span id="name-mp-dccp-suboptions-registry"></span><div id="ref-add-proto-opt-list">
 <table class="center" id="table-8">
         <caption>
 <a href="#table-8" class="selfRef">Table 8</a>:
-<a href="#name-addition-to-dccp-protocol-o" class="selfRef">Addition to DCCP Protocol options and corresponding sub-options</a>
+<a href="#name-mp-dccp-suboptions-registry" class="selfRef">MP-DCCP Suboptions registry</a>
         </caption>
 <thead>
           <tr>
@@ -3065,7 +3078,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or Type=46</td>
+            <td class="text-center" rowspan="1" colspan="1">Type=46</td>
             <td class="text-center" rowspan="1" colspan="1">MP_OPT</td>
             <td class="text-center" rowspan="1" colspan="1">DCCP Multipath option</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3073,7 +3086,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=0</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=0</td>
             <td class="text-center" rowspan="1" colspan="1">MP_CONFIRM</td>
             <td class="text-center" rowspan="1" colspan="1">Confirm reception/processing of an MP_OPT option</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3081,7 +3094,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=1</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=1</td>
             <td class="text-center" rowspan="1" colspan="1">MP_JOIN</td>
             <td class="text-center" rowspan="1" colspan="1">Join subflow to existing MP-DCCP connection</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3089,7 +3102,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=2</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=2</td>
             <td class="text-center" rowspan="1" colspan="1">MP_FAST_CLOSE</td>
             <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP connection</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3097,7 +3110,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=3</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=3</td>
             <td class="text-center" rowspan="1" colspan="1">MP_KEY</td>
             <td class="text-center" rowspan="1" colspan="1">Exchange key material for MP_HMAC</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3105,7 +3118,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=4</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=4</td>
             <td class="text-center" rowspan="1" colspan="1">MP_SEQ</td>
             <td class="text-center" rowspan="1" colspan="1">Multipath Sequence Number</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3113,7 +3126,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=5</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=5</td>
             <td class="text-center" rowspan="1" colspan="1">MP_HMAC</td>
             <td class="text-center" rowspan="1" colspan="1">Hash-based Message Auth. Code for MP-DCCP</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3121,7 +3134,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=6</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=6</td>
             <td class="text-center" rowspan="1" colspan="1">MP_RTT</td>
             <td class="text-center" rowspan="1" colspan="1">Transmit RTT values and calculation parameters</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3129,7 +3142,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=7</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=7</td>
             <td class="text-center" rowspan="1" colspan="1">MP_ADDADDR</td>
             <td class="text-center" rowspan="1" colspan="1">Advertise additional Address(es)/Port(s)</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3137,7 +3150,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=8</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=8</td>
             <td class="text-center" rowspan="1" colspan="1">MP_REMOVEADDR</td>
             <td class="text-center" rowspan="1" colspan="1">Remove Address(es)/ Port(s)</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3145,7 +3158,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=9</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=9</td>
             <td class="text-center" rowspan="1" colspan="1">MP_PRIO</td>
             <td class="text-center" rowspan="1" colspan="1">Change Subflow Priority</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3153,7 +3166,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=10</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=10</td>
             <td class="text-center" rowspan="1" colspan="1">MP_CLOSE</td>
             <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP subflow</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3161,7 +3174,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT=11</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT=11</td>
             <td class="text-center" rowspan="1" colspan="1">MP_EXP</td>
             <td class="text-center" rowspan="1" colspan="1">Experimental Sub-Option for private use</td>
             <td class="text-center" rowspan="1" colspan="1">
@@ -3169,7 +3182,7 @@ Protocol options" and assigned as "MP-DCCP sub-options", respectively.<a href="#
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or MP_OPT&gt;11</td>
+            <td class="text-center" rowspan="1" colspan="1">MP_OPT&gt;11</td>
             <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
             <td class="text-center" rowspan="1" colspan="1">Reserved for future MP-DCCP suboptions</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
@@ -3234,23 +3247,23 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dl class="references">
 <dt id="I-D.amend-iccrg-multipath-reordering">[I-D.amend-iccrg-multipath-reordering]</dt>
       <dd>
-<span class="refAuthor">Amend, M.</span> and <span class="refAuthor">D. Von Hugo</span>, <span class="refTitle">"Multipath sequence maintenance"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-iccrg-multipath-reordering-03</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt">https://www.ietf.org/archive/id/draft-amend-iccrg-multipath-reordering-03.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Amend, M.</span> and <span class="refAuthor">D. Von Hugo</span>, <span class="refTitle">"Multipath sequence maintenance"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-iccrg-multipath-reordering-03</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-iccrg-multipath-reordering-03">https://datatracker.ietf.org/doc/html/draft-amend-iccrg-multipath-reordering-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.amend-tsvwg-dccp-udp-header-conversion">[I-D.amend-tsvwg-dccp-udp-header-conversion]</dt>
       <dd>
-<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"Lossless and overhead free DCCP - UDP header conversion (U-DCCP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-dccp-udp-header-conversion-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-amend-tsvwg-dccp-udp-header-conversion-01.txt">https://www.ietf.org/archive/id/draft-amend-tsvwg-dccp-udp-header-conversion-01.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"Lossless and overhead free DCCP - UDP header conversion (U-DCCP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-dccp-udp-header-conversion-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.amend-tsvwg-multipath-framework-mpdccp">[I-D.amend-tsvwg-multipath-framework-mpdccp]</dt>
       <dd>
-<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Bogenfeld, E.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"A multipath framework for UDP traffic over heterogeneous access networks"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-multipath-framework-mpdccp-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-amend-tsvwg-multipath-framework-mpdccp-01.txt">https://www.ietf.org/archive/id/draft-amend-tsvwg-multipath-framework-mpdccp-01.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Bogenfeld, E.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"A multipath framework for UDP traffic over heterogeneous access networks"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-multipath-framework-mpdccp-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-multipath-framework-mpdccp-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-multipath-framework-mpdccp-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.lhwxz-hybrid-access-network-architecture">[I-D.lhwxz-hybrid-access-network-architecture]</dt>
       <dd>
-<span class="refAuthor">Leymann, N.</span>, <span class="refAuthor">Heidemann, C.</span>, <span class="refAuthor">Cullen, M.</span>, <span class="refAuthor">Xue, L.</span>, and <span class="refAuthor">M. Zhang</span>, <span class="refTitle">"Hybrid Access Network Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lhwxz-hybrid-access-network-architecture-02</span>, <time datetime="2015-01-13" class="refDate">13 January 2015</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-lhwxz-hybrid-access-network-architecture-02.txt">https://www.ietf.org/archive/id/draft-lhwxz-hybrid-access-network-architecture-02.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Leymann, N.</span>, <span class="refAuthor">Heidemann, C.</span>, <span class="refAuthor">Cullen, M.</span>, <span class="refAuthor">Xue, L.</span>, and <span class="refAuthor">M. Zhang</span>, <span class="refTitle">"Hybrid Access Network Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lhwxz-hybrid-access-network-architecture-02</span>, <time datetime="2015-01-13" class="refDate">13 January 2015</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-access-network-architecture-02">https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-access-network-architecture-02</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.muley-network-based-bonding-hybrid-access">[I-D.muley-network-based-bonding-hybrid-access]</dt>
       <dd>
-<span class="refAuthor">Muley, P.</span>, <span class="refAuthor">Henderickx, W.</span>, <span class="refAuthor">Geng, L.</span>, <span class="refAuthor">Liu, H.</span>, <span class="refAuthor">Cardullo, L.</span>, <span class="refAuthor">Newton, J.</span>, <span class="refAuthor">Seo, S.</span>, <span class="refAuthor">Draznin, S.</span>, and <span class="refAuthor">B. Patil</span>, <span class="refTitle">"Network based Bonding solution for Hybrid Access"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muley-network-based-bonding-hybrid-access-03</span>, <time datetime="2018-10-22" class="refDate">22 October 2018</time>, <span>&lt;<a href="https://www.ietf.org/archive/id/draft-muley-network-based-bonding-hybrid-access-03.txt">https://www.ietf.org/archive/id/draft-muley-network-based-bonding-hybrid-access-03.txt</a>&gt;</span>. </dd>
+<span class="refAuthor">Muley, P.</span>, <span class="refAuthor">Henderickx, W.</span>, <span class="refAuthor">Geng, L.</span>, <span class="refAuthor">Liu, H.</span>, <span class="refAuthor">Cardullo, L.</span>, <span class="refAuthor">Newton, J.</span>, <span class="refAuthor">Seo, S.</span>, <span class="refAuthor">Draznin, S.</span>, and <span class="refAuthor">B. Patil</span>, <span class="refTitle">"Network based Bonding solution for Hybrid Access"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muley-network-based-bonding-hybrid-access-03</span>, <time datetime="2018-10-22" class="refDate">22 October 2018</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-muley-network-based-bonding-hybrid-access-03">https://datatracker.ietf.org/doc/html/draft-muley-network-based-bonding-hybrid-access-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="OLIA">[OLIA]</dt>
       <dd>
@@ -3262,91 +3275,91 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dd class="break"></dd>
 <dt id="RFC0793">[RFC0793]</dt>
       <dd>
-<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Transmission Control Protocol"</span>, <span class="seriesInfo">RFC 793</span>, <span class="seriesInfo">DOI 10.17487/RFC0793</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc793">https://www.rfc-editor.org/info/rfc793</a>&gt;</span>. </dd>
+<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Transmission Control Protocol"</span>, <span class="seriesInfo">RFC 793</span>, <span class="seriesInfo">DOI 10.17487/RFC0793</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc793">https://www.rfc-editor.org/rfc/rfc793</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2104">[RFC2104]</dt>
       <dd>
-<span class="refAuthor">Krawczyk, H.</span>, <span class="refAuthor">Bellare, M.</span>, and <span class="refAuthor">R. Canetti</span>, <span class="refTitle">"HMAC: Keyed-Hashing for Message Authentication"</span>, <span class="seriesInfo">RFC 2104</span>, <span class="seriesInfo">DOI 10.17487/RFC2104</span>, <time datetime="1997-02" class="refDate">February 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2104">https://www.rfc-editor.org/info/rfc2104</a>&gt;</span>. </dd>
+<span class="refAuthor">Krawczyk, H.</span>, <span class="refAuthor">Bellare, M.</span>, and <span class="refAuthor">R. Canetti</span>, <span class="refTitle">"HMAC: Keyed-Hashing for Message Authentication"</span>, <span class="seriesInfo">RFC 2104</span>, <span class="seriesInfo">DOI 10.17487/RFC2104</span>, <time datetime="1997-02" class="refDate">February 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2104">https://www.rfc-editor.org/rfc/rfc2104</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
       <dd>
-<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc2119">https://www.rfc-editor.org/info/rfc2119</a>&gt;</span>. </dd>
+<span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3124">[RFC3124]</dt>
       <dd>
-<span class="refAuthor">Balakrishnan, H.</span> and <span class="refAuthor">S. Seshan</span>, <span class="refTitle">"The Congestion Manager"</span>, <span class="seriesInfo">RFC 3124</span>, <span class="seriesInfo">DOI 10.17487/RFC3124</span>, <time datetime="2001-06" class="refDate">June 2001</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3124">https://www.rfc-editor.org/info/rfc3124</a>&gt;</span>. </dd>
+<span class="refAuthor">Balakrishnan, H.</span> and <span class="refAuthor">S. Seshan</span>, <span class="refTitle">"The Congestion Manager"</span>, <span class="seriesInfo">RFC 3124</span>, <span class="seriesInfo">DOI 10.17487/RFC3124</span>, <time datetime="2001-06" class="refDate">June 2001</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3124">https://www.rfc-editor.org/rfc/rfc3124</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC3711">[RFC3711]</dt>
       <dd>
-<span class="refAuthor">Baugher, M.</span>, <span class="refAuthor">McGrew, D.</span>, <span class="refAuthor">Naslund, M.</span>, <span class="refAuthor">Carrara, E.</span>, and <span class="refAuthor">K. Norrman</span>, <span class="refTitle">"The Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 3711</span>, <span class="seriesInfo">DOI 10.17487/RFC3711</span>, <time datetime="2004-03" class="refDate">March 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc3711">https://www.rfc-editor.org/info/rfc3711</a>&gt;</span>. </dd>
+<span class="refAuthor">Baugher, M.</span>, <span class="refAuthor">McGrew, D.</span>, <span class="refAuthor">Naslund, M.</span>, <span class="refAuthor">Carrara, E.</span>, and <span class="refAuthor">K. Norrman</span>, <span class="refTitle">"The Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 3711</span>, <span class="seriesInfo">DOI 10.17487/RFC3711</span>, <time datetime="2004-03" class="refDate">March 2004</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc3711">https://www.rfc-editor.org/rfc/rfc3711</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4043">[RFC4043]</dt>
       <dd>
-<span class="refAuthor">Pinkas, D.</span> and <span class="refAuthor">T. Gindin</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Permanent Identifier"</span>, <span class="seriesInfo">RFC 4043</span>, <span class="seriesInfo">DOI 10.17487/RFC4043</span>, <time datetime="2005-05" class="refDate">May 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4043">https://www.rfc-editor.org/info/rfc4043</a>&gt;</span>. </dd>
+<span class="refAuthor">Pinkas, D.</span> and <span class="refAuthor">T. Gindin</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Permanent Identifier"</span>, <span class="seriesInfo">RFC 4043</span>, <span class="seriesInfo">DOI 10.17487/RFC4043</span>, <time datetime="2005-05" class="refDate">May 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4043">https://www.rfc-editor.org/rfc/rfc4043</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4086">[RFC4086]</dt>
       <dd>
-<span class="refAuthor">Eastlake 3rd, D.</span>, <span class="refAuthor">Schiller, J.</span>, and <span class="refAuthor">S. Crocker</span>, <span class="refTitle">"Randomness Requirements for Security"</span>, <span class="seriesInfo">BCP 106</span>, <span class="seriesInfo">RFC 4086</span>, <span class="seriesInfo">DOI 10.17487/RFC4086</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4086">https://www.rfc-editor.org/info/rfc4086</a>&gt;</span>. </dd>
+<span class="refAuthor">Eastlake 3rd, D.</span>, <span class="refAuthor">Schiller, J.</span>, and <span class="refAuthor">S. Crocker</span>, <span class="refTitle">"Randomness Requirements for Security"</span>, <span class="seriesInfo">BCP 106</span>, <span class="seriesInfo">RFC 4086</span>, <span class="seriesInfo">DOI 10.17487/RFC4086</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4086">https://www.rfc-editor.org/rfc/rfc4086</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC4340">[RFC4340]</dt>
       <dd>
-<span class="refAuthor">Kohler, E.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">S. Floyd</span>, <span class="refTitle">"Datagram Congestion Control Protocol (DCCP)"</span>, <span class="seriesInfo">RFC 4340</span>, <span class="seriesInfo">DOI 10.17487/RFC4340</span>, <time datetime="2006-03" class="refDate">March 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc4340">https://www.rfc-editor.org/info/rfc4340</a>&gt;</span>. </dd>
+<span class="refAuthor">Kohler, E.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">S. Floyd</span>, <span class="refTitle">"Datagram Congestion Control Protocol (DCCP)"</span>, <span class="seriesInfo">RFC 4340</span>, <span class="seriesInfo">DOI 10.17487/RFC4340</span>, <time datetime="2006-03" class="refDate">March 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4340">https://www.rfc-editor.org/rfc/rfc4340</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5595">[RFC5595]</dt>
       <dd>
-<span class="refAuthor">Fairhurst, G.</span>, <span class="refTitle">"The Datagram Congestion Control Protocol (DCCP) Service Codes"</span>, <span class="seriesInfo">RFC 5595</span>, <span class="seriesInfo">DOI 10.17487/RFC5595</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5595">https://www.rfc-editor.org/info/rfc5595</a>&gt;</span>. </dd>
+<span class="refAuthor">Fairhurst, G.</span>, <span class="refTitle">"The Datagram Congestion Control Protocol (DCCP) Service Codes"</span>, <span class="seriesInfo">RFC 5595</span>, <span class="seriesInfo">DOI 10.17487/RFC5595</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5595">https://www.rfc-editor.org/rfc/rfc5595</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5596">[RFC5596]</dt>
       <dd>
-<span class="refAuthor">Fairhurst, G.</span>, <span class="refTitle">"Datagram Congestion Control Protocol (DCCP) Simultaneous-Open Technique to Facilitate NAT/Middlebox Traversal"</span>, <span class="seriesInfo">RFC 5596</span>, <span class="seriesInfo">DOI 10.17487/RFC5596</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5596">https://www.rfc-editor.org/info/rfc5596</a>&gt;</span>. </dd>
+<span class="refAuthor">Fairhurst, G.</span>, <span class="refTitle">"Datagram Congestion Control Protocol (DCCP) Simultaneous-Open Technique to Facilitate NAT/Middlebox Traversal"</span>, <span class="seriesInfo">RFC 5596</span>, <span class="seriesInfo">DOI 10.17487/RFC5596</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5596">https://www.rfc-editor.org/rfc/rfc5596</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5597">[RFC5597]</dt>
       <dd>
-<span class="refAuthor">Denis-Courmont, R.</span>, <span class="refTitle">"Network Address Translation (NAT) Behavioral Requirements for the Datagram Congestion Control Protocol"</span>, <span class="seriesInfo">BCP 150</span>, <span class="seriesInfo">RFC 5597</span>, <span class="seriesInfo">DOI 10.17487/RFC5597</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5597">https://www.rfc-editor.org/info/rfc5597</a>&gt;</span>. </dd>
+<span class="refAuthor">Denis-Courmont, R.</span>, <span class="refTitle">"Network Address Translation (NAT) Behavioral Requirements for the Datagram Congestion Control Protocol"</span>, <span class="seriesInfo">BCP 150</span>, <span class="seriesInfo">RFC 5597</span>, <span class="seriesInfo">DOI 10.17487/RFC5597</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5597">https://www.rfc-editor.org/rfc/rfc5597</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5634">[RFC5634]</dt>
       <dd>
-<span class="refAuthor">Fairhurst, G.</span> and <span class="refAuthor">A. Sathiaseelan</span>, <span class="refTitle">"Quick-Start for the Datagram Congestion Control Protocol (DCCP)"</span>, <span class="seriesInfo">RFC 5634</span>, <span class="seriesInfo">DOI 10.17487/RFC5634</span>, <time datetime="2009-08" class="refDate">August 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc5634">https://www.rfc-editor.org/info/rfc5634</a>&gt;</span>. </dd>
+<span class="refAuthor">Fairhurst, G.</span> and <span class="refAuthor">A. Sathiaseelan</span>, <span class="refTitle">"Quick-Start for the Datagram Congestion Control Protocol (DCCP)"</span>, <span class="seriesInfo">RFC 5634</span>, <span class="seriesInfo">DOI 10.17487/RFC5634</span>, <time datetime="2009-08" class="refDate">August 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5634">https://www.rfc-editor.org/rfc/rfc5634</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6234">[RFC6234]</dt>
       <dd>
-<span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6234">https://www.rfc-editor.org/info/rfc6234</a>&gt;</span>. </dd>
+<span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6234">https://www.rfc-editor.org/rfc/rfc6234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6356">[RFC6356]</dt>
       <dd>
-<span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">D. Wischik</span>, <span class="refTitle">"Coupled Congestion Control for Multipath Transport Protocols"</span>, <span class="seriesInfo">RFC 6356</span>, <span class="seriesInfo">DOI 10.17487/RFC6356</span>, <time datetime="2011-10" class="refDate">October 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6356">https://www.rfc-editor.org/info/rfc6356</a>&gt;</span>. </dd>
+<span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">D. Wischik</span>, <span class="refTitle">"Coupled Congestion Control for Multipath Transport Protocols"</span>, <span class="seriesInfo">RFC 6356</span>, <span class="seriesInfo">DOI 10.17487/RFC6356</span>, <time datetime="2011-10" class="refDate">October 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6356">https://www.rfc-editor.org/rfc/rfc6356</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6773">[RFC6773]</dt>
       <dd>
-<span class="refAuthor">Phelan, T.</span>, <span class="refAuthor">Fairhurst, G.</span>, and <span class="refAuthor">C. Perkins</span>, <span class="refTitle">"DCCP-UDP: A Datagram Congestion Control Protocol UDP Encapsulation for NAT Traversal"</span>, <span class="seriesInfo">RFC 6773</span>, <span class="seriesInfo">DOI 10.17487/RFC6773</span>, <time datetime="2012-11" class="refDate">November 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6773">https://www.rfc-editor.org/info/rfc6773</a>&gt;</span>. </dd>
+<span class="refAuthor">Phelan, T.</span>, <span class="refAuthor">Fairhurst, G.</span>, and <span class="refAuthor">C. Perkins</span>, <span class="refTitle">"DCCP-UDP: A Datagram Congestion Control Protocol UDP Encapsulation for NAT Traversal"</span>, <span class="seriesInfo">RFC 6773</span>, <span class="seriesInfo">DOI 10.17487/RFC6773</span>, <time datetime="2012-11" class="refDate">November 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6773">https://www.rfc-editor.org/rfc/rfc6773</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6824">[RFC6824]</dt>
       <dd>
-<span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">O. Bonaventure</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 6824</span>, <span class="seriesInfo">DOI 10.17487/RFC6824</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6824">https://www.rfc-editor.org/info/rfc6824</a>&gt;</span>. </dd>
+<span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">O. Bonaventure</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 6824</span>, <span class="seriesInfo">DOI 10.17487/RFC6824</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6824">https://www.rfc-editor.org/rfc/rfc6824</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6904">[RFC6904]</dt>
       <dd>
-<span class="refAuthor">Lennox, J.</span>, <span class="refTitle">"Encryption of Header Extensions in the Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 6904</span>, <span class="seriesInfo">DOI 10.17487/RFC6904</span>, <time datetime="2013-04" class="refDate">April 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6904">https://www.rfc-editor.org/info/rfc6904</a>&gt;</span>. </dd>
+<span class="refAuthor">Lennox, J.</span>, <span class="refTitle">"Encryption of Header Extensions in the Secure Real-time Transport Protocol (SRTP)"</span>, <span class="seriesInfo">RFC 6904</span>, <span class="seriesInfo">DOI 10.17487/RFC6904</span>, <time datetime="2013-04" class="refDate">April 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6904">https://www.rfc-editor.org/rfc/rfc6904</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6951">[RFC6951]</dt>
       <dd>
-<span class="refAuthor">Tuexen, M.</span> and <span class="refAuthor">R. Stewart</span>, <span class="refTitle">"UDP Encapsulation of Stream Control Transmission Protocol (SCTP) Packets for End-Host to End-Host Communication"</span>, <span class="seriesInfo">RFC 6951</span>, <span class="seriesInfo">DOI 10.17487/RFC6951</span>, <time datetime="2013-05" class="refDate">May 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc6951">https://www.rfc-editor.org/info/rfc6951</a>&gt;</span>. </dd>
+<span class="refAuthor">Tuexen, M.</span> and <span class="refAuthor">R. Stewart</span>, <span class="refTitle">"UDP Encapsulation of Stream Control Transmission Protocol (SCTP) Packets for End-Host to End-Host Communication"</span>, <span class="seriesInfo">RFC 6951</span>, <span class="seriesInfo">DOI 10.17487/RFC6951</span>, <time datetime="2013-05" class="refDate">May 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6951">https://www.rfc-editor.org/rfc/rfc6951</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8041">[RFC8041]</dt>
       <dd>
-<span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Paasch, C.</span>, and <span class="refAuthor">G. Detal</span>, <span class="refTitle">"Use Cases and Operational Experience with Multipath TCP"</span>, <span class="seriesInfo">RFC 8041</span>, <span class="seriesInfo">DOI 10.17487/RFC8041</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8041">https://www.rfc-editor.org/info/rfc8041</a>&gt;</span>. </dd>
+<span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Paasch, C.</span>, and <span class="refAuthor">G. Detal</span>, <span class="refTitle">"Use Cases and Operational Experience with Multipath TCP"</span>, <span class="seriesInfo">RFC 8041</span>, <span class="seriesInfo">DOI 10.17487/RFC8041</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8041">https://www.rfc-editor.org/rfc/rfc8041</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8126">[RFC8126]</dt>
       <dd>
-<span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8126">https://www.rfc-editor.org/info/rfc8126</a>&gt;</span>. </dd>
+<span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8126">https://www.rfc-editor.org/rfc/rfc8126</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8174">[RFC8174]</dt>
       <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8174">https://www.rfc-editor.org/info/rfc8174</a>&gt;</span>. </dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC8684">[RFC8684]</dt>
       <dd>
-<span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, <span class="refAuthor">Bonaventure, O.</span>, and <span class="refAuthor">C. Paasch</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 8684</span>, <span class="seriesInfo">DOI 10.17487/RFC8684</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/info/rfc8684">https://www.rfc-editor.org/info/rfc8684</a>&gt;</span>. </dd>
+<span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, <span class="refAuthor">Bonaventure, O.</span>, and <span class="refAuthor">C. Paasch</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 8684</span>, <span class="seriesInfo">DOI 10.17487/RFC8684</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8684">https://www.rfc-editor.org/rfc/rfc8684</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="slide">[slide]</dt>
       <dd>
