@@ -3004,7 +3004,7 @@ passages were copied almost unmodified from these documents.<a href="#section-7-
 <a href="#section-8" class="section-number selfRef">8. </a><a href="#name-iana-considerations" class="section-name selfRef">IANA Considerations</a>
       </h2>
 <p id="section-8-1">This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
-in accordance with <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>.  This document defines one new value to be added to the DCCP Feature Numbers registry and two new registries to be added to the DCCP registry group.<a href="#section-8-1" class="pilcrow">¶</a></p>
+in accordance with <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>.  This document defines one new value to be added to the DCCP Feature Numbers registry and three new registries to be added to the DCCP registry group.<a href="#section-8-1" class="pilcrow">¶</a></p>
 <p id="section-8-2">This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
 as described in <a href="#protocol" class="auto internal xref">Section 3</a>. The following entry in <a href="#ref-add-feature-list" class="auto internal xref">Table 6</a> should be
@@ -3032,11 +3032,11 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
       </table>
 </div>
 <p id="section-8-4">As outlined in sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-4" class="pilcrow">¶</a></p>
-<span id="name-mp-dccp-registry"></span><div id="ref-add-version-list">
+<span id="name-mp-dccp-versions-registry"></span><div id="ref-add-version-list">
 <table class="center" id="table-7">
         <caption>
 <a href="#table-7" class="selfRef">Table 7</a>:
-<a href="#name-mp-dccp-registry" class="selfRef">MP-DCCP Registry</a>
+<a href="#name-mp-dccp-versions-registry" class="selfRef">MP-DCCP Versions Registry</a>
         </caption>
 <thead>
           <tr>
@@ -3192,15 +3192,13 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
 </div>
 <p id="section-8-10">Future MP-DCCP sub-options with MP_OPT&gt;11 can be assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-10" class="pilcrow">¶</a></p>
 <p id="section-8-11">In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-11" class="pilcrow">¶</a></p>
-<p id="section-8-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol three different sub options to the MP-KEY option to identify the 
-MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below.
-Values in range 3-255 (decimal) inclusive remain unassigned in this version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+<p id="section-8-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" class="pilcrow">¶</a></p>
-<span id="name-mp_key-key-type-sub-options"></span><div id="ref-mp_key-sub-opt-list">
+<span id="name-mp-dccp-mp_key-registry-wit"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
         <caption>
 <a href="#table-9" class="selfRef">Table 9</a>:
-<a href="#name-mp_key-key-type-sub-options" class="selfRef">MP_KEY Key type sub-options for key data exchange on different paths</a>
+<a href="#name-mp-dccp-mp_key-registry-wit" class="selfRef">MP-DCCP MP_KEY registry with type sub-options for key data exchange on different paths</a>
         </caption>
 <thead>
           <tr>
@@ -3212,7 +3210,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or 0</td>
+            <td class="text-center" rowspan="1" colspan="1">0</td>
             <td class="text-center" rowspan="1" colspan="1">Plain Text</td>
             <td class="text-center" rowspan="1" colspan="1">Plain Text Key</td>
             <td class="text-left" rowspan="1" colspan="1">
@@ -3220,7 +3218,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or 1</td>
+            <td class="text-center" rowspan="1" colspan="1">1</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE-C25519-SHA256</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE with SHA256 and Curve25519</td>
             <td class="text-left" rowspan="1" colspan="1">
@@ -3228,7 +3226,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">TBD or 2</td>
+            <td class="text-center" rowspan="1" colspan="1">2</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE-C25519-SHA512</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE with SHA512 and Curve25519</td>
             <td class="text-left" rowspan="1" colspan="1">
