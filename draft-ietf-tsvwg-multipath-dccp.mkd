@@ -377,8 +377,8 @@ and are outside the scope of this document.
 
 The following sections define MP-DCCP behavior in detail.
 
-A Multipath DCCP connection provides a bidirectional byte-stream between 
-two hosts exchanging data as in DCCP, thus, not requiring 
+A Multipath DCCP connection provides a bidirectional connection of datagrams 
+between two hosts exchanging data as in DCCP, thus, not requiring 
 any change to the applications. However, Multipath DCCP enables the 
 hosts to use different paths with different IP addresses to transport 
 the packets of an MP-DCCP connection. MP-DCCP manages the request, 
