@@ -176,8 +176,8 @@ DCCP to support multipath operations.  Multipath DCCP provides
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
-components necessary to establish and use multiple DCCP flows in parallel across
-different paths.
+components necessary to establish and use multiple DCCP flows across
+different paths simultaneously.
 
 --- middle
 
@@ -355,7 +355,7 @@ Address A1    Address A2             Address B1    Address B2
 # Operation Overview {#op_overview}
 
 DCCP (Section 17.2 of {{RFC4340}}) allows multiple application 
-sub-flows to be multiplexed over a single DCCP connection with 
+subflows to be multiplexed over a single DCCP connection with 
 potentially same performance. However, DCCP does not provide built-in 
 support for multiple subflows and the Congestion Manager (CM) 
 {{RFC3124}}, as a generic multiplexing facility, can not fully support 
