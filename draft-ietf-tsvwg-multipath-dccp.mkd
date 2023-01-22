@@ -394,7 +394,8 @@ variable length multipath-related option, as described in {{protocol}}.
 All MP-DCCP operations are signaled with MP-DCCP suboptions described in {#MP_OPT}.
 
 The number of concurrent DCCP subflows can vary during the 
-lifetime of a Multipath DCCP connection. 
+lifetime of a Multipath DCCP connection. The details of the path management decisions for
+when to add or remove subflows are outside the scope of this document.
 
 
 # MP-DCCP Protocol {#protocol}
@@ -1293,7 +1294,8 @@ Linked Increases Algorithm (LIA) specified in {{RFC6356}} to
 solve this problem.  This scheme can be adapted also for Multipath DCCP.
 The same applies to other coupled congestion control schemes, which
 have been proposed for Multipath TCP such as Opportunistic Linked
-Increases Algorithm [OLIA].
+Increases Algorithm [OLIA]. The details of the congestion control
+algorithms are outside the scope of this document.
 
 ## Maximum Packet Size Considerations
 
