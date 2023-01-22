@@ -176,7 +176,7 @@ DCCP to support multipath operations.  Multipath DCCP provides
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
 the same type of service to applications as DCCP and it provides the
-components necessary to establish and use multiple DCCP subflows across
+components necessary to establish communication and communicate across multiple
 different paths.
 
 --- middle
