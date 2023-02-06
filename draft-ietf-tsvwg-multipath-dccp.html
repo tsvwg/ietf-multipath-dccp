@@ -1690,7 +1690,8 @@ negotiated, all subsequent MP-DCCP operations for that connection are signalled 
 variable length multipath-related option, as described in <a href="#protocol" class="auto internal xref">Section 3</a>.
 All MP-DCCP operations are signaled with MP-DCCP suboptions described in {#MP_OPT}.<a href="#section-2-6" class="pilcrow">¶</a></p>
 <p id="section-2-7">The number of concurrent DCCP subflows can vary during the 
-lifetime of a Multipath DCCP connection.<a href="#section-2-7" class="pilcrow">¶</a></p>
+lifetime of a Multipath DCCP connection. The details of the path management decisions for
+when to add or remove subflows are outside the scope of this document.<a href="#section-2-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="protocol">
@@ -3018,7 +3019,8 @@ Linked Increases Algorithm (LIA) specified in <span>[<a href="#RFC6356" class="c
 solve this problem.  This scheme can be adapted also for Multipath DCCP.
 The same applies to other coupled congestion control schemes, which
 have been proposed for Multipath TCP such as Opportunistic Linked
-Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>. The details of the congestion control
+algorithms are outside the scope of this document.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="maximum-packet-size-considerations">
