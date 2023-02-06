@@ -39,8 +39,8 @@ Abstract
    multipath operations.  Multipath DCCP provides the ability to
    simultaneously use multiple paths between peers.  The protocol offers
    the same type of service to applications as DCCP and it provides the
-   components necessary to establish and use multiple DCCP subflows
-   across different paths.
+   components necessary to establish and use multiple DCCP flows across
+   different paths simultaneously.
 
 Status of This Memo
 
@@ -152,16 +152,16 @@ Internet-Draft               Multipath DCCP               September 2022
    [I-D.amend-tsvwg-multipath-framework-mpdccp] and for hybrid access
    networks [I-D.lhwxz-hybrid-access-network-architecture][I-D.muley-net
    work-based-bonding-hybrid-access].  MP-DCCP can be applied for load-
-   balancing, seamless session handover, and aggregation purposes
-   (referred to as Access Traffic Steering, Switching, and Splitting
-   (ATSSS) in the 3GPP terminology [TS23.501]).
+   balancing, seamless session handover, and bandwidth aggregation
+   purposes (referred to as Access Traffic Steering, Switching, and
+   Splitting (ATSSS) in the 3GPP terminology [TS23.501]).
 
-   As pointed out in [I-D.amend-tsvwg-multipath-framework-mpdccp] the
-   proposed encapsulation in terms of lightweight DCCP flow headers is
-   more appropriate for unreliable IP traffic in terms of UDP and other
-   non-TCP packets in comparison to MPTCP.  Such considerations are not
-   detailed in the present specification.  This document presents the
-   protocol changes required to add multipath support to DCCP;
+   This document presents the protocol changes required to add multipath
+   support to DCCP; specifically, those for signaling and setting up
+   multiple paths (a.k.a, "subflows"), managing these subflows,
+   reordering of data, and termination of sessions.
+
+
 
 
 
@@ -169,10 +169,6 @@ Amend, et al.             Expires 30 March 2023                 [Page 3]
 
 Internet-Draft               Multipath DCCP               September 2022
 
-
-   specifically, those for signaling and setting up multiple paths
-   (a.k.a, "subflows"), managing these subflows, reordering of data, and
-   termination of sessions.
 
    DCCP, as stated in [RFC4340] does not provide reliable and ordered
    delivery.  Consequently, multiple application subflows may be
@@ -195,6 +191,12 @@ Internet-Draft               Multipath DCCP               September 2022
    Application subflows can co-exist with MP-DCCP operation as defined
    in this document.
 
+   As pointed out in [I-D.amend-tsvwg-multipath-framework-mpdccp] the
+   proposed encapsulation in terms of lightweight DCCP flow headers is
+   more appropriate for unreliable IP traffic in terms of UDP and other
+   non-TCP packets in comparison to MPTCP.  Such considerations are not
+   detailed in the present specification.
+
 1.1.  Multipath DCCP in the Networking Stack
 
    MP-DCCP operates at the transport layer and aims to be transparent to
@@ -214,8 +216,6 @@ Internet-Draft               Multipath DCCP               September 2022
    +---------------+            +-------------------------------+
 
      Figure 1: Comparison of Standard DCCP and MP-DCCP Protocol Stacks
-
-
 
 
 
@@ -294,7 +294,7 @@ Internet-Draft               Multipath DCCP               September 2022
      |             |  (DCCP subflow setup)|             |
      |             |--------------------->|             |
      |             |<---------------------|             |
-     | merge individual DCCP subflows to one multipath connection
+     | merge individual DCCP subflows to one MP-DCCP connection
      |             |                      |             |
 
                   Figure 2: Example MP-DCCP Usage Scenario
@@ -305,38 +305,20 @@ Internet-Draft               Multipath DCCP               September 2022
       Hosts A and B, respectively.  It should be noted that MP-DCCP does
       not require the presence of more than one address in both peers.
 
-   *  In case extra paths and corresponding addresses are available,
-      additional DCCP subflows are created on these paths and are
-      attached to the existing MP-DCCP session, which continues to
+   *  In case extra paths and corresponding addresses/ports are
+      available, additional DCCP subflows are created on these paths and
+      are attached to the existing MP-DCCP session, which continues to
       appear as a single connection to the applications at both ends.
       The creation of an additional DCCP subflow is illustrated between
       Address A2 on Host A and Address B1 on Host B.
 
    *  MP-DCCP identifies multiple paths by the presence of multiple
-      addresses at hosts.  Combinations of these multiple addresses
-      equate to the additional paths.  In the example, other potential
-      paths that could be set up are A1<->B2 and A2<->B2.  Although this
-      additional session is shown as being initiated from A2, it could
-      equally have been initiated from B1 or B2.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 30 March 2023                 [Page 6]
-
-Internet-Draft               Multipath DCCP               September 2022
-
+      addresses/ports at hosts.  Combinations of these multiple
+      addresses/ports equate to the additional paths.  In the example,
+      other potential paths that could be set up are A1<->B2 and
+      A2<->B2.  Although this additional subflow is shown as being
+      initiated from A2, it could equally have been initiated from B1 or
+      B2.
 
    *  The discovery and setup of additional subflows will be achieved
       through a path management method including the logic and details
@@ -348,6 +330,14 @@ Internet-Draft               Multipath DCCP               September 2022
       specifics of the implementation.  In the same context, if any of
       the MP-DCCP peer hosts has a limit on the maximum number of paths
       that can be maintained (e.g., similar to what is discussed in
+
+
+
+Amend, et al.             Expires 30 March 2023                 [Page 6]
+
+Internet-Draft               Multipath DCCP               September 2022
+
+
       Section 3.4 of [RFC8041], the creation of new subflows from that
       peer host should be avoided and incoming subflow requests should
       be terminated.
@@ -370,29 +360,19 @@ Internet-Draft               Multipath DCCP               September 2022
 
 2.  Operation Overview
 
-   DCCP (Section 17.2 of [RFC4340]) allows multiple application sub-
-   flows to be multiplexed over a single DCCP connection with
-   potentially same performance.  However, DCCP does not provide built-
-   in support for multiple subflows and the Congestion Manager (CM)
-   [RFC3124], as a generic multiplexing facility, can not fully support
-   multiple congestion control mechanisms for multiple DCCP flows
-   between same source and destination addresses.  Various congestion
-   control mechanisms have been specified to optimize DCCP performance
-   for specific traffic types in terms of profiles denoted by a
-   Congestion Control IDentifier (CCID).
+   DCCP (Section 17.2 of [RFC4340]) allows multiple application subflows
+   to be multiplexed over a single DCCP connection with potentially same
+   performance.  However, DCCP does not provide built-in support for
+   multiple subflows and the Congestion Manager (CM) [RFC3124], as a
+   generic multiplexing facility, can not fully support multiple
+   congestion control mechanisms for multiple DCCP flows between same
+   source and destination addresses.  Various congestion control
+   mechanisms have been specified to optimize DCCP performance for
+   specific traffic types in terms of profiles denoted by a Congestion
+   Control IDentifier (CCID).
 
    The extension of DCCP towards Multipath-DCCP (MP-DCCP) is described
    in detail in Section 3.
-
-
-
-
-
-
-Amend, et al.             Expires 30 March 2023                 [Page 7]
-
-Internet-Draft               Multipath DCCP               September 2022
-
 
    As a high level overview of the MP-DCCP operation, the data stream
    from a DCCP application is split by MP-DCCP operation into one or
@@ -406,14 +386,22 @@ Internet-Draft               Multipath DCCP               September 2022
 
    The following sections define MP-DCCP behavior in detail.
 
-   A Multipath DCCP connection provides a bidirectional byte-stream
-   between two hosts exchanging data as in DCCP, thus, not requiring any
-   change to the applications.  However, Multipath DCCP enables the
-   hosts to use different paths with different IP addresses to transport
-   the packets of an MP-DCCP connection.  MP-DCCP manages the request,
-   set-up, authentication, prioritization, modification, and removal of
-   the DCCP subflows on different paths as well as the exchange of
-   performance parameters.
+
+
+
+Amend, et al.             Expires 30 March 2023                 [Page 7]
+
+Internet-Draft               Multipath DCCP               September 2022
+
+
+   A Multipath DCCP connection provides a bidirectional connection of
+   datagrams between two hosts exchanging data as in DCCP, thus, not
+   requiring any change to the applications.  However, Multipath DCCP
+   enables the hosts to use different paths with different IP addresses
+   to transport the packets of an MP-DCCP connection.  MP-DCCP manages
+   the request, set-up, authentication, prioritization, modification,
+   and removal of the DCCP subflows on different paths as well as the
+   exchange of performance parameters.
 
    The Multipath Capability for MP-DCCP can be negotiated with a new
    DCCP feature, as specified in Section 3.1.  Once negotiated, all
@@ -442,14 +430,6 @@ Internet-Draft               Multipath DCCP               September 2022
                          Table 1: Multipath Feature
 
    Rec'n Rule:  The reconciliation rule used for the feature.  SP means
-
-
-
-Amend, et al.             Expires 30 March 2023                 [Page 8]
-
-Internet-Draft               Multipath DCCP               September 2022
-
-
       server-priority, NN means non-negotiable.
 
    Initial Value:  The initial value for the feature.  Every feature has
@@ -459,6 +439,16 @@ Internet-Draft               Multipath DCCP               September 2022
       MUST understand the feature.  If it is "N", then the feature
       behaves like an extension, and it is safe to respond to Change
       options for the feature with empty Confirm options.
+
+
+
+
+
+
+Amend, et al.             Expires 30 March 2023                 [Page 8]
+
+Internet-Draft               Multipath DCCP               September 2022
+
 
    The DCCP protocol options as defined in ([RFC4340], Section 5.8) and
    ([RFC5634], Section 2.2.1) are enriched with a new Multipath related
@@ -498,14 +488,6 @@ Internet-Draft               Multipath DCCP               September 2022
    negotiation of the Multipath Capable feature is allowed on the same
    MP-DCCP connection.
 
-
-
-
-Amend, et al.             Expires 30 March 2023                 [Page 9]
-
-Internet-Draft               Multipath DCCP               September 2022
-
-
    Clients MUST include a Change R option during the initial handshake
    request to supply a list of supported MP-DCCP protocol versions,
    ordered by preference.
@@ -515,6 +497,14 @@ Internet-Draft               Multipath DCCP               September 2022
    by its own supported version(s) ordered by preference.  Any subflow
    addition to an existing MP-DCCP connection MUST use the same version
    negotiated for the first subflow.
+
+
+
+
+Amend, et al.             Expires 30 March 2023                 [Page 9]
+
+Internet-Draft               Multipath DCCP               September 2022
+
 
    If no agreement is found, the Server MUST reply with an empty Confirm
    L option with feature number 10 and no values.
@@ -554,6 +544,16 @@ Internet-Draft               Multipath DCCP               September 2022
 
                      Figure 3: Multipath Option Format
 
+   The description of the fields of the multipath option is shown in
+   Table 3.  MP_OPT refers to an MP-DCCP suboption.
+
+
+
+
+
+
+
+
 
 
 
@@ -561,9 +561,6 @@ Amend, et al.             Expires 30 March 2023                [Page 10]
 
 Internet-Draft               Multipath DCCP               September 2022
 
-
-   The description of the fields of the multipath option is shown in
-   Table 3.  MP_OPT refers to an MP-DCCP suboption.
 
     +======+========+================+================================+
     | Type | Option | MP_OPT         | Meaning                        |
@@ -607,6 +604,9 @@ Internet-Draft               Multipath DCCP               September 2022
    [RFC8684].
 
 3.2.1.  MP_CONFIRM
+
+
+
 
 
 
