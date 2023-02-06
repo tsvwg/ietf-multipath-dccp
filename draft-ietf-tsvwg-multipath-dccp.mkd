@@ -563,6 +563,52 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
 
 
 
+An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm-good}}. The host A sends a 
+DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
+this instance (but could be any path) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
+together with the associated option (MP_PRIO)
+
+~~~~
+          Host A                                         Host B 
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
+     |             |---------------------------------------------->|
+     |             |                                       |       |
+     |             |  DCCP-Response +                      |       |
+     |             |<----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
+     |             |                                       |       |
+~~~~
+{: #ref-mp-dccp-confirm-good title='Example MP-DCCP CONFIRM procedure'}
+    
+A second example to illustrate the same MP-DCCP confirm procedure but where an out of date option is also delivered is shown in ({{ref-mp-dccp-confirm-outdated}}.
+Here, a first DCCP-Data is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues a second DCCP-Data with option MP_PRIO
+set to 1. The delivery of the first MP_PRIO is delayed in the network between Host A and Host B and arrives after the second MP_PRIO. Host B
+ignores this second MP_PRIO as the associated sequence number is earlier than the first. Host B sends a DCCP-Ack confirming receipt of the MP_PRIO(1) with sequence number 2.
+
+~~~~
+          Host A                                         Host B 
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+     |             |-------------                          |       |
+     |             |             \                         |       |
+     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
+     |             |---------------\------------------------------>|
+     |             |                \                      |       |
+     |             |                 ----------------------------->|
+     |             |                                       |       |
+     |             |  DCCP-Ack +                           |       |
+     |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
+     |             |                                       |       |
+~~~~
+{: #ref-mp-dccp-confirm-outdated title='Example MP-DCCP CONFIRM procedure with outdated suboption'}
+
+
 ### MP_JOIN {#MP_JOIN}
 
 
@@ -1198,6 +1244,68 @@ handshake is as follows:
 
 * Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
   handshaking.
+
+## Address knowledge exchange
+### Advertising a new path ({{MP_ADDADDR}})
+
+When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
+shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
+* an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
+* the IP address of the new path (A2_IP)
+* A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
+  as that used for the initial subflow address A1_IP
+
+The following options must be included in a packet carrying MP_ADDADDR:
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
+* the sequence number (seqno 12) for this message
+
+Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
+
+~~~~
+          Host A                                         Host B 
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +        |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
+     |             |                                       |      
+     |   DCCP-Ack + MP_HMAC(B) +                           |
+     |<----- MP_CONFIRM(seqno 12, MP_ADDADDR) -------------|
+~~~~
+{: #ref-mp-dccp-add-address title='Example MP-DCCP ADDADDR procedure'}
+
+### Removing a path ({{MP_REMOVEADDR}})
+When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
+shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
+* an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
+
+The following options must be included in a packet carrying MP_REMOVEADDR
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
+* the sequence number (seqno 33) for this message
+
+Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containing the MP_SEQ number (seqno 33) of the packet carrying the option that we are confirming, together with the MP_REMOVEADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
+
+~~~~
+          Host A                                         Host B 
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2) +                |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
+     |             |                                       |      
+     |   DCCP-Ack + MP_HMAC(B) +                           |
+     |<----- MP_CONFIRM(seqno 33, MP_REMOVEADDR) ----------|
+~~~~
+{: #ref-mp-dccp-remove-address title='Example MP-DCCP REMOVEADDR procedure'}
+
 
 ## Close a MP-DCCP connection {#closing}
 
