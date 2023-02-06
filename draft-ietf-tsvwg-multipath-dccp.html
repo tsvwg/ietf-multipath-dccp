@@ -1415,16 +1415,24 @@ different paths.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
                 <p id="section-toc.1-1.3.2.3.1"><a href="#section-3.3" class="auto internal xref">3.3</a>.  <a href="#name-mp-dccp-handshaking-procedu" class="internal xref">MP-DCCP Handshaking Procedure</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4">
-                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-close-a-mp-dccp-connection" class="internal xref">Close a MP-DCCP connection</a></p>
+                <p id="section-toc.1-1.3.2.4.1"><a href="#section-3.4" class="auto internal xref">3.4</a>.  <a href="#name-address-knowledge-exchange" class="internal xref">Address knowledge exchange</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.4.2.1">
+                    <p id="section-toc.1-1.3.2.4.2.1.1"><a href="#section-3.4.1" class="auto internal xref">3.4.1</a>.  <a href="#name-removing-a-path" class="internal xref">Removing a path (Section 3.2.9)</a></p>
+</li>
+                </ul>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.5">
-                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-fallback" class="internal xref">Fallback</a></p>
+                <p id="section-toc.1-1.3.2.5.1"><a href="#section-3.5" class="auto internal xref">3.5</a>.  <a href="#name-close-a-mp-dccp-connection" class="internal xref">Close a MP-DCCP connection</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.6">
-                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-congestion-control-consider" class="internal xref">Congestion Control Considerations</a></p>
+                <p id="section-toc.1-1.3.2.6.1"><a href="#section-3.6" class="auto internal xref">3.6</a>.  <a href="#name-fallback" class="internal xref">Fallback</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.7">
-                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
+                <p id="section-toc.1-1.3.2.7.1"><a href="#section-3.7" class="auto internal xref">3.7</a>.  <a href="#name-congestion-control-consider" class="internal xref">Congestion Control Considerations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8">
+                <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="auto internal xref">3.8</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
 </li>
             </ul>
 </li>
@@ -2002,6 +2010,61 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
             </tbody>
           </table>
 </div>
+<p id="section-3.2.1-7">An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in <a href="#ref-mp-dccp-confirm-good" class="auto internal xref">Figure 4</a>. The host A sends a 
+DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
+this instance (but could be any path) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
+together with the associated option (MP_PRIO)<a href="#section-3.2.1-7" class="pilcrow">¶</a></p>
+<span id="name-example-mp-dccp-confirm-pro"></span><div id="ref-mp-dccp-confirm-good">
+<figure id="figure-4">
+            <div class="alignLeft art-text artwork" id="section-3.2.1-8.1">
+<pre>
+          Host A                                         Host B
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
+     |             |----------------------------------------------&gt;|
+     |             |                                       |       |
+     |             |  DCCP-Response +                      |       |
+     |             |&lt;----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
+     |             |                                       |       |
+</pre>
+</div>
+<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<a href="#name-example-mp-dccp-confirm-pro" class="selfRef">Example MP-DCCP CONFIRM procedure</a>
+            </figcaption></figure>
+</div>
+<p id="section-3.2.1-9">A second example to illustrate the same MP-DCCP confirm procedure but where an out of date option is also delivered is shown in (<a href="#ref-mp-dccp-confirm-outdated" class="auto internal xref">Figure 5</a>.
+Here, a first DCCP-Data is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues a second DCCP-Data with option MP_PRIO
+set to 1. The delivery of the first MP_PRIO is delayed in the network between Host A and Host B and arrives after the second MP_PRIO. Host B
+ignores this second MP_PRIO as the associated sequence number is earlier than the first. Host B sends a DCCP-Ack confirming receipt of the MP_PRIO(1) with sequence number 2.<a href="#section-3.2.1-9" class="pilcrow">¶</a></p>
+<span id="name-example-mp-dccp-confirm-proc"></span><div id="ref-mp-dccp-confirm-outdated">
+<figure id="figure-5">
+            <div class="alignLeft art-text artwork" id="section-3.2.1-10.1">
+<pre>
+          Host A                                         Host B
+------------------------                         ------------------------
+Address A1    Address A2                         Address B1    Address B2
+----------    ----------                         ----------    ----------
+     |             |                                       |       |
+     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+     |             |-------------                          |       |
+     |             |             \                         |       |
+     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
+     |             |---------------\------------------------------&gt;|
+     |             |                \                      |       |
+     |             |                 -----------------------------&gt;|
+     |             |                                       |       |
+     |             |  DCCP-Ack +                           |       |
+     |             |&lt;----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
+     |             |                                       |       |
+</pre>
+</div>
+<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<a href="#name-example-mp-dccp-confirm-proc" class="selfRef">Example MP-DCCP CONFIRM procedure with outdated suboption</a>
+            </figcaption></figure>
+</div>
 </section>
 </div>
 <div id="MP_JOIN">
@@ -2010,7 +2073,7 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
 <a href="#section-3.2.2" class="section-number selfRef">3.2.2. </a><a href="#name-mp_join" class="section-name selfRef">MP_JOIN</a>
           </h4>
 <span id="name-format-of-the-mp_join-subop"></span><div id="ref-MP_JOIN">
-<figure id="figure-4">
+<figure id="figure-6">
             <div class="alignLeft art-text artwork" id="section-3.2.2-1.1">
 <pre>
               1          2          3
@@ -2025,7 +2088,7 @@ rules apply when suboptions with different MP_SEQs are confirmed at once. This m
    Type=46  Length=12 MP_OPT=1
 </pre>
 </div>
-<figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
+<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
 <a href="#name-format-of-the-mp_join-subop" class="selfRef">Format of the MP_JOIN Suboption</a>
             </figcaption></figure>
 </div>
@@ -2074,7 +2137,7 @@ subflows.  It is therefore necessary to provide an MP-DCCP-level
 "Reset" to allow the abrupt closure of the whole MP-DCCP connection;
 this is done via the MP_FAST_CLOSE suboption.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_fast_close"></span><div id="ref-MP_FAST_CLOSE">
-<figure id="figure-5">
+<figure id="figure-7">
             <div class="alignLeft art-text artwork" id="section-3.2.3-2.1">
 <pre>
               1          2          3
@@ -2085,7 +2148,7 @@ this is done via the MP_FAST_CLOSE suboption.<a href="#section-3.2.3-1" class="p
    Type=46   Length  MP_OPT=2
 </pre>
 </div>
-<figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
+<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
 <a href="#name-format-of-the-mp_fast_close" class="selfRef">Format of the MP_FAST_CLOSE Suboption</a>
             </figcaption></figure>
 </div>
@@ -2100,7 +2163,7 @@ this is done via the MP_FAST_CLOSE suboption.<a href="#section-3.2.3-1" class="p
 <a href="#section-3.2.4" class="section-number selfRef">3.2.4. </a><a href="#name-mp_key" class="section-name selfRef">MP_KEY</a>
           </h4>
 <span id="name-format-of-the-mp_key-subopt"></span><div id="ref-MP_KEY">
-<figure id="figure-6">
+<figure id="figure-8">
             <div class="alignLeft art-text artwork" id="section-3.2.4-1.1">
 <pre>
                        1                   2                   3
@@ -2113,7 +2176,7 @@ this is done via the MP_FAST_CLOSE suboption.<a href="#section-3.2.3-1" class="p
       Type=46          Length         MP_OPT=3
 </pre>
 </div>
-<figcaption><a href="#figure-6" class="selfRef">Figure 6</a>:
+<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
 <a href="#name-format-of-the-mp_key-subopt" class="selfRef">Format of the MP_KEY Suboption</a>
             </figcaption></figure>
 </div>
@@ -2195,7 +2258,7 @@ on a single key type to be used as described in <a href="#handshaking" class="au
 <a href="#section-3.2.5" class="section-number selfRef">3.2.5. </a><a href="#name-mp_seq" class="section-name selfRef">MP_SEQ</a>
           </h4>
 <span id="name-format-of-the-mp_seq-subopt"></span><div id="ref-MP_SEQ">
-<figure id="figure-7">
+<figure id="figure-9">
             <div class="alignLeft art-text artwork" id="section-3.2.5-1.1">
 <pre>
               1          2          3           4          5
@@ -2208,7 +2271,7 @@ on a single key type to be used as described in <a href="#handshaking" class="au
    Type=46  Length=9 MP_OPT=4
 </pre>
 </div>
-<figcaption><a href="#figure-7" class="selfRef">Figure 7</a>:
+<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
 <a href="#name-format-of-the-mp_seq-subopt" class="selfRef">Format of the MP_SEQ Suboption</a>
             </figcaption></figure>
 </div>
@@ -2226,7 +2289,7 @@ sent with any DCCP-Data and DCCP-DataACK packet.<a href="#section-3.2.5-3" class
 <a href="#section-3.2.6" class="section-number selfRef">3.2.6. </a><a href="#name-mp_hmac" class="section-name selfRef">MP_HMAC</a>
           </h4>
 <span id="name-format-of-the-mp_hmac-subop"></span><div id="ref-MP_HMAC">
-<figure id="figure-8">
+<figure id="figure-10">
             <div class="alignLeft art-text artwork" id="section-3.2.6-1.1">
 <pre>
               1          2          3           4
@@ -2237,7 +2300,7 @@ sent with any DCCP-Data and DCCP-DataACK packet.<a href="#section-3.2.5-3" class
    Type=46  Length=23 MP_OPT=5
 </pre>
 </div>
-<figcaption><a href="#figure-8" class="selfRef">Figure 8</a>:
+<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
 <a href="#name-format-of-the-mp_hmac-subop" class="selfRef">Format of the MP_HMAC Suboption</a>
             </figcaption></figure>
 </div>
@@ -2271,7 +2334,7 @@ option.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
 <a href="#section-3.2.7" class="section-number selfRef">3.2.7. </a><a href="#name-mp_rtt" class="section-name selfRef">MP_RTT</a>
           </h4>
 <span id="name-format-of-the-mp_rtt-subopt"></span><div id="ref-MP_RTT">
-<figure id="figure-9">
+<figure id="figure-11">
             <div class="alignLeft art-text artwork" id="section-3.2.7-1.1">
 <pre>
               1          2          3           4          5
@@ -2284,7 +2347,7 @@ option.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
    Type=46  Length=12 MP_OPT=6
 </pre>
 </div>
-<figcaption><a href="#figure-9" class="selfRef">Figure 9</a>:
+<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
 <a href="#name-format-of-the-mp_rtt-subopt" class="selfRef">Format of the MP_RTT Suboption</a>
             </figcaption></figure>
 </div>
@@ -2333,7 +2396,7 @@ approximately 1193 hours.<a href="#section-3.2.7-3" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
-<p id="section-3.2.7-9">In <a href="#ref-MP_RTT_example" class="auto internal xref">Figure 10</a> an exemplary flow shows the exchange of path individual 
+<p id="section-3.2.7-9">In <a href="#ref-MP_RTT_example" class="auto internal xref">Figure 12</a> an exemplary flow shows the exchange of path individual 
 RTT information with RTT1 pointing to a first path and RTT2 to a second path. Those
 RTT values might be extracted from the sender's Congestion Control procedure and
 carried to the receiving host using MP_RTT suboption. With the reception of RTT1
@@ -2343,7 +2406,7 @@ In case the path individual RTTs are symmetric in down- and uplink direction, pa
 with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
 lost after path_delta/2.<a href="#section-3.2.7-9" class="pilcrow">¶</a></p>
 <span id="name-exemplary-flow-of-mp_rtt-ex"></span><div id="ref-MP_RTT_example">
-<figure id="figure-10">
+<figure id="figure-12">
             <div class="alignLeft art-text artwork" id="section-3.2.7-10.1">
 <pre>
    MP-DCCP                   MP-DCCP
@@ -2356,7 +2419,7 @@ lost after path_delta/2.<a href="#section-3.2.7-9" class="pilcrow">¶</a></p>
    +--------+                +-------------+
 </pre>
 </div>
-<figcaption><a href="#figure-10" class="selfRef">Figure 10</a>:
+<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
 <a href="#name-exemplary-flow-of-mp_rtt-ex" class="selfRef">Exemplary flow of MP_RTT exchange and usage</a>
             </figcaption></figure>
 </div>
@@ -2405,7 +2468,7 @@ cannot validate the HMAC, it SHOULD silently ignore the option.<a href="#section
 <p id="section-3.2.8-5">The presence of a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
 in which MP_ADDADDR is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.8-5" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_addaddr-su"></span><div id="refMP_ADDADDR">
-<figure id="figure-11">
+<figure id="figure-13">
             <div class="alignLeft art-text artwork" id="section-3.2.8-6.1">
 <pre>
                       1                   2                   3
@@ -2420,7 +2483,7 @@ in which MP_ADDADDR is sent. Further details are given in <a href="#MP_CONFIRM" 
        Type=46         Length         MP_OPT=7
 </pre>
 </div>
-<figcaption><a href="#figure-11" class="selfRef">Figure 11</a>:
+<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
 <a href="#name-format-of-the-mp_addaddr-su" class="selfRef">Format of the MP_ADDADDR Suboption</a>
             </figcaption></figure>
 </div>
@@ -2523,7 +2586,7 @@ cleaning up any local state.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p
 other middleboxes that rewrite source addresses.  If there is no address
 at the requested ID, the receiver will silently ignore the request.<a href="#section-3.2.9-7" class="pilcrow">¶</a></p>
 <span id="name-format-of-themp_removeaddr-"></span><div id="refMP_REMOVEADDR">
-<figure id="figure-12">
+<figure id="figure-14">
             <div class="alignLeft art-text artwork" id="section-3.2.9-8.1">
 <pre>
                      1                   2                   3
@@ -2536,13 +2599,13 @@ at the requested ID, the receiver will silently ignore the request.<a href="#sec
 -&gt; followed by MP_HMAC option
 </pre>
 </div>
-<figcaption><a href="#figure-12" class="selfRef">Figure 12</a>:
+<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
 <a href="#name-format-of-themp_removeaddr-" class="selfRef">Format of theMP_REMOVEADDR Suboption</a>
             </figcaption></figure>
 </div>
 <p id="section-3.2.9-9">A subflow that is still functioning MUST be closed with a DCCP-Close or
 exchange as in regular DCCP, rather than using this option. For more
-information, see Section <a href="#closing" class="auto internal xref">Section 3.4</a>.<a href="#section-3.2.9-9" class="pilcrow">¶</a></p>
+information, see Section <a href="#closing" class="auto internal xref">Section 3.5</a>.<a href="#section-3.2.9-9" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_PRIO">
@@ -2565,7 +2628,7 @@ user plane traffic.<a href="#section-3.2.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-2">The MP_PRIO suboption, shown below, can be used to set a priority flag
 for the path over which the suboption is received.<a href="#section-3.2.10-2" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_prio-subop"></span><div id="ref-MP_PRIO">
-<figure id="figure-13">
+<figure id="figure-15">
             <div class="alignLeft art-text artwork" id="section-3.2.10-3.1">
 <pre>
                         1                   2                   3
@@ -2576,7 +2639,7 @@ for the path over which the suboption is received.<a href="#section-3.2.10-2" cl
        Type=46         Length=4        MP_OPT=9
 </pre>
 </div>
-<figcaption><a href="#figure-13" class="selfRef">Figure 13</a>:
+<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
 <a href="#name-format-of-the-mp_prio-subop" class="selfRef">Format of the MP_PRIO Suboption</a>
             </figcaption></figure>
 </div>
@@ -2630,7 +2693,7 @@ in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" cla
 <a href="#section-3.2.11" class="section-number selfRef">3.2.11. </a><a href="#name-mp_close" class="section-name selfRef">MP_CLOSE</a>
           </h4>
 <span id="name-format-of-the-mp_close-subo"></span><div id="ref-MP_CLOSE">
-<figure id="figure-14">
+<figure id="figure-16">
             <div class="alignLeft art-text artwork" id="section-3.2.11-1.1">
 <pre>
               1          2          3
@@ -2641,7 +2704,7 @@ in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" cla
    Type=46   Length  MP_OPT=10
 </pre>
 </div>
-<figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
+<figcaption><a href="#figure-16" class="selfRef">Figure 16</a>:
 <a href="#name-format-of-the-mp_close-subo" class="selfRef">Format of the MP_CLOSE Suboption</a>
             </figcaption></figure>
 </div>
@@ -2661,7 +2724,7 @@ in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" cla
 option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only at this stage. MP_OPT 
 feature number 11 is foreseen with an exemplary description as below:<a href="#section-3.2.12-1" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_exp-subopt"></span><div id="ref-MP_EXP">
-<figure id="figure-15">
+<figure id="figure-17">
             <div class="alignLeft art-text artwork" id="section-3.2.12-2.1">
 <pre>
                      1                   2                   3
@@ -2674,7 +2737,7 @@ feature number 11 is foreseen with an exemplary description as below:<a href="#s
      Type=46         Length         MP_OPT=11
 </pre>
 </div>
-<figcaption><a href="#figure-15" class="selfRef">Figure 15</a>:
+<figcaption><a href="#figure-17" class="selfRef">Figure 17</a>:
 <a href="#name-format-of-the-mp_exp-subopt" class="selfRef">Format of the MP_EXP Suboption</a>
             </figcaption></figure>
 </div>
@@ -2688,9 +2751,9 @@ feature number 11 is foreseen with an exemplary description as below:<a href="#s
         <h3 id="name-mp-dccp-handshaking-procedu">
 <a href="#section-3.3" class="section-number selfRef">3.3. </a><a href="#name-mp-dccp-handshaking-procedu" class="section-name selfRef">MP-DCCP Handshaking Procedure</a>
         </h3>
-<p id="section-3.3-1">An example to illustrate the MP-DCCP handshake procedure is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 16</a>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
+<p id="section-3.3-1">An example to illustrate the MP-DCCP handshake procedure is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 18</a>.<a href="#section-3.3-1" class="pilcrow">¶</a></p>
 <span id="name-example-mp-dccp-handshake"></span><div id="ref-mp-dccp-handshaking">
-<figure id="figure-16">
+<figure id="figure-18">
           <div class="alignLeft art-text artwork" id="section-3.3-2.1">
 <pre>
           Host A                                         Host B
@@ -2719,7 +2782,7 @@ Address A1    Address A2                              Address B1
      |             |DCCP-ACK                               |
 </pre>
 </div>
-<figcaption><a href="#figure-16" class="selfRef">Figure 16</a>:
+<figcaption><a href="#figure-18" class="selfRef">Figure 18</a>:
 <a href="#name-example-mp-dccp-handshake" class="selfRef">Example MP-DCCP Handshake</a>
           </figcaption></figure>
 </div>
@@ -2774,12 +2837,90 @@ handshaking.<a href="#section-3.3-7.4" class="pilcrow">¶</a>
         </ul>
 </section>
 </div>
-<div id="closing">
+<div id="address-knowledge-exchange">
 <section id="section-3.4">
-        <h3 id="name-close-a-mp-dccp-connection">
-<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-close-a-mp-dccp-connection" class="section-name selfRef">Close a MP-DCCP connection</a>
+        <h3 id="name-address-knowledge-exchange">
+<a href="#section-3.4" class="section-number selfRef">3.4. </a><a href="#name-address-knowledge-exchange" class="section-name selfRef">Address knowledge exchange</a>
         </h3>
-<p id="section-3.4-1">When a host wants to close an existing subflow but not the whole MP-DCCP
+<p id="section-3.4-1">### Advertising a new path (<a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>)<a href="#section-3.4-1" class="pilcrow">¶</a></p>
+<p id="section-3.4-2">When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option (<a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>) as
+shown in the example in <a href="#ref-mp-dccp-add-address" class="auto internal xref">Figure 19</a>. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
+* an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
+* the IP address of the new path (A2_IP)
+* A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
+  as that used for the initial subflow address A1_IP<a href="#section-3.4-2" class="pilcrow">¶</a></p>
+<p id="section-3.4-3">The following options must be included in a packet carrying MP_ADDADDR:
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in <a href="#handshaking" class="auto internal xref">Section 3.3</a> and <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>
+* the sequence number (seqno 12) for this message<a href="#section-3.4-3" class="pilcrow">¶</a></p>
+<p id="section-3.4-4">Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.4-4" class="pilcrow">¶</a></p>
+<span id="name-example-mp-dccp-addaddr-pro"></span><div id="ref-mp-dccp-add-address">
+<figure id="figure-19">
+          <div class="alignLeft art-text artwork" id="section-3.4-5.1">
+<pre>
+          Host A                                         Host B
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +        |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 12) --------------&gt;|
+     |             |                                       |
+     |   DCCP-Ack + MP_HMAC(B) +                           |
+     |&lt;----- MP_CONFIRM(seqno 12, MP_ADDADDR) -------------|
+</pre>
+</div>
+<figcaption><a href="#figure-19" class="selfRef">Figure 19</a>:
+<a href="#name-example-mp-dccp-addaddr-pro" class="selfRef">Example MP-DCCP ADDADDR procedure</a>
+          </figcaption></figure>
+</div>
+<div id="removing-a-path-mpremoveaddr">
+<section id="section-3.4.1">
+          <h4 id="name-removing-a-path">
+<a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-removing-a-path" class="section-name selfRef">Removing a path (<em class="cite xref">[Section 3.2.9]</em>)</a>
+          </h4>
+<p id="section-3.4.1-1">When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option (<a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>) as
+shown in the example in <a href="#ref-mp-dccp-remove-address" class="auto internal xref">Figure 20</a>. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
+* an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<p id="section-3.4.1-2">The following options must be included in a packet carrying MP_REMOVEADDR
+* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in <a href="#handshaking" class="auto internal xref">Section 3.3</a> and <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>
+* the sequence number (seqno 33) for this message<a href="#section-3.4.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.4.1-3">Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:
+* an MP_CONFIRM containing the MP_SEQ number (seqno 33) of the packet carrying the option that we are confirming, together with the MP_REMOVEADDR option
+* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.4.1-3" class="pilcrow">¶</a></p>
+<span id="name-example-mp-dccp-removeaddr-"></span><div id="ref-mp-dccp-remove-address">
+<figure id="figure-20">
+            <div class="alignLeft art-text artwork" id="section-3.4.1-4.1">
+<pre>
+          Host A                                         Host B
+------------------------                              -----------
+Address A1    Address A2                               Address B1
+----------    ----------                              -----------
+     |             |                                       |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2) +                |
+     |------- MP_HMAC(A) + MP_SEQ(seqno 33) --------------&gt;|
+     |             |                                       |
+     |   DCCP-Ack + MP_HMAC(B) +                           |
+     |&lt;----- MP_CONFIRM(seqno 33, MP_REMOVEADDR) ----------|
+</pre>
+</div>
+<figcaption><a href="#figure-20" class="selfRef">Figure 20</a>:
+<a href="#name-example-mp-dccp-removeaddr-" class="selfRef">Example MP-DCCP REMOVEADDR procedure</a>
+            </figcaption></figure>
+</div>
+</section>
+</div>
+</section>
+</div>
+<div id="closing">
+<section id="section-3.5">
+        <h3 id="name-close-a-mp-dccp-connection">
+<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-close-a-mp-dccp-connection" class="section-name selfRef">Close a MP-DCCP connection</a>
+        </h3>
+<p id="section-3.5-1">When a host wants to close an existing subflow but not the whole MP-DCCP
 connection, it initiates the regular DCCP connection termination procedure 
 as described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
@@ -2788,11 +2929,11 @@ Table 2 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. This
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
 is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
-this section.<a href="#section-3.4-1" class="pilcrow">¶</a></p>
-<p id="section-3.4-2">When a host wants to terminate an  MP-DCCP connection, it is RECOMMENDED that the host
+this section.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
+<p id="section-3.5-2">When a host wants to terminate an  MP-DCCP connection, it is RECOMMENDED that the host
 initiates the DCCP connection termination as per <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> on each subflow with the first packet on 
-each subflow carrying MP_CLOSE (see <a href="#MP_CLOSE" class="auto internal xref">Section 3.2.11</a>).<a href="#section-3.4-2" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.4-3">
+each subflow carrying MP_CLOSE (see <a href="#MP_CLOSE" class="auto internal xref">Section 3.2.11</a>).<a href="#section-3.5-2" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.5-3">
 <pre>
   Host A                                   Host B
   ------                                   ------
@@ -2803,12 +2944,12 @@ each subflow carrying MP_CLOSE (see <a href="#MP_CLOSE" class="auto internal xre
   [B's key] [on all subflows]
                                    &lt;-      DCCP-Reset
                                            [on all subflows]
-</pre><a href="#section-3.4-3" class="pilcrow">¶</a>
+</pre><a href="#section-3.5-3" class="pilcrow">¶</a>
 </div>
-<p id="section-3.4-4">Additionally, an MP-DCCP connection may be closed abruptly using the "Fast Close"
+<p id="section-3.5-4">Additionally, an MP-DCCP connection may be closed abruptly using the "Fast Close"
 procedure described in <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>, where a DCCP-Reset is sent on all
-subflows, each carrying the MP_FAST_CLOSE option.<a href="#section-3.4-4" class="pilcrow">¶</a></p>
-<div class="alignLeft art-text artwork" id="section-3.4-5">
+subflows, each carrying the MP_FAST_CLOSE option.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
+<div class="alignLeft art-text artwork" id="section-3.5-5">
 <pre>
   Host A                                   Host B
   ------                                   ------
@@ -2816,58 +2957,58 @@ subflows, each carrying the MP_FAST_CLOSE option.<a href="#section-3.4-4" class=
   [B's key] [on all subflows]
                                    &lt;-      DCCP-Reset
                                            [on all subflows]
-</pre><a href="#section-3.4-5" class="pilcrow">¶</a>
+</pre><a href="#section-3.5-5" class="pilcrow">¶</a>
 </div>
 </section>
 </div>
 <div id="fallback">
-<section id="section-3.5">
+<section id="section-3.6">
         <h3 id="name-fallback">
-<a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-fallback" class="section-name selfRef">Fallback</a>
+<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-fallback" class="section-name selfRef">Fallback</a>
         </h3>
-<p id="section-3.5-1">When a subflow fails to operate following MP-DCCP intended behavior, it is 
+<p id="section-3.6-1">When a subflow fails to operate following MP-DCCP intended behavior, it is 
 necessary to proceed with a fall back. This may be either falling back 
 to regular DCCP <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> or removing a problematic subflow. The main reasons for 
 subflow failing include: no MP support at peer host, failure to negotiate protocol
 version, loss of MP-DCCP suboptions, faulty/non-supported MP-DCCP options or modification
-of payload data.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
-<p id="section-3.5-2">At the start of an MP-DCCP connection, the handshake ensures exchange of MP-DCCP feature and
+of payload data.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
+<p id="section-3.6-2">At the start of an MP-DCCP connection, the handshake ensures exchange of MP-DCCP feature and
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
 messages don't carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fall back to regular DCCP or MUST be closed.<a href="#section-3.5-2" class="pilcrow">¶</a></p>
-<p id="section-3.5-3">The same fallback SHOULD take place if the endpoints fail to agree on a protocol
+established and the handshake SHOULD fall back to regular DCCP or MUST be closed.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+<p id="section-3.6-3">The same fallback SHOULD take place if the endpoints fail to agree on a protocol
 version to use during the Multipath Capable feature negotiation, which is described
 in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. The protocol version negotiation distinguishes between negotiation
 for the initial connection establishment, and addition of subsequent subflows. If
 protocol version negotiation is not successful during the initial connection establishment,
-MP-DCCP connection will fall back to regular DCCP.<a href="#section-3.5-3" class="pilcrow">¶</a></p>
-<p id="section-3.5-4">Similar procedure MUST be applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated,
-a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.<a href="#section-3.5-4" class="pilcrow">¶</a></p>
-<p id="section-3.5-5">If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
+MP-DCCP connection will fall back to regular DCCP.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.6-4">Similar procedure MUST be applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated,
+a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.6-5">If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Also non-verifiable MP_HMAC <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a> or MP_JOIN Path Token <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a> as
-part of the subsequent flow establishment MUST lead to a subflow closing.<a href="#section-3.5-5" class="pilcrow">¶</a></p>
-<p id="section-3.5-6">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
+part of the subsequent flow establishment MUST lead to a subflow closing.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
+<p id="section-3.6-6">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. A checksum will 
 fail if the data has been changed in any way. All data from the start of the segment that
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
 Corrupt). If this happens in an MP-DCCP connection, the affected subflow can either be closed
-or other action can be taken.<a href="#section-3.5-6" class="pilcrow">¶</a></p>
+or other action can be taken.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="congestion-control-considerations">
-<section id="section-3.6">
+<section id="section-3.7">
         <h3 id="name-congestion-control-consider">
-<a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-congestion-control-consider" class="section-name selfRef">Congestion Control Considerations</a>
+<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-congestion-control-consider" class="section-name selfRef">Congestion Control Considerations</a>
         </h3>
-<p id="section-3.6-1">Senders MUST manage per-path congestion status, and SHOULD avoid to send
+<p id="section-3.7-1">Senders MUST manage per-path congestion status, and SHOULD avoid to send
 more data on a given path than congestion control on that path
-allows.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
-<p id="section-3.6-2">When a Multipath DCCP connection uses two or more paths, there is no
+allows.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
+<p id="section-3.7-2">When a Multipath DCCP connection uses two or more paths, there is no
 guarantee that these paths are fully disjoint.  When two (or more
 paths) share the same bottleneck, using a standard congestion control
 scheme could result in an unfair distribution of the bandwidth with
@@ -2877,16 +3018,16 @@ Linked Increases Algorithm (LIA) specified in <span>[<a href="#RFC6356" class="c
 solve this problem.  This scheme can be adapted also for Multipath DCCP.
 The same applies to other coupled congestion control schemes, which
 have been proposed for Multipath TCP such as Opportunistic Linked
-Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="maximum-packet-size-considerations">
-<section id="section-3.7">
+<section id="section-3.8">
         <h3 id="name-maximum-packet-size-conside">
-<a href="#section-3.7" class="section-number selfRef">3.7. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
+<a href="#section-3.8" class="section-number selfRef">3.8. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
         </h3>
-<p id="section-3.7-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system.<a href="#section-3.7-1" class="pilcrow">¶</a></p>
-<p id="section-3.7-2">For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.<a href="#section-3.7-2" class="pilcrow">¶</a></p>
+<p id="section-3.8-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
+<p id="section-3.8-2">For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.<a href="#section-3.8-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
