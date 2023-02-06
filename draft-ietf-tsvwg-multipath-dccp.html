@@ -1829,6 +1829,7 @@ for version 1.<a href="#section-3.1-11.1" class="pilcrow">¶</a>
           <li id="section-3.1-11.3">MP-DCCP is then enabled between the Client and Server with version 1.<a href="#section-3.1-11.3" class="pilcrow">¶</a>
 </li>
         </ol>
+<p id="section-3.1-12">If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fall back to regular DCCP or MUST be closed. Further details are specified in <a href="#fallback" class="auto internal xref">Section 3.6</a><a href="#section-3.1-12" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_OPT">
@@ -2122,6 +2123,8 @@ receiver no longer have them in use.<a href="#section-3.2.2-4" class="pilcrow">�
 <p id="section-3.2.2-5">The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
 Together with the Token, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a>.<a href="#section-3.2.2-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.2-6">If the path token can not be verified by the receiving host during a handshake negotiation, 
+the new subflow MUST be closed, as specified in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_FAST_CLOSE">
@@ -2251,6 +2254,9 @@ Curve 25519 to generate the derived key (d-key) from the shared secret.<a href="
 <p id="section-3.2.4-7">Providing multiple keys is only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow, and allows the hosts to agree
 on a single key type to be used as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.2.4-7" class="pilcrow">¶</a></p>
+<p id="section-3.2.4-8">If the key type can not be agreed when the MP_KEY option is sent as part of the 
+handshake procedure, the MP-DCCP connection should fallback to regular DCCP as 
+indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a><a href="#section-3.2.4-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_SEQ">
@@ -2327,6 +2333,10 @@ individual MP_HASH option, this requires the MP_HASH to be correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
 option.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-6">If the HMAC can not be validated by a receiving host, the subsequent handling depends
+on which suboption was being authenticated. If the suboption to be authenticated was either
+MP_ADDADDR or MP_REMOVEADDR, the receiving host SHOULD silently ignore it (see <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a> and <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>). 
+If the suboption to be authenticated was MP_JOIN, it MUST lead to a subflow closing (see <a href="#fallback" class="auto internal xref">Section 3.6</a>)<a href="#section-3.2.6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_RTT">
