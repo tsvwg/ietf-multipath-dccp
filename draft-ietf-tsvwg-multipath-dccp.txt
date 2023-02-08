@@ -735,7 +735,7 @@ Internet-Draft               Multipath DCCP               September 2022
 Address A1    Address A2                         Address B1    Address B2
 ----------    ----------                         ----------    ----------
      |             |                                       |       |
-     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)     |       |
      |             |-------------                          |       |
      |             |             \                         |       |
      |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
