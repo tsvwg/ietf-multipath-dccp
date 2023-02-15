@@ -808,7 +808,10 @@ within a single DCCP packet. As all this multipath options come along with an
 individual MP_HASH option, this requires the MP_HASH to be correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
-option.
+option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
+results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
+first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 with the
+MP_ADDADDR suboption.
 
 If the HMAC can not be validated by a receiving host, the subsequent handling depends
 on which suboption was being authenticated. If the suboption to be authenticated was either
