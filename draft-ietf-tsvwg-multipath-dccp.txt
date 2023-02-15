@@ -695,19 +695,19 @@ Internet-Draft               Multipath DCCP               September 2022
    MP_CONFIRM option and a list containing the original sequence number
    (1) together with the associated option (MP_PRIO)
 
-          Host A                                         Host B
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
-     |             |---------------------------------------------->|
-     |             |                                       |       |
-     |             |  DCCP-Response +                      |       |
-     |             |<----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
-     |             |                                       |       |
+             Host A                                     Host B
+   ------------------------                     ------------------------
+   Address A1    Address A2                     Address B1    Address B2
+   ----------    ----------                     ----------    ----------
+        |             |                                   |       |
+        |             | DCCP-Request(seqno 1) + MP_PRIO(1)|       |
+        |             |------------------------------------------>|
+        |             |                                   |       |
+        |             | DCCP-Response +                   |       |
+        |             |<---- MP_CONFIRM(seqno 1, MP_PRIO) --------|
+        |             |                                   |       |
 
-             Figure 4: Example MP-DCCP CONFIRM procedure
+                Figure 4: Example MP-DCCP CONFIRM procedure
 
    A second example to illustrate the same MP-DCCP confirm procedure but
    where an out of date option is also delivered is shown in (Figure 5.
@@ -730,24 +730,24 @@ Amend, et al.             Expires 30 March 2023                [Page 13]
 Internet-Draft               Multipath DCCP               September 2022
 
 
-          Host A                                         Host B
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)     |       |
-     |             |-------------                          |       |
-     |             |             \                         |       |
-     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
-     |             |---------------\------------------------------>|
-     |             |                \                      |       |
-     |             |                 ----------------------------->|
-     |             |                                       |       |
-     |             |  DCCP-Ack +                           |       |
-     |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
-     |             |                                       |       |
+             Host A                                     Host B
+   ------------------------                     ------------------------
+   Address A1    Address A2                     Address B1    Address B2
+   ----------    ----------                     ----------    ----------
+        |             |                                   |       |
+        |             | DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+        |             |------------                       |       |
+        |             |            \                      |       |
+        |             | DCCP-Data(seqno 2) +  MP_PRIO(1)  |       |
+        |             |--------------\--------------------------->|
+        |             |               \                   |       |
+        |             |                -------------------------->|
+        |             |                                   |       |
+        |             | DCCP-Ack +                        |       |
+        |             |<---- MP_CONFIRM(seqno 2, MP_PRIO) --------|
+        |             |                                   |       |
 
- Figure 5: Example MP-DCCP CONFIRM procedure with outdated suboption
+    Figure 5: Example MP-DCCP CONFIRM procedure with outdated suboption
 
 3.2.2.  MP_JOIN
 

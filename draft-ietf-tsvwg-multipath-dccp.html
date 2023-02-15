@@ -2020,17 +2020,17 @@ together with the associated option (MP_PRIO)<a href="#section-3.2.1-7" class="p
 <figure id="figure-4">
             <div class="alignLeft art-text artwork" id="section-3.2.1-8.1">
 <pre>
-          Host A                                         Host B
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
-     |             |----------------------------------------------&gt;|
-     |             |                                       |       |
-     |             |  DCCP-Response +                      |       |
-     |             |&lt;----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
-     |             |                                       |       |
+          Host A                                     Host B
+------------------------                     ------------------------
+Address A1    Address A2                     Address B1    Address B2
+----------    ----------                     ----------    ----------
+     |             |                                   |       |
+     |             | DCCP-Request(seqno 1) + MP_PRIO(1)|       |
+     |             |------------------------------------------&gt;|
+     |             |                                   |       |
+     |             | DCCP-Response +                   |       |
+     |             |&lt;---- MP_CONFIRM(seqno 1, MP_PRIO) --------|
+     |             |                                   |       |
 </pre>
 </div>
 <figcaption><a href="#figure-4" class="selfRef">Figure 4</a>:
@@ -2045,22 +2045,22 @@ ignores this second MP_PRIO as the associated sequence number is earlier than th
 <figure id="figure-5">
             <div class="alignLeft art-text artwork" id="section-3.2.1-10.1">
 <pre>
-          Host A                                         Host B
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)     |       |
-     |             |-------------                          |       |
-     |             |             \                         |       |
-     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
-     |             |---------------\------------------------------&gt;|
-     |             |                \                      |       |
-     |             |                 -----------------------------&gt;|
-     |             |                                       |       |
-     |             |  DCCP-Ack +                           |       |
-     |             |&lt;----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
-     |             |                                       |       |
+          Host A                                     Host B
+------------------------                     ------------------------
+Address A1    Address A2                     Address B1    Address B2
+----------    ----------                     ----------    ----------
+     |             |                                   |       |
+     |             | DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+     |             |------------                       |       |
+     |             |            \                      |       |
+     |             | DCCP-Data(seqno 2) +  MP_PRIO(1)  |       |
+     |             |--------------\---------------------------&gt;|
+     |             |               \                   |       |
+     |             |                --------------------------&gt;|
+     |             |                                   |       |
+     |             | DCCP-Ack +                        |       |
+     |             |&lt;---- MP_CONFIRM(seqno 2, MP_PRIO) --------|
+     |             |                                   |       |
 </pre>
 </div>
 <figcaption><a href="#figure-5" class="selfRef">Figure 5</a>:
