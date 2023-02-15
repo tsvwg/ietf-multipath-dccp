@@ -573,17 +573,17 @@ this instance (but could be any path) with a DCCP-Response containing the MP_CON
 together with the associated option (MP_PRIO)
 
 ~~~~
-          Host A                                         Host B 
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Request(seqno 1) +  MP_PRIO(1)  |       |
-     |             |---------------------------------------------->|
-     |             |                                       |       |
-     |             |  DCCP-Response +                      |       |
-     |             |<----- MP_CONFIRM(seqno 1, MP_PRIO) -----------|
-     |             |                                       |       |
+          Host A                                     Host B 
+------------------------                     ------------------------
+Address A1    Address A2                     Address B1    Address B2
+----------    ----------                     ----------    ----------
+     |             |                                   |       |
+     |             | DCCP-Request(seqno 1) + MP_PRIO(1)|       |
+     |             |------------------------------------------>|
+     |             |                                   |       |
+     |             | DCCP-Response +                   |       |
+     |             |<---- MP_CONFIRM(seqno 1, MP_PRIO) --------|
+     |             |                                   |       |
 ~~~~
 {: #ref-mp-dccp-confirm-good title='Example MP-DCCP CONFIRM procedure'}
     
@@ -593,22 +593,22 @@ set to 1. The delivery of the first MP_PRIO is delayed in the network between Ho
 ignores this second MP_PRIO as the associated sequence number is earlier than the first. Host B sends a DCCP-Ack confirming receipt of the MP_PRIO(1) with sequence number 2.
 
 ~~~~
-          Host A                                         Host B 
-------------------------                         ------------------------
-Address A1    Address A2                         Address B1    Address B2
-----------    ----------                         ----------    ----------
-     |             |                                       |       |
-     |             |  DCCP-Data(seqno 1) +  MP_PRIO(4)     |       |
-     |             |-------------                          |       |
-     |             |             \                         |       |
-     |             |  DCCP-Data(seqno 2) +  MP_PRIO(1)     |       |
-     |             |---------------\------------------------------>|
-     |             |                \                      |       |
-     |             |                 ----------------------------->|
-     |             |                                       |       |
-     |             |  DCCP-Ack +                           |       |
-     |             |<----- MP_CONFIRM(seqno 2, MP_PRIO) -----------|
-     |             |                                       |       |
+          Host A                                     Host B 
+------------------------                     ------------------------
+Address A1    Address A2                     Address B1    Address B2
+----------    ----------                     ----------    ----------
+     |             |                                   |       |
+     |             | DCCP-Data(seqno 1) +  MP_PRIO(4)  |       |
+     |             |------------                       |       |
+     |             |            \                      |       |
+     |             | DCCP-Data(seqno 2) +  MP_PRIO(1)  |       |
+     |             |--------------\--------------------------->|
+     |             |               \                   |       |
+     |             |                -------------------------->|
+     |             |                                   |       |
+     |             | DCCP-Ack +                        |       |
+     |             |<---- MP_CONFIRM(seqno 2, MP_PRIO) --------|
+     |             |                                   |       |
 ~~~~
 {: #ref-mp-dccp-confirm-outdated title='Example MP-DCCP CONFIRM procedure with outdated suboption'}
 
