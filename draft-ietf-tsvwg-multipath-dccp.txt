@@ -1987,7 +1987,7 @@ Internet-Draft               Multipath DCCP                February 2023
 
    The authors gratefully acknowledge significant input into this
    document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef,
-   Mohamed Boucadair, and Behcet Sarikaya.
+   Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
 
 8.  IANA Considerations
 
