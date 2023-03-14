@@ -1568,7 +1568,7 @@ IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP 
 | MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
 | MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
 | MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
-| MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_OPT}}        |
+| MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_CLOSE}}        |
 | MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
 | MP_OPT>11| Unassigned      | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='MP-DCCP Suboptions registry'}
