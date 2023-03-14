@@ -2105,7 +2105,7 @@ Internet-Draft               Multipath DCCP                February 2023
       |           |               |       Priority      |   3.2.10  |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
-      |           |               |       subflow       |    3.2    |
+      |           |               |       subflow       |   3.2.11  |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT=11 |     MP_EXP    |  Experimental Sub-  |  Section  |
       |           |               |  Option for private |   3.2.12  |
