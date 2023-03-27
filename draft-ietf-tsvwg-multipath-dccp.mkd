@@ -186,12 +186,12 @@ different paths simultaneously.
 Datagram Congestion Control Protocol (DCCP) {{RFC4340}} is a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
-Multipath DCCP (MP-DCCP) is a set of extensions to DCCP  to 
-enable DCCP flows to be established across multiple paths 
-simultaneously. Such extensions are beneficial to applications that transfer  
-large amounts of data, due to the possibility to aggregate capacity of the 
-multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability, 
-which is important for low-latency applications that do not require 
+Multipath DCCP (MP-DCCP) is a set of extensions to DCCP to
+enable DCCP flows to be established across multiple paths
+simultaneously. Such extensions are beneficial to applications that transfer
+large amounts of data, due to the possibility to aggregate capacity of the
+multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability,
+which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
 
 MP-DCCP has been first suggested
