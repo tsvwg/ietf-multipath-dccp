@@ -140,12 +140,12 @@ Internet-Draft               Multipath DCCP                February 2023
    restricted to one single path.  Multipath DCCP (MP-DCCP) is a set of
    extensions to DCCP to enable DCCP flows to be established across
    multiple paths simultaneously.  Such extensions are beneficial to
-   applications that transfer
-   large amounts of data, due to the possibility to aggregate capacity
-   of the multiple paths.  In addition, the multipath extensions enable
-   to tradeoff timeliness and reliability, which is important for low-
-   latency applications that do not require guaranteed delivery
-   services, such as Audio/Video streaming.
+   applications that transfer large amounts of data, due to the
+   possibility to aggregate capacity of the multiple paths.  In
+   addition, the multipath extensions enable to tradeoff timeliness and
+   reliability, which is important for low-latency applications that do
+   not require guaranteed delivery services, such as Audio/Video
+   streaming.
 
    MP-DCCP has been first suggested in the context of the 3GPP work on
    5G multi-access solutions
