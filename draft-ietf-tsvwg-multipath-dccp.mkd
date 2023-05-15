@@ -1429,6 +1429,58 @@ A DCCP implementation maintains the maximum packet size (MPS) during operation o
 
 For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.
 
+## Path usage strategies
+
+MP-DCCP can be configured to realise one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+Selecting an appropriate method can allow MP-DCCP to realise different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
+
+### Path mobility
+
+The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
+Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
+When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path prio configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
+Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
+Path mobility is supported in the current Linux reference implementation {{website}}.
+
+### Concurrent path usage
+MP-DCCP does not specify the scheduling functions that determines when 
+or how the multiple subpaths are used to convey DCCP Data. Compared to a 
+path mobility strategy, the selection between MP-DCCP subflows is a 
+per-packet decision that is a part of the multipath scheduling process.
+
+The method allows a scheduling design to be used to realise various 
+designs of multipath usage.
+It can support path failover, where multiple subpaths remain active, but 
+only one subpath is used at any one time. Scheduling could seek to 
+maximise reliability, throughput, minimising latency, etc.
+
+The method can also support a concurrent path utilization strategy. This 
+would allow multiple subpaths to be simultaneously used to aggregate the 
+path resources to obtain higher connection throughput. The choice of 
+(coupled) congestion control, scheduler, and possible reordering 
+function has performance, fairness consequences, and could impact 
+congestion control.
+
+Concurrent path usage over the Internet can have implications. When a 
+Multipath DCCP connection uses two or more paths, there is no guarantee 
+that these paths are fully disjoint.  When two (or more subpaths) share 
+the same bottleneck, using a standard congestion control scheme could 
+result in an unfair distribution of the capacity with the multipath 
+connection using more capacity than competing single path connections.  
+Multipath TCP uses the coupled congestion control Linked Increases 
+Algorithm (LIA) specified in {{RFC6356}} to solve this problem.  This 
+scheme can be adapted also for Multipath DCCP.  The same applies to 
+other coupled congestion control schemes that have been proposed for 
+Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
+
+The specification of scheduling for concurrent multipath and related the 
+congestion control algorithms for use in the general Internet are 
+outside the scope of this document.  If and when the IETF specifies a 
+method for concurrent usage of multiple paths for use in the general 
+Internet, the framework specified in this document could be used to 
+provide an IETF recommended method for MP-DCCP.
+
+
 
 # Security Considerations {#security}
 
