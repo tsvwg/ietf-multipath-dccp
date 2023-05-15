@@ -1265,7 +1265,8 @@ handshake is as follows:
   handshaking.
 
 ## Address knowledge exchange
-### Advertising a new path ({{MP_ADDADDR}})
+
+### Advertising a new path (MP_ADDADDR)
 
 When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
 shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
@@ -1297,7 +1298,7 @@ Address A1    Address A2                               Address B1
 ~~~~
 {: #ref-mp-dccp-add-address title='Example MP-DCCP ADDADDR procedure'}
 
-### Removing a path ({{MP_REMOVEADDR}})
+### Removing a path (MP_REMOVEADDR)
 When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
 shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
