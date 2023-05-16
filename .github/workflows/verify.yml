@@ -25,7 +25,7 @@ jobs:
 
       - run: sudo npm install cspell@cspell4 -g
       - run: gem install kramdown-rfc2629
-      - run: sudo pip install xml2rfc
+      - run: pip install xml2rfc
       - name: "Convert Markdown to RFC" 
         run: make full
       - name: "Archive Built Drafts"
