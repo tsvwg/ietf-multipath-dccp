@@ -118,7 +118,8 @@ Internet-Draft               Multipath DCCP                February 2023
                use . . . . . . . . . . . . . . . . . . . . . . . . .  27
      3.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  28
      3.4.  Address knowledge exchange  . . . . . . . . . . . . . . .  29
-       3.4.1.  Removing a path (Section 3.2.9) . . . . . . . . . . .  30
+       3.4.1.  Advertising a new path (MP_ADDADDR) . . . . . . . . .  29
+       3.4.2.  Removing a path (MP_REMOVEADDR) . . . . . . . . . . .  30
      3.5.  Close a MP-DCCP connection  . . . . . . . . . . . . . . .  31
      3.6.  Fallback  . . . . . . . . . . . . . . . . . . . . . . . .  32
      3.7.  Congestion Control Considerations . . . . . . . . . . . .  33
@@ -160,7 +161,6 @@ Internet-Draft               Multipath DCCP                February 2023
    support to DCCP; specifically, those for signaling and setting up
    multiple paths (a.k.a, "subflows"), managing these subflows,
    reordering of data, and termination of sessions.
-
 
 
 
@@ -1605,7 +1605,7 @@ Internet-Draft               Multipath DCCP                February 2023
 
 3.4.  Address knowledge exchange
 
-   ### Advertising a new path (Section 3.2.8)
+3.4.1.  Advertising a new path (MP_ADDADDR)
 
    When a host (Host A) wants to advertise the availability of a new
    path, it should use the MP_ADDADDR option (Section 3.2.8) as shown in
@@ -1652,7 +1652,7 @@ Internet-Draft               Multipath DCCP                February 2023
 
                 Figure 19: Example MP-DCCP ADDADDR procedure
 
-3.4.1.  Removing a path (Section 3.2.9)
+3.4.2.  Removing a path (MP_REMOVEADDR)
 
    When a host (Host A) wants to indicate that a path is no longer
    available, it should use the MP_REMOVEADDR option (Section 3.2.9) as
