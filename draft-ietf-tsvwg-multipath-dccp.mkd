@@ -1443,20 +1443,23 @@ Note: Rules for picking the most appropriate source-destination pair are an impl
 Path mobility is supported in the current Linux reference implementation {{website}}.
 
 ### Concurrent path usage
-Different to a 
-path mobility strategy, the selection between MP-DCCP subflows is here a 
-per-packet decision that is a part of the multipath scheduling process. This method would allow multiple subpaths to be simultaneously used to aggregate the 
-path resources to obtain higher connection throughput.
-In this scenario, the selection of congestion control, per-packet scheduling and potential re-ordering method determines a concurrent path utilization strategy and result in a particular transport characteristic.
-The concurrent path usage method allows a scheduling design to be used to realise various 
-designs of multipath usage.
-Scheduling could seek to 
-maximise reliability, throughput, minimising latency, etc.
+Different to a path mobility strategy, the selection between MP-DCCP
+subflows is here a per-packet decision that is a part of the multipath
+scheduling process. This method would allow multiple subflows to be
+simultaneously used to aggregate the path resources to obtain higher
+connection throughput.
 
+In this scenario, the selection of congestion control, per-packet scheduling
+and potential re-ordering method determines a concurrent path utilization
+strategy and result in a particular transport characteristic.
+
+The concurrent path usage method allows a scheduling design to be used to
+realise various designs of multipath usage. Scheduling could seek to 
+maximise reliability, throughput, minimising latency, etc.
 
 Concurrent path usage over the Internet can have implications. When a 
 Multipath DCCP connection uses two or more paths, there is no guarantee 
-that these paths are fully disjoint.  When two (or more subpaths) share 
+that these paths are fully disjoint.  When two (or more subflows) share 
 the same bottleneck, using a standard congestion control scheme could 
 result in an unfair distribution of the capacity with the multipath 
 connection using more capacity than competing single path connections.  
@@ -1467,12 +1470,11 @@ other coupled congestion control schemes that have been proposed for
 Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
 
 The specification of scheduling for concurrent multipath and related the 
-congestion control algorithms and re-ordering methods for use in the general Internet are 
-outside the scope of this document.  If and when the IETF specifies a 
-method for concurrent usage of multiple paths for use in the general 
-Internet, the framework specified in this document could be used to 
+congestion control algorithms and re-ordering methods for use in the general
+Internet are outside the scope of this document. If and when the IETF
+specifies a method for concurrent usage of multiple paths for use in the
+general Internet, the framework specified in this document could be used to 
 provide an IETF recommended method for MP-DCCP.
-
 
 
 # Security Considerations {#security}
