@@ -634,7 +634,7 @@ Address A1    Address A2                     Address B1    Address B2
 {: #ref-MP_JOIN title='Format of the MP_JOIN Suboption'}
 
 The MP_JOIN option is used by a host to add a new subflow to an existing MP-DCCP
-connection and REQUIRES a successfull establishment of the first subflow using MP_KEY.
+connection and REQUIRES a successful establishment of the first subflow using MP_KEY.
 The Path Token is the SHA256 hash of the derived key (d-key),
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
@@ -774,7 +774,7 @@ number (IDSN) SHOULD be set randomly {{RFC4086}}.
 
 The MP_SEQ number space is
 different from the path individual sequence number space and MUST be
-sent with any DCCP-Data and DCCP-DataACK packet.
+sent with all DCCP-Data and DCCP-DataACK packet.
 
 
 ### MP_HMAC {#MP_HMAC}
@@ -807,8 +807,8 @@ described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
    * MP_REMOVEADDR: Solely the Address ID.
 
 MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
-within a single DCCP packet. As all this multipath options come along with an
-individual MP_HASH option, this requires the MP_HASH to be correctly associated.
+within a single DCCP packet. All these multipath options include an individual
+MP_HASH option. This ensures the MP_HASH is correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
 option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
@@ -818,8 +818,8 @@ MP_ADDADDR suboption.
 
 If the HMAC can not be validated by a receiving host, the subsequent handling depends
 on which suboption was being authenticated. If the suboption to be authenticated was either
-MP_ADDADDR or MP_REMOVEADDR, the receiving host SHOULD silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
-If the suboption to be authenticated was MP_JOIN, it MUST lead to a subflow closing (see {{fallback}})
+MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
+If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see {{fallback}})
 
 ### MP_RTT {#MP_RTT}
 
@@ -877,7 +877,7 @@ RTT values might be extracted from the sender's Congestion Control procedure and
 carried to the receiving host using MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
-In case the path individual RTTs are symmetric in down- and uplink direction, packets
+In the case that the path individual RTTs are symmetric in down- and uplink direction, packets
 with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
 lost after path_delta/2.
 
@@ -910,11 +910,11 @@ use, are optional and can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
 remains port 80 on all subflows, as does the ephemeral port at the
-client), there may be cases (such as port-based load balancing) where
+client), there could be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
-port is specified, the receiving peer SHOULD assume that any attempt to
-connect to the specified address has to be on the same port as is already
-in use by the subflow on which the MP_ADDADDR signal was sent.
+port is specified, the receiving peer MUST assume that any attempt to
+connect to the specified address uses the port already used by the
+subflow on which the MP_ADDADDR signal was sent.
 
 Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
@@ -949,7 +949,7 @@ in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
   +-------------------------------+
        Type=46         Length         MP_OPT=7
 ~~~~
-{: #refMP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
+{: #ref-MP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
  
 Every address has an Address ID that can be used for uniquely
 identifying the address within a connection for address removal. The
@@ -965,7 +965,7 @@ Address-ID-to-address mappings for a connection (identified by a token
 pair). In this way, there is a stored mapping between the Address ID,
 observed source address, and token pair for future processing of control
 information for a connection. Note that an implementation
-MAY discard incoming address advertisements at will, for example, for
+MAY discard incoming address advertisements, for example, for
 avoiding the required mapping state, or because advertised addresses
 are of no use to it (for example, IPv6 addresses when it has IPv4
 only).  Therefore, a host MUST treat address advertisements as soft
@@ -974,8 +974,8 @@ state, and it MAY choose to refresh advertisements periodically.
 Due to the proliferation of NATs, it is reasonably likely that one
 host may attempt to advertise private addresses.  It is not
 desirable to prohibit this, since there may be cases where both hosts
-have additional interfaces on the same private network, and a host
-MAY want to advertise such addresses. The MP_JOIN handshake to
+have additional interfaces on the same private network. A host
+MAY advertise a private addresses. The MP_JOIN handshake to
 create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
 security risks.  The MP_JOIN message contains a 32-bit token that
 uniquely identifies the connection to the receiving host. If the
