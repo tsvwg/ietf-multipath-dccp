@@ -1434,7 +1434,7 @@ For compatibility reasons, an MP-DCCP implementation SHOULD always announce the 
 MP-DCCP can be configured to realise one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
 Selecting an appropriate method can allow MP-DCCP to realise different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
 
-### Path mobility
+### Path mobility {#path_mobility}
 
 The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
@@ -1443,23 +1443,16 @@ Note: Rules for picking the most appropriate source-destination pair are an impl
 Path mobility is supported in the current Linux reference implementation {{website}}.
 
 ### Concurrent path usage
-MP-DCCP does not specify the scheduling functions that determines when 
-or how the multiple subpaths are used to convey DCCP Data. Compared to a 
-path mobility strategy, the selection between MP-DCCP subflows is a 
-per-packet decision that is a part of the multipath scheduling process.
-
-The method allows a scheduling design to be used to realise various 
+Different to a 
+path mobility strategy, the selection between MP-DCCP subflows is here a 
+per-packet decision that is a part of the multipath scheduling process. This method would allow multiple subpaths to be simultaneously used to aggregate the 
+path resources to obtain higher connection throughput.
+In this scenario, the selection of congestion control, per-packet scheduling and potential re-ordering method determines a concurrent path utilization strategy and result in a particular transport characteristic.
+The concurrent path usage method allows a scheduling design to be used to realise various 
 designs of multipath usage.
-It can support path failover, where multiple subpaths remain active, but 
-only one subpath is used at any one time. Scheduling could seek to 
+Scheduling could seek to 
 maximise reliability, throughput, minimising latency, etc.
 
-The method can also support a concurrent path utilization strategy. This 
-would allow multiple subpaths to be simultaneously used to aggregate the 
-path resources to obtain higher connection throughput. The choice of 
-(coupled) congestion control, scheduler, and possible reordering 
-function has performance, fairness consequences, and could impact 
-congestion control.
 
 Concurrent path usage over the Internet can have implications. When a 
 Multipath DCCP connection uses two or more paths, there is no guarantee 
@@ -1474,7 +1467,7 @@ other coupled congestion control schemes that have been proposed for
 Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
 
 The specification of scheduling for concurrent multipath and related the 
-congestion control algorithms for use in the general Internet are 
+congestion control algorithms and re-ordering methods for use in the general Internet are 
 outside the scope of this document.  If and when the IETF specifies a 
 method for concurrent usage of multiple paths for use in the general 
 Internet, the framework specified in this document could be used to 
