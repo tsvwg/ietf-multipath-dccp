@@ -1455,7 +1455,7 @@ and potential re-ordering method determines a concurrent path utilization
 strategy and result in a particular transport characteristic.
 
 A concurrent path usage method uses a scheduling design that could seek to 
-maximise reliability, throughput, minimising latency, etc.
+maximize reliability, throughput, minimizing latency, etc.
 
 Concurrent path usage over the Internet can have implications. When a 
 Multipath DCCP connection uses two or more paths, there is no guarantee 
