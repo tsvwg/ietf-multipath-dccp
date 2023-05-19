@@ -1453,8 +1453,7 @@ In this scenario, the selection of congestion control, per-packet scheduling
 and potential re-ordering method determines a concurrent path utilization
 strategy and result in a particular transport characteristic.
 
-The concurrent path usage method allows a scheduling design to be used to
-realise various designs of multipath usage. Scheduling could seek to 
+A concurrent path usage method uses a scheduling design that could seek to 
 maximise reliability, throughput, minimising latency, etc.
 
 Concurrent path usage over the Internet can have implications. When a 
