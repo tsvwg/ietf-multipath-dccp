@@ -1432,8 +1432,8 @@ For compatibility reasons, an MP-DCCP implementation SHOULD always announce the 
 
 ## Path usage strategies
 
-MP-DCCP can be configured to realise one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
-Selecting an appropriate method can allow MP-DCCP to realise different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
+MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
 
 ### Path mobility {#path_mobility}
 
