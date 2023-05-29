@@ -987,10 +987,10 @@ accidentally setting up a new subflow upon the signal of a private
 address.  Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
 new MP_JOIN attempts are discussed in {{security}}.
-In case a sending host of a MP_ADDADDR knows about the inability
-to establish incoming subflows on a particular address, a MP_ADDADDR
-SHOULD NOT advertise this address unless sending host has new knowledge
-about the ability. Such ability information can be obtained from local
+If a sending host of an MP_ADDADDR knows that no incoming subflows can
+be established at a particular address, an MP_ADDADDR SHOULD NOT
+announce that address unless the sending host has new knowledge about
+the possibility to do so. Such ability information can be obtained from local
 firewall or routing settings, knowledge about availability of external
 NAT or firewall, or from connectivity checks performed by the
 host/application.
@@ -999,7 +999,7 @@ The reception of an MP_ADDADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). Using this mechanism reliable exchange of address
 information is ensured.
 
-A host can send an MP_ADDADDR message with an already assigned Address
+A host MAY send an MP_ADDADDR message with an already assigned Address
 ID, but the Address MUST be the same as previously assigned to this
 Address ID, and the Port MUST be different from one already in use
 for this Address ID.  If these conditions are not met, the receiver
