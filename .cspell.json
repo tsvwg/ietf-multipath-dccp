@@ -93,6 +93,7 @@
        "RTTs",
        "SEQs",
        "seqno",
-       "Ferlin"
+       "Ferlin",
+       "CWND"
     ]
 }
