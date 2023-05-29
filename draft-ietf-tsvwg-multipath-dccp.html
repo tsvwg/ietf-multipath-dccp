@@ -44,7 +44,7 @@ different paths simultaneously.
     lxml 4.9.2
     pycountry 22.3.5
     PyYAML 6.0
-    requests 2.30.0
+    requests 2.31.0
     setuptools 65.5.0
     six 1.16.0
     wcwidth 0.2.6
@@ -1434,6 +1434,17 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.8">
                 <p id="section-toc.1-1.3.2.8.1"><a href="#section-3.8" class="auto internal xref">3.8</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9">
+                <p id="section-toc.1-1.3.2.9.1"><a href="#section-3.9" class="auto internal xref">3.9</a>.  <a href="#name-path-usage-strategies" class="internal xref">Path usage strategies</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9.2.1">
+                    <p id="section-toc.1-1.3.2.9.2.1.1"><a href="#section-3.9.1" class="auto internal xref">3.9.1</a>.  <a href="#name-path-mobility" class="internal xref">Path mobility</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.3.2.9.2.2">
+                    <p id="section-toc.1-1.3.2.9.2.2.1"><a href="#section-3.9.2" class="auto internal xref">3.9.2</a>.  <a href="#name-concurrent-path-usage" class="internal xref">Concurrent path usage</a></p>
+</li>
+                </ul>
 </li>
             </ul>
 </li>
@@ -3050,6 +3061,61 @@ algorithms are outside the scope of this document.<a href="#section-3.7-2" class
         </h3>
 <p id="section-3.8-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
 <p id="section-3.8-2">For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.<a href="#section-3.8-2" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="path-usage-strategies">
+<section id="section-3.9">
+        <h3 id="name-path-usage-strategies">
+<a href="#section-3.9" class="section-number selfRef">3.9. </a><a href="#name-path-usage-strategies" class="section-name selfRef">Path usage strategies</a>
+        </h3>
+<p id="section-3.9-1">MP-DCCP can be configured to realise one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+Selecting an appropriate method can allow MP-DCCP to realise different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.<a href="#section-3.9-1" class="pilcrow">¶</a></p>
+<div id="path_mobility">
+<section id="section-3.9.1">
+          <h4 id="name-path-mobility">
+<a href="#section-3.9.1" class="section-number selfRef">3.9.1. </a><a href="#name-path-mobility" class="section-name selfRef">Path mobility</a>
+          </h4>
+<p id="section-3.9.1-1">The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
+Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
+When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
+Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
+Path mobility is supported in the current Linux reference implementation <span>[<a href="#website" class="cite xref">website</a>]</span>.<a href="#section-3.9.1-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="concurrent-path-usage">
+<section id="section-3.9.2">
+          <h4 id="name-concurrent-path-usage">
+<a href="#section-3.9.2" class="section-number selfRef">3.9.2. </a><a href="#name-concurrent-path-usage" class="section-name selfRef">Concurrent path usage</a>
+          </h4>
+<p id="section-3.9.2-1">Different to a path mobility strategy, the selection between MP-DCCP
+subflows is here a per-packet decision that is a part of the multipath
+scheduling process. This method would allow multiple subflows to be
+simultaneously used to aggregate the path resources to obtain higher
+connection throughput.<a href="#section-3.9.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.9.2-2">In this scenario, the selection of congestion control, per-packet scheduling
+and potential re-ordering method determines a concurrent path utilization
+strategy and result in a particular transport characteristic.<a href="#section-3.9.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.9.2-3">A concurrent path usage method uses a scheduling design that could seek to 
+maximize reliability, throughput, minimizing latency, etc.<a href="#section-3.9.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.9.2-4">Concurrent path usage over the Internet can have implications. When a 
+Multipath DCCP connection uses two or more paths, there is no guarantee 
+that these paths are fully disjoint.  When two (or more) subflows share 
+the same bottleneck, using a standard congestion control scheme could 
+result in an unfair distribution of the capacity with the multipath 
+connection using more capacity than competing single path connections.<br>
+Multipath TCP uses the coupled congestion control Linked Increases 
+Algorithm (LIA) specified in the experimental specification <span>[<a href="#RFC6356" class="cite xref">RFC6356</a>]</span> to solve this problem.  This 
+scheme could also be proposed for Multipath DCCP.  The same applies to 
+other coupled congestion control schemes that have been proposed for 
+Multipath TCP such as Opportunistic Linked Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.9.2-4" class="pilcrow">¶</a></p>
+<p id="section-3.9.2-5">The specification of scheduling for concurrent multipath and related the 
+congestion control algorithms and re-ordering methods for use in the general
+Internet are outside the scope of this document. If and when the IETF
+specifies a method for concurrent usage of multiple paths for use in the
+general Internet, the framework specified in this document could be used to 
+provide an IETF recommended method for MP-DCCP.<a href="#section-3.9.2-5" class="pilcrow">¶</a></p>
+</section>
+</div>
 </section>
 </div>
 </section>
