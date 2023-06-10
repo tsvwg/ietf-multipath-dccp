@@ -487,7 +487,7 @@ for version 1.
 
 3. MP-DCCP is then enabled between the Client and Server with version 1.
 
-If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fall back to regular DCCP or MUST be closed. Further details are specified in {{fallback}}
+If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fallback to regular DCCP or MUST be closed. Further details are specified in {{fallback}}
 
 
 ## Multipath Option {#MP_OPT}
@@ -1072,23 +1072,23 @@ at the requested Address ID, the receiver will silently ignore the request.
  
 A subflow that is still functioning MUST be closed with a DCCP-Close
 exchange as in regular DCCP, rather than using this option. For more
-information, see Section {{closing}}.
+information, see {{closing}}.
 
 
 ### MP_PRIO {#MP_PRIO}
 
 In the event that a single specific path out of the set of available
 paths shall be treated with higher priority compared to the others
-when making scheduling decisions for user plane traffic, a host may 
+when making scheduling decisions for payload traffic, a host may 
 wish to signal such change in priority  to the peer.
 One reason for such behavior is due to the different costs involved in
 using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
-may be subject to dynamic changes, for example when the mobile runs out
+could change, for example when the mobile runs out
 of battery, the usage of only a single path may be the preferred choice
-of the user. Therefore, the path priority should be considered as hints 
+of the user. Therefore, the path priority SHOULD be considered as hints 
 for the packet scheduler when making decisions which path to use for 
-user plane traffic.
+payload traffic.
 
 
 The MP_PRIO suboption, shown below, can be used to set a priority flag
@@ -1116,11 +1116,10 @@ The following values are available for Prio field:
        congested or are not available. This is the recommended setting for
        paths that have costs or data caps as these paths will be used less
        frequently then primary paths.
-*   3 - 15: Primary: can use the path in any way deemed reasonable by peer. 
-       The path will always be used for packet scheduling decisions. The 
+*   3 - 15: Primary: The path can be used for packet scheduling decisions. The 
        priority number indicates the relative priority of one path over the 
        other for primary paths. Higher numbers indicate higher priority. 
-       The peer should consider sending more traffic over higher priority paths. 
+       The peer should consider sending traffic first over higher priority paths. 
        This is the recommended setting for paths that do not have a cost or 
        data caps associated with them as these paths will be frequently used.
 
@@ -1133,7 +1132,7 @@ Example use cases include:
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
    will be used and Cellular only, if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
-   all packets can be scheduled  over all paths at all time. 
+   both paths can be used when making packet scheduling decisions. 
 
 If not specified, the default behavior is, that a path can always be used for 
 packet scheduling decisions (MP_PRIO=3), if the path has been established and 
@@ -1158,7 +1157,7 @@ in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 ~~~~
 {: #ref-MP_CLOSE title='Format of the MP_CLOSE Suboption'}
 
-For a graceful shutdown of a MP-DCCP connection, MP_CLOSE is used to communicate this to a peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well. At the initiator of the DCCP-CloseReq all sockets, including the MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note, Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
+An MP-DCCP connection can be gracefully closed by sending and MP_CLOSE to the peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well. At the initiator of the DCCP-CloseReq all sockets, including the MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note, Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
 
 On reception of a first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data, or due to a local decision, all subflows transition to the CLOSING state before transmitting a DCCP-Close carrying MP_CLOSE. In this case, the MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of the initial subflow used during handshake with MP_KEY option. If the initial subflow no longer exists, the state moves immediately to CLOSED.
 
@@ -1173,7 +1172,7 @@ Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt terminatio
 
 This section reserves a MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of MP-DCCP protocol. This
 option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only at this stage. MP_OPT 
-feature number 11 is foreseen with an exemplary description as below:
+feature number 11 is specified with an exemplary description as below:
 
 ~~~~
                      1                   2                   3
@@ -1343,9 +1342,8 @@ is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
 this section. 
 
-When a host wants to terminate an  MP-DCCP connection, it is RECOMMENDED that the host
-initiates the DCCP connection termination as per {{RFC4340}} on each subflow with the first packet on 
-each subflow carrying MP_CLOSE (see {{MP_CLOSE}}).
+A host terminates an MP-DCCP connection using the DCCP connection termination specified in section 5.5 of
+{{RFC4340}} on each subflow with the first packet on each subflow carrying MP_CLOSE (see {{MP_CLOSE}}).
 
       Host A                                   Host B
       ------                                   ------
@@ -1371,7 +1369,7 @@ subflows, each carrying the MP_FAST_CLOSE option.
 ## Fallback {#fallback}
 
 When a subflow fails to operate following MP-DCCP intended behavior, it is 
-necessary to proceed with a fall back. This may be either falling back 
+necessary to proceed with a fallback. This may be either falling back 
 to regular DCCP {{RFC4340}} or removing a problematic subflow. The main reasons for 
 subflow failing include: no MP support at peer host, failure to negotiate protocol
 version, loss of MP-DCCP suboptions, faulty/non-supported MP-DCCP options or modification
@@ -1380,15 +1378,16 @@ of payload data.
 At the start of an MP-DCCP connection, the handshake ensures exchange of MP-DCCP feature and
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
-messages don’t carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fall back to regular DCCP or MUST be closed. 
+messages do not carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
+established and the handshake SHOULD fallback to regular DCCP (if this is not 
+possible it MUST be closed). 
 
-The same fallback SHOULD take place if the endpoints fail to agree on a protocol
-version to use during the Multipath Capable feature negotiation, which is described
-in {{mp_capable}}. The protocol version negotiation distinguishes between negotiation
+A connection SHOULD fallback to regular DCCP if the endpoints fail to agree on a
+protocol version to use during the Multipath Capable feature negotiation. This is described in
+{{mp_capable}}. The protocol version negotiation distinguishes between negotiation
 for the initial connection establishment, and addition of subsequent subflows. If
 protocol version negotiation is not successful during the initial connection establishment,
-MP-DCCP connection will fall back to regular DCCP. 
+MP-DCCP connection will fallback to regular DCCP. 
 
 Similar procedure MUST be applied if the MP_KEY {{MP_KEY}} Key Type cannot be negotiated,
 a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.
@@ -1396,8 +1395,9 @@ a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option 
 If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
-version is used. Also non-verifiable MP_HMAC {{MP_HMAC}} or MP_JOIN Path Token {{MP_JOIN}} as
-part of the subsequent flow establishment MUST lead to a subflow closing.
+version is used. Reception of a non-verifiable MP_HMAC ({{MP_HMAC}}) or an invalid
+MP_JOIN Path Token {{MP_JOIN}} during flow establishment MUST cause the
+subfloor to be closed.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
@@ -1405,14 +1405,15 @@ fail if the data has been changed in any way. All data from the start of the seg
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
-Corrupt). If this happens in an MP-DCCP connection, the affected subflow can either be closed
-or other action can be taken. 
+Corrupt). If data is dropped due to corruption for an MP-DCCP connection, the affected
+subflow MAY be closed.
+
 
 ## Congestion Control Considerations
 
-Senders MUST manage per-path congestion status, and SHOULD avoid to send
-more data on a given path than congestion control on that path
-allows.
+Senders MUST manage per-path congestion status, and avoid to
+sending more data on a given path than congestion control
+for each path allows.
 
 When a Multipath DCCP connection uses two or more paths, there is no
 guarantee that these paths are fully disjoint.  When two (or more
