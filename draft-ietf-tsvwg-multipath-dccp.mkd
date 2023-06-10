@@ -64,20 +64,22 @@ author:
   code: IP5 3RE
   country: United Kingdom
   email: stephen.h.johnson@bt.com
-  
+
+normative:
+  RFC2119:
+  RFC4340:
+
 informative:
   I-D.amend-tsvwg-multipath-framework-mpdccp:
   I-D.lhwxz-hybrid-access-network-architecture:
   I-D.muley-network-based-bonding-hybrid-access:
-  I-D.amend-tsvwg-dccp-udp-header-conversion:
   I-D.amend-iccrg-multipath-reordering:
   RFC0793:
   RFC2104:
-  RFC2119:
   RFC3711:
   RFC4043:
   RFC4086:
-  RFC4340:
+  RFC5238:
   RFC5595:
   RFC5596:
   RFC5597:
@@ -97,10 +99,10 @@ informative:
       org: 3GPP
     date: '2020-12-17'
     target: https://www.3gpp.org/ftp//Specs/archive/23_series/23.501/23501-g70.zip
-  website: 
+  multipath-dccp.org: 
     title: Multipath extension for DCCP
     target: https://multipath-dccp.org/
-  paper:
+  MP-DCCP.Paper:
     title: A Framework for Multiaccess Support for Unreliable Internet Traffic using Multipath DCCP
     author:
       -
@@ -127,7 +129,7 @@ informative:
     date: '2019-10-14'
     seriesinfo:
       DOI: 10.1109/LCN44214.2019.8990746
-  slide:
+  IETF115.Slides:
     title: MP-DCCP for enabling transfer of UDP/IP traffic over multiple data paths in multi-connectivity networks
     author:
       -
@@ -166,8 +168,8 @@ network failures.
 Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
 a cellular and a Wireless Local Area (WLAN) networks
 or a cellular and a fixed access networks. Compared to existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic (e.g., UDP or plain IP).  More details on potential use cases are provided in {{website}}, {{slide}}, and {{paper}}.
-All these use cases profit from an Open Source Linux reference implementation provided under {{website}}.
+traffic (e.g., UDP or plain IP).  More details on potential use cases are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 This document specifies a set of extensions to
 DCCP to support multipath operations.  Multipath DCCP provides 
@@ -1440,7 +1442,7 @@ For compatibility reasons, an MP-DCCP implementation SHOULD always announce the 
 Similar to DCCP, MP-DCCP does not provide cryptographic security
 guarantees inherently. Thus, if applications need cryptographic security
 (integrity, authentication, confidentiality, access control, and
-anti-replay protection) the use of IPsec or some other kind of
+anti-replay protection) the use of IPsec, DTLS over DCCP {{RFC5238}} or other
 end-to-end security is recommended;
 Secure Real-time Transport Protocol (SRTP) {{RFC3711}} is one candidate
 protocol for authentication. Together with Encryption of Header
@@ -1449,7 +1451,7 @@ be provided.
 
 As described in {{RFC4340}}, DCCP provides protection against hijacking
 and limits the potential impact of some denial-of-service attacks, but
-DCCP provides no inherent protection against attackers’ snooping on data
+DCCP provides no inherent protection against an on-path attacker snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
 introduced compared to regular DCCP. Thereof derived are the
 following key security requirements to be fulfilled by MP-DCCP:
@@ -1507,25 +1509,21 @@ connection-establishment procedures for DCCP.  Further standardized technologies
 addressing NAT type middleboxes are covered by {{RFC5597}}.
 
 {{RFC6773}} specifies UDP Encapsulation for NAT Traversal of DCCP sessions,
-similar to other UDP encapsulations such as for SCTP {{RFC6951}}. The alternative
-U-DCCP approach proposed in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} would
-reduce tunneling overhead. The handshaking procedure for DCCP-UDP
-header conversion or use of a DCCP-UDP negotiation procedure to signal support
-for DCCP-UDP header conversion would require encapsulation during the handshakes
-and use of two additional port numbers out of the UDP port number space, but
-would require zero overhead afterwards.
+similar to other UDP encapsulations such as for SCTP {{RFC6951}}. Future
+specifications by the IETF could specify other methods for DCCP encapsulation.
+
 
 
 # Implementation
 
 The approach described above has been implemented in open source across different testbeds and a new scheduling algorithm has been extensively tested. Also 
-demonstrations of a laboratory setup have been executed and have been published at {{website}}.
+demonstrations of a laboratory setup have been executed and have been published at {{multipath-dccp.org}}.
 
 
 # Acknowledgments
 
-Due to the great spearheading work of the Multipath TCP authors in {{RFC6824}}/{{RFC8684}}, some text
-passages were copied almost unmodified from these documents.
+{{RFC6824}} and {{RFC8684}} defined Multipath TCP and provided important
+inputs for this specification
 
 The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
 
@@ -1578,7 +1576,7 @@ IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP 
 | MP_OPT>11| Unassigned      | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='MP-DCCP Suboptions registry'}
  
-Future MP-DCCP sub-options with MP_OPT>11 can be assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future MP-DCCP sub-options with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
@@ -1659,7 +1657,7 @@ character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_
 adding optional mechanisms for data stream packet reordering 
 at the receiver.  Information from the MP_RTT multipath option ({{MP_RTT}}), 
 DCCP path sequencing and the DCCP Timestamp Option provide further means 
-for advanced reordering approaches, e.g., as described in {{I-D.amend-iccrg-multipath-reordering}}.
+for advanced reordering approaches, e.g., as proposed in {{I-D.amend-iccrg-multipath-reordering}}.
 Such mechanisms do, however, not affect interoperability
 and are not part of the MP-DCCP protocol.  Many 
 applications that use unreliable transport protocols can also inherently deal 
