@@ -1465,7 +1465,7 @@ result in an unfair distribution of the capacity with the multipath
 connection using more capacity than competing single path connections.  
 Multipath TCP uses the coupled congestion control Linked Increases 
 Algorithm (LIA) specified in the experimental specification {{RFC6356}} to solve this problem.  This 
-scheme could also be proposed for Multipath DCCP.  The same applies to 
+scheme could also be used for Multipath DCCP.  The same applies to 
 other coupled congestion control schemes that have been proposed for 
 Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
 
