@@ -30,18 +30,18 @@ the same type of service to applications as DCCP and it provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.17.1" name="generator">
+<meta content="xml2rfc 3.17.4" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-08" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.17.1
-    Python 3.10.11
-    appdirs 1.4.4
-    ConfigArgParse 1.5.3
-    google-i18n-address 2.5.2
+  xml2rfc 3.17.4
+    Python 3.10.12
+    ConfigArgParse 1.5.5
+    google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.2
+    platformdirs 3.8.0
     pycountry 22.3.5
     PyYAML 6.0
     requests 2.31.0
@@ -2611,7 +2611,7 @@ cleaning up any local state.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p
 <p id="section-3.2.9-7">Address removal is undertaken by ID, so as to permit the use of NATs and
 other middleboxes that rewrite source addresses.  If there is no address
 at the requested ID, the receiver will silently ignore the request.<a href="#section-3.2.9-7" class="pilcrow">¶</a></p>
-<span id="name-format-of-themp_removeaddr-"></span><div id="refMP_REMOVEADDR">
+<span id="name-format-of-the-mp_removeaddr"></span><div id="refMP_REMOVEADDR">
 <figure id="figure-14">
             <div class="alignLeft art-text artwork" id="section-3.2.9-8.1">
 <pre>
@@ -2626,7 +2626,7 @@ at the requested ID, the receiver will silently ignore the request.<a href="#sec
 </pre>
 </div>
 <figcaption><a href="#figure-14" class="selfRef">Figure 14</a>:
-<a href="#name-format-of-themp_removeaddr-" class="selfRef">Format of theMP_REMOVEADDR Suboption</a>
+<a href="#name-format-of-the-mp_removeaddr" class="selfRef">Format of the MP_REMOVEADDR Suboption</a>
             </figcaption></figure>
 </div>
 <p id="section-3.2.9-9">A subflow that is still functioning MUST be closed with a DCCP-Close or

@@ -1329,7 +1329,7 @@ Internet-Draft               Multipath DCCP                     May 2023
 
    -> followed by MP_HMAC option
 
-              Figure 14: Format of theMP_REMOVEADDR Suboption
+              Figure 14: Format of the MP_REMOVEADDR Suboption
 
    A subflow that is still functioning MUST be closed with a DCCP-Close
    or exchange as in regular DCCP, rather than using this option.  For
