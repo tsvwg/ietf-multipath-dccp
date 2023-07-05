@@ -1447,7 +1447,7 @@ The path mobility strategy provides the use of a single path with a seamless han
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
 When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
 Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
-Path mobility is supported in the current Linux reference implementation {{website}}.
+Path mobility is supported in the current Linux reference implementation {{multipath-dccp.org}}.
 
 ### Concurrent path usage
 Different to a path mobility strategy, the selection between MP-DCCP
