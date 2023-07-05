@@ -35,6 +35,7 @@ jobs:
           path: |
             draft-*.html
             draft-*.txt
+            draft-*.xml
   deploy:
     runs-on: ubuntu-latest
     env: 
@@ -54,7 +55,7 @@ jobs:
       - name: "Deploy to Github Pages"
         shell: "bash"
         run: |
-          ls *.html *.txt
+          ls *.html *.txt *.xml
           git config --global user.name "${{ env.CI_COMMIT_AUTHOR }}"
           git add ./\*.txt
           git add ./\*.html
