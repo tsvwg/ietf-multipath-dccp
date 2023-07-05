@@ -1,8 +1,8 @@
 ---
 title: DCCP Extensions for Multipath Operation with Multiple Addresses
 abbrev: Multipath DCCP
-docname: draft-ietf-tsvwg-multipath-dccp-07
-date: 2023-02-15
+docname: draft-ietf-tsvwg-multipath-dccp-08
+date: 2023-05-29
 cat: exp
 
 ipr: trust200902
@@ -1070,7 +1070,7 @@ at the requested Address ID, the receiver will silently ignore the request.
 
 -> followed by MP_HMAC option
 ~~~~
-{: #refMP_REMOVEADDR title='Format of theMP_REMOVEADDR Suboption'}
+{: #refMP_REMOVEADDR title='Format of the MP_REMOVEADDR Suboption'}
  
 A subflow that is still functioning MUST be closed with a DCCP-Close
 exchange as in regular DCCP, rather than using this option. For more
@@ -1435,6 +1435,52 @@ algorithms are outside the scope of this document.
 A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system. 
 
 For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.
+
+## Path usage strategies
+
+MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
+
+### Path mobility {#path_mobility}
+
+The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
+Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
+When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
+Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
+Path mobility is supported in the current Linux reference implementation {{website}}.
+
+### Concurrent path usage
+Different to a path mobility strategy, the selection between MP-DCCP
+subflows is here a per-packet decision that is a part of the multipath
+scheduling process. This method would allow multiple subflows to be
+simultaneously used to aggregate the path resources to obtain higher
+connection throughput.
+
+In this scenario, the selection of congestion control, per-packet scheduling
+and potential re-ordering method determines a concurrent path utilization
+strategy and result in a particular transport characteristic.
+
+A concurrent path usage method uses a scheduling design that could seek to 
+maximize reliability, throughput, minimizing latency, etc.
+
+Concurrent path usage over the Internet can have implications. When a 
+Multipath DCCP connection uses two or more paths, there is no guarantee 
+that these paths are fully disjoint.  When two (or more) subflows share 
+the same bottleneck, using a standard congestion control scheme could 
+result in an unfair distribution of the capacity with the multipath 
+connection using more capacity than competing single path connections.  
+Multipath TCP uses the coupled congestion control Linked Increases 
+Algorithm (LIA) specified in the experimental specification {{RFC6356}} to solve this problem.  This 
+scheme could also be proposed for Multipath DCCP.  The same applies to 
+other coupled congestion control schemes that have been proposed for 
+Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
+
+The specification of scheduling for concurrent multipath and related the 
+congestion control algorithms and re-ordering methods for use in the general
+Internet are outside the scope of this document. If and when the IETF
+specifies a method for concurrent usage of multiple paths for use in the
+general Internet, the framework specified in this document could be used to 
+provide an IETF recommended method for MP-DCCP.
 
 
 # Security Considerations {#security}
