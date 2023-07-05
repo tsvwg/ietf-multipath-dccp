@@ -1065,7 +1065,7 @@ at the requested ID, the receiver will silently ignore the request.
 
 -> followed by MP_HMAC option
 ~~~~
-{: #refMP_REMOVEADDR title='Format of theMP_REMOVEADDR Suboption'}
+{: #refMP_REMOVEADDR title='Format of the MP_REMOVEADDR Suboption'}
  
 A subflow that is still functioning MUST be closed with a DCCP-Close or
 exchange as in regular DCCP, rather than using this option. For more
