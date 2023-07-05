@@ -4,7 +4,7 @@
 
 Transport Area Working Group                               M. Amend, Ed.
 Internet-Draft                                                        DT
-Intended status: Experimental                               A. Brunstrom
+Intended status: Standards Track                            A. Brunstrom
 Expires: 30 November 2023                                     A. Kassler
                                                      Karlstad University
                                                             V. Rakocevic
