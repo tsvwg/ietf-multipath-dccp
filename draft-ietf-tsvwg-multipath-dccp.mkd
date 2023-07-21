@@ -1417,19 +1417,6 @@ Senders MUST manage per-path congestion status, and avoid to
 sending more data on a given path than congestion control
 for each path allows.
 
-When a Multipath DCCP connection uses two or more paths, there is no
-guarantee that these paths are fully disjoint.  When two (or more
-paths) share the same bottleneck, using a standard congestion control
-scheme could result in an unfair distribution of the bandwidth with
-the multipath connection getting more bandwidth than competing single
-path connections.  Multipath TCP uses the coupled congestion control
-Linked Increases Algorithm (LIA) specified in {{RFC6356}} to
-solve this problem.  This scheme can be adapted also for Multipath DCCP.
-The same applies to other coupled congestion control schemes, which
-have been proposed for Multipath TCP such as Opportunistic Linked
-Increases Algorithm {{OLIA}}. The details of the congestion control
-algorithms are outside the scope of this document.
-
 ## Maximum Packet Size Considerations
 
 A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system. 
