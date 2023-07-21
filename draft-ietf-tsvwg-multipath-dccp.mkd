@@ -89,6 +89,7 @@ informative:
   RFC6824:
   RFC6904:
   RFC6951:
+  RFC7323:
   RFC8041:
   RFC8126:
   RFC8174:
@@ -777,6 +778,16 @@ number (IDSN) SHOULD be set randomly {{RFC4086}}.
 The MP_SEQ number space is
 different from the path individual sequence number space and MUST be
 sent with all DCCP-Data and DCCP-DataACK packet.
+
+When the sequence number space is exhausted, the sequence number MUST
+be wrapped. {{RFC7323}} provides guidance on selecting an appropriately
+sized sequence number space according to the maximum segment lifetime of
+TCP. 64 bits is the recommended size for TCP to avoid the sequence number
+space going through within the segment lifetime. For DCCP, the Maximum
+Segment Lifetime is the same as that of TCP as specified in {{RFC4340}},
+Section 3.4. Compared to TCP, the sequence number for DCCP is incremented
+per packet rather than per byte transmitted. For this reason, the 48 bits
+chosen in MP_SEQ are considered sufficiently large.
 
 
 ### MP_HMAC {#MP_HMAC}
