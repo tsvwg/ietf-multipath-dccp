@@ -1188,7 +1188,7 @@ feature number 11 is specified with an exemplary description as below:
 ~~~~
 {: #ref-MP_EXP title='Format of the MP_EXP Suboption'}
  
-Details as length and type of data remain to be defined according to the foreseen use by the experimenters.
+According to the foreseen use by the experimenters Data MUST be defined within the scope of the 8bit Length field.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
