@@ -41,9 +41,9 @@ different paths simultaneously.
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.8.0
+    platformdirs 3.9.1
     pycountry 22.3.5
-    PyYAML 6.0
+    PyYAML 6.0.1
     requests 2.31.0
     setuptools 65.5.0
     six 1.16.0
@@ -3049,7 +3049,7 @@ feature are not present or are faulty in the handshake procedure, that subflow M
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Reception of a non-verifiable MP_HMAC (<a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>) or an invalid
 MP_JOIN Path Token <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a> during flow establishment MUST cause the
-subfloor to be closed.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
+subflow to be closed.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
 <p id="section-3.6-6">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. A checksum will 
 fail if the data has been changed in any way. All data from the start of the segment that

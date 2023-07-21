@@ -1838,7 +1838,7 @@ Internet-Draft               Multipath DCCP                    July 2023
    especially the case if a different MP_CAPABLE version than the
    originally negotiated version is used.  Reception of a non-verifiable
    MP_HMAC (Section 3.2.6) or an invalid MP_JOIN Path Token
-   Section 3.2.2 during flow establishment MUST cause the subfloor to be
+   Section 3.2.2 during flow establishment MUST cause the subflow to be
    closed.
 
 
