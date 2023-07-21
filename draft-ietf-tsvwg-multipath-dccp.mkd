@@ -1399,7 +1399,7 @@ feature are not present or are faulty in the handshake procedure, that subflow M
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Reception of a non-verifiable MP_HMAC ({{MP_HMAC}}) or an invalid
 MP_JOIN Path Token {{MP_JOIN}} during flow establishment MUST cause the
-subfloow to be closed.
+subflow to be closed.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
