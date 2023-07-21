@@ -2871,16 +2871,16 @@ MP_JOIN.<a href="#section-3.3-7.1" class="pilcrow">¶</a>
 with Confirm feature option for MP-Capable and the MP_JOIN option with
 the Token TB and a random nonce RB together with the computed MP_HMAC.
 The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
-of a HMAC code created by using token and nonce received with MP_JOIN(A) as message
-and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-7.2.1" class="pilcrow">¶</a></p>
+of a HMAC code created by using the nonce received with MP_JOIN(A) and the
+local nonce RB as message and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-7.2.1" class="pilcrow">¶</a></p>
 <p id="section-3.3-7.2.2">
 MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)<a href="#section-3.3-7.2.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-7.3">
             <p id="section-3.3-7.3.1">Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.
 The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
-of a HMAC code created by using token and nonce received with MP_JOIN(B) as message
-and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-7.3.1" class="pilcrow">¶</a></p>
+of a HMAC code created by using the local nonce RA and the nonce received
+with MP_JOIN(B) as message and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-7.3.1" class="pilcrow">¶</a></p>
 <p id="section-3.3-7.3.2">
 MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)<a href="#section-3.3-7.3.2" class="pilcrow">¶</a></p>
 </li>

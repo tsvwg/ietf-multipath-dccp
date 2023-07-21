@@ -1637,16 +1637,16 @@ Internet-Draft               Multipath DCCP                    July 2023
       MP_JOIN option with the Token TB and a random nonce RB together
       with the computed MP_HMAC.  The HMAC is calculated by taking the
       leftmost 20 bytes from the SHA256 hash of a HMAC code created by
-      using token and nonce received with MP_JOIN(A) as message and the
-      derived key described in Section 3.2.4 as key:
+      using the nonce received with MP_JOIN(A) and the local nonce RB as
+      message and the derived key described in Section 3.2.4 as key:
 
       MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)
 
    *  Host A sends a DCCP-Ack with the HMAC computed for the DCCP-
       Response.  The HMAC is calculated by taking the leftmost 20 bytes
-      from the SHA256 hash of a HMAC code created by using token and
-      nonce received with MP_JOIN(B) as message and the derived key
-      described in Section 3.2.4 as key:
+      from the SHA256 hash of a HMAC code created by using the local
+      nonce RA and the nonce received with MP_JOIN(B) as message and the
+      derived key described in Section 3.2.4 as key:
 
       MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
 
