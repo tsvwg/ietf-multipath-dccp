@@ -1140,7 +1140,11 @@ If not specified, the default behavior is, that a path can always be used for
 packet scheduling decisions (MP_PRIO=3), if the path has been established and 
 added to an existing MP-DCCP connection. At least one path should have a 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
-connection. MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
+connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
+value when an MP-DCCP connection enters a state where all paths remain with an
+MP_PRIO value of zero. This helps an MP-DCCP connection to continue to be used 
+scheduling in case the multipath scheduler strictly respects MP_PRIO value 0.
+MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see {{ref-mp-option-confirm}}).
 
 The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
