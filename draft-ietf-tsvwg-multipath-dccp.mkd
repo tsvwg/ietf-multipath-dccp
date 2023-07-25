@@ -1054,8 +1054,8 @@ The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 information is ensured. To avoid inconsistent states, it is recommended to
 release the sender address ID only after MP_REMOVEADDR has been confirmed. 
 
-The sending and receipt of this message SHOULD trigger the sending of
-DCCP-Close and DCCP-Reset by client and server, respectively on the affected
+The sending and receipt of this message SHOULD trigger the closing procedure
+described in {{RFC4340}} between client and server, respectively on the affected
 subflow(s) (if possible), as a courtesy to cleaning up middlebox state, before
 cleaning up any local state.
 
