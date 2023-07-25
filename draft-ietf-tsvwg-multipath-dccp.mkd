@@ -940,7 +940,7 @@ intermediary.  If a host receives an MP_ADDADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
 The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
-in which MP_ADDADDR is sent. Further details are given in {{MP_CONFIRM}}.
+in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
 
 ~~~~
                       1                   2                   3
