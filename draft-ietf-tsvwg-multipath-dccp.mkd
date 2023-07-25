@@ -1187,8 +1187,8 @@ feature number 11 is specified with an exemplary description as below:
      Type=46         Length         MP_OPT=11
 ~~~~
 {: #ref-MP_EXP title='Format of the MP_EXP Suboption'}
- 
-According to the foreseen use by the experimenters Data MUST be defined within the scope of the 8bit Length field.
+
+The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 Bytes.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
