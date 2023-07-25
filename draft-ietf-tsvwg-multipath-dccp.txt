@@ -476,7 +476,7 @@ Internet-Draft               Multipath DCCP                    July 2023
 
        0  1  2  3   4  5  6  7
       +-----------+------------+
-      | THIS-VERN | Unassigned |
+      | THIS-VER  | Unassigned |
       +-----------+------------+
 
              Figure 3: Format of the Multipath Capable feature
