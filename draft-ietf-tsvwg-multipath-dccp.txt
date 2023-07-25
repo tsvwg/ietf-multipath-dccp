@@ -1356,10 +1356,10 @@ Internet-Draft               Multipath DCCP                    July 2023
    is recommended to release the sender address ID only after
    MP_REMOVEADDR has been confirmed.
 
-   The sending and receipt of this message SHOULD trigger the sending of
-   DCCP-Close and DCCP-Reset by client and server, respectively on the
-   affected subflow(s) (if possible), as a courtesy to cleaning up
-   middlebox state, before cleaning up any local state.
+   The sending and receipt of this message SHOULD trigger the closing
+   procedure described in [RFC4340] between client and server,
+   respectively on the affected subflow(s) (if possible), as a courtesy
+   to cleaning up middlebox state, before cleaning up any local state.
 
    Address removal is done by Address ID to allow the use of NATs and
    other middleboxes that rewrite source addresses.  If there is no

@@ -2632,8 +2632,8 @@ in which MP_REMOVEADDR is sent. Further details are given in <a href="#MP_CONFIR
 (<a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>). Using this mechanism reliable exchange of address
 information is ensured. To avoid inconsistent states, it is recommended to
 release the sender address ID only after MP_REMOVEADDR has been confirmed.<a href="#section-3.2.9-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-6">The sending and receipt of this message SHOULD trigger the sending of
-DCCP-Close and DCCP-Reset by client and server, respectively on the affected
+<p id="section-3.2.9-6">The sending and receipt of this message SHOULD trigger the closing procedure
+described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> between client and server, respectively on the affected
 subflow(s) (if possible), as a courtesy to cleaning up middlebox state, before
 cleaning up any local state.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-7">Address removal is done by Address ID to allow the use of NATs and other
