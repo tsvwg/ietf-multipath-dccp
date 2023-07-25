@@ -134,7 +134,7 @@ Internet-Draft               Multipath DCCP                    July 2023
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  38
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  41
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  41
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  41
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  42
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  45
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  47
 
@@ -1754,17 +1754,18 @@ Internet-Draft               Multipath DCCP                    July 2023
 3.5.  Close a MP-DCCP connection
 
    When a host wants to close an existing subflow but not the whole MP-
-   DCCP connection, it initiates the regular DCCP connection termination
-   procedure as described in [RFC4340], i.e., it sends a DCCP-Close/
-   DCCP-Reset on the subflow.  This may be preceded by a DCCP-CloseReq.
-   In the event of an irregular termination of a subflow, e.g., during
-   subflow establishment, it is RECOMMENDED to use an appropriate DCCP
-   reset code as specified in Table 2 of [RFC4340].  This could be, for
-   example, sending reset code 5 (Option Error) when an MP-DCCP option
-   provides invalid data or reset code 9 (Too Busy) when the maximum
-   number of maintainable paths is reached.  Note that receiving a reset
-   code 9 for secondary subflows SHOULD NOT impact already existing
-   active subflows.  If necessary, these subflows are terminated in a
+   DCCP connection, it MUST initiate the regular DCCP connection
+   termination procedure as described in Section 5.6 of [RFC4340], i.e.,
+   it sends a DCCP-Close/DCCP-Reset on the subflow.  This may be
+   preceded by a DCCP-CloseReq.  In the event of an irregular
+   termination of a subflow, e.g., during subflow establishment, it MUST
+   use an appropriate DCCP reset code as specified in IANA
+   [DCCP.Parameter] for DCCP operations.  This could be, for example,
+   sending reset code 5 (Option Error) when an MP-DCCP option provides
+   invalid data or reset code 9 (Too Busy) when the maximum number of
+   maintainable paths is reached.  Note that receiving a reset code 9
+   for secondary subflows SHOULD NOT impact already existing active
+   subflows.  If necessary, these subflows are terminated in a
    subsequent step using the procedures described in this section.
 
    A host terminates an MP-DCCP connection using the DCCP connection
@@ -1785,7 +1786,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    Additionally, an MP-DCCP connection may be closed abruptly using the
    "Fast Close" procedure described in Section 3.2.3, where a DCCP-Reset
    is sent on all subflows, each carrying the MP_FAST_CLOSE option.
-
 
 
 
@@ -2275,6 +2275,11 @@ Internet-Draft               Multipath DCCP                    July 2023
 
 9.1.  Normative References
 
+   [DCCP.Parameter]
+              "IANA Datagram Congestion Control Protocol (DCCP)
+              Parameters", n.d., <https://www.iana.org/assignments/dccp-
+              parameters/dccp-parameters.xhtml>.
+
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
@@ -2285,11 +2290,6 @@ Internet-Draft               Multipath DCCP                    July 2023
               DOI 10.17487/RFC4340, March 2006,
               <https://www.rfc-editor.org/rfc/rfc4340>.
 
-9.2.  Informative References
-
-   [I-D.amend-iccrg-multipath-reordering]
-              Amend, M. and D. Von Hugo, "Multipath sequence
-              maintenance", Work in Progress, Internet-Draft, draft-
 
 
 
@@ -2298,6 +2298,11 @@ Amend, et al.            Expires 6 January 2024                [Page 41]
 Internet-Draft               Multipath DCCP                    July 2023
 
 
+9.2.  Informative References
+
+   [I-D.amend-iccrg-multipath-reordering]
+              Amend, M. and D. Von Hugo, "Multipath sequence
+              maintenance", Work in Progress, Internet-Draft, draft-
               amend-iccrg-multipath-reordering-03, 25 October 2021,
               <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
               multipath-reordering-03>.
@@ -2336,13 +2341,8 @@ Internet-Draft               Multipath DCCP                    July 2023
               slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-
               operation-00>.
 
-   [MP-DCCP.Paper]
-              Amend, M., Bogenfeld, E., Cvjetkovic, M., Rakocevic, V.,
-              Pieska, M., Kassler, A., and A. Brunstrom, "A Framework
-              for Multiaccess Support for Unreliable Internet Traffic
-              using Multipath DCCP", DOI 10.1109/LCN44214.2019.8990746,
-              October 2019,
-              <https://doi.org/10.1109/LCN44214.2019.8990746>.
+
+
 
 
 
@@ -2353,6 +2353,14 @@ Amend, et al.            Expires 6 January 2024                [Page 42]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   [MP-DCCP.Paper]
+              Amend, M., Bogenfeld, E., Cvjetkovic, M., Rakocevic, V.,
+              Pieska, M., Kassler, A., and A. Brunstrom, "A Framework
+              for Multiaccess Support for Unreliable Internet Traffic
+              using Multipath DCCP", DOI 10.1109/LCN44214.2019.8990746,
+              October 2019,
+              <https://doi.org/10.1109/LCN44214.2019.8990746>.
 
    [multipath-dccp.org]
               "Multipath extension for DCCP", n.d.,
@@ -2393,14 +2401,6 @@ Internet-Draft               Multipath DCCP                    July 2023
               RFC 5238, DOI 10.17487/RFC5238, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5238>.
 
-   [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
-              (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
-              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
-
-   [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
-              (DCCP) Simultaneous-Open Technique to Facilitate NAT/
-              Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
-              September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
 
 
@@ -2409,6 +2409,15 @@ Amend, et al.            Expires 6 January 2024                [Page 43]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
+              (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
+
+   [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
+              (DCCP) Simultaneous-Open Technique to Facilitate NAT/
+              Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
    [RFC5597]  Denis-Courmont, R., "Network Address Translation (NAT)
               Behavioral Requirements for the Datagram Congestion
@@ -2447,15 +2456,6 @@ Internet-Draft               Multipath DCCP                    July 2023
               DOI 10.17487/RFC6951, May 2013,
               <https://www.rfc-editor.org/rfc/rfc6951>.
 
-   [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
-              Operational Experience with Multipath TCP", RFC 8041,
-              DOI 10.17487/RFC8041, January 2017,
-              <https://www.rfc-editor.org/rfc/rfc8041>.
-
-   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/rfc/rfc8126>.
 
 
 
@@ -2465,6 +2465,16 @@ Amend, et al.            Expires 6 January 2024                [Page 44]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
+              Operational Experience with Multipath TCP", RFC 8041,
+              DOI 10.17487/RFC8041, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8041>.
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
 
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
@@ -2499,16 +2509,6 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
-
-
-
-
-
-
 
 
 

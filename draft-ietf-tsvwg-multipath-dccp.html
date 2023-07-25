@@ -36,7 +36,7 @@ different paths simultaneously.
 <!-- Generator version information:
   xml2rfc 3.17.4
     Python 3.10.12
-    ConfigArgParse 1.5.5
+    ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
@@ -2980,11 +2980,10 @@ Address A1    Address A2                               Address B1
 <a href="#section-3.5" class="section-number selfRef">3.5. </a><a href="#name-close-a-mp-dccp-connection" class="section-name selfRef">Close a MP-DCCP connection</a>
         </h3>
 <p id="section-3.5-1">When a host wants to close an existing subflow but not the whole MP-DCCP
-connection, it initiates the regular DCCP connection termination procedure 
-as described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
+connection, it MUST initiate the regular DCCP connection termination procedure 
+as described in Section 5.6 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
-e.g., during subflow establishment, it is RECOMMENDED to use an appropriate DCCP reset code as specified in
-Table 2 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
+e.g., during subflow establishment, it MUST use an appropriate DCCP reset code as specified in IANA <span>[<a href="#DCCP.Parameter" class="cite xref">DCCP.Parameter</a>]</span> for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
 is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
@@ -3499,6 +3498,10 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
         </h3>
 <dl class="references">
+<dt id="DCCP.Parameter">[DCCP.Parameter]</dt>
+        <dd>
+<span class="refTitle">"IANA Datagram Congestion Control Protocol (DCCP) Parameters"</span>, <span>n.d.</span>, <span>&lt;<a href="https://www.iana.org/assignments/dccp-parameters/dccp-parameters.xhtml">https://www.iana.org/assignments/dccp-parameters/dccp-parameters.xhtml</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC2119">[RFC2119]</dt>
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
