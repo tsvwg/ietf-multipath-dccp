@@ -2567,7 +2567,7 @@ MAY advertise a private addresses. The MP_JOIN handshake to
 create a new subflow (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) provides mechanisms to minimize
 security risks.  The MP_JOIN message contains a 32-bit token that
 uniquely identifies the connection to the receiving host. If the
-token is unknown, the host will return with a DCCP-Reset. In the unlikely
+token is unknown, the host MUST return with a DCCP-Reset. In the unlikely
 event that the token is known, subflow setup will continue, but the
 HMAC exchange must occur for authentication.  This will fail, and
 will provide sufficient protection against two unconnected hosts
