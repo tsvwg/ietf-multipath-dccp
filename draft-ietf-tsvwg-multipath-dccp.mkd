@@ -974,7 +974,7 @@ MAY discard incoming address advertisements, for example, for
 avoiding the required mapping state, or because advertised addresses
 are of no use to it (for example, IPv6 addresses when it has IPv4
 only).  Therefore, a host MUST treat address advertisements as soft
-state, and it MAY choose to refresh advertisements periodically.
+state, and the sender MAY choose to refresh advertisements periodically.
 
 Due to the proliferation of NATs, it is reasonably likely that one
 host may attempt to advertise private addresses.  It is not
