@@ -3086,8 +3086,7 @@ algorithms are outside the scope of this document.<a href="#section-3.7-2" class
         <h3 id="name-maximum-packet-size-conside">
 <a href="#section-3.8" class="section-number selfRef">3.8. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
         </h3>
-<p id="section-3.8-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. As per this definition a DCCP application interface SHOULD let the application discover the current MPS, this is subject to ambiguity with potential different path MPS in a multipath system.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
-<p id="section-3.8-2">For compatibility reasons, an MP-DCCP implementation SHOULD always announce the minimum MPS across all paths.<a href="#section-3.8-2" class="pilcrow">¶</a></p>
+<p id="section-3.8-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-usage-strategies">

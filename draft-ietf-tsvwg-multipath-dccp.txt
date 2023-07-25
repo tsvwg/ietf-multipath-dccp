@@ -1886,13 +1886,13 @@ Internet-Draft               Multipath DCCP                    July 2023
    operation of a DCCP session.  This procedure is specified for single-
    path DCCP in [RFC4340], Section 14.  Without any restrictions, this
    is adopted for MP-DCCP operations, in particular the PMTU measurement
-   and the Sender Behaviour.  As per this definition a DCCP application
-   interface SHOULD let the application discover the current MPS, this
-   is subject to ambiguity with potential different path MPS in a
-   multipath system.
+   and the Sender Behaviour.  The DCCP application interface SHOULD
+   allow the application to discover the current MPS.  This reflects the
+   current supported largest size for the data stream that can be used
+   across the set of all active MP-DCCP subflows.
 
-   For compatibility reasons, an MP-DCCP implementation SHOULD always
-   announce the minimum MPS across all paths.
+
+
 
 
 
