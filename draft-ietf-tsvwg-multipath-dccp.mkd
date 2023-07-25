@@ -1627,6 +1627,8 @@ in potential future versions of the MP-DCCP protocol.
 
 # Differences from Multipath TCP {#diff_mptcp}
 
+This appendix is Informative.
+
 Multipath DCCP is similar to Multipath TCP {{RFC8684}}, in that it
 extends the related basic DCCP transport protocol {{RFC4340}} with
 multipath capabilities in the same way as Multipath TCP extends TCP
