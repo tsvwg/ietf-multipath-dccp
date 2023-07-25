@@ -116,7 +116,7 @@ Internet-Draft               Multipath DCCP                    July 2023
 
        3.2.12. Experimental MP-DCCP Sub-Option MP_EXP for private
                use . . . . . . . . . . . . . . . . . . . . . . . . .  28
-     3.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  28
+     3.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  29
      3.4.  Address knowledge exchange  . . . . . . . . . . . . . . .  30
        3.4.1.  Advertising a new path (MP_ADDADDR) . . . . . . . . .  30
        3.4.2.  Removing a path (MP_REMOVEADDR) . . . . . . . . . . .  31
@@ -1474,9 +1474,13 @@ Internet-Draft               Multipath DCCP                    July 2023
    used for packet scheduling decisions (MP_PRIO=3), if the path has
    been established and added to an existing MP-DCCP connection.  At
    least one path should have a MP_PRIO value greater or equal to one
-   for it to be allowed to send on the connection.  MP_PRIO is assumed
-   to be exchanged reliably using the MP_CONFIRM mechanisms (see
-   Table 4).
+   for it to be allowed to send on the connection.  It is RECOMMENDED to
+   update at least one path to a non-zero MP_PRIO value when an MP-DCCP
+   connection enters a state where all paths remain with an MP_PRIO
+   value of zero.  This helps an MP-DCCP connection to continue to be
+   used scheduling in case the multipath scheduler strictly respects
+   MP_PRIO value 0.  MP_PRIO is assumed to be exchanged reliably using
+   the MP_CONFIRM mechanisms (see Table 4).
 
    The presence of a MP_SEQ Section 3.2.5 MUST be ensured in a DCCP
    datagram in which MP_PRIO is sent.  Further details are given in
@@ -1502,10 +1506,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    all sockets, including the MP-DCCP connection socket, transition to
    CLOSEREQ state.  To protect unauthorized shutdown of a multi-path
    connection, the selected Key Data of the peer host during the
-   handshaking procedure MUST be carried by the MP_CLOSE option and
-   validated by the peer host.  Note, Key Data is different between
-   MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
-
 
 
 
@@ -1513,6 +1513,10 @@ Amend, et al.            Expires 6 January 2024                [Page 27]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   handshaking procedure MUST be carried by the MP_CLOSE option and
+   validated by the peer host.  Note, Key Data is different between
+   MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
 
    On reception of a first DCCP-CloseReq carrying a MP_CLOSE with valid
    Key Data, or due to a local decision, all subflows transition to the
@@ -1557,10 +1561,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    Details as length and type of data remain to be defined according to
    the foreseen use by the experimenters.
 
-3.3.  MP-DCCP Handshaking Procedure
-
-   An example to illustrate the MP-DCCP handshake procedure is shown in
-   Figure 21.
 
 
 
@@ -1569,6 +1569,11 @@ Amend, et al.            Expires 6 January 2024                [Page 28]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+3.3.  MP-DCCP Handshaking Procedure
+
+   An example to illustrate the MP-DCCP handshake procedure is shown in
+   Figure 21.
 
              Host A                                         Host B
    ------------------------                              ----------
@@ -1613,11 +1618,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    *  Host B sends a DCCP-Ack to confirm both keys and conclude the
       handshaking.
 
-   Host A waits for the final DCCP-Ack from host B before starting any
-   establishment of additional subflow connections.
-
-   The handshake for subsequent subflows based on a successful initial
-   handshake is as follows:
 
 
 
@@ -1625,6 +1625,12 @@ Amend, et al.            Expires 6 January 2024                [Page 29]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   Host A waits for the final DCCP-Ack from host B before starting any
+   establishment of additional subflow connections.
+
+   The handshake for subsequent subflows based on a successful initial
+   handshake is as follows:
 
    *  Host A sends a DCCP-Request with the MP-Capable feature Change
       request and the MP_JOIN option with Host B's Token TB, generated
@@ -1667,12 +1673,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    The value of 00 here, indicates that the port number is the same as
    that used for the initial subflow address A1_IP
 
-   The following options must be included in a packet carrying
-   MP_ADDADDR: * the leftmost 20 bytes of the HMAC(A) generated during
-   the initial handshaking procedure described in Section 3.3 and
-   Section 3.2.6 * the sequence number (seqno 12) for this message
-
-
 
 
 
@@ -1681,6 +1681,11 @@ Amend, et al.            Expires 6 January 2024                [Page 30]
 
 Internet-Draft               Multipath DCCP                    July 2023
 
+
+   The following options must be included in a packet carrying
+   MP_ADDADDR: * the leftmost 20 bytes of the HMAC(A) generated during
+   the initial handshaking procedure described in Section 3.3 and
+   Section 3.2.6 * the sequence number (seqno 12) for this message
 
    Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack
    containing the MP_CONFIRM option.  The parameters supplied in this
@@ -1724,11 +1729,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    confirming, together with the MP_REMOVEADDR option * the leftmost 20
    bytes of the HMAC(B) generated during the initial handshaking
    procedure Section 3.3
-
-
-
-
-
 
 
 

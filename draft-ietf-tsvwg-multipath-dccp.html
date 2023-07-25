@@ -2734,7 +2734,11 @@ for the path over which the suboption is received.<a href="#section-3.2.10-2" cl
 packet scheduling decisions (MP_PRIO=3), if the path has been established and 
 added to an existing MP-DCCP connection. At least one path should have a 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
-connection. MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
+connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
+value when an MP-DCCP connection enters a state where all paths remain with an
+MP_PRIO value of zero. This helps an MP-DCCP connection to continue to be used 
+scheduling in case the multipath scheduler strictly respects MP_PRIO value 0.
+MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).<a href="#section-3.2.10-7" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-8">The presence of a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
