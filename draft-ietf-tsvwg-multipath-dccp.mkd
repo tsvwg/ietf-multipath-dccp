@@ -1180,7 +1180,7 @@ Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt terminatio
 ### Experimental MP-DCCP Sub-Option MP_EXP for private use {#MP_EXP}
 
 This section reserves a MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of MP-DCCP protocol. This
-option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only at this stage. MP_OPT 
+option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only. MP_OPT 
 feature number 11 is specified with an exemplary description as below:
 
 ~~~~
