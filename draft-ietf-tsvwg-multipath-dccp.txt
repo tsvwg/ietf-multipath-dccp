@@ -2482,6 +2482,8 @@ Internet-Draft               Multipath DCCP                    July 2023
 
 Appendix A.  Differences from Multipath TCP
 
+   This appendix is Informative.
+
    Multipath DCCP is similar to Multipath TCP [RFC8684], in that it
    extends the related basic DCCP transport protocol [RFC4340] with
    multipath capabilities in the same way as Multipath TCP extends TCP
@@ -2499,8 +2501,6 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
 
 
 
