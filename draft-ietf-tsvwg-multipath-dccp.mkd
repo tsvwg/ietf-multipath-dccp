@@ -440,12 +440,12 @@ DCCP endpoints negotiates the Multipath Capable Feature to decide whether multip
 
 Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and has length of one-byte.
 The leftmost four bits are used to specify a compatible version of the
-MP-DCCP implementation (0000 for this specification). The following four bits are unassigned in version 0. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
+MP-DCCP implementation (THIS-VER for this specification). The following four bits are unassigned in version THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
     0  1  2  3   4  5  6  7
    +-----------+------------+
-   |  Version  | Unassigned |
+   | THIS-VERN | Unassigned |
    +-----------+------------+
 ~~~~
 {: #ref-mp-capable-format title='Format of the Multipath Capable feature'}
@@ -1579,10 +1579,10 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
-   |  Version  | Description | Specification  |
+   |  Version  | Value | Specification  |
    |:---------:|:-----------:|:--------------:|
-   |   0000    |   Version 0 | [ThisDocument] |
-   |0001 - 1111|  Unassigned |                |
+   | THIS-VER  |  Suggested 0000 | [ThisDocument] |
+   | Unassigned| 0001 - 1111     |      |
 {:#ref-add-version-list title='MP-DCCP Versions Registry'}
 
 Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
@@ -1613,7 +1613,7 @@ Future MP-DCCP sub-options with MP_OPT>11 are assigned from this registry using 
 
 In addition IANA is requested to assign a new DCCP Reset Code value THIS-RESET-CODE (13 suggested) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this THIS-VER of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Value | Key Type             | Name or Meaning                  | Reference  |
