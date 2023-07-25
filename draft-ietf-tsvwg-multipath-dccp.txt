@@ -1502,10 +1502,10 @@ Internet-Draft               Multipath DCCP                    July 2023
    procedure as described in [RFC4340] MUST be initiated using MP_CLOSE
    in the initial packet (either a DCCP-CloseReq or a DCCP-Close).  In
    the case where a DCCP-CloseReq is used, the following DCCP-Close MUST
-   carry the MP_CLOSE as well.  At the initiator of the DCCP-CloseReq
-   all sockets, including the MP-DCCP connection socket, transition to
+   carry the MP_CLOSE as well to avoid keeping a state in the sender of
+   the DCCP-CloseReq.  At the initiator of the DCCP-CloseReq all
+   sockets, including the MP-DCCP connection socket, transition to
    CLOSEREQ state.  To protect unauthorized shutdown of a multi-path
-   connection, the selected Key Data of the peer host during the
 
 
 
@@ -1514,6 +1514,7 @@ Amend, et al.            Expires 6 January 2024                [Page 27]
 Internet-Draft               Multipath DCCP                    July 2023
 
 
+   connection, the selected Key Data of the peer host during the
    handshaking procedure MUST be carried by the MP_CLOSE option and
    validated by the peer host.  Note, Key Data is different between
    MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
@@ -1544,8 +1545,8 @@ Internet-Draft               Multipath DCCP                    July 2023
    experimental additional feature for improving and optimization of MP-
    DCCP protocol.  This option may be applicable to specific
    environments or scenarios according to potential new requirements and
-   meant for private use only at this stage.  MP_OPT feature number 11
-   is specified with an exemplary description as below:
+   meant for private use only.  MP_OPT feature number 11 is specified
+   with an exemplary description as below:
 
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1560,7 +1561,6 @@ Internet-Draft               Multipath DCCP                    July 2023
 
    Details as length and type of data remain to be defined according to
    the foreseen use by the experimenters.
-
 
 
 
