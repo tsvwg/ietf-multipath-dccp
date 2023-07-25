@@ -1719,7 +1719,7 @@ when to add or remove subflows are outside the scope of this document.<a href="#
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-mp-dccp-protocol" class="section-name selfRef">MP-DCCP Protocol</a>
       </h2>
 <p id="section-3-1">The DCCP protocol feature list (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 6.4) are
-enriched with a new Multipath related feature with Feature number 10, as
+enriched with a new Multipath related feature with Feature number THIS-FEATURE, as
 shown in <a href="#ref-feature-list" class="auto internal xref">Table 1</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <span id="name-multipath-feature"></span><div id="ref-feature-list">
 <table class="center" id="table-1">
@@ -1738,7 +1738,7 @@ shown in <a href="#ref-feature-list" class="auto internal xref">Table 1</a>.<a h
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">10</td>
+            <td class="text-center" rowspan="1" colspan="1">THIS-FEATURE</td>
             <td class="text-left" rowspan="1" colspan="1">Multipath Capable</td>
             <td class="text-center" rowspan="1" colspan="1">SP</td>
             <td class="text-center" rowspan="1" colspan="1">0</td>
@@ -1800,16 +1800,16 @@ shown in <a href="#ref-option-list" class="auto internal xref">Table 2</a>.<a hr
 <a href="#section-3.1" class="section-number selfRef">3.1. </a><a href="#name-multipath-capable-feature" class="section-name selfRef">Multipath Capable Feature</a>
         </h3>
 <p id="section-3.1-1">DCCP endpoints negotiates the Multipath Capable Feature to decide whether multipath extensions can be enabled for a DCCP connection.<a href="#section-3.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.1-2">Multipath Capable feature (MP_CAPABLE) has feature number 10 and has length of one-byte.
+<p id="section-3.1-2">Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and has length of one-byte.
 The leftmost four bits are used to specify a compatible version of the
-MP-DCCP implementation (0000 for this specification). The following four bits are unassigned in version 0. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
+MP-DCCP implementation (THIS-VER for this specification). The following four bits are unassigned in version THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.<a href="#section-3.1-2" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-multipath-cap"></span><div id="ref-mp-capable-format">
 <figure id="figure-3">
           <div class="alignLeft art-text artwork" id="section-3.1-3.1">
 <pre>
     0  1  2  3   4  5  6  7
    +-----------+------------+
-   |  Version  | Unassigned |
+   | THIS-VERN | Unassigned |
    +-----------+------------+
 </pre>
 </div>
@@ -1830,7 +1830,7 @@ an MP-DCCP version to be used from the Client list, followed by its own
 supported version(s) ordered by preference. Any subflow addition to an existing MP-DCCP connection MUST use the same
 version negotiated for the first subflow.<a href="#section-3.1-7" class="pilcrow">¶</a></p>
 <p id="section-3.1-8">If no agreement is found, the Server MUST reply with an empty Confirm L option
-with feature number 10 and no values.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
+with feature number THIS-FEATURE and no values.<a href="#section-3.1-8" class="pilcrow">¶</a></p>
 <p id="section-3.1-9">An example of successful version negotiation is shown hereafter:<a href="#section-3.1-9" class="pilcrow">¶</a></p>
 <span id="name-example-of-mp-dccp-support-"></span><div id="ref-mp-capable-example">
 <figure id="figure-4">
@@ -2196,9 +2196,9 @@ this is done via the MP_FAST_CLOSE suboption.<a href="#section-3.2.3-1" class="p
 <a href="#name-format-of-the-mp_fast_close" class="selfRef">Format of the MP_FAST_CLOSE Suboption</a>
             </figcaption></figure>
 </div>
-<p id="section-3.2.3-3">For being effective, the MP_FAST_CLOSE suboption MUST be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code 13. To protect unauthorized shutdown of a multipath DCCP connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-3">For being effective, the MP_FAST_CLOSE suboption MUST be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code THIS-RESET-CODE. To protect unauthorized shutdown of a multipath DCCP connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option.<a href="#section-3.2.3-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-4">With completion of this step, the initiating host can tear down the subflows and the multipath DCCP connection immediately terminates.<a href="#section-3.2.3-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.3-5">Upon reception of the MP_FAST_CLOSE and successful validation of the Key Data at the peer host, a DCCP Reset packet is replied on all subflows to the initiating host with Reset Code 13. The peer host can now close the whole MP-DCCP connection (i.e., it transitions the connection state directly to CLOSED).<a href="#section-3.2.3-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.3-5">Upon reception of the MP_FAST_CLOSE and successful validation of the Key Data at the peer host, a DCCP Reset packet is replied on all subflows to the initiating host with Reset Code THIS-RESET-CODE. The peer host can now close the whole MP-DCCP connection (i.e., it transitions the connection state directly to CLOSED).<a href="#section-3.2.3-5" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_KEY">
@@ -2558,7 +2558,7 @@ MAY discard incoming address advertisements, for example, for
 avoiding the required mapping state, or because advertised addresses
 are of no use to it (for example, IPv6 addresses when it has IPv4
 only).  Therefore, a host MUST treat address advertisements as soft
-state, and it MAY choose to refresh advertisements periodically.<a href="#section-3.2.8-8" class="pilcrow">¶</a></p>
+state, and the sender MAY choose to refresh advertisements periodically.<a href="#section-3.2.8-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-9">Due to the proliferation of NATs, it is reasonably likely that one
 host may attempt to advertise private addresses.  It is not
 desirable to prohibit this, since there may be cases where both hosts
@@ -3262,7 +3262,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">10 (suggested)</td>
+            <td class="text-center" rowspan="1" colspan="1">THIS-FEATURE (10 suggested)</td>
             <td class="text-center" rowspan="1" colspan="1">MP-DCCP capability feature</td>
             <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
           </tr>
@@ -3279,26 +3279,26 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
 <thead>
           <tr>
             <th class="text-center" rowspan="1" colspan="1">Version</th>
-            <th class="text-center" rowspan="1" colspan="1">Description</th>
+            <th class="text-center" rowspan="1" colspan="1">Value</th>
             <th class="text-center" rowspan="1" colspan="1">Specification</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">0000</td>
-            <td class="text-center" rowspan="1" colspan="1">Version 0</td>
+            <td class="text-center" rowspan="1" colspan="1">THIS-VER</td>
+            <td class="text-center" rowspan="1" colspan="1">Suggested 0000</td>
             <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">0001 - 1111</td>
             <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
+            <td class="text-center" rowspan="1" colspan="1">0001 - 1111</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
         </tbody>
       </table>
 </div>
 <p id="section-8-6">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-6" class="pilcrow">¶</a></p>
-<p id="section-8-7">This document requests IANA to assign a new DCCP protocol option of type=46 as described in Section 3.2.<a href="#section-8-7" class="pilcrow">¶</a></p>
+<p id="section-8-7">This document requests IANA to assign a new DCCP protocol option THIS-DCCP-OPTION (suggested type=46) as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>. In this document, THIS-DCCP-OPTION is replaced by 46 for better readability.<a href="#section-8-7" class="pilcrow">¶</a></p>
 <p id="section-8-8">IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'MP-DCCP Suboptions' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-8" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-suboptions-registry"></span><div id="ref-add-proto-opt-list">
 <table class="center" id="table-8">
@@ -3429,8 +3429,8 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
       </table>
 </div>
 <p id="section-8-10">Future MP-DCCP sub-options with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-10" class="pilcrow">¶</a></p>
-<p id="section-8-11">In addition IANA is requested to assign a new DCCP Reset Code value 13 (or TBD) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-11" class="pilcrow">¶</a></p>
-<p id="section-8-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+<p id="section-8-11">In addition IANA is requested to assign a new DCCP Reset Code value THIS-RESET-CODE (13 suggested) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-11" class="pilcrow">¶</a></p>
+<p id="section-8-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this THIS-VER of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-mp_key-registry-wit"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
