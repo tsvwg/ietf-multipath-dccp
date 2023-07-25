@@ -68,6 +68,9 @@ author:
 normative:
   RFC2119:
   RFC4340:
+  DCCP.Parameter:
+    title: IANA Datagram Congestion Control Protocol (DCCP) Parameters
+    target: https://www.iana.org/assignments/dccp-parameters/dccp-parameters.xhtml
 
 informative:
   I-D.amend-tsvwg-multipath-framework-mpdccp:
@@ -1334,11 +1337,10 @@ Address A1    Address A2                               Address B1
 ## Close a MP-DCCP connection {#closing}
 
 When a host wants to close an existing subflow but not the whole MP-DCCP
-connection, it initiates the regular DCCP connection termination procedure 
-as described in {{RFC4340}}, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
+connection, it MUST initiate the regular DCCP connection termination procedure 
+as described in Section 5.6 of {{RFC4340}}, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
-e.g., during subflow establishment, it is RECOMMENDED to use an appropriate DCCP reset code as specified in
-Table 2 of {{RFC4340}}. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
+e.g., during subflow establishment, it MUST use an appropriate DCCP reset code as specified in IANA {{DCCP.Parameter}} for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
 is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
