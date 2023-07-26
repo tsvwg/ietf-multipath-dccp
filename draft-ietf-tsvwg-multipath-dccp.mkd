@@ -1397,8 +1397,7 @@ for the initial connection establishment, and addition of subsequent subflows. I
 protocol version negotiation is not successful during the initial connection establishment,
 MP-DCCP connection will fallback to regular DCCP. 
 
-Similar procedure MUST be applied if the MP_KEY {{MP_KEY}} Key Type cannot be negotiated,
-a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.
+The fallback procedure to regular DCCP MUST be also applied if the MP_KEY {{MP_KEY}} Key Type cannot be negotiated.
 
 If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
@@ -1406,6 +1405,9 @@ This is especially the case if a different MP_CAPABLE version than the originall
 version is used. Reception of a non-verifiable MP_HMAC ({{MP_HMAC}}) or an invalid
 MP_JOIN Path Token {{MP_JOIN}} during flow establishment MUST cause the
 subflow to be closed.
+
+The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong Key-A/Key-B is
+received or MP_KEY option is malformed.
 
 Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of {{RFC4340}}. A checksum will 
