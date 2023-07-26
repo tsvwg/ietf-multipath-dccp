@@ -2798,7 +2798,7 @@ feature number 11 is specified with an exemplary description as below:<a href="#
 <a href="#name-format-of-the-mp_exp-subopt" class="selfRef">Format of the MP_EXP Suboption</a>
             </figcaption></figure>
 </div>
-<p id="section-3.2.12-3">Details as length and type of data remain to be defined according to the foreseen use by the experimenters.<a href="#section-3.2.12-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.12-3">The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 Bytes.<a href="#section-3.2.12-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3045,22 +3045,23 @@ protocol version to use during the Multipath Capable feature negotiation. This i
 for the initial connection establishment, and addition of subsequent subflows. If
 protocol version negotiation is not successful during the initial connection establishment,
 MP-DCCP connection will fallback to regular DCCP.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
-<p id="section-3.6-4">Similar procedure MUST be applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated,
-a final ACK carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option is malformed.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+<p id="section-3.6-4">The fallback procedure to regular DCCP MUST be also applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
 <p id="section-3.6-5">If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Reception of a non-verifiable MP_HMAC (<a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>) or an invalid
 MP_JOIN Path Token <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a> during flow establishment MUST cause the
 subflow to be closed.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
-<p id="section-3.6-6">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
+<p id="section-3.6-6">The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong Key-A/Key-B is
+received or MP_KEY option is malformed.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
+<p id="section-3.6-7">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. A checksum will 
 fail if the data has been changed in any way. All data from the start of the segment that
 failed the checksum onwards cannot be considered trustworthy. DCCP defines that if 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
 Corrupt). If data is dropped due to corruption for an MP-DCCP connection, the affected
-subflow MAY be closed.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
+subflow MAY be closed.<a href="#section-3.6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="congestion-control-considerations">

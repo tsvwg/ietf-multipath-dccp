@@ -1559,8 +1559,8 @@ Internet-Draft               Multipath DCCP                    July 2023
 
                  Figure 20: Format of the MP_EXP Suboption
 
-   Details as length and type of data remain to be defined according to
-   the foreseen use by the experimenters.
+   The Data field can carry any data according to the foreseen use by
+   the experimenters with a maximum length of 252 Bytes.
 
 
 
@@ -1850,9 +1850,8 @@ Amend, et al.            Expires 6 January 2024                [Page 33]
 Internet-Draft               Multipath DCCP                    July 2023
 
 
-   Similar procedure MUST be applied if the MP_KEY Section 3.2.4 Key
-   Type cannot be negotiated, a final ACK carrying MP_KEY with wrong
-   Key-A/Key-B is received or MP_KEY option is malformed.
+   The fallback procedure to regular DCCP MUST be also applied if the
+   MP_KEY Section 3.2.4 Key Type cannot be negotiated.
 
    If a subflow attempts to join an existing MP-DCCP connection, but MP-
    DCCP options or MP_CAPABLE feature are not present or are faulty in
@@ -1862,6 +1861,10 @@ Internet-Draft               Multipath DCCP                    July 2023
    MP_HMAC (Section 3.2.6) or an invalid MP_JOIN Path Token
    Section 3.2.2 during flow establishment MUST cause the subflow to be
    closed.
+
+   The subflow closing procedure MUST be also applied if a final ACK
+   carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option
+   is malformed.
 
    Another relevant case is when payload data is modified by
    middleboxes.  DCCP uses checksum to protect the data, as described in
@@ -1890,9 +1893,6 @@ Internet-Draft               Multipath DCCP                    July 2023
    allow the application to discover the current MPS.  This reflects the
    current supported largest size for the data stream that can be used
    across the set of all active MP-DCCP subflows.
-
-
-
 
 
 
