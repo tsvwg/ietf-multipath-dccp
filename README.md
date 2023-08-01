@@ -8,7 +8,7 @@ This is work in progress and uses "xml2rfc" v3 vocabulary. Github workflow proce
 
 Please ensure that the CI tests continue to succeed everytime you submit a pull request.
 
-Get latest `.txt` and `.html` view from `markusa/ietf-multipath-dccp` `master`branch
+Get latest `.txt` and `.html` view from `markusa/ietf-multipath-dccp` `master` branch
 
 **`.txt`**
 [ietf-multipath-dccp.txt](https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
