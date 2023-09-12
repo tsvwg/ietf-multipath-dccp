@@ -742,6 +742,10 @@ Plain Text
 ECDHE-SHA256-C25519
 : Public Key Material is exchanged via ECDHE key exchange with SHA256 and
   Curve 25519 to generate the derived key (d-key) from the shared secret.
+  The full potential of ECDHE use is realized when it is combined with peer
+  authentication technologies to thwart men-in-the-middle attacks. This can
+  be achieved, for example, with separate use and verification of certificates
+  issued by a certificate authority.
 {: vspace='0'}
 
 
