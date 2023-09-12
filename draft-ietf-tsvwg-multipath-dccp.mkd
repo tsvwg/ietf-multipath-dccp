@@ -548,8 +548,8 @@ until a MP_CONFIRM is received or confirmation of options is identified outdated
 receiving host is not the subject of MP_CONFIRM.
 
 As multipath suboptions could arrive out-of-order, suboptions defined in {{ref-mp-option-confirm}}
-MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows suboptions to be identified with obsolete datasets that would otherwise conflict with newer datasets. In case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
-suboption is detected at the receiver if a previous suboption referring to the same dataset contained a higher sequence number
+MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows suboptions to be identified with obsolete information that would otherwise conflict with related newer information provided by the very last sent packet. In case of MP_ADDADDR or MP_REMOVEADDR related information are identified based on AddressID, whereas the related information for MP_PRIO is identified by the subflow in use. An outdated
+suboption is detected at the receiver if a previous suboption referring to the same related information contained a higher sequence number
 carried by MP_SEQ. AN MP_CONFIRM MAY be generated for suboptions that are identified outdated.
 
 Similarly an MP_CONFIRM could arrive out of order. To ensure that the most recent suboption is confirmed the associated
