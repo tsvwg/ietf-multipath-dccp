@@ -905,7 +905,7 @@ port numbers) on which a host can be reached. This option can be used at any
 time during an existing DCCP connection, when the sender wishes to
 enable multiple paths and/or when additional paths become available.
 Multiple instances of this suboption within a packet advertise simultaneously
-new addresses.
+new addresses. 
 
 Length is variable depending on the address family (IPv4 or IPv6) and whether a port number is
 used. This field is in range between 8 and 22 bytes.
@@ -957,7 +957,7 @@ in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
 {: #ref-MP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
  
 Every address has an Address ID that can be used for uniquely
-identifying the address within a connection for address removal. The
+identifying the address within a connection for address removal. Each host maintains a list of unique Address IDs and it manages these as it wishes. The
 Address ID is also used to identify MP_JOIN options (see {{MP_JOIN}})
 relating to the same address, even when address translators are in use.
 The Address ID MUST uniquely identify the address for the sender of the
