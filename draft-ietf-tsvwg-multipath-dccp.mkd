@@ -1746,7 +1746,7 @@ different DCCP subflows are routed across paths with different latencies.
 In theory, applications using DCCP are aware that packet reordering could 
 occur, because DCCP does not provide mechanisms to restore the original packet order.
 
-In contrats, the receiver processing for MPTCP adopted a rigid
+In contrast to TCP, the receiver processing for MPTCP adopted a rigid
 "just wait" approach, because TCP guarantees reliable in-order delivery.
 
 
