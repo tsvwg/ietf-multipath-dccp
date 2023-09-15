@@ -50,7 +50,7 @@ author:
  -
   ins: V. Rakocevic
   name: Veselin Rakocevic
-  org: City University of London
+  org: City, University of London
   street: Northampton Square
   city: London
   country: United Kingdom
@@ -168,17 +168,16 @@ simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
 experience through higher throughput and improved resilience to
 network failures.
-Use cases for a Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
-a cellular and a Wireless Local Area (WLAN) networks
-or a cellular and a fixed access networks. Compared to existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic (e.g., UDP or plain IP).  More details on potential use cases are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
-All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
+Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
+a cellular and a Wireless Local Area (WLAN) network
+or a cellular and a fixed access network. Compared to the existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
+traffic (e.g., UDP or plain IP).  
 
 This document specifies a set of extensions to
 DCCP to support multipath operations.  Multipath DCCP provides 
 the ability to simultaneously use multiple
 paths between peers.  The protocol offers
-the same type of service to applications as DCCP and it provides the
+the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously.
 
@@ -220,7 +219,7 @@ In the following, the term subflow refers to DCCP subflows transmitted
 via different paths (4-tuple of source and destination address/port
 pairs), not to be mixed up with the "application sub-flows" mentioned in
 Section 17.2 of {{RFC4340}}.
-Application subflows are differing content-wise
+Application subflows differ content-wise
 by source and destination port per application as, for example, enabled
 by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
 can be multiplexed over a single DCCP connection. For the sake of consistency
@@ -234,6 +233,9 @@ As pointed out in {{I-D.amend-tsvwg-multipath-framework-mpdccp}} the proposed en
 lightweight DCCP flow headers is more appropriate for unreliable 
 IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
 Such considerations are not detailed in the present specification. 
+
+More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -265,7 +267,7 @@ for multipath transport or are defined in the context of MP-DCCP,
 similar to {{RFC8684}}, as follows:
  
 Path: A sequence of links between a sender and a receiver, defined in
-this context by a 4-tuple of source and destination address/ port pairs.
+this context by a 4-tuple of source and destination address/port pairs.
 
 Subflow: A flow of DCCP segments operating over an individual path,
 which forms part of a larger MP-DCCP connection. A subflow is started
@@ -283,7 +285,7 @@ Host: An end host operating an MP-DCCP implementation, and either
 initiating or accepting an MP-DCCP connection. 
 
 In addition to these
-terms, within framework of MP-DCCP the interpretation of, and effect on,
+terms, within the framework of MP-DCCP, the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in {{protocol}}.
 
 
@@ -312,7 +314,7 @@ Address A1    Address A2             Address B1    Address B2
 {: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP Usage Scenario'}
  
 
-   *  An MP-DCCP connection begins with a 4-way handshaking procedure, between 
+   *  An MP-DCCP connection begins with a 4-way handshaking procedure between 
       two hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}},
       an MP-DCCP connection is established between addresses A1 and B1 on Hosts
       A and B, respectively. It should be noted that MP-DCCP does not require the presence of 
@@ -371,7 +373,7 @@ described in detail in {{protocol}}.
 As a high level overview of the MP-DCCP operation, the data 
 stream from a DCCP application is split 
 by MP-DCCP operation into one or more subflows which can be 
-transmitted via different also physically isolated paths.
+transmitted via different - also physically isolated - paths.
 The corresponding control information allows the receiver to optionally 
 re-assemble and deliver the received data in the originally transmitted order to the 
 recipient application. This may be necessary because DCCP does not guarantee in-order delivery.
@@ -544,11 +546,11 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
 {: #ref-mp-confirm-format title='Format of the MP_CONFIRM suboption'}
 
 Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until a MP_CONFIRM is received or confirmation of options is identified outdated. The further processing of the multipath options in the
+until an MP_CONFIRM is received or confirmation of options is identified outdated. The further processing of the multipath options in the
 receiving host is not the subject of MP_CONFIRM.
 
-As multipath suboptions could arrive out-of-order, suboptions defined in {{ref-mp-option-confirm}}
-MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows suboptions to be identified with obsolete datasets that would otherwise conflict with newer datasets. In case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
+As multipath suboptions could arrive out of order, suboptions defined in {{ref-mp-option-confirm}}
+MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows suboptions to be identified with obsolete datasets that would otherwise conflict with newer datasets. In the case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
 suboption is detected at the receiver if a previous suboption referring to the same dataset contained a higher sequence number
 carried by MP_SEQ. AN MP_CONFIRM MAY be generated for suboptions that are identified outdated.
 
@@ -577,8 +579,8 @@ received in short succession. In this case, the structure described above is con
 
 An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm-good}}. The host A sends a 
 DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
-this instance (but could be any path) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
-together with the associated option (MP_PRIO)
+this instance (any path can be used) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
+together with the associated option (MP_PRIO).
 
 ~~~~
           Host A                                     Host B 
@@ -596,7 +598,7 @@ Address A1    Address A2                     Address B1    Address B2
 {: #ref-mp-dccp-confirm-good title='Example MP-DCCP CONFIRM procedure'}
     
 A second example to illustrate the same MP-DCCP confirm procedure but where an out of date option is also delivered is shown in ({{ref-mp-dccp-confirm-outdated}}.
-Here, a first DCCP-Data is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues a second DCCP-Data with option MP_PRIO
+Here, the first DCCP-Data is sent from Host A to Host B with option MP_PRIO set to 4. Host A subsequently issues the second DCCP-Data with option MP_PRIO
 set to 1. The delivery of the first MP_PRIO is delayed in the network between Host A and Host B and arrives after the second MP_PRIO. Host B
 ignores this second MP_PRIO as the associated sequence number is earlier than the first. Host B sends a DCCP-Ack confirming receipt of the MP_PRIO(1) with sequence number 2.
 
@@ -671,7 +673,7 @@ The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
 Together with the Token, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in {{handshaking}}.
 
-If the path token can not be verified by the receiving host during a handshake negotiation, 
+If the path token cannot be verified by the receiving host during a handshake negotiation, 
 the new subflow MUST be closed, as specified in {{fallback}}.
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
@@ -695,7 +697,7 @@ this is done via the MP_FAST_CLOSE suboption.
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
-For being effective, the MP_FAST_CLOSE suboption MUST be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code THIS-RESET-CODE. To protect unauthorized shutdown of a multipath DCCP connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option. 
+To be effective, the MP_FAST_CLOSE suboption MUST be sent from an initiating host on all subflows as part of a DCCP-Reset packet with Reset Code THIS-RESET-CODE. To protect unauthorized shutdown of a multipath DCCP connection, the selected Key Data of the peer host during the handshaking procedure is carried by the MP_FAST_CLOSE option. 
 
 With completion of this step, the initiating host can tear down the subflows and the multipath DCCP connection immediately terminates.
 
@@ -818,10 +820,10 @@ Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
 option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
 results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
-first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 with the
+first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
 MP_ADDADDR suboption.
 
-If the HMAC can not be validated by a receiving host, the subsequent handling depends
+If the HMAC cannot be validated by a receiving host, the subsequent handling depends
 on which suboption was being authenticated. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see {{fallback}})
@@ -876,8 +878,8 @@ Age
    exists, e.g., when initialized, the value is 0.
 {: vspace='0'}
 
-In {{ref-MP_RTT_example}} an exemplary flow shows the exchange of path individual 
-RTT information with RTT1 pointing to a first path and RTT2 to a second path. Those
+In {{ref-MP_RTT_example}} an example flow shows the exchange of path individual 
+RTT information, with RTT1 pointing to the first path and RTT2 to the second path. Those
 RTT values might be extracted from the sender's Congestion Control procedure and
 carried to the receiving host using MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
@@ -921,7 +923,7 @@ port is specified, the receiving peer MUST assume that any attempt to
 connect to the specified address uses the port already used by the
 subflow on which the MP_ADDADDR signal was sent.
 
-Along with the MP_ADDADDR option a MP_HMAC option MUST be sent for
+Along with the MP_ADDADDR option an MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in {{MP_HMAC}}. In the same way as for MP_JOIN,
@@ -929,8 +931,8 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID, IP address, and port that precede the HMAC in the
-MP_ADDADDR option.  If the port is not present in the MP_ADDADDR option,
+the Address ID, IP address, and port number that precede the HMAC in the
+MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
 the HMAC message will nevertheless include 2 octets of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
 injecting MP_ADDADDR signals in an attempt to hijack a connection.
@@ -939,7 +941,7 @@ address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
-The presence of a MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
+The presence of an MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
 in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
 
 ~~~~
@@ -956,8 +958,8 @@ in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
 ~~~~
 {: #ref-MP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
  
-Every address has an Address ID that can be used for uniquely
-identifying the address within a connection for address removal. The
+Every address has an Address ID that can be used to uniquely
+identify the address within a connection for address removal. The
 Address ID is also used to identify MP_JOIN options (see {{MP_JOIN}})
 relating to the same address, even when address translators are in use.
 The Address ID MUST uniquely identify the address for the sender of the
@@ -968,10 +970,10 @@ All Address IDs learned via either MP_JOIN or MP_ADDADDR SHOULD be stored
 by the receiver in a data structure that gathers all the
 Address-ID-to-address mappings for a connection (identified by a token
 pair). In this way, there is a stored mapping between the Address ID,
-observed source address, and token pair for future processing of control
+the observed source address, and the token pair for future processing of control
 information for a connection. Note that an implementation
-MAY discard incoming address advertisements, for example, for
-avoiding the required mapping state, or because advertised addresses
+MAY discard incoming address advertisements - for example, to
+avoid the required mapping state, or because advertised addresses
 are of no use to it (for example, IPv6 addresses when it has IPv4
 only).  Therefore, a host MUST treat address advertisements as soft
 state, and the sender MAY choose to refresh advertisements periodically.
@@ -980,7 +982,7 @@ Due to the proliferation of NATs, it is reasonably likely that one
 host may attempt to advertise private addresses.  It is not
 desirable to prohibit this, since there may be cases where both hosts
 have additional interfaces on the same private network. A host
-MAY advertise a private addresses. The MP_JOIN handshake to
+MAY advertise private addresses. The MP_JOIN handshake to
 create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
 security risks.  The MP_JOIN message contains a 32-bit token that
 uniquely identifies the connection to the receiving host. If the
@@ -1054,9 +1056,9 @@ The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 information is ensured. To avoid inconsistent states, it is recommended to
 release the sender address ID only after MP_REMOVEADDR has been confirmed. 
 
-The sending and receipt of this message SHOULD trigger the closing procedure
-described in {{RFC4340}} between client and server, respectively on the affected
-subflow(s) (if possible), as a courtesy to cleaning up middlebox state, before
+The sending and receiving of this message SHOULD trigger the closing procedure
+described in {{RFC4340}} between the client and the server, respectively, on the affected
+subflow(s) (if possible), as a courtesy to clean up the middlebox state, before
 cleaning up any local state.
 
 Address removal is done by Address ID to allow the use of NATs and other
@@ -1089,8 +1091,8 @@ wish to signal such change in priority  to the peer.
 One reason for such behavior is due to the different costs involved in
 using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). Also, the priority of a path
-could change, for example when the mobile runs out
-of battery, the usage of only a single path may be the preferred choice
+could change, for example, when the mobile device runs out
+of battery, and then the usage of only a single path may be the preferred choice
 of the user. Therefore, the path priority SHOULD be considered as hints 
 for the packet scheduler when making decisions which path to use for 
 payload traffic.
@@ -1109,7 +1111,7 @@ for the path over which the suboption is received.
 ~~~~
 {: #ref-MP_PRIO title='Format of the MP_PRIO Suboption'}
 
-The following values are available for Prio field:
+The following values are available for the Prio field:
 
 *   0: Do not use. The path is not available.
 *   1: Standby: do not use this path for traffic scheduling, if another
@@ -1130,23 +1132,23 @@ The following values are available for Prio field:
 
 Example use cases include:
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
-   Wi-Fi will be used and Cellular only if the Wi-Fi path is congested or not
+   Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
    clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
-   will be used and Cellular only, if the Wi-Fi path is not available. 
+   will be used and Cellular will be used only if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
    both paths can be used when making packet scheduling decisions. 
 
-If not specified, the default behavior is, that a path can always be used for 
+If not specified, the default behavior is that a path can always be used for 
 packet scheduling decisions (MP_PRIO=3), if the path has been established and 
 added to an existing MP-DCCP connection. At least one path should have a 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
 connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
-MP_PRIO value of zero. This helps an MP-DCCP connection to continue to be used 
-scheduling in case the multipath scheduler strictly respects MP_PRIO value 0.
+MP_PRIO value of zero. This helps an MP-DCCP connection to continue to use 
+scheduling in the case the multipath scheduler strictly respects MP_PRIO value 0.
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see {{ref-mp-option-confirm}}).
 
@@ -1166,9 +1168,9 @@ in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 ~~~~
 {: #ref-MP_CLOSE title='Format of the MP_CLOSE Suboption'}
 
-An MP-DCCP connection can be gracefully closed by sending and MP_CLOSE to the peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well to avoid keeping a state in the sender of the DCCP-CloseReq. At the initiator of the DCCP-CloseReq all sockets, including the MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note, Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
+An MP-DCCP connection can be gracefully closed by sending and MP_CLOSE to the peer host. On all subflows, the regular termination procedure as described in {{RFC4340}} MUST be initiated using MP_CLOSE in the initial packet (either a DCCP-CloseReq or a DCCP-Close). In the case where a DCCP-CloseReq is used, the following DCCP-Close MUST carry the MP_CLOSE as well, to avoid keeping a state in the sender of the DCCP-CloseReq. At the initiator of the DCCP-CloseReq, all sockets, including the MP-DCCP connection socket, transition to CLOSEREQ state. To protect unauthorized shutdown of a multi-path connection, the selected Key Data of the peer host during the handshaking procedure MUST be carried by the MP_CLOSE option and validated by the peer host. Note that Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.
 
-On reception of a first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data, or due to a local decision, all subflows transition to the CLOSING state before transmitting a DCCP-Close carrying MP_CLOSE. In this case, the MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of the initial subflow used during handshake with MP_KEY option. If the initial subflow no longer exists, the state moves immediately to CLOSED.
+On reception of the first DCCP-CloseReq carrying an MP_CLOSE with valid Key Data, or due to a local decision, all subflows transition to the CLOSING state before transmitting a DCCP-Close carrying MP_CLOSE. In this case, the MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of the initial subflow used during handshake with MP_KEY option. If the initial subflow no longer exists, the state moves immediately to CLOSED.
 
 Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data at the peer host, all subflows, as well as the MP-DCCP connection socket, move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 MUST be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.
 
@@ -1179,8 +1181,8 @@ Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt terminatio
 
 ### Experimental MP-DCCP Sub-Option MP_EXP for private use {#MP_EXP}
 
-This section reserves a MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of MP-DCCP protocol. This
-option may be applicable to specific environments or scenarios according to potential new requirements and meant for private use only. MP_OPT 
+This section reserves an MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
+option may be applicable to specific environments or scenarios according to potential new requirements and is meant for private use only. MP_OPT 
 feature number 11 is specified with an exemplary description as below:
 
 ~~~~
@@ -1283,7 +1285,7 @@ When a host (Host A) wants to advertise the availability of a new path, it shoul
 shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
 * an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
 * the IP address of the new path (A2_IP)
-* A pair of octets specifying the port number associated with this IP address. The value of 00 here, indicates that the port number is the same
+* A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
 The following options MUST be included in a packet carrying MP_ADDADDR:
@@ -1338,7 +1340,7 @@ Address A1    Address A2                               Address B1
 {: #ref-mp-dccp-remove-address title='Example MP-DCCP REMOVEADDR procedure'}
 
 
-## Close a MP-DCCP connection {#closing}
+## Closing an MP-DCCP connection {#closing}
 
 When a host wants to close an existing subflow but not the whole MP-DCCP
 connection, it MUST initiate the regular DCCP connection termination procedure 
@@ -1444,7 +1446,7 @@ Path mobility is supported in the current Linux reference implementation {{multi
 
 ### Concurrent path usage
 Different to a path mobility strategy, the selection between MP-DCCP
-subflows is here a per-packet decision that is a part of the multipath
+subflows is here a per-packet decision that is part of the multipath
 scheduling process. This method would allow multiple subflows to be
 simultaneously used to aggregate the path resources to obtain higher
 connection throughput.
