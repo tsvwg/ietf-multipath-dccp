@@ -1491,7 +1491,6 @@ connection throughput.
 In this scenario, the selection of congestion control, per-packet scheduling
 and potential re-ordering method determines a concurrent path utilization
 strategy and result in a particular transport characteristic.
-
 A concurrent path usage method uses a scheduling design that could seek to 
 maximize reliability, throughput, minimizing latency, etc.
 
@@ -1509,8 +1508,8 @@ Multipath TCP such as Opportunistic Linked Increases Algorithm {{OLIA}}.
 
 The specification of scheduling for concurrent multipath and related the 
 congestion control algorithms and re-ordering methods for use in the general
-Internet are outside the scope of this document. If and when the IETF
-specifies a method for concurrent usage of multiple paths for use in the
+Internet are outside the scope of this document. If, and when, the IETF
+specifies a method for concurrent usage of multiple paths for the
 general Internet, the framework specified in this document could be used to 
 provide an IETF recommended method for MP-DCCP.
 
@@ -1527,7 +1526,7 @@ protocol for authentication. Together with Encryption of Header
 Extensions in SRTP, as provided by {{RFC6904}}, also integrity would
 be provided.
 
-As described in {{RFC4340}}, DCCP provides protection against hijacking
+DCCP {{RFC4340}} provides protection against hijacking
 and limits the potential impact of some denial-of-service attacks, but
 DCCP provides no inherent protection against an on-path attacker snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
@@ -1541,11 +1540,11 @@ following key security requirements to be fulfilled by MP-DCCP:
 * Provide replay protection, i.e., ensure that a request to add/remove a
   subflow is 'fresh'. 
 
-In order to achieve these goals, MP-DCCP includes a hash-based handshake
+To achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
-over the network. To ease demultiplexing while not giving away any
+over the network. To ease demultiplexing while not revealing
 cryptographic material, future subflows use a truncated cryptographic
 hash of this key as the connection identification "token". The keys are
 concatenated and used as keys for creating Hash-based Message
@@ -1559,13 +1558,13 @@ ends -- this ensures that the HMAC will never be the same on two handshakes.
 Guidance on generating random numbers suitable for use as keys is given
 in {{RFC4086}}. During normal operation, regular DCCP protection
 mechanisms (such as header checksum to protect DCCP headers against
-corruption) will provide the same level of protection against attacks on
+corruption) is designed to provide the same level of protection against attacks on
 individual DCCP subflows as exists for regular DCCP. 
 
 As discussed in {{MP_ADDADDR}}, a host may advertise its private
 addresses, but these might point to different hosts in the receiver's
-network.  The MP_JOIN handshake ({{MP_JOIN}}) will ensure that this
-does not succeed in setting up a subflow to the incorrect host.
+network.  The MP_JOIN handshake ({{MP_JOIN}}) is designed to ensure that this
+does not set up a subflow to the incorrect host.
 However, it could still create unwanted DCCP handshake traffic.  This
 feature of MP-DCCP could be a target for denial-of-service exploits,
 with malicious participants in MP-DCCP connections encouraging the
@@ -1580,16 +1579,15 @@ intrusion detection systems (IDSs), and others have to be considered for all
 extensions to standard protocols since otherwise unexpected reactions of
 middleboxes may hinder its deployment. DCCP already provides means to
 mitigate the potential impact of middleboxes, also in comparison to TCP (see
-{{RFC4043}}, Section 16). In case, however, both hosts are located behind a NAT or
+{{RFC4043}}, Section 16). When both hosts are located behind a NAT or
 firewall entity, specific measures have to be applied such as the {{RFC5596}}-specified
 simultaneous-open technique that update the (traditionally asymmetric)
 connection-establishment procedures for DCCP.  Further standardized technologies
-addressing NAT type middleboxes are covered by {{RFC5597}}.
+addressing middleboxes operating as NATs are provided in {{RFC5597}}.
 
 {{RFC6773}} specifies UDP Encapsulation for NAT Traversal of DCCP sessions,
 similar to other UDP encapsulations such as for SCTP {{RFC6951}}. Future
 specifications by the IETF could specify other methods for DCCP encapsulation.
-
 
 
 # Implementation
@@ -1601,7 +1599,7 @@ demonstrations of a laboratory setup have been executed and have been published 
 # Acknowledgments
 
 {{RFC6824}} and {{RFC8684}} defined Multipath TCP and provided important
-inputs for this specification
+inputs for this specification.
 
 The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
 
@@ -1609,7 +1607,7 @@ The authors gratefully acknowledge significant input into this document from Dir
 # IANA Considerations
 
 This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
-in accordance with {{RFC8126}}.  This document defines one new value to be added to the DCCP Feature Numbers registry and three new registries to be added to the DCCP registry group. 
+in accordance with {{RFC8126}}.  This document defines one new value which is requested to be allocated in the IANA DCCP Feature Numbers registry and three new registries to be allocated in the DCCP registry group. 
 
 This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
@@ -1621,7 +1619,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 |  THIS-FEATURE (10 suggested)  | MP-DCCP capability feature | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
-As outlined in sect. {{mp_capable}} the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
+Sect. {{mp_capable} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
    |  Version  | Value | Specification  |
@@ -1732,24 +1730,24 @@ congestion control.
 Therefore, the sender logic is not much different between MP-DCCP and
 MPTCP.
 
-The receiver side for MP-DCCP has to deal with the unreliable transport 
-character of DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}}) facilitates
+The receiver side for MP-DCCP has to deal with the unreliable delivery provided by 
+DCCP. The multipath sequence numbers included in MP-DCCP (see {{MP_SEQ}}) facilitates
 adding optional mechanisms for data stream packet reordering 
 at the receiver.  Information from the MP_RTT multipath option ({{MP_RTT}}), 
 DCCP path sequencing and the DCCP Timestamp Option provide further means 
 for advanced reordering approaches, e.g., as proposed in {{I-D.amend-iccrg-multipath-reordering}}.
 Such mechanisms do, however, not affect interoperability
 and are not part of the MP-DCCP protocol.  Many 
-applications that use unreliable transport protocols can also inherently deal 
-with out-of-sequence data (e.g., through adaptive audio and video buffers), 
-and so additional reordering support may not be necessary. The addition of optional 
-reordering mechanisms are most likely to be needed when the 
+applications that use unreliable transport protocols can also inherently process 
+out-of-sequence data (e.g., through adaptive audio and video buffers), 
+and so additional reordering support might not be necessary. The addition of optional 
+reordering mechanisms are likely to be needed when the 
 different DCCP subflows are routed across paths with different latencies. 
-In theory, applications using DCCP are aware that packet reordering might 
-happen, since DCCP has no mechanisms to prevent it.
+In theory, applications using DCCP are aware that packet reordering could 
+occur, because DCCP does not provide mechanisms to restore the original packet order.
 
-The receiving process for MPTCP is on the other hand a rigid
-"just wait" approach, since TCP guarantees reliable delivery.
+In contrats, the receiver processing for MPTCP adopted a rigid
+"just wait" approach, because TCP guarantees reliable in-order delivery.
 
 
 
