@@ -191,7 +191,7 @@ transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
 Multipath DCCP (MP-DCCP) provides a set of extensions to DCCP to
 enable a DCCP connection to simultaneously establish flow across multiple paths. This can be  beneficial to applications that transfer
-large amounts of data, by utilising the capacity/connectivity offered by 
+large amounts of data, by utilizing the capacity/connectivity offered by 
 multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability,
 which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
@@ -371,7 +371,7 @@ Address A1    Address A2             Address B1    Address B2
 
    *  MP-DCCP identifies multiple paths by the presence of multiple
       addresses/ports at hosts.  Combinations of these multiple addresses/ports
-      inidcate the additional paths.  In the example, other potential
+      indicate the additional paths.  In the example, other potential
       paths that could be set up are A1<->B2 and A2<->B2.  Although this
       additional subflow is shown as being initiated from A2, it could
       alternatively have been initiated from B1 or B2.
@@ -523,7 +523,7 @@ The fields used by the the multipath option are described in {{ref-mp-option-lis
 | 46  |       TBD     | >10              | Reserved for future MP suboptions.                   |
 {: #ref-mp-option-list title='MP_OPT Option Types'}
 
-Future MP suboptions could be defined in a later version or extension to this specifictaion.
+Future MP suboptions could be defined in a later version or extension to this specification.
 
 These operations are largely inspired by the signals defined in {{RFC8684}}. 
 
@@ -546,7 +546,7 @@ until a MP_CONFIRM is received or confirmation of options is identified outdated
 receiving host is not the subject of MP_CONFIRM.
 
 Multipath suboptions could arrive out-of-order, therefore suboptions defined in {{ref-mp-option-confirm}}
-MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows a receicre to identify whether
+MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows a receive to identify whether
 suboptions are associated with obsolete datasets that would otherwise conflict with newer datasets. In case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
 suboption is detected at the receiver if a previous suboption referring to the same dataset contained a higher sequence number
 in the MP_SEQ. AN MP_CONFIRM MAY be generated for suboptions that are identified as outdated.
@@ -733,7 +733,7 @@ The MP_KEY suboption is used to exchange key material between
 hosts for a given connection. 
 The Length varies between 12 and 68 Bytes for a single-key message, and up to
 110 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
-specifis the type of the following key data. 
+specifies the type of the following key data. 
 The set of key types are shown in {{ref-key-type-list}}.
 
 | Key  Type              | Key Length (Bytes) | Meaning                          |
@@ -892,7 +892,7 @@ Age
 An example of a flow showing  the exchange of path individual 
 RTT information is provides in
 {{ref-MP_RTT_example}}. 
-RTT1 referes to the first path and RTT2 to the second path. The
+RTT1 refers to the first path and RTT2 to the second path. The
 RTT values could be extracted from the sender's Congestion Control procedure and
 at the receiving host using the MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
@@ -926,7 +926,7 @@ new addresses.
 The Length is variable depending on the address family (IPv4 or IPv6) and whether a port number is
 used. This field is in range between 8 and 22 bytes.
 
-The final 2 octets, soptionally pecify the DCCP port number to
+The final 2 octets, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
@@ -1113,7 +1113,7 @@ signal such change in priority to the peer.
 This could be used when there are different costs for
 using different paths (e.g., WiFi is free while cellular has limit on
 volume, 5G has higher energy consumption). The priority of a path
-could also change, for example when a mobile hostr runs out
+could also change, for example, when a mobile host runs out
 of battery, the usage of only a single path may be the preferred choice
 of the user. 
 
