@@ -77,6 +77,7 @@ informative:
   I-D.lhwxz-hybrid-access-network-architecture:
   I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-iccrg-multipath-reordering:
+  I-D.liu-tsvwg-multipath-quic:
   RFC0793:
   RFC2104:
   RFC3711:
