@@ -158,7 +158,6 @@ Emerging networking experiments and technologies, ACM"
       ins: U. Upadhyay
     -
       ins: J.-Y. Le Boudec
-      
   MP-QUIC:
     title: "Multipath Extension for QUIC"
     date: "2023"
