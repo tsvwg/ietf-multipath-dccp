@@ -159,23 +159,6 @@ Emerging networking experiments and technologies, ACM"
       ins: U. Upadhyay
     -
       ins: J.-Y. Le Boudec
-  MP-QUIC:
-    title: "Multipath Extension for QUIC"
-    date: "2023"
-    seriesinfo: "draft-ietf-quic-multipath-05"
-    author:
-    -
-      ins: Y. Liu
-    -
-      ins: Y. Ma
-    -
-      ins: Q. D. Connick
-    -
-      ins: O. Bonaventure
-    -
-      ins: C. Huitema
-    -
-      ins: M. Kühlewind
 
 --- abstract
 
