@@ -236,7 +236,12 @@ lightweight DCCP flow headers is more appropriate for unreliable
 IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
 Such considerations are not detailed in the present specification. 
 
-Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of multiple paths for a single connection {{MP-QUIC}}. MP-QUIC is based on QUIC and leverages UDP as the underlying transport protocol, as does MP-DCCP. However, in contrast to MP-DCCP, MP-QUIC encrypts the traffic using TLS 1.3.. In contrast to MP-DCCP, MP-QUIC supports multiple streams. Using the datagram option, MP-QUIC does not provide in-ordered or reliable delivery, similar to MP-DCCP. 
+Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
+multiple paths for a single connection {{I-D.liu-tsvwg-multipath-quic}}. MP-QUIC is based on QUIC 
+and leverages UDP as the underlying transport protocol, as does MP-DCCP. 
+However, in contrast to MP-DCCP, MP-QUIC encrypts the traffic using TLS 1.3.. 
+In contrast to MP-DCCP, MP-QUIC supports multiple streams. 
+Using the datagram option, MP-QUIC does not provide in-ordered or reliable delivery, similar to MP-DCCP. 
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
