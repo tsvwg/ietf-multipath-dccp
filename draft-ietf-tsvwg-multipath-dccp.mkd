@@ -254,11 +254,6 @@ similar to {{RFC8684}}, as follows:
 Path: A sequence of links between a sender and a receiver, defined in
 this context by a 4-tuple of source and destination address/ port pairs.
 
-Subflow: A flow of DCCP segments operating over an individual path,
-which forms part of a larger MP-DCCP connection. A subflow is started
-and terminated similar to a regular (single-path) DCCP connection. The term subflow
-can also be used to refer to an MP-DCCP connection with a single path.
-
 (MP-DCCP) Connection: A set of one or more subflows, over which an
 application can communicate between two hosts. The MP-DCCP connection is
 exposed as single DCCP socket to the application.
