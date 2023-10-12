@@ -30,24 +30,24 @@ the same type of service to applications as DCCP and it provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.18.0" name="generator">
+<meta content="xml2rfc 3.18.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-10" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.18.0
-    Python 3.10.12
+  xml2rfc 3.18.1
+    Python 3.10.13
     ConfigArgParse 1.7
     google-i18n-address 3.1.0
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.10.0
+    platformdirs 3.11.0
     pycountry 22.3.5
     PyYAML 6.0.1
     requests 2.31.0
     setuptools 65.5.0
     six 1.16.0
-    wcwidth 0.2.6
+    wcwidth 0.2.8
 -->
 <link href="draft-ietf-tsvwg-multipath-dccp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -325,6 +325,9 @@ blockquote {
   border: 1px solid #ddd;
   border-radius: 3px;
   margin: 1em 0;
+}
+blockquote > *:last-child {
+  margin-bottom: 0;
 }
 cite {
   display: block;
@@ -1621,37 +1624,43 @@ Address A1    Address A2             Address B1    Address B2
           </figcaption></figure>
 </div>
 <ul class="normal">
-<li class="normal" id="section-1.3-3.1">An MP-DCCP connection begins with a 4-way handshaking procedure, between 
+<li class="normal" id="section-1.3-3.1">
+            <p id="section-1.3-3.1.1">An MP-DCCP connection begins with a 4-way handshaking procedure, between 
 two hosts as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a>. In <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a>,
 an MP-DCCP connection is established between addresses A1 and B1 on Hosts
 A and B, respectively. It should be noted that MP-DCCP does not require the presence of 
-more than one address in both peers.<a href="#section-1.3-3.1" class="pilcrow">¶</a>
+more than one address in both peers.<a href="#section-1.3-3.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-3.2">In case extra paths and corresponding addresses/ports are available, additional DCCP subflows are created on 
+          <li class="normal" id="section-1.3-3.2">
+            <p id="section-1.3-3.2.1">In case extra paths and corresponding addresses/ports are available, additional DCCP subflows are created on 
 these paths and are attached to the existing MP-DCCP session, which
 continues to appear as a single connection to the applications at both
 ends. The creation of an additional DCCP subflow is illustrated between Address A2
-on Host A and Address B1 on Host B.<a href="#section-1.3-3.2" class="pilcrow">¶</a>
+on Host A and Address B1 on Host B.<a href="#section-1.3-3.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-3.3">MP-DCCP identifies multiple paths by the presence of multiple
+          <li class="normal" id="section-1.3-3.3">
+            <p id="section-1.3-3.3.1">MP-DCCP identifies multiple paths by the presence of multiple
 addresses/ports at hosts.  Combinations of these multiple addresses/ports
 equate to the additional paths.  In the example, other potential
 paths that could be set up are A1&lt;-&gt;B2 and A2&lt;-&gt;B2.  Although this
 additional subflow is shown as being initiated from A2, it could
-equally have been initiated from B1 or B2.<a href="#section-1.3-3.3" class="pilcrow">¶</a>
+equally have been initiated from B1 or B2.<a href="#section-1.3-3.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-3.4">The discovery and setup of additional subflows will be achieved
+          <li class="normal" id="section-1.3-3.4">
+            <p id="section-1.3-3.4.1">The discovery and setup of additional subflows will be achieved
 through a path management method including the logic and details of the procedures for adding/removing subflows;
 this document describes supportive measures by which a host can initiate new subflows and signal available addresses 
 between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
-corresponding policy and the specifics of the implementation. In the same context, if any of the MP-DCCP peer hosts has a limit on the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host should be avoided and incoming subflow requests should be terminated.<a href="#section-1.3-3.4" class="pilcrow">¶</a>
+corresponding policy and the specifics of the implementation. In the same context, if any of the MP-DCCP peer hosts has a limit on the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host should be avoided and incoming subflow requests should be terminated.<a href="#section-1.3-3.4.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-3.5">MP-DCCP adds connection-level sequence numbers and exchange of
-Round-Trip Time (RTT) information to enable optional reordering features.<a href="#section-1.3-3.5" class="pilcrow">¶</a>
+          <li class="normal" id="section-1.3-3.5">
+            <p id="section-1.3-3.5.1">MP-DCCP adds connection-level sequence numbers and exchange of
+Round-Trip Time (RTT) information to enable optional reordering features.<a href="#section-1.3-3.5.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-1.3-3.6">Subflows are terminated as regular DCCP connections, as described
+          <li class="normal" id="section-1.3-3.6">
+            <p id="section-1.3-3.6.1">Subflows are terminated as regular DCCP connections, as described
 in (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 8.3). The MP-DCCP connection is terminated by a
-connection-level DCCP-CloseReq or DCCP-Close message.<a href="#section-1.3-3.6" class="pilcrow">¶</a>
+connection-level DCCP-CloseReq or DCCP-Close message.<a href="#section-1.3-3.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -1852,12 +1861,15 @@ with feature number THIS-FEATURE and no values.<a href="#section-3.1-8" class="p
           </figcaption></figure>
 </div>
 <ol start="1" type="1" class="normal type-1" id="section-3.1-11">
-<li id="section-3.1-11.1">The Client indicates support for both MP-DCCP versions 1 and 0, with a preference
-for version 1.<a href="#section-3.1-11.1" class="pilcrow">¶</a>
+<li id="section-3.1-11.1">
+            <p id="section-3.1-11.1.1">The Client indicates support for both MP-DCCP versions 1 and 0, with a preference
+for version 1.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-11.2">Server agrees on using MP-DCCP version 1, and supplies its own preference list.<a href="#section-3.1-11.2" class="pilcrow">¶</a>
+          <li id="section-3.1-11.2">
+            <p id="section-3.1-11.2.1">Server agrees on using MP-DCCP version 1, and supplies its own preference list.<a href="#section-3.1-11.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li id="section-3.1-11.3">MP-DCCP is then enabled between the Client and Server with version 1.<a href="#section-3.1-11.3" class="pilcrow">¶</a>
+          <li id="section-3.1-11.3">
+            <p id="section-3.1-11.3.1">MP-DCCP is then enabled between the Client and Server with version 1.<a href="#section-3.1-11.3.1" class="pilcrow">¶</a></p>
 </li>
         </ol>
 <p id="section-3.1-12">If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fallback to regular DCCP or MUST be closed. Further details are specified in <a href="#fallback" class="auto internal xref">Section 3.6</a><a href="#section-3.1-12" class="pilcrow">¶</a></p>
@@ -2328,6 +2340,15 @@ number (IDSN) SHOULD be set randomly <span>[<a href="#RFC4086" class="cite xref"
 <p id="section-3.2.5-3">The MP_SEQ number space is
 different from the path individual sequence number space and MUST be
 sent with all DCCP-Data and DCCP-DataACK packet.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.5-4">When the sequence number space is exhausted, the sequence number MUST
+be wrapped. <span>[<a href="#RFC7323" class="cite xref">RFC7323</a>]</span> provides guidance on selecting an appropriately
+sized sequence number space according to the maximum segment lifetime of
+TCP. 64 bits is the recommended size for TCP to avoid the sequence number
+space going through within the segment lifetime. For DCCP, the Maximum
+Segment Lifetime is the same as that of TCP as specified in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>,
+Section 3.4. Compared to TCP, the sequence number for DCCP is incremented
+per packet rather than per byte transmitted. For this reason, the 48 bits
+chosen in MP_SEQ are considered sufficiently large.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_HMAC">
@@ -2358,13 +2379,16 @@ to <span>[<a href="#RFC2104" class="cite xref">RFC2104</a>]</span> in combinatio
 <p id="section-3.2.6-3">The "Key" used for the HMAC computation is the derived key (d-key)
 described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, while the HMAC "Message" is a concatenation of<a href="#section-3.2.6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.6-4.1">MP_JOIN: The token and nonce of the MP_JOIN for which authentication
-   shall be performed.<a href="#section-3.2.6-4.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.2.6-4.1">
+              <p id="section-3.2.6-4.1.1">MP_JOIN: The token and nonce of the MP_JOIN for which authentication
+   shall be performed.<a href="#section-3.2.6-4.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.6-4.2">MP_ADDADDR: The Address ID with associated IP address
-   and if defined port, otherwise two octets of value 0.<a href="#section-3.2.6-4.2" class="pilcrow">¶</a>
+            <li class="normal" id="section-3.2.6-4.2">
+              <p id="section-3.2.6-4.2.1">MP_ADDADDR: The Address ID with associated IP address
+   and if defined port, otherwise two octets of value 0.<a href="#section-3.2.6-4.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.6-4.3">MP_REMOVEADDR: Solely the Address ID.<a href="#section-3.2.6-4.3" class="pilcrow">¶</a>
+            <li class="normal" id="section-3.2.6-4.3">
+              <p id="section-3.2.6-4.3.1">MP_REMOVEADDR: Solely the Address ID.<a href="#section-3.2.6-4.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.2.6-5">MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
@@ -2699,25 +2723,29 @@ for the path over which the suboption is received.<a href="#section-3.2.10-2" cl
 </div>
 <p id="section-3.2.10-4">The following values are available for Prio field:<a href="#section-3.2.10-4" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.2.10-5.1">0: Do not use. The path is not available.<a href="#section-3.2.10-5.1" class="pilcrow">¶</a>
+<li class="normal" id="section-3.2.10-5.1">
+              <p id="section-3.2.10-5.1.1">0: Do not use. The path is not available.<a href="#section-3.2.10-5.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.10-5.2">1: Standby: do not use this path for traffic scheduling, if another
+            <li class="normal" id="section-3.2.10-5.2">
+              <p id="section-3.2.10-5.2.1">1: Standby: do not use this path for traffic scheduling, if another
    path (secondary or primary) is available. The path will only be used if 
-   other secondary or primary paths are not established.<a href="#section-3.2.10-5.2" class="pilcrow">¶</a>
+   other secondary or primary paths are not established.<a href="#section-3.2.10-5.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.10-5.3">2: Secondary: do not use this path for traffic scheduling, if the other
+            <li class="normal" id="section-3.2.10-5.3">
+              <p id="section-3.2.10-5.3.1">2: Secondary: do not use this path for traffic scheduling, if the other
    paths are good enough. The path will be used occasionally for increasing 
    temporarily the available capacity, e.g. when primary paths are 
    congested or are not available. This is the recommended setting for
    paths that have costs or data caps as these paths will be used less
-   frequently then primary paths.<a href="#section-3.2.10-5.3" class="pilcrow">¶</a>
+   frequently then primary paths.<a href="#section-3.2.10-5.3.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.10-5.4">3 - 15: Primary: The path can be used for packet scheduling decisions. The 
+            <li class="normal" id="section-3.2.10-5.4">
+              <p id="section-3.2.10-5.4.1">3 - 15: Primary: The path can be used for packet scheduling decisions. The 
    priority number indicates the relative priority of one path over the 
    other for primary paths. Higher numbers indicate higher priority. 
    The peer should consider sending traffic first over higher priority paths. 
    This is the recommended setting for paths that do not have a cost or 
-   data caps associated with them as these paths will be frequently used.<a href="#section-3.2.10-5.4" class="pilcrow">¶</a>
+   data caps associated with them as these paths will be frequently used.<a href="#section-3.2.10-5.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.2.10-6">Example use cases include:
@@ -2845,18 +2873,22 @@ Address A1    Address A2                              Address B1
 </div>
 <p id="section-3.3-3">The basic initial handshake for the first subflow is as follows:<a href="#section-3.3-3" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-4.1">Host A sends a DCCP-Request with the MP-Capable feature Change
+<li class="normal" id="section-3.3-4.1">
+            <p id="section-3.3-4.1.1">Host A sends a DCCP-Request with the MP-Capable feature Change
 request and the MP_KEY option with an Host-specific Key-A for
-each of supported types as described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>.<a href="#section-3.3-4.1" class="pilcrow">¶</a>
+each of supported types as described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>.<a href="#section-3.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-4.2">Host B sends a DCCP-Response with Confirm feature for
+          <li class="normal" id="section-3.3-4.2">
+            <p id="section-3.3-4.2.1">Host B sends a DCCP-Response with Confirm feature for
 MP-Capable and the MP_Key option with a single Host-specific Key-B.
 The type of the key is chosen from the list of supported types
-from the previous request.<a href="#section-3.3-4.2" class="pilcrow">¶</a>
+from the previous request.<a href="#section-3.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-4.3">Host A sends a DCCP-Ack with both Keys echoed to Host B.<a href="#section-3.3-4.3" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.3-4.3">
+            <p id="section-3.3-4.3.1">Host A sends a DCCP-Ack with both Keys echoed to Host B.<a href="#section-3.3-4.3.1" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-4.4">Host B sends a DCCP-Ack to confirm both keys and conclude the handshaking.<a href="#section-3.3-4.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.3-4.4">
+            <p id="section-3.3-4.4.1">Host B sends a DCCP-Ack to confirm both keys and conclude the handshaking.<a href="#section-3.3-4.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 <p id="section-3.3-5">Host A waits for the final DCCP-Ack from host B before starting any
@@ -2864,11 +2896,12 @@ establishment of additional subflow connections.<a href="#section-3.3-5" class="
 <p id="section-3.3-6">The handshake for subsequent subflows based on a successful initial
 handshake is as follows:<a href="#section-3.3-6" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-3.3-7.1">Host A sends a DCCP-Request with the MP-Capable feature Change
+<li class="normal" id="section-3.3-7.1">
+            <p id="section-3.3-7.1.1">Host A sends a DCCP-Request with the MP-Capable feature Change
 request and the MP_JOIN option with Host B's Token TB, generated from
 the derived key by applying a SHA256 hash and truncating to the first
 32 bits. Additionally, an own random nonce RA is transmitted with the
-MP_JOIN.<a href="#section-3.3-7.1" class="pilcrow">¶</a>
+MP_JOIN.<a href="#section-3.3-7.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-7.2">
             <p id="section-3.3-7.2.1">Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response
@@ -2888,8 +2921,9 @@ with MP_JOIN(B) as message and the derived key described in <a href="#MP_KEY" cl
 <p id="section-3.3-7.3.2">
 MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)<a href="#section-3.3-7.3.2" class="pilcrow">¶</a></p>
 </li>
-          <li class="normal" id="section-3.3-7.4">Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
-handshaking.<a href="#section-3.3-7.4" class="pilcrow">¶</a>
+          <li class="normal" id="section-3.3-7.4">
+            <p id="section-3.3-7.4.1">Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
+handshaking.<a href="#section-3.3-7.4.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
@@ -3160,14 +3194,17 @@ packets. Regarding the security of MP-DCCP no additional risks should be
 introduced compared to regular DCCP. Thereof derived are the
 following key security requirements to be fulfilled by MP-DCCP:<a href="#section-4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
-<li class="normal" id="section-4-3.1">Provide a mechanism to confirm that parties involved in a subflow
-handshake are identical to those in the original connection setup.<a href="#section-4-3.1" class="pilcrow">¶</a>
+<li class="normal" id="section-4-3.1">
+          <p id="section-4-3.1.1">Provide a mechanism to confirm that parties involved in a subflow
+handshake are identical to those in the original connection setup.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-3.2">Provide verification that the new address to be included in a MP
-connection is valid for a peer to receive traffic at before using it.<a href="#section-4-3.2" class="pilcrow">¶</a>
+        <li class="normal" id="section-4-3.2">
+          <p id="section-4-3.2.1">Provide verification that the new address to be included in a MP
+connection is valid for a peer to receive traffic at before using it.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
 </li>
-        <li class="normal" id="section-4-3.3">Provide replay protection, i.e., ensure that a request to add/remove a
-subflow is 'fresh'.<a href="#section-4-3.3" class="pilcrow">¶</a>
+        <li class="normal" id="section-4-3.3">
+          <p id="section-4-3.3.1">Provide replay protection, i.e., ensure that a request to add/remove a
+subflow is 'fresh'.<a href="#section-4-3.3.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-4-4">In order to achieve these goals, MP-DCCP includes a hash-based handshake
@@ -3485,6 +3522,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
       <h2 id="name-references">
 <a href="#section-9" class="section-number selfRef">9. </a><a href="#name-references" class="section-name selfRef">References</a>
       </h2>
+<div id="sec-normative-references">
 <section id="section-9.1">
         <h3 id="name-normative-references">
 <a href="#section-9.1" class="section-number selfRef">9.1. </a><a href="#name-normative-references" class="section-name selfRef">Normative References</a>
@@ -3504,6 +3542,8 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
+<div id="sec-informative-references">
 <section id="section-9.2">
         <h3 id="name-informative-references">
 <a href="#section-9.2" class="section-number selfRef">9.2. </a><a href="#name-informative-references" class="section-name selfRef">Informative References</a>
@@ -3601,6 +3641,10 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
         <dd>
 <span class="refAuthor">Tuexen, M.</span> and <span class="refAuthor">R. Stewart</span>, <span class="refTitle">"UDP Encapsulation of Stream Control Transmission Protocol (SCTP) Packets for End-Host to End-Host Communication"</span>, <span class="seriesInfo">RFC 6951</span>, <span class="seriesInfo">DOI 10.17487/RFC6951</span>, <time datetime="2013-05" class="refDate">May 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6951">https://www.rfc-editor.org/rfc/rfc6951</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC7323">[RFC7323]</dt>
+        <dd>
+<span class="refAuthor">Borman, D.</span>, <span class="refAuthor">Braden, B.</span>, <span class="refAuthor">Jacobson, V.</span>, and <span class="refAuthor">R. Scheffenegger, Ed.</span>, <span class="refTitle">"TCP Extensions for High Performance"</span>, <span class="seriesInfo">RFC 7323</span>, <span class="seriesInfo">DOI 10.17487/RFC7323</span>, <time datetime="2014-09" class="refDate">September 2014</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc7323">https://www.rfc-editor.org/rfc/rfc7323</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC8041">[RFC8041]</dt>
         <dd>
 <span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Paasch, C.</span>, and <span class="refAuthor">G. Detal</span>, <span class="refTitle">"Use Cases and Operational Experience with Multipath TCP"</span>, <span class="seriesInfo">RFC 8041</span>, <span class="seriesInfo">DOI 10.17487/RFC8041</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8041">https://www.rfc-editor.org/rfc/rfc8041</a>&gt;</span>. </dd>
@@ -3623,6 +3667,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dd class="break"></dd>
 </dl>
 </section>
+</div>
 </section>
 <div id="diff_mptcp">
 <section id="appendix-A">
