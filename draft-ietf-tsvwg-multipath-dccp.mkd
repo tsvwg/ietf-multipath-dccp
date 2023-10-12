@@ -885,7 +885,7 @@ Age
 {: vspace='0'}
 
 An example of a flow showing  the exchange of path individual 
-RTT information is provides in
+RTT information is provided in
 {{ref-MP_RTT_example}}. 
 RTT1 refers to the first path and RTT2 to the second path. The
 RTT values could be extracted from the sender's Congestion Control procedure and
