@@ -215,7 +215,7 @@ single DCCP connection with no inherent performance penalty
 for application subflows that do not require in-ordered delivery. DCCP
 does not provide built-in support for those multiple application subflows.
 
-Encapsulation for DCCP in UDP is defined in RFC6773.
+Encapsulation for DCCP in UDP is defined in {{RFC6773}}.
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} proposes a 
 lightweight encapsulation for DCCP flow headers appropriate for unreliable 
 IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
