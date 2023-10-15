@@ -1,4 +1,4 @@
-# ietf-multipath-dccp [![Build Status](https://github.com/markusa/ietf-multipath-dccp/actions/workflows/verify.yml/badge.svg?branch=master)](https://github.com/markusa/ietf-multipath-dccp/actions/workflows/verify.yml?query=branch:master)
+# ietf-multipath-dccp [![Build Status](https://github.com/tsvwg/ietf-multipath-dccp/actions/workflows/verify.yml/badge.svg?branch=master)](https://github.com/tsvwg/ietf-multipath-dccp/actions/workflows/verify.yml?query=branch:master)
 IETF draft extending the DCCP protocol with multipath capabilities.
 
 This is work in progress and uses "xml2rfc" v3 vocabulary. Github workflow process has been configured to verify:
@@ -8,15 +8,15 @@ This is work in progress and uses "xml2rfc" v3 vocabulary. Github workflow proce
 
 Please ensure that the CI tests continue to succeed everytime you submit a pull request.
 
-Get latest `.txt` and `.html` view from `markusa/ietf-multipath-dccp` `master`branch
+Get latest `.txt` and `.html` view from `tsvwg/ietf-multipath-dccp` `master` branch
 
 **`.txt`**
-[ietf-multipath-dccp.txt](https://markusa.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
+[ietf-multipath-dccp.txt](https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
 
 **`.html`**
-[ietf-multipath-dccp.html](https://markusa.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.html)
+[ietf-multipath-dccp.html](https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.html)
 
-[Comparison with latest published IETF version](https://www.ietf.org/rfcdiff?url1=draft-ietf-tsvwg-multipath-dccp&url2=https://markusa.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
+[Comparison with latest published IETF version](https://www.ietf.org/rfcdiff?url1=draft-ietf-tsvwg-multipath-dccp&url2=https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
 
 `make` is used to automate the build process and supports:
 
