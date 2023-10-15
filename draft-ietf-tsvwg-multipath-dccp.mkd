@@ -556,9 +556,13 @@ priority value 1.
 
 The length of the MP_CONFIRM option and the path over which the option is sent depend on the confirmed suboptions and the received
 MP_SEQ, which is both copied verbatim and appended as a list of confirmations. The list is structured by first listing the received
-MP_SEQ followed by the confirmed suboption or suboptions. The same rules apply when suboptions with different MP_SEQs are confirmed at
+MP_SEQ followed by the related suboption or suboptions to confirm. The same rules apply when suboptions with different MP_SEQs are confirmed at
 once. This could happen if a datagram with MP_PRIO and a first MP_SEQ_1 and another datagram with MP_ADDADDR and a second MP_SEQ_2 are
-received in short succession. In this case, the structure described above is concatenated resulting in  MP_SEQ_1 + MP_PRIO + MP_SEQ_2 + MP_ADDADDR.
+received in short succession. In this case, the structure described above is concatenated resulting in MP_SEQ_2 + MP_PRIO + MP_SEQ_1 + MP_ADDADDR.
+The order of the confirmed suboptions in the list of confirmations MUST reflect the incoming order at the host who sends the MP_CONFIRM, with the most
+recent suboption received listed first. This could allow the host receiving the MP_CONFIRM to verify that the options were applied in the correct order
+and to take countermeasures if they were not, e.g., if an MP_REMOVEADDR overtakes an MP_ADDADDR that refers to the same dataset.
+
 
 
 |Type | Option Length | MP_OPT           | MP_CONFIRM Sending path                                       |
