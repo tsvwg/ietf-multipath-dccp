@@ -430,8 +430,7 @@ shown in {{ref-option-list}}.
 
 A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.
 
-The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and has a length of one-byte.
-The leftmost four bits specify the compatible version of the
+The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself indicated by the feature number THIS-VERSION, also one ore several values can be exchanged. This value field has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation. The leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
 MP-DCCP implementation (THIS-VER for this specification). The following four bits are unassigned in version, THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
@@ -440,7 +439,7 @@ MP-DCCP implementation (THIS-VER for this specification). The following four bit
    | THIS-VER  | Unassigned |
    +-----------+------------+
 ~~~~
-{: #ref-mp-capable-format title='Format of the Multipath Capable feature'}
+{: #ref-mp-capable-format title='Format of the Multipath Capable feature value field'}
 
 The setting of the MP_CAPABLE feature MUST follow the server-priority reconciliation rule described
 in ({{RFC4340}}, Section 6.3.1). This allows multiple versions to be
@@ -462,7 +461,7 @@ If no agreement is found, the Server MUST reply with an empty Confirm L option
 with feature number THIS-FEATURE and no values.
 
 
-An example of successful version negotiation is shown hereafter: 
+An example of successful version negotiation is shown hereafter and follows the negotiation example shown in {{RFC4340}} Section 6.5: 
 
 ~~~~
       Client                                             Server
@@ -480,7 +479,7 @@ An example of successful version negotiation is shown hereafter:
 1. The Client indicates support for both MP-DCCP versions 1 and 0, with a preference
 for version 1.
 
-2. Server agrees on using MP-DCCP version 1, and supplies its own preference list.
+2. Server agrees on using MP-DCCP version 1 indicated by the first value, and supplies its own preference list with the following values.
 
 3. MP-DCCP is then enabled between the Client and Server with version 1.
 
@@ -1252,20 +1251,20 @@ An example to illustrate the MP-DCCP handshake procedure is shown in {{ref-mp-dc
 Address A1    Address A2                              Address B1
 ----------    ----------                              ----------
      |             |                                       |
-     |             DCCP-Request + MP_CAPABLE               |
+     |           DCCP-Request + Change R (MP_CAPABLE,...)  |
      |------- MP_KEY(Key-A(1), Key-A(2),...) ------------->|
      |<---------------------- MP_KEY(Key-B) ---------------|
-     |             DCCP-Response +  MP_CAPABLE             |
+     |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
      |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
      |<----------------------------------------------------|
      |   DCCP-Ack  |                                       |
      |             |                                       |
-     |             |          DCCP-Request + MP_CAPABLE    |
+     |             |DCCP-Request + Change R(MP_CAPABLE,...)|
      |             |--- MP_JOIN(TB,RA) ------------------->|
      |             |<------MP_JOIN(TB,RB) + MP_HMAC(B)-----|
-     |             |DCCP-Response  + MP_CAPABLE            |
+     |             |DCCP-Response+Confirm L(MP_CAPABLE,...)|
      |             |                                       |
      |             |DCCP-Ack                               |
      |             |-------- MP_HMAC(A) ------------------>|
