@@ -924,7 +924,11 @@ Internet-Draft               Multipath DCCP                 October 2023
    ECDHE-SHA256-C25519
       Public Key Material is exchanged via ECDHE key exchange with
       SHA256 and Curve 25519 to generate the derived key (d-key) from
-      the shared secret.
+      the shared secret.  The full potential of ECDHE use is realized
+      when it is combined with peer authentication technologies to
+      protect against men-in-the-middle attacks.  This can be achieved,
+      for example, with separate use and verification of certificates
+      issued by a certificate authority.
 
    ECDHE-SHA512-C25519
       Public Key Material is exchanged via ECDHE key exchange with
@@ -940,10 +944,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    Section 4.6
 
 4.2.5.  MP_SEQ
-
-
-
-
 
 
 

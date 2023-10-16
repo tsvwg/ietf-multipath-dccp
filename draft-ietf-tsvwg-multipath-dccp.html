@@ -2306,7 +2306,11 @@ in front (e.g. hostA d-key(A)=(key-a+key-b), hostB d-key(B)=(key-b+key-a)).<a hr
             <dt id="section-4.2.4-5.1">ECDHE-SHA256-C25519</dt>
             <dd style="margin-left: 1.5em" id="section-4.2.4-5.2">
               <p id="section-4.2.4-5.2.1">Public Key Material is exchanged via ECDHE key exchange with SHA256 and
-Curve 25519 to generate the derived key (d-key) from the shared secret.<a href="#section-4.2.4-5.2.1" class="pilcrow">¶</a></p>
+Curve 25519 to generate the derived key (d-key) from the shared secret.
+The full potential of ECDHE use is realized when it is combined with peer
+authentication technologies to protect against men-in-the-middle attacks. This can
+be achieved, for example, with separate use and verification of certificates
+issued by a certificate authority.<a href="#section-4.2.4-5.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
