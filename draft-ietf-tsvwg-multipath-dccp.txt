@@ -636,14 +636,15 @@ Internet-Draft               Multipath DCCP                 October 2023
    Multipath suboptions could arrive out-of-order, therefore suboptions
    defined in Table 4 MUST be sent in a DCCP datagram with MP_SEQ
    Section 4.2.5.  This allows a receiver to identify whether suboptions
-   are associated with obsolete datasets that would otherwise conflict
-   with newer datasets.  In the case of MP_ADDADDR or MP_REMOVEADDR the
-   same dataset is identified based on AddressID, whereas the same
-   dataset for MP_PRIO is identified by the subflow in use.  An outdated
-   suboption is detected at the receiver if a previous suboption
-   referring to the same dataset contained a higher sequence number in
-   the MP_SEQ.  AN MP_CONFIRM MAY be generated for suboptions that are
-   identified as outdated.
+   are associated with obsolete datasets (information carried in the
+   suboption header) that would otherwise conflict with newer datasets.
+   In the case of MP_ADDADDR or MP_REMOVEADDR the same dataset is
+   identified based on AddressID, whereas the same dataset for MP_PRIO
+   is identified by the subflow in use.  An outdated suboption is
+   detected at the receiver if a previous suboption referring to the
+   same dataset contained a higher sequence number in the MP_SEQ.  AN
+   MP_CONFIRM MAY be generated for suboptions that are identified as
+   outdated.
 
    Similarly an MP_CONFIRM could arrive out of order.  The associated
    MP_SEQ received MUST be echoed to ensure that the most recent
@@ -655,7 +656,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    update and the third update would cause the sender to incorrectly
    interpret that the priority value was set to 0 without recognizing
    that the receiver has applied priority value 1.
-
 
 
 
