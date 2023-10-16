@@ -95,6 +95,8 @@
        "seqno",
        "Ferlin",
        "DTLS",
-       "CWND"
+       "CWND",
+       "QUIC",
+       "quic"
     ]
 }
