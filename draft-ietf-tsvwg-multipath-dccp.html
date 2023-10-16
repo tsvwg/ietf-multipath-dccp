@@ -1813,8 +1813,7 @@ shown in <a href="#ref-option-list" class="auto internal xref">Table 2</a>.<a hr
 <a href="#section-4.1" class="section-number selfRef">4.1. </a><a href="#name-multipath-capable-feature" class="section-name selfRef">Multipath Capable Feature</a>
         </h3>
 <p id="section-4.1-1">A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.<a href="#section-4.1-1" class="pilcrow">¶</a></p>
-<p id="section-4.1-2">The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and has a length of one-byte.
-The leftmost four bits specify the compatible version of the
+<p id="section-4.1-2">The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and follows the structure for features given in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> Section 6. Beside the negotiation of the feature itself indicated by the feature number THIS-VERSION, also one ore several values can be exchanged. This value field has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation. The leftmost four bits in <a href="#ref-mp-capable-format" class="auto internal xref">Figure 3</a> specify the compatible version of the
 MP-DCCP implementation (THIS-VER for this specification, which results in the version field being set to 000THIS-VER). The following four bits are unassigned in version, THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.<a href="#section-4.1-2" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-multipath-cap"></span><div id="ref-mp-capable-format">
 <figure id="figure-3">
@@ -1827,7 +1826,7 @@ MP-DCCP implementation (THIS-VER for this specification, which results in the ve
 </pre>
 </div>
 <figcaption><a href="#figure-3" class="selfRef">Figure 3</a>:
-<a href="#name-format-of-the-multipath-cap" class="selfRef">Format of the Multipath Capable feature</a>
+<a href="#name-format-of-the-multipath-cap" class="selfRef">Format of the Multipath Capable feature value field</a>
           </figcaption></figure>
 </div>
 <p id="section-4.1-4">The setting of the MP_CAPABLE feature MUST follow the server-priority reconciliation rule described
@@ -1844,7 +1843,7 @@ supported version(s), ordered by preference. Any subflow added to an existing MP
 version negotiated for the first subflow.<a href="#section-4.1-7" class="pilcrow">¶</a></p>
 <p id="section-4.1-8">If no agreement is found, the Server MUST reply with an empty Confirm L option
 with feature number THIS-FEATURE and no values.<a href="#section-4.1-8" class="pilcrow">¶</a></p>
-<p id="section-4.1-9">An example of successful version negotiation is shown hereafter:<a href="#section-4.1-9" class="pilcrow">¶</a></p>
+<p id="section-4.1-9">An example of successful version negotiation is shown hereafter and follows the negotiation example shown in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> Section 6.5:<a href="#section-4.1-9" class="pilcrow">¶</a></p>
 <span id="name-example-of-mp-dccp-support-"></span><div id="ref-mp-capable-example">
 <figure id="figure-4">
           <div class="alignLeft art-text artwork" id="section-4.1-10.1">
@@ -1870,7 +1869,7 @@ with feature number THIS-FEATURE and no values.<a href="#section-4.1-8" class="p
 for version 1.<a href="#section-4.1-11.1.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-4.1-11.2">
-            <p id="section-4.1-11.2.1">Server agrees on using MP-DCCP version 1, and supplies its own preference list.<a href="#section-4.1-11.2.1" class="pilcrow">¶</a></p>
+            <p id="section-4.1-11.2.1">Server agrees on using MP-DCCP version 1 indicated by the first value, and supplies its own preference list with the following values.<a href="#section-4.1-11.2.1" class="pilcrow">¶</a></p>
 </li>
           <li id="section-4.1-11.3">
             <p id="section-4.1-11.3.1">MP-DCCP is then enabled between the Client and Server with version 1.<a href="#section-4.1-11.3.1" class="pilcrow">¶</a></p>
@@ -2893,20 +2892,20 @@ feature number 11 is specified with an exemplary description as below:<a href="#
 Address A1    Address A2                              Address B1
 ----------    ----------                              ----------
      |             |                                       |
-     |             DCCP-Request + MP_CAPABLE               |
+     |           DCCP-Request + Change R (MP_CAPABLE,...)  |
      |------- MP_KEY(Key-A(1), Key-A(2),...) -------------&gt;|
      |&lt;---------------------- MP_KEY(Key-B) ---------------|
-     |             DCCP-Response +  MP_CAPABLE             |
+     |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
      |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------&gt;|
      |&lt;----------------------------------------------------|
      |   DCCP-Ack  |                                       |
      |             |                                       |
-     |             |          DCCP-Request + MP_CAPABLE    |
+     |             |DCCP-Request + Change R(MP_CAPABLE,...)|
      |             |--- MP_JOIN(TB,RA) -------------------&gt;|
      |             |&lt;------MP_JOIN(TB,RB) + MP_HMAC(B)-----|
-     |             |DCCP-Response  + MP_CAPABLE            |
+     |             |DCCP-Response+Confirm L(MP_CAPABLE,...)|
      |             |                                       |
      |             |DCCP-Ack                               |
      |             |-------- MP_HMAC(A) ------------------&gt;|
