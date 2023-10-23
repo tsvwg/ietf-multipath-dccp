@@ -409,9 +409,9 @@ The DCCP protocol feature list ({{RFC4340}}, Section 6.4) is
 updated by adding  a new Multipath feature with Feature number THIS-FEATURE, as
 shown in {{ref-feature-list}}.
 
-| Number       | Meaning                      | Rule | Rec'n Value | Initial Req'd |
-|:------------:|:-----------------------------|:----:|:-----------:|:-------------:|
-| THIS-FEATURE | Multipath Capable            |  SP  |      0      |       N       |
+| Number       | Meaning                      | Rec'n Rule | Initial Value | Req'd |
+|:------------:|:-----------------------------|:----------:|:-------------:|:-----:|
+| THIS-FEATURE | Multipath Capable            |     SP     |       0       |   N   |
 {: #ref-feature-list title='Multipath Feature'}
 
 Rec'n Rule:
