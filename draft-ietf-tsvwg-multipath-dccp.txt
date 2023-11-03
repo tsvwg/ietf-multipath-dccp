@@ -698,7 +698,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    identified based on AddressID, whereas the same dataset for MP_PRIO
    is identified by the subflow in use.  An outdated suboption is
    detected at the receiver if a previous suboption referring to the
-   same dataset contained a higher sequence number in the MP_SEQ.  AN
+   same dataset contained a higher sequence number in the MP_SEQ.  An
    MP_CONFIRM MAY be generated for suboptions that are identified as
    outdated.
 
@@ -715,7 +715,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    The length of the MP_CONFIRM option and the path over which the
    option is sent depend on the confirmed suboptions and the received
-   MP_SEQ, which is both copied verbatim and appended as a list of
+   MP_SEQ, which are both copied verbatim and appended as a list of
    confirmations.  The list is structured by first listing the received
    MP_SEQ followed by the related suboption or suboptions to confirm.
    The same rules apply when suboptions with different MP_SEQs are
@@ -731,7 +731,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 
    structure described above is concatenated resulting in MP_SEQ_2 +
-   MP_PRIO + MP_SEQ_1 + MP_ADDADDR.  The order of the confirmed
+   MP_ADDADDR + MP_SEQ_1 + MP_PRIO.  The order of the confirmed
    suboptions in the list of confirmations MUST reflect the incoming
    order at the host who sends the MP_CONFIRM, with the most recent
    suboption received listed first.  This could allow the host receiving
@@ -876,12 +876,12 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 4.2.3.  MP_FAST_CLOSE
 
-   DCCP can send a Close or Reset signals to abruptly close a
-   connection.  Using MP-DCCP, a regular Close or Reset only has the
-   scope of the SubFlow over which a signal was received.  As such, it
-   will only close the subflow and does not affect other remaining
-   SubFlows or the MP-DCCP connection (unless it is the last SubFlow).
-   This permits break-before-make handover between SubFlows.
+   DCCP can send a Close or Reset signal to abruptly close a connection.
+   Using MP-DCCP, a regular Close or Reset only has the scope of the
+   SubFlow over which a signal was received.  As such, it will only
+   close the subflow and does not affect other remaining SubFlows or the
+   MP-DCCP connection (unless it is the last SubFlow).  This permits
+   break-before-make handover between SubFlows.
 
    An MP-DCCP-level "Reset" allows the abrupt closure of the MP-DCCP
    connection using the MP_FAST_CLOSE suboption.
@@ -1027,7 +1027,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    The MP_SEQ number space is independent from the path individual
    sequence number space and MUST be sent with all DCCP-Data and DCCP-
-   DataACK packet.
+   DataACK packets.
 
    When the sequence number space is exhausted, the sequence number MUST
    be wrapped.  [RFC7323] provides guidance on selecting an
@@ -1182,7 +1182,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    The MP_ADDADDR suboption announces additional addresses (and,
    optionally, port numbers) by which a host can be reached.  This can
-   be sent at any time during an existing DCCP connection, when the
+   be sent at any time during an existing MP-DCCP connection, when the
    sender wishes to enable multiple paths and/or when additional paths
    become available.  Multiple instances of this suboption within a
    packet can simultaneously advertise new addresses.
@@ -1271,9 +1271,9 @@ Internet-Draft               Multipath DCCP                 October 2023
    periodically.
 
    A host MAY advertise private addresses, e.g., because there is a NAT
-   on the path.  It is not desirable to prohibit this, since there could
-   be cases where both hosts have additional interfaces on the same
-   private network.
+   on the path.  It is desirable to allow this, since there could be
+   cases where both hosts have additional interfaces on the same private
+   network.
 
    The MP_JOIN handshake to create a new subflow (Section 4.2.2)
    provides mechanisms to minimize security risks.  The MP_JOIN message
@@ -1356,7 +1356,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    The rationale for using a HMAC is to prevent unauthorized entities
    from injecting MP_REMOVEADDR signals in an attempt to hijack a
    connection.  Note that, additionally, the presence of this HMAC
-   prevents the address from being removed in flight unless the key is
+   prevents the address from being modified in flight unless the key is
    known by an intermediary.  If a host receives an MP_REMOVEADDR option
    for which it cannot validate the HMAC, it SHOULD silently ignore the
    option.
@@ -2337,9 +2337,9 @@ Internet-Draft               Multipath DCCP                 October 2023
               Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
               C., and M. Kuehlewind, "Multipath Extension for QUIC",
               Work in Progress, Internet-Draft, draft-ietf-quic-
-              multipath-05, 10 July 2023,
+              multipath-06, 23 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              multipath-05>.
+              multipath-06>.
 
 
 
