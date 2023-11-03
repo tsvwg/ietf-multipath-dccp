@@ -430,12 +430,12 @@ Internet-Draft               Multipath DCCP                 October 2023
    adding a new Multipath feature with Feature number THIS-FEATURE, as
    shown in Table 1.
 
-     +==============+===========+======+=============+===============+
-     |    Number    | Meaning   | Rule | Rec'n Value | Initial Req'd |
-     +==============+===========+======+=============+===============+
-     | THIS-FEATURE | Multipath |  SP  |      0      |       N       |
-     |              | Capable   |      |             |               |
-     +--------------+-----------+------+-------------+---------------+
+     +==============+===========+============+===============+=======+
+     |    Number    | Meaning   | Rec'n Rule | Initial Value | Req'd |
+     +==============+===========+============+===============+=======+
+     | THIS-FEATURE | Multipath |     SP     |       0       |   N   |
+     |              | Capable   |            |               |       |
+     +--------------+-----------+------------+---------------+-------+
 
                          Table 1: Multipath Feature
 
