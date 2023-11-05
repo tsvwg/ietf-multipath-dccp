@@ -909,7 +909,7 @@ Smooth RTT (=3)
 : Averaged RTT value over a given period, preferably provided by the CCID in use.
 {: vspace='0'}
 
-Each CCID specifies the algorithms applied for their corresponding RTT estimations. 
+Each CCID specifies the algorithms and period applied for their corresponding RTT estimations. 
 
 Age
 : The Age parameter defines the time difference between now - creation of the MP_RTT option -
@@ -927,7 +927,7 @@ and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
 In the case that the path individual RTTs are symmetric in the down- and uplink directions, packets
 with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
-lost after path_delta/2.
+lost after path_delta/2 in a system without jitter, and would require an offset to be considered in systems with jitter.
 
 ~~~~
    MP-DCCP                   MP-DCCP
