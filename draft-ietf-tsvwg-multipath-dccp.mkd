@@ -335,7 +335,9 @@ The Multipath Capability for MP-DCCP is negotiated with a new DCCP
 feature, as specified in {{mp_capable}}. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
 variable length multipath-related option, as described in {{protocol}}.
-All MP-DCCP operations are signaled by MP-DCCP suboptions described in {#MP_OPT}.
+All MP-DCCP operations are signaled by MP-DCCP suboptions described in {#MP_OPT}. Suboptions that 
+require confirmation from the remote peer are retransmitted by the sender until confirmed or until 
+confirmation is no longer considered relevant.
 
 ## MP-DCCP Concept {#concept}
 
@@ -363,22 +365,21 @@ Address A1    Address A2             Address B1    Address B2
  
 
    *  An MP-DCCP connection begins with a 4-way handshake, between 
-      two hosts as described in {{handshaking}}. In {{ref-example-mp-dccp-usage-scenario}},
+      two hosts. In {{ref-example-mp-dccp-usage-scenario}},
       an MP-DCCP connection is established between addresses A1 and B1 on Hosts
-      A and B, respectively. MP-DCCP does not require both peers to have 
+      A and B, respectively. In the handshake, a Multipath Capable feature is used to negotiate multipath support for the connection. Host specific keys are also exchanged between Host A and Host B during the handshake. The details of the MP-DCCP handshaing procedure is described in {{handshaking}}. MP-DCCP does not require both peers to have 
       more than one address.
 
-   *  When additional paths and corresponding addresses/ports are available, additional DCCP subflows are created on 
-      these paths and are attached to the existing MP-DCCP session, which
+   *  When additional paths and corresponding addresses/ports are available, additional DCCP subflows can be created on 
+      these paths and attached to the existing MP-DCCP connection. An MP_JOIN suboption is used to connect a new DCCP subflow to an exisiting MP-DCCP connection. It contains a path token derived from the keys exchanged during the setup of the initial subflow and is exchanged in the 4-way handshake for the subflow together with the Multipath Capable feature. The example in {{ref-example-mp-dccp-usage-scenario}} illustrates creation of an additional DCCP subflow between Address A2 on Host A and Address B1 on Host B. The two subflows
       continues to provide a single connection to the applications at both
-      endpoints. The example illustrates creation of an additional DCCP subflow between Address A2
-      on Host A and Address B1 on Host B.
+      endpoints. 
 
    *  MP-DCCP identifies multiple paths by the presence of multiple
       addresses/ports at hosts.  Combinations of these multiple addresses/ports
       indicate the additional paths.  In the example, other potential
-      paths that could be set up are A1<->B2 and A2<->B2.  Although this
-      additional subflow is shown as being initiated from A2, it could
+      paths that could be set up are A1<->B2 and A2<->B2.  Although the
+      additional subflow in the example is shown as being initiated from A2, an additional subflow could
       alternatively have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows is achieved
@@ -387,12 +388,11 @@ Address A1    Address A2             Address B1    Address B2
       between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
       corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of {{RFC8041}}, the creation of new subflows from that peer host needs to be avoided and incoming subflow requests terminated.
 
-   *  MP-DCCP adds connection-level sequence numbers and exchange of
-      Round-Trip Time (RTT) information to enable optional reordering features.
+   *  Through the use of suboptions, MP-DCCP adds connection-level sequence numbers and exchange of
+      Round-Trip Time (RTT) information to enable optional reordering features. As a hint for scheduling decisions, a suboption that allows a peer to indicate its priorities for what path to use is also defined.
 
    *  Subflows are terminated in the same way as regular DCCP connections, as described
-      in ({{RFC4340}}, Section 8.3). The MP-DCCP connection is terminated by a
-      connection-level DCCP-CloseReq or DCCP-Close message.
+      in ({{RFC4340}}, Section 8.3). MP-DCCP connections are closed by including an MP_CLOSE suboption in subflow DCCP-CloseReq or DCCP-Close messages. An MP-DCCP connection may also be reset through the use of an MP_FAST_CLOSE suboption. Key data from the initial handshake is included in the MP_CLOSE and MP_FAST_CLOSE to protect from unauthorized shutdown of MP-DCCP connections.
 
 # Requirements Language
 
