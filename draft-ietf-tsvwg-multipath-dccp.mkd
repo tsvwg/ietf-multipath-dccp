@@ -1270,8 +1270,8 @@ Address A1    Address A2                              Address B1
 ----------    ----------                              ----------
      |             |                                       |
      |           DCCP-Request + Change R (MP_CAPABLE,...)  |
-     |------- MP_KEY(Key-A(1), Key-A(2),...) ------------->|
-     |<---------------------- MP_KEY(Key-B) ---------------|
+     |---- MP_KEY(CI-A + Key-A(1), Key-A(2),...) --------->|
+     |<------------------- MP_KEY(CI-B + Key-B) -----------|
      |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
@@ -1280,8 +1280,8 @@ Address A1    Address A2                              Address B1
      |   DCCP-Ack  |                                       |
      |             |                                       |
      |             |DCCP-Request + Change R(MP_CAPABLE,...)|
-     |             |--- MP_JOIN(TB,RA) ------------------->|
-     |             |<------MP_JOIN(TB,RB) + MP_HMAC(B)-----|
+     |             |--- MP_JOIN(CI-B,RA) ----------------->|
+     |             |<------MP_JOIN(CI-B,RB) + MP_HMAC(B)---|
      |             |DCCP-Response+Confirm L(MP_CAPABLE,...)|
      |             |                                       |
      |             |DCCP-Ack                               |
