@@ -1275,7 +1275,7 @@ Address A1    Address A2                              Address B1
      |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
-     |--------- MP_KEY(Key-A) + MP_KEY(Key-B) ------------>|
+     |----------------- MP_KEY(Key-B) -------------------->|
      |<----------------------------------------------------|
      |   DCCP-Ack  |                                       |
      |             |                                       |
