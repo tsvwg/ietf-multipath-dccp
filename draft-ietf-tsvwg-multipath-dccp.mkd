@@ -1275,7 +1275,7 @@ Address A1    Address A2                              Address B1
      |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
-     |----------------- MP_KEY(Key-B) -------------------->|
+     |---------------------------------------------------->|
      |<----------------------------------------------------|
      |   DCCP-Ack  |                                       |
      |             |                                       |
@@ -1302,9 +1302,11 @@ The basic initial handshake for the first subflow is as follows:
   The type of the key is chosen from the list of supported types
   from the previous request.
 
-* Host A sends a DCCP-Ack with both Keys echoed to Host B.
+* Host A sends a DCCP-Ack to confirm the proper key exchange.
 
-* Host B sends a DCCP-Ack to confirm both keys and conclude the handshaking.
+* Host B sends a DCCP-Ack to complete the handshaking and set both connection ends to the OPEN state.
+
+It should be noted that DCCP is protected against corruption of DCCP header data (section 9 of {{RFC4340}}), so no additional mechanisms beyond the general confirmation are required to ensure that the header data has been properly received.
 
 Host A waits for the final DCCP-Ack from host B before starting any
 establishment of additional subflow connections.
