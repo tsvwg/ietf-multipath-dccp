@@ -744,8 +744,8 @@ the connection state to CLOSED).
 
 The MP_KEY suboption is used to exchange key material between
 hosts for a given connection. 
-The Length varies between 12 and 68 Bytes for a single-key message, and up to
-110 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
+The Length varies between 17 and 73 Bytes for a single-key message, and up to
+115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
 specifies the type of the following key data. 
 The set of key types are shown in {{ref-key-type-list}}.
 
