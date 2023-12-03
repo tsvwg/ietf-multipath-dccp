@@ -1612,6 +1612,8 @@ addressing middleboxes operating as NATs are provided in {{RFC5597}}.
 similar to other UDP encapsulations such as for SCTP {{RFC6951}}. Future
 specifications by the IETF could specify other methods for DCCP encapsulation.
 
+The security impact of MP-DCCP aware middleboxes is discussed in {{middlebox}}
+
 
 # Implementation
 
