@@ -1624,7 +1624,7 @@ demonstrations of a laboratory setup have been executed and have been published 
 {{RFC6824}} and {{RFC8684}} defined Multipath TCP and provided important
 inputs for this specification.
 
-The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
+The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry Fairhurst and Behcet Sarikaya.
 
 
 # IANA Considerations
