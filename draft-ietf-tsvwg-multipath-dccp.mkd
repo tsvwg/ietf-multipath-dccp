@@ -268,8 +268,8 @@ this context by a 4-tuple of source and destination address/port pairs.
 application can communicate between two hosts. The MP-DCCP connection is
 exposed as single DCCP socket to the application.
 
-Token: A locally unique identifier given to a multipath connection by a
-host. May also be referred to as a "Connection ID".
+Connection Identifier: A locally unique identifier given to a multipath connection by a
+host.
 
 Host: An end host operating an MP-DCCP implementation, and either
 initiating or accepting an MP-DCCP connection. 
@@ -1010,9 +1010,9 @@ allocating such IDs is implementation specific.
 
 All Address IDs learned via either MP_JOIN or MP_ADDADDR can be stored
 by the receiver in a data structure that gathers all the
-Address-ID-to-address mappings for a connection (identified by a token
+Address-ID-to-address mappings for a connection (identified by a Connection Identifier
 pair). In this way, there is a stored mapping between the Address ID,
-the observed source address, and the token pair for future processing of control
+the observed source address, and the Connection Identifier pair for future processing of control
 information for a connection. Note that an implementation
 MAY discard incoming address advertisements - for example, to
 avoid the required mapping state, or because advertised addresses
@@ -1028,16 +1028,9 @@ have additional interfaces on the same private network.
 
 The MP_JOIN handshake to
 create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
-security risks.  The MP_JOIN message contains a 32-bit token that
+security risks.  The MP_JOIN message contains a 32-bit Connection Identifier that
 uniquely identifies a connection to the receiving host. If the
-token is unknown, the host MUST send a DCCP-Reset. 
-
-In the unlikely
-event that the token is already known, the SubFlow setup will continue, but the
-HMAC exchange must provide authentication, which will fail. This
- provides sufficient protection against two unconnected hosts
-accidentally setting up a new subflow using a private
-address.  
+Connection Identifier is unknown, the host MUST send a DCCP-Reset. 
 
 Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
@@ -1472,7 +1465,7 @@ If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP option
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Reception of a non-verifiable MP_HMAC ({{MP_HMAC}}) or an invalid
-MP_JOIN Path Token {{MP_JOIN}} during flow establishment MUST cause the
+MP_JOIN Connection Identifier {{MP_JOIN}} during flow establishment MUST cause the
 subflow to be closed.
 
 The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong Key-A/Key-B is
@@ -1575,11 +1568,11 @@ algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
 over the network. To ease demultiplexing while not revealing
-cryptographic material, future subflows use a truncated cryptographic
-hash of this key as the connection identification "token". The keys are
+cryptographic material, future subflows use the initially exchanged
+Connection Identifier information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
 Authentication Codes (HMACs) used on subflow setup, in order to verify
-that the parties in the handshake are the same as in the original
+that the parties in the handshake of future subflows are the same as in the original
 connection setup. It also provides verification that the peer can
 receive traffic at this new address. Replay attacks would still be
 possible when only keys are used;
