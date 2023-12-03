@@ -97,6 +97,8 @@
        "DTLS",
        "CWND",
        "QUIC",
-       "quic"
+       "quic",
+       "Gorry",
+       "Fairhurst"
     ]
 }
