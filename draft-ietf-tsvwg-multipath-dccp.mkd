@@ -891,25 +891,25 @@ The Field RTT type indicates the type of RTT estimation, according to the follow
 
 
 Raw RTT (=0)
-: Raw RTT value of the last Datagram Round-Trip, preferably provided by the CCID in use.
+: Raw RTT value of the last Datagram Round-Trip
 {: vspace='0'}
 
 
 Min RTT (=1)
-: Min RTT value over a given period, preferably provided by the CCID in use.
+: Min RTT value over a given period
 {: vspace='0'}
 
 
 Max RTT (=2)
-: Max RTT value over a given period, preferably provided by the CCID in use.
+: Max RTT value over a given period
 {: vspace='0'}
 
 
 Smooth RTT (=3)
-: Averaged RTT value over a given period, preferably provided by the CCID in use.
+: Averaged RTT value over a given period
 {: vspace='0'}
 
-Each CCID specifies the algorithms and period applied for their corresponding RTT estimations. 
+Each CCID specifies the algorithms and period applied for their corresponding RTT estimations.The availability of the above described types, to be used in the MP_RTT option, depends on the CCID implementation in place.
 
 Age
 : The Age parameter defines the time difference between now - creation of the MP_RTT option -
