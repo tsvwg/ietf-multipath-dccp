@@ -406,12 +406,12 @@ Address A1    Address A2             Address B1    Address B2
 # MP-DCCP Protocol {#protocol}
 
 The DCCP protocol feature list ({{RFC4340}}, Section 6.4) is
-updated by adding  a new Multipath feature with Feature number THIS-FEATURE, as
+updated by adding  a new Multipath feature with Feature number 10, as
 shown in {{ref-feature-list}}.
 
 | Number       | Meaning                      | Rec'n Rule | Initial Value | Req'd |
 |:------------:|:-----------------------------|:----------:|:-------------:|:-----:|
-| THIS-FEATURE | Multipath Capable            |     SP     |       0       |   N   |
+|      10      | Multipath Capable            |     SP     |       0       |   N   |
 {: #ref-feature-list title='Multipath Feature'}
 
 Rec'n Rule:
@@ -440,13 +440,13 @@ shown in {{ref-option-list}}.
 
 A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.
 
-The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself indicated by the feature number THIS-VERSION, also one ore several values can be exchanged. This value field has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation. The leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
-MP-DCCP implementation (THIS-VER for this specification, which results in the version field being set to 000THIS-VER). The following four bits are unassigned in version, THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
+The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one ore several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation if required for example to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
+MP-DCCP implementation and MUST be set to 0 following this specification. The four bits following the Version field are unassigned in version 0 and MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
     0  1  2  3   4  5  6  7
    +-----------+------------+
-   | THIS-VER  | Unassigned |
+   |  Version  | Unassigned |
    +-----------+------------+
 ~~~~
 {: #ref-mp-capable-format title='Format of the Multipath Capable feature value field'}
