@@ -190,8 +190,13 @@ different paths simultaneously.
 Datagram Congestion Control Protocol (DCCP) {{RFC4340}} is a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
-Multipath DCCP (MP-DCCP) provides a set of extensions to DCCP to
-enable a DCCP connection to simultaneously establish flow across multiple paths. This can be  beneficial to applications that transfer
+This document specifies a set of protocol changes that add multipath
+support to DCCP; specifically, support for signaling and setting up
+multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
+data, and termination of sessions.
+
+Multipath DCCP (MP-DCCP) 
+enables a DCCP connection to simultaneously establish a flow across multiple paths. This can be  beneficial to applications that transfer
 large amounts of data, by utilizing the capacity/connectivity offered by 
 multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability,
 which is important for low-latency applications that do not require
@@ -204,26 +209,14 @@ networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-bas
 MP-DCCP can be applied for load-balancing, seamless session handover, and bandwidth
 aggregation (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
 in the 3GPP terminology {{TS23.501}}).
-
-This document specifies a set of protocol changes that add multipath
-support to DCCP; specifically, support for signaling and setting up
-multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
-data, and termination of sessions.
-
-DCCP, as stated in {{RFC4340}} does not provide reliable and ordered
-delivery. Consequently, multiple application subflows may be multiplexed over a
-single DCCP connection with no inherent performance penalty 
-for application subflows that do not require in-ordered delivery. DCCP
-does not provide built-in support for those multiple application subflows.
+More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
+All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 Encapsulation for DCCP in UDP is defined in {{RFC6773}}.
 {{I-D.amend-tsvwg-multipath-framework-mpdccp}} proposes a 
 lightweight encapsulation for DCCP flow headers appropriate for unreliable 
 IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
 This is not considered in the present specification. 
-
-More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
-All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
@@ -234,7 +227,7 @@ multiple streams. When the datagram option is used, MP-QUIC does not provide in-
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
 MP-DCCP provides a set of features to DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering. 
-It operates at the transport layer and can be used as a transparent for
+It operates at the transport layer and can be used as a transport for
 both higher and lower layers. 
 It is
 designed to be used by applications in the same way as DCCP with no
@@ -274,7 +267,7 @@ host. May also be referred to as a "Connection ID".
 Host: An end host operating an MP-DCCP implementation, and either
 initiating or accepting an MP-DCCP connection. 
 
-SubFlow: A subflow refers to a DCCP flows transmitted using a specific path (4-tuple of source and destination address/port
+SubFlow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
 pairs) that forms one of the multipath flows used by a single connection.
 
 In addition to these
