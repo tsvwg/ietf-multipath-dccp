@@ -267,34 +267,35 @@ host. May also be referred to as a "Connection ID".
 Host: An end host operating an MP-DCCP implementation, and either
 initiating or accepting an MP-DCCP connection. 
 
-SubFlow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
+Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
 pairs) that forms one of the multipath flows used by a single connection.
 
 In addition to these
 terms, within the framework of MP-DCCP, the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in {{protocol}}.
 
-The term SubFlow is not to be confused with an "application sub-flows" mentioned in
+The term subflow is not to be confused with an "application sub-flow" mentioned in
 Section 17.2 of {{RFC4340}}.
-Application subflows are differentiated 
+Application sub-flows are differentiated 
 by source and destination port per application as, for example, enabled
-by Service Codes introduced to DCCP in {{RFC5595}}, and those application subflows
+by Service Codes introduced to DCCP in {{RFC5595}}, and those application sub-flows
 can be multiplexed over a single DCCP connection. For the sake of consistency,
 this specification assumes a single application is served by a DCCP connection,
 as shown in {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}}.
 This ought to not impact DCCP operation on each single path
 as noted in (Section 2.4 of {{RFC5595}}).
-Application subflows can co-exist with MP-DCCP operation as specified in this document.
+Application sub-flows can co-exist with MP-DCCP operation as specified in this document.
 
 # Operation Overview {#op_overview}
 
-DCCP (Section 17.2 of {{RFC4340}}) allows multiple application 
-subflows to be multiplexed over a single DCCP connection with 
-potentially same performance. However, DCCP does not provide built-in 
-support for managing multiple subflows within one DCCP connection.
+DCCP allows multiple application 
+sub-flows to be multiplexed over a single DCCP connection with 
+potentially same performance. 
 Various congestion control mechanisms have been specified to optimize
 DCCP performance for specific traffic types in terms of profiles denoted
 by a Congestion Control IDentifier (CCID).
+However, DCCP does not provide built-in 
+support for managing multiple subflows within one DCCP connection.
 
 The extension of DCCP for Multipath-DCCP (MP-DCCP) is 
 described in detail in {{protocol}}.
@@ -310,10 +311,8 @@ The details of the transmission scheduling mechanism and
 optional reordering mechanism are up to the sender and receiver, respectively,
 and are outside the scope of this document.
 
-The following sections define MP-DCCP behavior in detail.
-
 A Multipath DCCP connection provides a bidirectional connection of datagrams 
-between two hosts exchanging data using in DCCP. It does not require 
+between two hosts exchanging data using DCCP. It does not require 
 any change to the applications. Multipath DCCP enables the 
 hosts to use multiples paths with different IP addresses to transport 
 the packets of an MP-DCCP connection. MP-DCCP manages the request, 
@@ -328,9 +327,11 @@ The Multipath Capability for MP-DCCP is negotiated with a new DCCP
 feature, as specified in {{mp_capable}}. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
 variable length multipath-related option, as described in {{protocol}}.
-All MP-DCCP operations are signaled by MP-DCCP suboptions described in {#MP_OPT}. Suboptions that 
+All MP-DCCP operations are signaled by MP-DCCP suboptions described in {{MP_OPT}}. Suboptions that 
 require confirmation from the remote peer are retransmitted by the sender until confirmed or until 
 confirmation is no longer considered relevant.
+
+The following sections define MP-DCCP behavior in detail.
 
 ## MP-DCCP Concept {#concept}
 
