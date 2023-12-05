@@ -781,9 +781,9 @@ Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
 on a single key type to be used, as described in {{handshaking}}
 
-If the key type can not be agreed in the 
+It is possible that not all hosts will have all key types. If the key type cannot be agreed in the 
 handshake procedure, the MP-DCCP connection MUST fallback to not using MP-DCCP, as 
-indicated in {{fallback}}
+indicated in {{fallback}}.
 
 ### MP_SEQ {#MP_SEQ}
 
