@@ -693,9 +693,9 @@ SubFlow).
 This permits break-before-make handover between
 SubFlows.  
 
-An MP-DCCP-level
-"Reset" allows the abrupt closure of the MP-DCCP connection
-using the MP_FAST_CLOSE suboption.
+It is necessary to provide an MP-DCCP-level
+"reset" and thus allow the abrupt closure of the MP-DCCP connection. This is done
+using the MP_FAST_CLOSE suboption. 
 
 ~~~~
               1          2          3
@@ -707,20 +707,21 @@ using the MP_FAST_CLOSE suboption.
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
-The MP_FAST_CLOSE suboption MUST be sent from an initiating host on all subflows 
-using a DCCP-Reset packet with Reset Code THIS-RESET-CODE. 
-To protect from unauthorized shutdown of a multipath DCCP connection, 
+When host A wants to abruptly close MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
+using a DCCP-Reset packet with Reset Code THIS-RESET-CODE. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option. 
 
-On completion of this step, the initiating host tears down all subflows 
+On completion of this step, host A will tear down all subflows 
 and the multipath DCCP connection immediately terminates.
 
 Upon reception of the MP_FAST_CLOSE and successful validation of the 
-Key Data, a DCCP Reset packet response is sent on all subflows to 
-the initiating host with Reset Code THIS-RESET-CODE. 
-The host then closes the MP-DCCP connection (i.e., it transitions 
-the connection state to CLOSED).
+Key Data, host B will send a DCCP Reset packet response on all subflows to 
+the host A with Reset Code THIS-RESET-CODE. 
+Host B will tear down all subflows and close the MP-DCCP connection (i.e., it transitions 
+the connection state to CLOSED). 
+
+In the case host A does not receive the DCCP Reset packet in reply to its MP_FAST_CLOSE for any reason, it SHOULD retransmit the MP_FAST_CLOSE. To keep the connection from being retained for a long time, the number of retransmissions SHOULD be limited; this limit is implementation specific. A RECOMMENDED number is 3.
 
 
 ### MP_KEY {#MP_KEY}
