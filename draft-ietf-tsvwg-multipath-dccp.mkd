@@ -858,8 +858,10 @@ results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas t
 first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
 MP_ADDADDR suboption.
 
-If the HMAC cannot be validated by a receiving host, the subsequent handling depends
-on which suboption was being authenticated. If the suboption to be authenticated was either
+On the receiver side, the HMAC validation of the sub-options MUST be carried out according to
+the sending sequence in which the associated MP_HMAC follows a sub-option. If the suboption
+cannot be validated by a receiving host because the HMAC validation fails, the subsequent handling depends
+on which suboption was being verified. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see {{fallback}})
 
