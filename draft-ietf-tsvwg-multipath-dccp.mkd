@@ -268,7 +268,7 @@ this context by a 4-tuple of source and destination address/port pairs.
 application can communicate between two hosts. The MP-DCCP connection is
 exposed as single DCCP socket to the application.
 
-Connection Identifier: A locally unique identifier given to a multipath connection by a
+Connection Identifier (CI): A locally unique identifier given to a multipath connection by a
 host.
 
 Host: An end host operating an MP-DCCP implementation, and either
@@ -638,7 +638,7 @@ Address A1    Address A2                     Address B1    Address B2
   +--------+--------+--------+--------+
   |00101110|00001100|00000001| Addr ID|
   +--------+--------+--------+--------+
-  | Connection Identifier (CI)        |
+  | Connection Identifier            |
   +--------+--------+--------+--------+
   | Nonce                             |
   +--------+--------+--------+--------+
@@ -648,7 +648,7 @@ Address A1    Address A2                     Address B1    Address B2
 
 The MP_JOIN option is used to add a new subflow to an existing MP-DCCP
 connection and REQUIRES a successful establishment of the first subflow using MP_KEY.
-The Connection Identifier is the one from the peer host,
+The Connection Identifier (CI) is the one from the peer host,
 which was previously exchanged with the MP_KEY option.
 MP_HMAC MUST be set when using MP_JOIN to provide authentication (See
 {{MP_HMAC}} for details).
@@ -676,10 +676,10 @@ over the lifetime of a subflow and can only be re-assigned if sender and
 receiver no longer have them in use.
 
 The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
-Together with the Connection Identifier, the Nonce value builds the basis to calculate the
+Together with the CI, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in {{handshaking}}.
 
-If the Connection Identifier cannot be verified by the receiving host during a handshake negotiation, 
+If the CI cannot be verified by the receiving host during a handshake negotiation, 
 the new subflow MUST be closed, as specified in {{fallback}}.
 
 ### MP_FAST_CLOSE {#MP_FAST_CLOSE}
@@ -732,7 +732,7 @@ the connection state to CLOSED).
   +---------------+---------------+---------------+---------------+
   |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 0 1 1|     resvd     | 
   +---------------+---------------+---------------+---------------+
-  |                   Connection Identifier (CI)                  |
+  |                     Connection Identifier                     |
   +---------------+---------------+---------------+---------------+
   |  Key Type (1) |  Key Data (1) |  Key Type (2) |  Key Data (2) |
   +---------------+---------------+---------------+---------------+
@@ -742,9 +742,9 @@ the connection state to CLOSED).
 ~~~~
 {: #ref-MP_KEY title='Format of the MP_KEY Suboption'}
 
-The MP_KEY suboption is used to exchange a connection identifier and key material between
+The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
 hosts for a given connection.
-The Connection Identifier (CI) is a unique number that is configured per host during the initial exchange of a connection with MP_KEY and is necessary to connect other DCCP streams to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
+The CI is a unique number that is configured per host during the initial exchange of a connection with MP_KEY and is necessary to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
 According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 Bytes for a single-key message, and up to
 115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
 specifies the type of the following key data. 
@@ -845,7 +845,7 @@ to {{RFC2104}} in combination with the SHA256 hash algorithm described in
 The "Key" used for the HMAC computation is the derived key (d-key)
 described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
 
-   * MP_JOIN: The Connection Identifier (CI) and nonce of the MP_JOIN for which authentication
+   * MP_JOIN: The CI and nonce of the MP_JOIN for which authentication
    shall be performed.
 
    * MP_ADDADDR: The Address ID with associated IP address
@@ -1010,9 +1010,9 @@ allocating such IDs is implementation specific.
 
 All Address IDs learned via either MP_JOIN or MP_ADDADDR can be stored
 by the receiver in a data structure that gathers all the
-Address-ID-to-address mappings for a connection (identified by a Connection Identifier
+Address-ID-to-address mappings for a connection (identified by a CI
 pair). In this way, there is a stored mapping between the Address ID,
-the observed source address, and the Connection Identifier pair for future processing of control
+the observed source address, and the CI pair for future processing of control
 information for a connection. Note that an implementation
 MAY discard incoming address advertisements - for example, to
 avoid the required mapping state, or because advertised addresses
@@ -1028,9 +1028,9 @@ have additional interfaces on the same private network.
 
 The MP_JOIN handshake to
 create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
-security risks.  The MP_JOIN message contains a 32-bit Connection Identifier that
+security risks.  The MP_JOIN message contains a 32-bit CI that
 uniquely identifies a connection to the receiving host. If the
-Connection Identifier is unknown, the host MUST send a DCCP-Reset. 
+CI is unknown, the host MUST send a DCCP-Reset. 
 
 Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
@@ -1292,12 +1292,12 @@ Address A1    Address A2                              Address B1
 The basic initial handshake for the first subflow is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
-  request and the MP_KEY option with an Host-specific Connection Identifier CI-A and a Key-A for
+  request and the MP_KEY option with an Host-specific CI-A and a Key-A for
   each of supported types as described in {{MP_KEY}}. CI-A is a unique identifier during the
   lifetime of a MP-DCCP connection.
 
 * Host B sends a DCCP-Response with Confirm feature for
-  MP-Capable and the MP_Key option with a unique Host-specific Connection Identifier CI-B and a single Host-specific Key-B.
+  MP-Capable and the MP_Key option with a unique Host-specific CI-B and a single Host-specific Key-B.
   The type of the key is chosen from the list of supported types
   from the previous request.
 
@@ -1314,13 +1314,13 @@ The handshake for subsequent subflows based on a successful initial
 handshake is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
-  request and the MP_JOIN option with Host B’s Connection Identifier CI-B,
+  request and the MP_JOIN option with Host B’s CI-B,
   taken from the basic initial handshake. Additionally, an own random nonce
   RA is transmitted with the MP_JOIN.
 
 * Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response
   with Confirm feature option for MP-Capable and the MP_JOIN option with
-  the Connection Identifier CI-A and a random nonce RB together with the computed MP_HMAC.
+  the CI-A and a random nonce RB together with the computed MP_HMAC.
   The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
   of a HMAC code created by using the nonce received with MP_JOIN(A) and the
   local nonce RB as message and the derived key described in {{MP_KEY}} as key:
@@ -1465,7 +1465,7 @@ If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP option
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
 version is used. Reception of a non-verifiable MP_HMAC ({{MP_HMAC}}) or an invalid
-MP_JOIN Connection Identifier {{MP_JOIN}} during flow establishment MUST cause the
+CI used in MP_JOIN ({{MP_JOIN}}) during flow establishment MUST cause the
 subflow to be closed.
 
 The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong Key-A/Key-B is
@@ -1569,7 +1569,7 @@ security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
 over the network. To ease demultiplexing while not revealing
 cryptographic material, future subflows use the initially exchanged
-Connection Identifier information. The keys exchanged once at the beginning are
+CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
 Authentication Codes (HMACs) used on subflow setup, in order to verify
 that the parties in the handshake of future subflows are the same as in the original
