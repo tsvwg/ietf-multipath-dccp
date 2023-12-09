@@ -125,9 +125,9 @@ Internet-Draft               Multipath DCCP                 October 2023
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  36
    6.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  38
    7.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  38
-   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  38
+   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  39
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  39
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  41
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  42
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  42
      10.2.  Informative References . . . . . . . . . . . . . . . . .  42
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  46
@@ -2085,6 +2085,13 @@ Internet-Draft               Multipath DCCP                 October 2023
    implementations should consider heuristics at both the sender and
    receiver to reduce the impact of this.
 
+   As described in Section 4.8, a Maximum Packet Size (MPS) is
+   maintained for a MP-DCCP connection.  If MP-DCCP exposes a minimum
+   MPS across all paths, any change to one path impacts the sender for
+   all paths.  To mitigate attacks that seek to force a low MPS, MP-DCCP
+   could detect an attempt to reduce the MPS less than a minimum MPS,
+   and then stop using these paths.
+
 6.  Interactions with Middleboxes
 
    Issues from interaction with on-path middleboxes such as NATs,
@@ -2112,14 +2119,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    extensively tested.  Also demonstrations of a laboratory setup have
    been executed and have been published at [multipath-dccp.org].
 
-8.  Acknowledgments
 
-   [RFC6824] and [RFC8684] defined Multipath TCP and provided important
-   inputs for this specification.
-
-   The authors gratefully acknowledge significant input into this
-   document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef,
-   Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
 
 
 
@@ -2129,6 +2129,15 @@ Amend, et al.             Expires 14 April 2024                [Page 38]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
+
+8.  Acknowledgments
+
+   [RFC6824] and [RFC8684] defined Multipath TCP and provided important
+   inputs for this specification.
+
+   The authors gratefully acknowledge significant input into this
+   document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef,
+   Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
 
 9.  IANA Considerations
 
@@ -2161,6 +2170,22 @@ Internet-Draft               Multipath DCCP                 October 2023
    registry within the DCCP registry group to track the MP-DCCP version.
    The initial content of this registry is as follows:
 
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 39]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
              +============+================+================+
              |  Version   |     Value      | Specification  |
              +============+================+================+
@@ -2178,13 +2203,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    THIS-DCCP-OPTION (suggested type=46) as described in Section 4.2.  In
    this document, THIS-DCCP-OPTION is replaced by 46 for better
    readability.
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 39]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
 
    IANA is requested to create a new 'MP-DCCP Suboptions' registry
    within the DCCP registry group.  The following entries in Table 8
@@ -2216,6 +2234,14 @@ Internet-Draft               Multipath DCCP                 October 2023
       |  MP_OPT=4 |     MP_SEQ    |  Multipath Sequence |  Section  |
       |           |               |        Number       |   4.2.5   |
       +-----------+---------------+---------------------+-----------+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 40]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
       |  MP_OPT=5 |    MP_HMAC    |  Hash-based Message |  Section  |
       |           |               | Auth.  Code for MP- |   4.2.6   |
       |           |               |         DCCP        |           |
@@ -2234,14 +2260,6 @@ Internet-Draft               Multipath DCCP                 October 2023
       |  MP_OPT=9 |    MP_PRIO    |    Change Subflow   |  Section  |
       |           |               |       Priority      |   4.2.10  |
       +-----------+---------------+---------------------+-----------+
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 40]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
       | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
       |           |               |       subflow       |   4.2.11  |
       +-----------+---------------+---------------------+-----------+
@@ -2273,6 +2291,13 @@ Internet-Draft               Multipath DCCP                 October 2023
    via Specification Required [RFC8126] in potential future versions of
    the MP-DCCP protocol.
 
+
+
+Amend, et al.             Expires 14 April 2024                [Page 41]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
     +=======+=====================+===================+===============+
     | Value |       Key Type      |  Name or Meaning  | Reference     |
     +=======+=====================+===================+===============+
@@ -2289,14 +2314,6 @@ Internet-Draft               Multipath DCCP                 October 2023
                       data exchange on different paths
 
 10.  References
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 41]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
 
 10.1.  Normative References
 
@@ -2329,6 +2346,14 @@ Internet-Draft               Multipath DCCP                 October 2023
               V. Rakocevic, "A multipath framework for UDP traffic over
               heterogeneous access networks", Work in Progress,
               Internet-Draft, draft-amend-tsvwg-multipath-framework-
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 42]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
               mpdccp-01, 8 July 2019,
               <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
               multipath-framework-mpdccp-01>.
@@ -2340,19 +2365,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               multipath-06, 23 October 2023,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
               multipath-06>.
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 42]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
 
    [I-D.lhwxz-hybrid-access-network-architecture]
               Leymann, N., Heidemann, C., Cullen, M., Xue, L., and M.
@@ -2391,6 +2403,13 @@ Internet-Draft               Multipath DCCP                 October 2023
               "Multipath extension for DCCP", n.d.,
               <https://multipath-dccp.org/>.
 
+
+
+Amend, et al.             Expires 14 April 2024                [Page 43]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
    [OLIA]     Khalili, R., Gast, N., Popovic, M., Upadhyay, U., and J.
               Le Boudec, "MPTCP is not pareto-optimal: performance
               issues and a possible solution", Proceedings of the 8th
@@ -2400,15 +2419,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    [RFC0793]  Postel, J., "Transmission Control Protocol", RFC 793,
               DOI 10.17487/RFC0793, September 1981,
               <https://www.rfc-editor.org/rfc/rfc793>.
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 43]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
 
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
@@ -2444,16 +2454,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
               September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
-   [RFC5597]  Denis-Courmont, R., "Network Address Translation (NAT)
-              Behavioral Requirements for the Datagram Congestion
-              Control Protocol", BCP 150, RFC 5597,
-              DOI 10.17487/RFC5597, September 2009,
-              <https://www.rfc-editor.org/rfc/rfc5597>.
-
-   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
-              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
-              DOI 10.17487/RFC6234, May 2011,
-              <https://www.rfc-editor.org/rfc/rfc6234>.
 
 
 
@@ -2465,6 +2465,17 @@ Amend, et al.             Expires 14 April 2024                [Page 44]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
+
+   [RFC5597]  Denis-Courmont, R., "Network Address Translation (NAT)
+              Behavioral Requirements for the Datagram Congestion
+              Control Protocol", BCP 150, RFC 5597,
+              DOI 10.17487/RFC5597, September 2009,
+              <https://www.rfc-editor.org/rfc/rfc5597>.
+
+   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
+              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
+              DOI 10.17487/RFC6234, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6234>.
 
    [RFC6356]  Raiciu, C., Handley, M., and D. Wischik, "Coupled
               Congestion Control for Multipath Transport Protocols",
@@ -2502,17 +2513,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
 
-   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/rfc/rfc8126>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
-
-
 
 
 
@@ -2521,6 +2521,15 @@ Amend, et al.             Expires 14 April 2024                [Page 45]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
@@ -2553,15 +2562,6 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
-
-
-
-
-
 
 
 

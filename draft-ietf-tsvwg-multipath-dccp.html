@@ -40,13 +40,13 @@ different paths simultaneously.
     intervaltree 3.1.0
     Jinja2 3.1.2
     lxml 4.9.3
-    platformdirs 3.11.0
-    pycountry 22.3.5
+    platformdirs 4.1.0
+    pycountry 23.12.7
     PyYAML 6.0.1
     requests 2.31.0
     setuptools 65.5.0
     six 1.16.0
-    wcwidth 0.2.9
+    wcwidth 0.2.12
 -->
 <link href="draft-ietf-tsvwg-multipath-dccp.xml" rel="alternate" type="application/rfc+xml">
 <link href="#copyright" rel="license">
@@ -3157,7 +3157,7 @@ sending more data on a given path than congestion control
 for each path allows.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="maximum-packet-size-considerations">
+<div id="mps">
 <section id="section-4.8">
         <h3 id="name-maximum-packet-size-conside">
 <a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
@@ -3286,6 +3286,12 @@ with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
 sender and receiver to reduce the impact of this.<a href="#section-5-5" class="pilcrow">¶</a></p>
+<p id="section-5-6">As described in <a href="#mps" class="auto internal xref">Section 4.8</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+If MP-DCCP exposes a minimum MPS across all paths,
+any change to one path impacts the sender for all paths.
+To mitigate attacks that seek to force a low MPS, MP-DCCP
+could detect an attempt to reduce the MPS less than a minimum MPS, and then
+stop using these paths.<a href="#section-5-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="middlebox">
