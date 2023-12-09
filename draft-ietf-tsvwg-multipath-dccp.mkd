@@ -1487,7 +1487,7 @@ Senders MUST manage per-path congestion status, and avoid to
 sending more data on a given path than congestion control
 for each path allows.
 
-## Maximum Packet Size Considerations
+## Maximum Packet Size Considerations {#mps}
 
 A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.
 
@@ -1594,6 +1594,13 @@ with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
 sender and receiver to reduce the impact of this.
+
+As described in {{mps}}, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+If MP-DCCP exposes a minimum MPS across all paths,
+any change to one path impacts the sender for all paths.
+To mitigate attacks that seek to force a low MPS, MP-DCCP
+could detect an attempt to reduce the MPS less than a minimum MPS, and then
+stop using these paths.
 
 # Interactions with Middleboxes {#middlebox}
 
