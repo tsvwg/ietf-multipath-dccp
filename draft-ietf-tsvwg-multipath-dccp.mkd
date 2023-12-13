@@ -220,7 +220,7 @@ This is not considered in the present specification.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
-in a similar way as MP-DCCP is based as DCCP. 
+in a similar way as MP-DCCP is based on DCCP. 
 In contrast to MP-DCCP, MP-QUIC encrypts the traffic using TLS 1.3. and supports
 multiple streams. When the datagram option is used, MP-QUIC provides a congestion-controlled unreliable unordered datagram service, similar to MP-DCCP; on the other hand, MP-DCCP defines procedures that facilitate subsequent reordering.
 
