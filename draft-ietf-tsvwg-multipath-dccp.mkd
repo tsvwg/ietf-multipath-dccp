@@ -1293,7 +1293,7 @@ The basic initial handshake for the first subflow is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
   request and the MP_KEY option with an Host-specific CI-A and a Key-A for
-  each of supported types as described in {{MP_KEY}}. CI-A is a unique identifier during the
+  each of the supported key types as described in {{MP_KEY}}. CI-A is a unique identifier during the
   lifetime of a MP-DCCP connection.
 
 * Host B sends a DCCP-Response with Confirm feature for
