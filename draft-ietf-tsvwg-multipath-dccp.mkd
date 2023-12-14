@@ -1564,15 +1564,15 @@ following key security requirements to be fulfilled by MP-DCCP:
   subflow is 'fresh'. 
 
 To achieve these goals, MP-DCCP includes a hash-based handshake
-algorithm documented in Sections {{MP_KEY}} and {{handshaking}}. The
+algorithm documented in Sections {{MP_KEY}}, {{MP_HMAC}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
 over the network. To ease demultiplexing while not revealing
-cryptographic material, future subflows use the initially exchanged
+cryptographic material, subsequent subflows use the initially exchanged
 CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
 Authentication Codes (HMACs) used on subflow setup, in order to verify
-that the parties in the handshake of future subflows are the same as in the original
+that the parties in the handshake of subsequent subflows are the same as in the original
 connection setup. It also provides verification that the peer can
 receive traffic at this new address. Replay attacks would still be
 possible when only keys are used;
