@@ -1479,6 +1479,7 @@ can be triggered by either the client or the server and results in the transmiss
 of a Reset packet. The fast close procedure moves the state of the client and server
 directly to TIMEWAIT and CLOSED, respectively.
 
+~~~~
    +----------------------------+    +------------------------------+
    |                            v    v                              |
    |                         +----------+                           |
@@ -1518,6 +1519,7 @@ directly to TIMEWAIT and CLOSED, respectively.
    +------------------------------+                     |           |
                                                         +-----------+
                                                     2MSL timer expires
+~~~~
 
 ## Congestion Control Considerations
 
