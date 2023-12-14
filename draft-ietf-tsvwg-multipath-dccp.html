@@ -2470,57 +2470,56 @@ calculate the RTT difference between the SubFlows and to estimate whether
 missing data has been lost.<a href="#section-4.2.7-2" class="pilcrow">¶</a></p>
 <p id="section-4.2.7-3">The RTT and Age information is a 32-bit integer. This covers a period of
 approximately 1193 hours.<a href="#section-4.2.7-3" class="pilcrow">¶</a></p>
-<span class="break"></span><dl class="dlNewline" id="section-4.2.7-4">
-            <dt id="section-4.2.7-4.1">Raw RTT (=0)</dt>
-            <dd style="margin-left: 1.5em" id="section-4.2.7-4.2">
-              <p id="section-4.2.7-4.2.1">Raw RTT value of the last Datagram Round-Trip, preferably provided by the CCID in use.<a href="#section-4.2.7-4.2.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-</dl>
+<p id="section-4.2.7-4">The Field RTT type indicates the type of RTT estimation, according to the following description:<a href="#section-4.2.7-4" class="pilcrow">¶</a></p>
 <span class="break"></span><dl class="dlNewline" id="section-4.2.7-5">
-            <dt id="section-4.2.7-5.1">Min RTT (=1)</dt>
+            <dt id="section-4.2.7-5.1">Raw RTT (=0)</dt>
             <dd style="margin-left: 1.5em" id="section-4.2.7-5.2">
-              <p id="section-4.2.7-5.2.1">Min RTT value over a given period, preferably provided by the CCID in use.<a href="#section-4.2.7-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.7-5.2.1">Raw RTT value of the last Datagram Round-Trip<a href="#section-4.2.7-5.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 <span class="break"></span><dl class="dlNewline" id="section-4.2.7-6">
-            <dt id="section-4.2.7-6.1">Max RTT (=2)</dt>
+            <dt id="section-4.2.7-6.1">Min RTT (=1)</dt>
             <dd style="margin-left: 1.5em" id="section-4.2.7-6.2">
-              <p id="section-4.2.7-6.2.1">Max RTT value over a given period, preferably provided by the CCID in use.<a href="#section-4.2.7-6.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.7-6.2.1">Min RTT value over a given period<a href="#section-4.2.7-6.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 <span class="break"></span><dl class="dlNewline" id="section-4.2.7-7">
-            <dt id="section-4.2.7-7.1">Smooth RTT (=3)</dt>
+            <dt id="section-4.2.7-7.1">Max RTT (=2)</dt>
             <dd style="margin-left: 1.5em" id="section-4.2.7-7.2">
-              <p id="section-4.2.7-7.2.1">Averaged RTT value over a given period, preferably provided by the CCID in use.<a href="#section-4.2.7-7.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.7-7.2.1">Max RTT value over a given period<a href="#section-4.2.7-7.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
 <span class="break"></span><dl class="dlNewline" id="section-4.2.7-8">
-            <dt id="section-4.2.7-8.1">Age</dt>
+            <dt id="section-4.2.7-8.1">Smooth RTT (=3)</dt>
             <dd style="margin-left: 1.5em" id="section-4.2.7-8.2">
-              <p id="section-4.2.7-8.2.1">The Age parameter defines the time difference between now - creation of the MP_RTT option -
- and the conducted RTT measurement in milliseconds. If no previous measurement
- exists, e.g., when initialized, the value is 0.<a href="#section-4.2.7-8.2.1" class="pilcrow">¶</a></p>
+              <p id="section-4.2.7-8.2.1">Averaged RTT value over a given period<a href="#section-4.2.7-8.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
-<p id="section-4.2.7-9">An example of a flow showing  the exchange of path individual 
+<p id="section-4.2.7-9">Each CCID specifies the algorithms and period applied for their corresponding RTT estimations.The availability of the above described types, to be used in the MP_RTT option, depends on the CCID implementation in place.<a href="#section-4.2.7-9" class="pilcrow">¶</a></p>
+<span class="break"></span><dl class="dlNewline" id="section-4.2.7-10">
+            <dt id="section-4.2.7-10.1">Age</dt>
+            <dd style="margin-left: 1.5em" id="section-4.2.7-10.2">
+              <p id="section-4.2.7-10.2.1">The Age parameter defines the time difference between now - creation of the MP_RTT option -
+ and the conducted RTT measurement in milliseconds. If no previous measurement
+ exists, e.g., when initialized, the value is 0.<a href="#section-4.2.7-10.2.1" class="pilcrow">¶</a></p>
+</dd>
+          <dd class="break"></dd>
+</dl>
+<p id="section-4.2.7-11">An example of a flow showing  the exchange of path individual 
 RTT information is provided in
 <a href="#ref-MP_RTT_example" class="auto internal xref">Figure 15</a>. 
 RTT1 refers to the first path and RTT2 to the second path. The
-RTT values could be extracted from the sender's Congestion Control procedure and
-at the receiving host using the MP_RTT suboption. With the reception of RTT1
+RTT values could be extracted from the sender's Congestion Control procedure and are conveyed to the receiving host using the MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
-In the case that the path individual RTTs are symmetric in the down- and uplink directions, packets
-with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
-lost after path_delta/2.<a href="#section-4.2.7-9" class="pilcrow">¶</a></p>
+In the case that the path individual RTTs are symmetric in the down- and uplink directions and there is no jitter, packets with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed lost after path_delta/2.<a href="#section-4.2.7-11" class="pilcrow">¶</a></p>
 <span id="name-exemplary-flow-of-mp_rtt-ex"></span><div id="ref-MP_RTT_example">
 <figure id="figure-15">
-            <div class="alignLeft art-text artwork" id="section-4.2.7-10.1">
+            <div class="alignLeft art-text artwork" id="section-4.2.7-12.1">
 <pre>
    MP-DCCP                   MP-DCCP
    Sender                    Receiver
