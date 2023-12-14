@@ -892,24 +892,29 @@ missing data has been lost.
 The RTT and Age information is a 32-bit integer. This covers a period of
 approximately 1193 hours.
 
+The Field RTT type indicates the type of RTT estimation, according to the following description: 
+
+
 Raw RTT (=0)
-: Raw RTT value of the last Datagram Round-Trip, preferably provided by the CCID in use.
+: Raw RTT value of the last Datagram Round-Trip
 {: vspace='0'}
 
 
 Min RTT (=1)
-: Min RTT value over a given period, preferably provided by the CCID in use.
+: Min RTT value over a given period
 {: vspace='0'}
 
 
 Max RTT (=2)
-: Max RTT value over a given period, preferably provided by the CCID in use.
+: Max RTT value over a given period
 {: vspace='0'}
 
 
 Smooth RTT (=3)
-: Averaged RTT value over a given period, preferably provided by the CCID in use.
+: Averaged RTT value over a given period
 {: vspace='0'}
+
+Each CCID specifies the algorithms and period applied for their corresponding RTT estimations.The availability of the above described types, to be used in the MP_RTT option, depends on the CCID implementation in place.
 
 Age
 : The Age parameter defines the time difference between now - creation of the MP_RTT option -
@@ -921,13 +926,10 @@ An example of a flow showing  the exchange of path individual
 RTT information is provided in
 {{ref-MP_RTT_example}}. 
 RTT1 refers to the first path and RTT2 to the second path. The
-RTT values could be extracted from the sender's Congestion Control procedure and
-at the receiving host using the MP_RTT suboption. With the reception of RTT1
+RTT values could be extracted from the sender's Congestion Control procedure and are conveyed to the receiving host using the MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
-In the case that the path individual RTTs are symmetric in the down- and uplink directions, packets
-with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
-lost after path_delta/2.
+In the case that the path individual RTTs are symmetric in the down- and uplink directions and there is no jitter, packets with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed lost after path_delta/2.
 
 ~~~~
    MP-DCCP                   MP-DCCP
@@ -1088,7 +1090,7 @@ address from being modified in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it SHOULD silently ignore the option.
 
-A receiver MUST include a MP_SEQ {{MP_SEQ} in a DCCP datagram that sends
+A receiver MUST include a MP_SEQ {{MP_SEQ}} in a DCCP datagram that sends
 an  MP_REMOVEADDR. Further details are given in {{MP_CONFIRM}}.
 
 The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
@@ -1657,7 +1659,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 |  THIS-FEATURE (10 suggested)  | MP-DCCP capability feature | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
-Sect. {{mp_capable} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
+Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
    |  Version  | Value | Specification  |
