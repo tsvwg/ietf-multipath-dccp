@@ -2193,7 +2193,8 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    The authors gratefully acknowledge significant input into this
    document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef,
-   Mohamed Boucadair, Simone Ferlin, and Behcet Sarikaya.
+   Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry
+   Fairhurst and Behcet Sarikaya.
 
 9.  IANA Considerations
 
@@ -2225,7 +2226,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    This document requests IANA to create a new 'MP-DCCP Versions'
    registry within the DCCP registry group to track the MP-DCCP version.
    The initial content of this registry is as follows:
-
 
 
 
