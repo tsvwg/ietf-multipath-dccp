@@ -1433,22 +1433,25 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
                 <p id="section-toc.1-1.4.2.6.1"><a href="#section-4.6" class="auto internal xref">4.6</a>.  <a href="#name-fallback" class="internal xref">Fallback</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.7">
-                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="auto internal xref">4.7</a>.  <a href="#name-congestion-control-consider" class="internal xref">Congestion Control Considerations</a></p>
+                <p id="section-toc.1-1.4.2.7.1"><a href="#section-4.7" class="auto internal xref">4.7</a>.  <a href="#name-state-diagram" class="internal xref">State Diagram</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.8">
-                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="auto internal xref">4.8</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
+                <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="auto internal xref">4.8</a>.  <a href="#name-congestion-control-consider" class="internal xref">Congestion Control Considerations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.9">
-                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="auto internal xref">4.9</a>.  <a href="#name-maximum-number-of-subflows" class="internal xref">Maximum number of Subflows</a></p>
+                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="auto internal xref">4.9</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.10">
-                <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="auto internal xref">4.10</a>. <a href="#name-path-usage-strategies" class="internal xref">Path usage strategies</a></p>
-<ul class="compact toc ulBare ulEmpty">
-<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.10.2.1">
-                    <p id="section-toc.1-1.4.2.10.2.1.1"><a href="#section-4.10.1" class="auto internal xref">4.10.1</a>.  <a href="#name-path-mobility" class="internal xref">Path mobility</a></p>
+                <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="auto internal xref">4.10</a>. <a href="#name-maximum-number-of-subflows" class="internal xref">Maximum number of Subflows</a></p>
 </li>
-                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.10.2.2">
-                    <p id="section-toc.1-1.4.2.10.2.2.1"><a href="#section-4.10.2" class="auto internal xref">4.10.2</a>.  <a href="#name-concurrent-path-usage" class="internal xref">Concurrent path usage</a></p>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.11">
+                <p id="section-toc.1-1.4.2.11.1"><a href="#section-4.11" class="auto internal xref">4.11</a>. <a href="#name-path-usage-strategies" class="internal xref">Path usage strategies</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.11.2.1">
+                    <p id="section-toc.1-1.4.2.11.2.1.1"><a href="#section-4.11.1" class="auto internal xref">4.11.1</a>.  <a href="#name-path-mobility" class="internal xref">Path mobility</a></p>
+</li>
+                  <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.11.2.2">
+                    <p id="section-toc.1-1.4.2.11.2.2.1"><a href="#section-4.11.2" class="auto internal xref">4.11.2</a>.  <a href="#name-concurrent-path-usage" class="internal xref">Concurrent path usage</a></p>
 </li>
                 </ul>
 </li>
@@ -3132,68 +3135,127 @@ Corrupt). If data is dropped due to corruption for an MP-DCCP connection, the af
 subflow MAY be closed.<a href="#section-4.6-7" class="pilcrow">¶</a></p>
 </section>
 </div>
-<div id="congestion-control-considerations">
+<div id="state-diagram">
 <section id="section-4.7">
-        <h3 id="name-congestion-control-consider">
-<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-congestion-control-consider" class="section-name selfRef">Congestion Control Considerations</a>
+        <h3 id="name-state-diagram">
+<a href="#section-4.7" class="section-number selfRef">4.7. </a><a href="#name-state-diagram" class="section-name selfRef">State Diagram</a>
         </h3>
-<p id="section-4.7-1">Senders MUST manage per-path congestion status, and avoid to
+<p id="section-4.7-1">The MP-DCCP per subflow state transitions to a large extent follow the
+state transitions defined for DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, with some modifications 
+due to the MP-DCCP four-way handshake and fast close procedures. The state diagram below
+illustrates the most common state transitions.  The diagram is illustrative.
+For example, there are arcs (not shown) from several additional states 
+to TIMEWAIT, contingent on the receipt of a valid DCCP-Reset.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+<p id="section-4.7-2">The states transitioned
+when moving from the CLOSED to OPEN state during the four-way handshake
+remain the same as for DCCP, but it is no longer possible to transmit
+application data while in the REQUEST state. The fast close procedure
+can be triggered by either the client or the server and results in the transmission
+of a Reset packet. The fast close procedure moves the state of the client and server
+directly to TIMEWAIT and CLOSED, respectively.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
+<p id="section-4.7-3">+----------------------------+    +------------------------------+
+   |                            v    v                              |
+   |                         +----------+                           |
+   |           +-------------+  CLOSED  +-------------+             |
+   |           | passive     +----------+   active    |             |
+   |           |  open                       open     |             |
+   |           |                          snd Request |             |
+   |           v                                      v             |
+   |     +-----------+                           +----------+       |
+   |     |  LISTEN   |                           | REQUEST  |       |
+   |     +-----+-----+                           +----+-----+       |
+   |           | rcv Request             rcv Response |             |
+   |           | snd Response              snd Ack    |             |
+   |           v                                      v             |
+   |     +-----------+                           +----------+       |
+   |     |  RESPOND  |                           | PARTOPEN |       |
+   |     +-----+-----+                           +----+-----+       |
+   |           | rcv Ack             rcv Ack/DataAck  |             |
+   |           | snd Ack                              |             |
+   |           |             +-----------+            |             |
+   |           +------------&gt;|   OPEN    |&lt;-----------+             |
+   |                         +--+-+-+-+--+                          |
+   |        server active close | | | |   active close              |
+   |            snd CloseReq    | | | | or rcv CloseReq             |
+   |                            | | | |    snd Close                |
+   |                            | | | |                             |
+   |     +-----------+          | | | |            +----------+     |
+   |     | CLOSEREQ  |&lt;---------+ | | +-----------&gt;| CLOSING  |     |
+   |     +-----+-----+            | |              +----+-----+     |
+   |           | rcv Close        | |         rcv Reset |           |
+   |           | snd Reset        | |                   |           |
+   |           |                  | | active FastClose  |           |
+   |&lt;----------+        rcv Close | | or rcv FastClose  v           |
+   |   or server active FastClose | | snd Reset    +----+-----+     |
+   |      or server rcv FastClose | +-------------&gt;| TIMEWAIT |     |
+   |                    snd Reset |                +----+-----+     |
+   +------------------------------+                     |           |
+                                                        +-----------+
+                                                    2MSL timer expires<a href="#section-4.7-3" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="congestion-control-considerations">
+<section id="section-4.8">
+        <h3 id="name-congestion-control-consider">
+<a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-congestion-control-consider" class="section-name selfRef">Congestion Control Considerations</a>
+        </h3>
+<p id="section-4.8-1">Senders MUST manage per-path congestion status, and avoid to
 sending more data on a given path than congestion control
-for each path allows.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
+for each path allows.<a href="#section-4.8-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="mps">
-<section id="section-4.8">
+<section id="section-4.9">
         <h3 id="name-maximum-packet-size-conside">
-<a href="#section-4.8" class="section-number selfRef">4.8. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
+<a href="#section-4.9" class="section-number selfRef">4.9. </a><a href="#name-maximum-packet-size-conside" class="section-name selfRef">Maximum Packet Size Considerations</a>
         </h3>
-<p id="section-4.8-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.<a href="#section-4.8-1" class="pilcrow">¶</a></p>
+<p id="section-4.9-1">A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.<a href="#section-4.9-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="maximum-number-of-subflows">
-<section id="section-4.9">
+<section id="section-4.10">
         <h3 id="name-maximum-number-of-subflows">
-<a href="#section-4.9" class="section-number selfRef">4.9. </a><a href="#name-maximum-number-of-subflows" class="section-name selfRef">Maximum number of Subflows</a>
+<a href="#section-4.10" class="section-number selfRef">4.10. </a><a href="#name-maximum-number-of-subflows" class="section-name selfRef">Maximum number of Subflows</a>
         </h3>
-<p id="section-4.9-1">In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.<a href="#section-4.9-1" class="pilcrow">¶</a></p>
-<p id="section-4.9-2">It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> if this limit is exceeded.<a href="#section-4.9-2" class="pilcrow">¶</a></p>
+<p id="section-4.10-1">In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.<a href="#section-4.10-1" class="pilcrow">¶</a></p>
+<p id="section-4.10-2">It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> if this limit is exceeded.<a href="#section-4.10-2" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="path-usage-strategies">
-<section id="section-4.10">
+<section id="section-4.11">
         <h3 id="name-path-usage-strategies">
-<a href="#section-4.10" class="section-number selfRef">4.10. </a><a href="#name-path-usage-strategies" class="section-name selfRef">Path usage strategies</a>
+<a href="#section-4.11" class="section-number selfRef">4.11. </a><a href="#name-path-usage-strategies" class="section-name selfRef">Path usage strategies</a>
         </h3>
-<p id="section-4.10-1">MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
-Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.<a href="#section-4.10-1" class="pilcrow">¶</a></p>
+<p id="section-4.11-1">MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.<a href="#section-4.11-1" class="pilcrow">¶</a></p>
 <div id="path_mobility">
-<section id="section-4.10.1">
+<section id="section-4.11.1">
           <h4 id="name-path-mobility">
-<a href="#section-4.10.1" class="section-number selfRef">4.10.1. </a><a href="#name-path-mobility" class="section-name selfRef">Path mobility</a>
+<a href="#section-4.11.1" class="section-number selfRef">4.11.1. </a><a href="#name-path-mobility" class="section-name selfRef">Path mobility</a>
           </h4>
-<p id="section-4.10.1-1">The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
+<p id="section-4.11.1-1">The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
 When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
 Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
-Path mobility is supported in the current Linux reference implementation <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-4.10.1-1" class="pilcrow">¶</a></p>
+Path mobility is supported in the current Linux reference implementation <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-4.11.1-1" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="concurrent-path-usage">
-<section id="section-4.10.2">
+<section id="section-4.11.2">
           <h4 id="name-concurrent-path-usage">
-<a href="#section-4.10.2" class="section-number selfRef">4.10.2. </a><a href="#name-concurrent-path-usage" class="section-name selfRef">Concurrent path usage</a>
+<a href="#section-4.11.2" class="section-number selfRef">4.11.2. </a><a href="#name-concurrent-path-usage" class="section-name selfRef">Concurrent path usage</a>
           </h4>
-<p id="section-4.10.2-1">Different to a path mobility strategy, the selection between MP-DCCP
+<p id="section-4.11.2-1">Different to a path mobility strategy, the selection between MP-DCCP
 subflows is a per-packet decision that is a part of the multipath
 scheduling process. This method would allow multiple subflows to be
 simultaneously used to aggregate the path resources to obtain higher
-connection throughput.<a href="#section-4.10.2-1" class="pilcrow">¶</a></p>
-<p id="section-4.10.2-2">In this scenario, the selection of congestion control, per-packet scheduling
+connection throughput.<a href="#section-4.11.2-1" class="pilcrow">¶</a></p>
+<p id="section-4.11.2-2">In this scenario, the selection of congestion control, per-packet scheduling
 and potential re-ordering method determines a concurrent path utilization
 strategy and result in a particular transport characteristic.
 A concurrent path usage method uses a scheduling design that could seek to 
-maximize reliability, throughput, minimizing latency, etc.<a href="#section-4.10.2-2" class="pilcrow">¶</a></p>
-<p id="section-4.10.2-3">Concurrent path usage over the Internet can have implications. When a 
+maximize reliability, throughput, minimizing latency, etc.<a href="#section-4.11.2-2" class="pilcrow">¶</a></p>
+<p id="section-4.11.2-3">Concurrent path usage over the Internet can have implications. When a 
 Multipath DCCP connection uses two or more paths, there is no guarantee 
 that these paths are fully disjoint.  When two (or more) subflows share 
 the same bottleneck, using a standard congestion control scheme could 
@@ -3203,13 +3265,13 @@ Multipath TCP uses the coupled congestion control Linked Increases
 Algorithm (LIA) specified in the experimental specification <span>[<a href="#RFC6356" class="cite xref">RFC6356</a>]</span> to solve this problem.  This 
 scheme could also be specified for Multipath DCCP.  The same applies to 
 other coupled congestion control schemes that have been proposed for 
-Multipath TCP such as Opportunistic Linked Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-4.10.2-3" class="pilcrow">¶</a></p>
-<p id="section-4.10.2-4">The specification of scheduling for concurrent multipath and related the 
+Multipath TCP such as Opportunistic Linked Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-4.11.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.11.2-4">The specification of scheduling for concurrent multipath and related the 
 congestion control algorithms and re-ordering methods for use in the general
 Internet are outside the scope of this document. If, and when, the IETF
 specifies a method for concurrent usage of multiple paths for the
 general Internet, the framework specified in this document could be used to 
-provide an IETF recommended method for MP-DCCP.<a href="#section-4.10.2-4" class="pilcrow">¶</a></p>
+provide an IETF recommended method for MP-DCCP.<a href="#section-4.11.2-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3280,7 +3342,7 @@ with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
 sender and receiver to reduce the impact of this.<a href="#section-5-5" class="pilcrow">¶</a></p>
-<p id="section-5-6">As described in <a href="#mps" class="auto internal xref">Section 4.8</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+<p id="section-5-6">As described in <a href="#mps" class="auto internal xref">Section 4.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
 If MP-DCCP exposes a minimum MPS across all paths,
 any change to one path impacts the sender for all paths.
 To mitigate attacks that seek to force a low MPS, MP-DCCP
