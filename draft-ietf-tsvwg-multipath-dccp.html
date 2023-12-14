@@ -1439,7 +1439,7 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
                 <p id="section-toc.1-1.4.2.8.1"><a href="#section-4.8" class="auto internal xref">4.8</a>.  <a href="#name-maximum-packet-size-conside" class="internal xref">Maximum Packet Size Considerations</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.9">
-                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="auto internal xref">4.9</a>.  <a href="#name-maximum-number-of-subflows" class="internal xref">Maximum number of SubFlows</a></p>
+                <p id="section-toc.1-1.4.2.9.1"><a href="#section-4.9" class="auto internal xref">4.9</a>.  <a href="#name-maximum-number-of-subflows" class="internal xref">Maximum number of Subflows</a></p>
 </li>
               <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.10">
                 <p id="section-toc.1-1.4.2.10.1"><a href="#section-4.10" class="auto internal xref">4.10</a>. <a href="#name-path-usage-strategies" class="internal xref">Path usage strategies</a></p>
@@ -3171,7 +3171,7 @@ for each path allows.<a href="#section-4.7-1" class="pilcrow">¶</a></p>
 <div id="maximum-number-of-subflows">
 <section id="section-4.9">
         <h3 id="name-maximum-number-of-subflows">
-<a href="#section-4.9" class="section-number selfRef">4.9. </a><a href="#name-maximum-number-of-subflows" class="section-name selfRef">Maximum number of SubFlows</a>
+<a href="#section-4.9" class="section-number selfRef">4.9. </a><a href="#name-maximum-number-of-subflows" class="section-name selfRef">Maximum number of Subflows</a>
         </h3>
 <p id="section-4.9-1">In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.<a href="#section-4.9-1" class="pilcrow">¶</a></p>
 <p id="section-4.9-2">It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> if this limit is exceeded.<a href="#section-4.9-2" class="pilcrow">¶</a></p>
