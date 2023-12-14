@@ -2168,15 +2168,15 @@ Internet-Draft               Multipath DCCP                 October 2023
    [RFC6951].  Future specifications by the IETF could specify other
    methods for DCCP encapsulation.
 
+   The security impact of MP-DCCP aware middleboxes is discussed in
+   Section 5
+
 7.  Implementation
 
    The approach described above has been implemented in open source
    across different testbeds and a new scheduling algorithm has been
    extensively tested.  Also demonstrations of a laboratory setup have
    been executed and have been published at [multipath-dccp.org].
-
-
-
 
 
 
