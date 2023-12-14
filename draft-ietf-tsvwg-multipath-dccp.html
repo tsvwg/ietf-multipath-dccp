@@ -2420,10 +2420,13 @@ option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
 results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
 first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
 MP_ADDADDR suboption.<a href="#section-4.2.6-5" class="pilcrow">¶</a></p>
-<p id="section-4.2.6-6">If the HMAC cannot be validated by a receiving host, the subsequent handling depends
-on which suboption was being authenticated. If the suboption to be authenticated was either
+<p id="section-4.2.6-6">On the receiver side, the HMAC validation of the suboptions MUST be carried out according to
+the sending sequence in which the associated MP_HMAC follows a suboption. If the suboption
+cannot be validated by a receiving host because the HMAC validation fails, the subsequent handling depends
+on which suboption was being verified. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see <a href="#MP_ADDADDR" class="auto internal xref">Section 4.2.8</a> and <a href="#MP_REMOVEADDR" class="auto internal xref">Section 4.2.9</a>). 
-If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see <a href="#fallback" class="auto internal xref">Section 4.6</a>)<a href="#section-4.2.6-6" class="pilcrow">¶</a></p>
+If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see <a href="#fallback" class="auto internal xref">Section 4.6</a>).
+In the event than an MP_HMAC cannot be associated with a suboption, this MP_HMAC MUST be ignored.<a href="#section-4.2.6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_RTT">
