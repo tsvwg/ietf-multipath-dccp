@@ -711,7 +711,7 @@ using a DCCP-Reset packet with Reset Code THIS-RESET-CODE. The requirement to se
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option. 
 
-On completion of this step, host A will tear down all subflows 
+After sending the MP_FAST_CLOSE on all subflows, host A will tear down all subflows 
 and the multipath DCCP connection immediately terminates.
 
 Upon reception of the first MP_FAST_CLOSE and successful validation of the 
