@@ -818,26 +818,26 @@ chosen in MP_SEQ are considered sufficiently large.
 {: #ref-MP_HMAC title='Format of the MP_HMAC Suboption'}
 
 The MP_HMAC suboption is used to provide authentication for the MP_JOIN,
-MP_ADDADDR, and MP_REMOVEADDR suboptions. The HMAC code is generated according
+MP_ADDADDR, and MP_REMOVEADDR suboptions. For this specification of MP-DCCP, the HMAC code is generated according
 to {{RFC2104}} in combination with the SHA256 hash algorithm described in
 {{RFC6234}}, with the output truncated to the leftmost 160 bits (20 bytes).
 
 The "Key" used for the HMAC computation is the derived key (d-key)
-described in {{MP_KEY}}, while the HMAC "Message" is a concatenation of
+described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADR and MP-REMOVEADDR is a concatenation of:
 
-   * MP_JOIN: The CI and nonce of the MP_JOIN for which authentication
+   * for MP_JOIN: The CI and nonce of the MP_JOIN for which authentication
    shall be performed.
 
-   * MP_ADDADDR: The Address ID with associated IP address
+   * for MP_ADDADDR: The Address ID with associated IP address in network order representation
    and if defined port, otherwise two octets of value 0.
    
-   * MP_REMOVEADDR: Solely the Address ID.
+   * for MP_REMOVEADDR: Solely the Address ID.
 
 MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
-within a single DCCP packet. All these multipath options include an individual
-MP_HASH option. This ensures the MP_HASH is correctly associated.
+within a single DCCP packet. All these multipath options require an individual
+MP_HMAC option. This ensures the MP_HMAC is correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
-MP_REMOVEADDR. Therefore, a MP_HASH MUST directly follow its associated multipath
+MP_REMOVEADDR. Therefore, a MP_HMAC MUST directly follow its associated multipath
 option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
 results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
 first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
