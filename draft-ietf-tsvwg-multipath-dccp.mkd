@@ -351,7 +351,7 @@ Address A1    Address A2             Address B1    Address B2
       more than one address.
 
    *  When additional paths and corresponding addresses/ports are available, additional DCCP subflows can be created on 
-      these paths and attached to the existing MP-DCCP connection. An MP_JOIN suboption is used to connect a new DCCP subflow to an existing MP-DCCP connection. It contains a path token derived from the keys exchanged during the setup of the initial subflow and is exchanged in the 4-way handshake for the subflow together with the Multipath Capable feature. The example in {{ref-example-mp-dccp-usage-scenario}} illustrates creation of an additional DCCP subflow between Address A2 on Host A and Address B1 on Host B. The two subflows
+      these paths and attached to the existing MP-DCCP connection. An MP_JOIN suboption is used to connect a new DCCP subflow to an existing MP-DCCP connection. It contains a Connection Identifier during the setup of the initial subflow and is exchanged in the 4-way handshake for the subflow together with the Multipath Capable feature. The example in {{ref-example-mp-dccp-usage-scenario}} illustrates creation of an additional DCCP subflow between Address A2 on Host A and Address B1 on Host B. The two subflows
       continues to provide a single connection to the applications at both
       endpoints. 
 
