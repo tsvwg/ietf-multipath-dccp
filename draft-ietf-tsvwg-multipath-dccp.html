@@ -1498,47 +1498,42 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
 <p id="section-1-1">Datagram Congestion Control Protocol (DCCP) <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> is a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
-Multipath DCCP (MP-DCCP) provides a set of extensions to DCCP to
-enable a DCCP connection to simultaneously establish flow across multiple paths. This can be  beneficial to applications that transfer
+This document specifies a set of protocol changes that add multipath
+support to DCCP; specifically, support for signaling and setting up
+multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
+data, and termination of sessions.<a href="#section-1-1" class="pilcrow">¶</a></p>
+<p id="section-1-2">Multipath DCCP (MP-DCCP) 
+enables a DCCP connection to simultaneously establish a flow across multiple paths. This can be  beneficial to applications that transfer
 large amounts of data, by utilizing the capacity/connectivity offered by 
 multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability,
 which is important for low-latency applications that do not require
-guaranteed delivery services, such as Audio/Video streaming.<a href="#section-1-1" class="pilcrow">¶</a></p>
-<p id="section-1-2">MP-DCCP was first suggested
+guaranteed delivery services, such as Audio/Video streaming.<a href="#section-1-2" class="pilcrow">¶</a></p>
+<p id="section-1-3">MP-DCCP was first suggested
 in the context of the 3GPP work on 5G multi-access solutions
 <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span> and for hybrid access
 networks <span>[<a href="#I-D.lhwxz-hybrid-access-network-architecture" class="cite xref">I-D.lhwxz-hybrid-access-network-architecture</a>]</span><span>[<a href="#I-D.muley-network-based-bonding-hybrid-access" class="cite xref">I-D.muley-network-based-bonding-hybrid-access</a>]</span>, where
 MP-DCCP can be applied for load-balancing, seamless session handover, and bandwidth
 aggregation (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
-in the 3GPP terminology <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>).<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">This document specifies a set of protocol changes that add multipath
-support to DCCP; specifically, support for signaling and setting up
-multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
-data, and termination of sessions.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">DCCP, as stated in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> does not provide reliable and ordered
-delivery. Consequently, multiple application subflows may be multiplexed over a
-single DCCP connection with no inherent performance penalty 
-for application subflows that do not require in-ordered delivery. DCCP
-does not provide built-in support for those multiple application subflows.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">Encapsulation for DCCP in UDP is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span>.
+in the 3GPP terminology <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>).
+More details on potential use cases for MP-DCCP are provided in <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>, <span>[<a href="#IETF115.Slides" class="cite xref">IETF115.Slides</a>]</span>, and <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>.
+All these use cases profit from an Open Source Linux reference implementation provided under <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
+<p id="section-1-4">Encapsulation for DCCP in UDP is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span>.
 <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span> proposes a 
 lightweight encapsulation for DCCP flow headers appropriate for unreliable 
 IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
-This is not considered in the present specification.<a href="#section-1-5" class="pilcrow">¶</a></p>
-<p id="section-1-6">More details on potential use cases for MP-DCCP are provided in <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>, <span>[<a href="#IETF115.Slides" class="cite xref">IETF115.Slides</a>]</span>, and <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>.
-All these use cases profit from an Open Source Linux reference implementation provided under <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-1-6" class="pilcrow">¶</a></p>
-<p id="section-1-7">Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
+This is not considered in the present specification.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-5">Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection <span>[<a href="#I-D.ietf-quic-multipath" class="cite xref">I-D.ietf-quic-multipath</a>]</span>. MP-QUIC is based on QUIC 
-and leverages UDP as the underlying transport protocol, as DCCP does for MP-DCCP. 
+in a similar way as MP-DCCP is based on DCCP. 
 In contrast to MP-DCCP, MP-QUIC encrypts the traffic using TLS 1.3. and supports
-multiple streams. When the datagram option is used, MP-QUIC does not provide in-ordered or reliable delivery, similar to MP-DCCP; on the other hand, MP-DCCP defines procedures that facilitate subsequent reordering.<a href="#section-1-7" class="pilcrow">¶</a></p>
+multiple streams. When the datagram option is used, MP-QUIC provides a congestion-controlled unreliable unordered datagram service, similar to MP-DCCP; on the other hand, MP-DCCP defines procedures that facilitate subsequent reordering.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="mpdccp_network_stack">
 <section id="section-1.1">
         <h3 id="name-multipath-dccp-in-the-netwo">
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-multipath-dccp-in-the-netwo" class="section-name selfRef">Multipath DCCP in the Networking Stack</a>
         </h3>
 <p id="section-1.1-1">MP-DCCP provides a set of features to DCCP; <a href="#ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks" class="auto internal xref">Figure 1</a> illustrates this layering. 
-It operates at the transport layer and can be used as a transparent for
+It operates at the transport layer and can be used as a transport for
 both higher and lower layers. 
 It is
 designed to be used by applications in the same way as DCCP with no
@@ -1581,22 +1576,11 @@ exposed as single DCCP socket to the application.<a href="#section-1.2-3" class=
 host.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
 <p id="section-1.2-5">Host: An end host operating an MP-DCCP implementation, and either
 initiating or accepting an MP-DCCP connection.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2-6">SubFlow: A subflow refers to a DCCP flows transmitted using a specific path (4-tuple of source and destination address/port
+<p id="section-1.2-6">Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
 pairs) that forms one of the multipath flows used by a single connection.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 <p id="section-1.2-7">In addition to these
 terms, within the framework of MP-DCCP, the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in <a href="#protocol" class="auto internal xref">Section 4</a>.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
-<p id="section-1.2-8">The term SubFlow is not to be confused with an "application sub-flows" mentioned in
-Section 17.2 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.
-Application subflows are differentiated 
-by source and destination port per application as, for example, enabled
-by Service Codes introduced to DCCP in <span>[<a href="#RFC5595" class="cite xref">RFC5595</a>]</span>, and those application subflows
-can be multiplexed over a single DCCP connection. For the sake of consistency,
-this specification assumes a single application is served by a DCCP connection,
-as shown in <a href="#ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks" class="auto internal xref">Figure 1</a>.
-This ought to not impact DCCP operation on each single path
-as noted in (Section 2.4 of <span>[<a href="#RFC5595" class="cite xref">RFC5595</a>]</span>).
-Application subflows can co-exist with MP-DCCP operation as specified in this document.<a href="#section-1.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -1606,13 +1590,12 @@ Application subflows can co-exist with MP-DCCP operation as specified in this do
       <h2 id="name-operation-overview">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-operation-overview" class="section-name selfRef">Operation Overview</a>
       </h2>
-<p id="section-2-1">DCCP (Section 17.2 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>) allows multiple application 
-subflows to be multiplexed over a single DCCP connection with 
-potentially same performance. However, DCCP does not provide built-in 
-support for managing multiple subflows within one DCCP connection.
+<p id="section-2-1">DCCP transmits congestion-controlled unreliable datagrams over a single path.<br>
 Various congestion control mechanisms have been specified to optimize
 DCCP performance for specific traffic types in terms of profiles denoted
-by a Congestion Control IDentifier (CCID).<a href="#section-2-1" class="pilcrow">¶</a></p>
+by a Congestion Control IDentifier (CCID).
+However, DCCP does not provide built-in 
+support for managing multiple subflows within one DCCP connection.<a href="#section-2-1" class="pilcrow">¶</a></p>
 <p id="section-2-2">The extension of DCCP for Multipath-DCCP (MP-DCCP) is 
 described in detail in <a href="#protocol" class="auto internal xref">Section 4</a>.<a href="#section-2-2" class="pilcrow">¶</a></p>
 <p id="section-2-3">At a high level of the MP-DCCP operation, the data 
@@ -1625,23 +1608,25 @@ recipient application. This may be necessary because DCCP does not guarantee in-
 The details of the transmission scheduling mechanism and 
 optional reordering mechanism are up to the sender and receiver, respectively,
 and are outside the scope of this document.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">The following sections define MP-DCCP behavior in detail.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">A Multipath DCCP connection provides a bidirectional connection of datagrams 
-between two hosts exchanging data using in DCCP. It does not require 
+<p id="section-2-4">A Multipath DCCP connection provides a bidirectional connection of datagrams 
+between two hosts exchanging data using DCCP. It does not require 
 any change to the applications. Multipath DCCP enables the 
-hosts to use multiples paths with different IP addresses to transport 
+hosts to use multiple paths with different IP addresses to transport 
 the packets of an MP-DCCP connection. MP-DCCP manages the request, 
 set-up, authentication, prioritization, modification, and removal of
 the DCCP subflows on different paths as well as the exchange of performance 
 parameters.<br>
 The number of DCCP subflows can vary during the 
 lifetime of a Multipath DCCP connection. The details of the path management decisions for
-when to add or remove subflows are outside the scope of this document.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The Multipath Capability for MP-DCCP is negotiated with a new DCCP 
+when to add or remove subflows are outside the scope of this document.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The Multipath Capability for MP-DCCP is negotiated with a new DCCP 
 feature, as specified in <a href="#mp_capable" class="auto internal xref">Section 4.1</a>. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
 variable length multipath-related option, as described in <a href="#protocol" class="auto internal xref">Section 4</a>.
-All MP-DCCP operations are signaled by MP-DCCP suboptions described in {#MP_OPT}.<a href="#section-2-6" class="pilcrow">¶</a></p>
+All MP-DCCP operations are signaled by MP-DCCP suboptions described in <a href="#MP_OPT" class="auto internal xref">Section 4.2</a>. Suboptions that 
+require confirmation from the remote peer are retransmitted by the sender until confirmed or until 
+confirmation is no longer considered relevant.<a href="#section-2-5" class="pilcrow">¶</a></p>
+<p id="section-2-6">The following sections define MP-DCCP behavior in detail.<a href="#section-2-6" class="pilcrow">¶</a></p>
 <div id="concept">
 <section id="section-2.1">
         <h3 id="name-mp-dccp-concept">
@@ -1676,24 +1661,23 @@ Address A1    Address A2             Address B1    Address B2
 <ul class="normal">
 <li class="normal" id="section-2.1-3.1">
             <p id="section-2.1-3.1.1">An MP-DCCP connection begins with a 4-way handshake, between 
-two hosts as described in <a href="#handshaking" class="auto internal xref">Section 4.3</a>. In <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a>,
+two hosts. In <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a>,
 an MP-DCCP connection is established between addresses A1 and B1 on Hosts
-A and B, respectively. MP-DCCP does not require both peers to have 
+A and B, respectively. In the handshake, a Multipath Capable feature is used to negotiate multipath support for the connection. Host specific keys are also exchanged between Host A and Host B during the handshake. The details of the MP-DCCP handshaking procedure is described in <a href="#handshaking" class="auto internal xref">Section 4.3</a>. MP-DCCP does not require both peers to have 
 more than one address.<a href="#section-2.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.2">
-            <p id="section-2.1-3.2.1">When additional paths and corresponding addresses/ports are available, additional DCCP subflows are created on 
-these paths and are attached to the existing MP-DCCP session, which
+            <p id="section-2.1-3.2.1">When additional paths and corresponding addresses/ports are available, additional DCCP subflows can be created on 
+these paths and attached to the existing MP-DCCP connection. An MP_JOIN suboption is used to connect a new DCCP subflow to an existing MP-DCCP connection. It contains a Connection Identifier during the setup of the initial subflow and is exchanged in the 4-way handshake for the subflow together with the Multipath Capable feature. The example in <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a> illustrates creation of an additional DCCP subflow between Address A2 on Host A and Address B1 on Host B. The two subflows
 continues to provide a single connection to the applications at both
-endpoints. The example illustrates creation of an additional DCCP subflow between Address A2
-on Host A and Address B1 on Host B.<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
+endpoints.<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.3">
             <p id="section-2.1-3.3.1">MP-DCCP identifies multiple paths by the presence of multiple
 addresses/ports at hosts.  Combinations of these multiple addresses/ports
 indicate the additional paths.  In the example, other potential
-paths that could be set up are A1&lt;-&gt;B2 and A2&lt;-&gt;B2.  Although this
-additional subflow is shown as being initiated from A2, it could
+paths that could be set up are A1&lt;-&gt;B2 and A2&lt;-&gt;B2.  Although the
+additional subflow in the example is shown as being initiated from A2, an additional subflow could
 alternatively have been initiated from B1 or B2.<a href="#section-2.1-3.3.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.4">
@@ -1704,13 +1688,12 @@ between peers. The definition of a path management method is, however, out of sc
 corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host needs to be avoided and incoming subflow requests terminated.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.5">
-            <p id="section-2.1-3.5.1">MP-DCCP adds connection-level sequence numbers and exchange of
-Round-Trip Time (RTT) information to enable optional reordering features.<a href="#section-2.1-3.5.1" class="pilcrow">¶</a></p>
+            <p id="section-2.1-3.5.1">Through the use of suboptions, MP-DCCP adds connection-level sequence numbers and exchange of
+Round-Trip Time (RTT) information to enable optional reordering features. As a hint for scheduling decisions, a suboption that allows a peer to indicate its priorities for what path to use is also defined.<a href="#section-2.1-3.5.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.6">
             <p id="section-2.1-3.6.1">Subflows are terminated in the same way as regular DCCP connections, as described
-in (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 8.3). The MP-DCCP connection is terminated by a
-connection-level DCCP-CloseReq or DCCP-Close message.<a href="#section-2.1-3.6.1" class="pilcrow">¶</a></p>
+in (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 8.3). MP-DCCP connections are closed by including an MP_CLOSE suboption in subflow DCCP-CloseReq or DCCP-Close messages. An MP-DCCP connection may also be reset through the use of an MP_FAST_CLOSE suboption. Key data from the initial handshake is included in the MP_CLOSE and MP_FAST_CLOSE to protect from unauthorized shutdown of MP-DCCP connections.<a href="#section-2.1-3.6.1" class="pilcrow">¶</a></p>
 </li>
         </ul>
 </section>
