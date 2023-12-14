@@ -2323,9 +2323,9 @@ Curve 25519 to generate the derived key (d-key) from the shared secret.<a href="
 <p id="section-4.2.4-7">Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
 on a single key type to be used, as described in <a href="#handshaking" class="auto internal xref">Section 4.3</a><a href="#section-4.2.4-7" class="pilcrow">¶</a></p>
-<p id="section-4.2.4-8">If the key type can not be agreed in the 
-handshake procedure, the MP-DCCP connection MUST fallback to not using MP-DCCP, as 
-indicated in <a href="#fallback" class="auto internal xref">Section 4.6</a><a href="#section-4.2.4-8" class="pilcrow">¶</a></p>
+<p id="section-4.2.4-8">It is possible that not all hosts will have all key types. If the key type cannot be agreed in the 
+handshake procedure, the MP-DCCP connection MUST fall back to not using MP-DCCP, as 
+indicated in <a href="#fallback" class="auto internal xref">Section 4.6</a>.<a href="#section-4.2.4-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_SEQ">
