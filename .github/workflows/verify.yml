@@ -40,8 +40,6 @@ jobs:
     runs-on: ubuntu-latest
     env: 
       CI_COMMIT_MESSAGE: Continuous Integration Build Artifacts
-      CI_COMMIT_ACTOR: ${{ GITHUB_ACTOR }}
-      CI_COMMIT_ACTOR_ID: ${{ GITHUB_ACTOR_ID }}
     needs: make-rfc
     if: github.ref == 'refs/heads/master'
     steps:
@@ -57,8 +55,8 @@ jobs:
         shell: "bash"
         run: |
           ls *.html *.txt *.xml
-          git config --global user.name "${{ env.CI_COMMIT_ACTOR }}"
-          git config --global user.email "${{ env.CI_COMMIT_ACTOR }}+${{ env.CI_COMMIT_ACTOR_ID }}@users.noreply.github.com"
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR_ID}+${GITHUB_ACTOR}@users.noreply.github.com"
           git add ./\*.txt
           git add ./\*.html
           git commit -a -m "${{ env.CI_COMMIT_MESSAGE }}" && git push || exit 0
