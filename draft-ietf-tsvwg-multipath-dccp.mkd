@@ -1463,6 +1463,62 @@ Corrupt). If data is dropped due to corruption for an MP-DCCP connection, the af
 subflow MAY be closed.
 
 
+## State Diagram {#state-diagram}
+The MP-DCCP per subflow state transitions to a large extent follow the
+state transitions defined for DCCP in {{RFC4340}}, with some modifications 
+due to the MP-DCCP four-way handshake and fast close procedures. The state diagram below
+illustrates the most common state transitions.  The diagram is illustrative.
+For example, there are arcs (not shown) from several additional states 
+to TIMEWAIT, contingent on the receipt of a valid DCCP-Reset. 
+
+The states transitioned
+when moving from the CLOSED to OPEN state during the four-way handshake
+remain the same as for DCCP, but it is no longer possible to transmit
+application data while in the REQUEST state. The fast close procedure
+can be triggered by either the client or the server and results in the transmission
+of a Reset packet. The fast close procedure moves the state of the client and server
+directly to TIMEWAIT and CLOSED, respectively.
+
+   +----------------------------+    +------------------------------+
+   |                            v    v                              |
+   |                         +----------+                           |
+   |           +-------------+  CLOSED  +-------------+             |
+   |           | passive     +----------+   active    |             |
+   |           |  open                       open     |             |
+   |           |                          snd Request |             |
+   |           v                                      v             |
+   |     +-----------+                           +----------+       |
+   |     |  LISTEN   |                           | REQUEST  |       |
+   |     +-----+-----+                           +----+-----+       |
+   |           | rcv Request             rcv Response |             |
+   |           | snd Response              snd Ack    |             |
+   |           v                                      v             |
+   |     +-----------+                           +----------+       |
+   |     |  RESPOND  |                           | PARTOPEN |       |
+   |     +-----+-----+                           +----+-----+       |
+   |           | rcv Ack             rcv Ack/DataAck  |             |
+   |           | snd Ack                              |             |
+   |           |             +-----------+            |             |
+   |           +------------>|   OPEN    |<-----------+             |
+   |                         +--+-+-+-+--+                          |
+   |        server active close | | | |   active close              |
+   |            snd CloseReq    | | | | or rcv CloseReq             |
+   |                            | | | |    snd Close                |
+   |                            | | | |                             |
+   |     +-----------+          | | | |            +----------+     |
+   |     | CLOSEREQ  |<---------+ | | +----------->| CLOSING  |     |
+   |     +-----+-----+            | |              +----+-----+     |
+   |           | rcv Close        | |         rcv Reset |           |
+   |           | snd Reset        | |                   |           |
+   |           |                  | | active FastClose  |           |
+   |<----------+        rcv Close | | or rcv FastClose  v           |
+   |   or server active FastClose | | snd Reset    +----+-----+     |
+   |      or server rcv FastClose | +------------->| TIMEWAIT |     |
+   |                    snd Reset |                +----+-----+     |
+   +------------------------------+                     |           |
+                                                        +-----------+
+                                                    2MSL timer expires
+
 ## Congestion Control Considerations
 
 Senders MUST manage per-path congestion status, and avoid to

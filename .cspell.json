@@ -98,6 +98,8 @@
        "CWND",
        "QUIC",
        "quic",
+       "TIMEWAIT",
+       "PARTOPEN",
        "Gorry",
        "Fairhurst"
     ]
