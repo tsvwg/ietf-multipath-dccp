@@ -921,13 +921,10 @@ An example of a flow showing  the exchange of path individual
 RTT information is provided in
 {{ref-MP_RTT_example}}. 
 RTT1 refers to the first path and RTT2 to the second path. The
-RTT values could be extracted from the sender's Congestion Control procedure and
-at the receiving host using the MP_RTT suboption. With the reception of RTT1
+RTT values could be extracted from the sender's Congestion Control procedure and are conveyed to the receiving host using the MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
-In the case that the path individual RTTs are symmetric in the down- and uplink directions, packets
-with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed
-lost after path_delta/2 in a system without jitter, and would require an offset to be considered in systems with jitter.
+In the case that the path individual RTTs are symmetric in the down- and uplink directions and there is no jitter, packets with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed lost after path_delta/2.
 
 ~~~~
    MP-DCCP                   MP-DCCP
