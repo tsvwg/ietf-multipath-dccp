@@ -3153,7 +3153,9 @@ application data while in the REQUEST state. The fast close procedure
 can be triggered by either the client or the server and results in the transmission
 of a Reset packet. The fast close procedure moves the state of the client and server
 directly to TIMEWAIT and CLOSED, respectively.<a href="#section-4.7-2" class="pilcrow">¶</a></p>
-<p id="section-4.7-3">+----------------------------+    +------------------------------+
+<div class="alignLeft art-text artwork" id="section-4.7-3">
+<pre>
+   +----------------------------+    +------------------------------+
    |                            v    v                              |
    |                         +----------+                           |
    |           +-------------+  CLOSED  +-------------+             |
@@ -3191,7 +3193,9 @@ directly to TIMEWAIT and CLOSED, respectively.<a href="#section-4.7-2" class="pi
    |                    snd Reset |                +----+-----+     |
    +------------------------------+                     |           |
                                                         +-----------+
-                                                    2MSL timer expires<a href="#section-4.7-3" class="pilcrow">¶</a></p>
+                                                    2MSL timer expires
+</pre><a href="#section-4.7-3" class="pilcrow">¶</a>
+</div>
 </section>
 </div>
 <div id="congestion-control-considerations">

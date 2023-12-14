@@ -119,21 +119,21 @@ Internet-Draft               Multipath DCCP                 October 2023
      4.6.  Fallback  . . . . . . . . . . . . . . . . . . . . . . . .  33
      4.7.  State Diagram . . . . . . . . . . . . . . . . . . . . . .  34
      4.8.  Congestion Control Considerations . . . . . . . . . . . .  35
-     4.9.  Maximum Packet Size Considerations  . . . . . . . . . . .  35
-     4.10. Maximum number of Subflows  . . . . . . . . . . . . . . .  35
+     4.9.  Maximum Packet Size Considerations  . . . . . . . . . . .  36
+     4.10. Maximum number of Subflows  . . . . . . . . . . . . . . .  36
      4.11. Path usage strategies . . . . . . . . . . . . . . . . . .  36
        4.11.1.  Path mobility  . . . . . . . . . . . . . . . . . . .  36
-       4.11.2.  Concurrent path usage  . . . . . . . . . . . . . . .  36
-   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  37
+       4.11.2.  Concurrent path usage  . . . . . . . . . . . . . . .  37
+   5.  Security Considerations . . . . . . . . . . . . . . . . . . .  38
    6.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  39
-   7.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  39
-   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  39
+   7.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  40
+   8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  40
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  40
-   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  42
+   10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  43
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  43
-     10.2.  Informative References . . . . . . . . . . . . . . . . .  43
+     10.2.  Informative References . . . . . . . . . . . . . . . . .  44
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  47
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  49
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  50
 
 1.  Introduction
 
@@ -1895,9 +1895,9 @@ Internet-Draft               Multipath DCCP                 October 2023
    packet.  The fast close procedure moves the state of the client and
    server directly to TIMEWAIT and CLOSED, respectively.
 
-   +----------------------------+ +------------------------------+ | v
-   v | | +----------+ | | +-------------+ CLOSED +-------------+ | | |
-   passive +----------+ active | | | | open open | | | | snd
+
+
+
 
 
 
@@ -1906,28 +1906,61 @@ Amend, et al.             Expires 14 April 2024                [Page 34]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-   Request | | | v v | | +-----------+ +----------+ | | | LISTEN | |
-   REQUEST | | | +-----+-----+ +----+-----+ | | | rcv Request rcv
-   Response | | | | snd Response snd Ack | | | v v | | +-----------+
-   +----------+ | | | RESPOND | | PARTOPEN | | | +-----+-----+
-   +----+-----+ | | | rcv Ack rcv Ack/DataAck | | | | snd Ack | | | |
-   +-----------+ | | | +------------>| OPEN |<-----------+ | |
-   +--+-+-+-+--+ | | server active close | | | | active close | | snd
-   CloseReq | | | | or rcv CloseReq | | | | | | snd
-   Close | | | | | | | | +-----------+ | | | | +----------+ | | |
-   CLOSEREQ |<---------+ | | +----------->| CLOSING | | |
-   +-----+-----+ | | +----+-----+ | | | rcv Close | | rcv Reset | | | |
-   snd Reset | | | | | | | | active FastClose | | |<----------+ rcv
-   Close | | or rcv FastClose v | | or server active FastClose | | snd
-   Reset +----+-----+ | | or server rcv FastClose | +------------->|
-   TIMEWAIT | | | snd Reset | +----+-----+ |
-   +------------------------------+ | | +-----------+ 2MSL timer expires
+     +----------------------------+    +------------------------------+
+     |                            v    v                              |
+     |                         +----------+                           |
+     |           +-------------+  CLOSED  +-------------+             |
+     |           | passive     +----------+   active    |             |
+     |           |  open                       open     |             |
+     |           |                          snd Request |             |
+     |           v                                      v             |
+     |     +-----------+                           +----------+       |
+     |     |  LISTEN   |                           | REQUEST  |       |
+     |     +-----+-----+                           +----+-----+       |
+     |           | rcv Request             rcv Response |             |
+     |           | snd Response              snd Ack    |             |
+     |           v                                      v             |
+     |     +-----------+                           +----------+       |
+     |     |  RESPOND  |                           | PARTOPEN |       |
+     |     +-----+-----+                           +----+-----+       |
+     |           | rcv Ack             rcv Ack/DataAck  |             |
+     |           | snd Ack                              |             |
+     |           |             +-----------+            |             |
+     |           +------------>|   OPEN    |<-----------+             |
+     |                         +--+-+-+-+--+                          |
+     |        server active close | | | |   active close              |
+     |            snd CloseReq    | | | | or rcv CloseReq             |
+     |                            | | | |    snd Close                |
+     |                            | | | |                             |
+     |     +-----------+          | | | |            +----------+     |
+     |     | CLOSEREQ  |<---------+ | | +----------->| CLOSING  |     |
+     |     +-----+-----+            | |              +----+-----+     |
+     |           | rcv Close        | |         rcv Reset |           |
+     |           | snd Reset        | |                   |           |
+     |           |                  | | active FastClose  |           |
+     |<----------+        rcv Close | | or rcv FastClose  v           |
+     |   or server active FastClose | | snd Reset    +----+-----+     |
+     |      or server rcv FastClose | +------------->| TIMEWAIT |     |
+     |                    snd Reset |                +----+-----+     |
+     +------------------------------+                     |           |
+                                                          +-----------+
+                                                      2MSL timer expires
 
 4.8.  Congestion Control Considerations
 
    Senders MUST manage per-path congestion status, and avoid to sending
    more data on a given path than congestion control for each path
    allows.
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 35]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
 4.9.  Maximum Packet Size Considerations
 
@@ -1953,15 +1986,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    Reset Code "too busy" as specified in [RFC4340] if this limit is
    exceeded.
 
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 35]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
 4.11.  Path usage strategies
 
    MP-DCCP can be configured to realize one of several strategies for
@@ -1986,6 +2010,14 @@ Internet-Draft               Multipath DCCP                 October 2023
    due to either the occurrence of certain error conditions (e.g., DCCP
    timeout, packet loss threshold, RTT threshold, closed/removed) or
    adjustments from the MP-DCCP user.  When there is outbound data to
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 36]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
    send and the primary path becomes inactive (e.g., due to failures) or
    de-prioritized, the MP-DCCP endpoint SHOULD try to send the data
    through an alternate path with a different source or destination
@@ -2005,18 +2037,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    scheduling process.  This method would allow multiple subflows to be
    simultaneously used to aggregate the path resources to obtain higher
    connection throughput.
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 36]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
 
    In this scenario, the selection of congestion control, per-packet
    scheduling and potential re-ordering method determines a concurrent
@@ -2047,6 +2067,13 @@ Internet-Draft               Multipath DCCP                 October 2023
    document could be used to provide an IETF recommended method for MP-
    DCCP.
 
+
+
+Amend, et al.             Expires 14 April 2024                [Page 37]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
 5.  Security Considerations
 
    Similar to DCCP, MP-DCCP does not provide cryptographic security
@@ -2065,15 +2092,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    should be introduced compared to regular DCCP.  Thereof derived are
    the following key security requirements to be fulfilled by MP-DCCP:
 
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 37]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    *  Provide a mechanism to confirm that parties involved in a subflow
       handshake are identical to those in the original connection setup.
 
@@ -2083,6 +2101,34 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    *  Provide replay protection, i.e., ensure that a request to add/
       remove a subflow is 'fresh'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 38]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    To achieve these goals, MP-DCCP includes a hash-based handshake
    algorithm documented in Sections Section 4.2.4, Section 4.2.6 and
@@ -2117,19 +2163,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    implementations should consider heuristics at both the sender and
    receiver to reduce the impact of this.
 
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 38]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    As described in Section 4.9, a Maximum Packet Size (MPS) is
    maintained for a MP-DCCP connection.  If MP-DCCP exposes a minimum
    MPS across all paths, any change to one path impacts the sender for
@@ -2145,6 +2178,14 @@ Internet-Draft               Multipath DCCP                 October 2023
    otherwise unexpected reactions of middleboxes may hinder its
    deployment.  DCCP already provides means to mitigate the potential
    impact of middleboxes, also in comparison to TCP (see [RFC4043],
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 39]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
    Section 16).  When both hosts are located behind a NAT or firewall
    entity, specific measures have to be applied such as the [RFC5596]-
    specified simultaneous-open technique that update the (traditionally
@@ -2177,15 +2218,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry
    Fairhurst and Behcet Sarikaya.
 
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 39]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
 9.  IANA Considerations
 
    This section provides guidance to the Internet Assigned Numbers
@@ -2201,6 +2233,14 @@ Internet-Draft               Multipath DCCP                 October 2023
    Table 6 should be added to the Feature Numbers registry in the DCCP
    registry group according to [RFC4340], Section 19.4. under the "DCCP
    Protocol" heading.
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 40]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    +=============================+====================+================+
    |            Value            |    Feature Name    | Specification  |
@@ -2235,13 +2275,6 @@ Internet-Draft               Multipath DCCP                 October 2023
    this document, THIS-DCCP-OPTION is replaced by 46 for better
    readability.
 
-
-
-Amend, et al.             Expires 14 April 2024                [Page 40]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    IANA is requested to create a new 'MP-DCCP Suboptions' registry
    within the DCCP registry group.  The following entries in Table 8
    should be added to the new 'MP-DCCP Suboptions' registry.  The
@@ -2257,6 +2290,14 @@ Internet-Draft               Multipath DCCP                 October 2023
       |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
       |           |               |   processing of an  |   4.2.1   |
       |           |               |    MP_OPT option    |           |
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 41]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
+
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
       |           |               |   existing MP-DCCP  |   4.2.2   |
@@ -2290,14 +2331,6 @@ Internet-Draft               Multipath DCCP                 October 2023
       |  MP_OPT=9 |    MP_PRIO    |    Change Subflow   |  Section  |
       |           |               |       Priority      |   4.2.10  |
       +-----------+---------------+---------------------+-----------+
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 41]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
       | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
       |           |               |       subflow       |   4.2.11  |
       +-----------+---------------+---------------------+-----------+
@@ -2310,6 +2343,16 @@ Internet-Draft               Multipath DCCP                 October 2023
       +-----------+---------------+---------------------+-----------+
 
                     Table 8: MP-DCCP Suboptions registry
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 42]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    Future MP-DCCP sub-options with MP_OPT>11 are assigned from this
    registry using the Specification Required policy (Section 4.6 of
@@ -2346,14 +2389,6 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 10.  References
 
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 42]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
 10.1.  Normative References
 
    [DCCP.Parameter]
@@ -2365,6 +2400,15 @@ Internet-Draft               Multipath DCCP                 October 2023
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 43]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
               Congestion Control Protocol (DCCP)", RFC 4340,
@@ -2397,19 +2441,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
               multipath-06>.
 
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 43]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    [I-D.lhwxz-hybrid-access-network-architecture]
               Leymann, N., Heidemann, C., Cullen, M., Xue, L., and M.
               Zhang, "Hybrid Access Network Architecture", Work in
@@ -2426,6 +2457,14 @@ Internet-Draft               Multipath DCCP                 October 2023
               bonding-hybrid-access-03, 22 October 2018,
               <https://datatracker.ietf.org/doc/html/draft-muley-
               network-based-bonding-hybrid-access-03>.
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 44]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    [IETF115.Slides]
               Amend, M., "MP-DCCP for enabling transfer of UDP/IP
@@ -2457,15 +2496,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               DOI 10.17487/RFC0793, September 1981,
               <https://www.rfc-editor.org/rfc/rfc793>.
 
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 44]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
               DOI 10.17487/RFC2104, February 1997,
@@ -2480,6 +2510,17 @@ Internet-Draft               Multipath DCCP                 October 2023
               Infrastructure Permanent Identifier", RFC 4043,
               DOI 10.17487/RFC4043, May 2005,
               <https://www.rfc-editor.org/rfc/rfc4043>.
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 45]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
               "Randomness Requirements for Security", BCP 106, RFC 4086,
@@ -2511,17 +2552,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               DOI 10.17487/RFC6234, May 2011,
               <https://www.rfc-editor.org/rfc/rfc6234>.
 
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 45]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    [RFC6356]  Raiciu, C., Handley, M., and D. Wischik, "Coupled
               Congestion Control for Multipath Transport Protocols",
               RFC 6356, DOI 10.17487/RFC6356, October 2011,
@@ -2536,6 +2566,17 @@ Internet-Draft               Multipath DCCP                 October 2023
               "TCP Extensions for Multipath Operation with Multiple
               Addresses", RFC 6824, DOI 10.17487/RFC6824, January 2013,
               <https://www.rfc-editor.org/rfc/rfc6824>.
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 46]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
@@ -2567,17 +2608,6 @@ Internet-Draft               Multipath DCCP                 October 2023
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
 
-
-
-
-
-
-
-Amend, et al.             Expires 14 April 2024                [Page 46]
-
-Internet-Draft               Multipath DCCP                 October 2023
-
-
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
               Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
@@ -2591,6 +2621,18 @@ Internet-Draft               Multipath DCCP                 October 2023
 Appendix A.  Differences from Multipath TCP
 
    This appendix is Informative.
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 47]
+
+Internet-Draft               Multipath DCCP                 October 2023
+
 
    Multipath DCCP is similar to Multipath TCP [RFC8684], in that it
    extends the related basic DCCP transport protocol [RFC4340] with
@@ -2629,7 +2671,21 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-Amend, et al.             Expires 14 April 2024                [Page 47]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 14 April 2024                [Page 48]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
@@ -2685,7 +2741,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 
 
-Amend, et al.             Expires 14 April 2024                [Page 48]
+Amend, et al.             Expires 14 April 2024                [Page 49]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
@@ -2741,7 +2797,7 @@ Authors' Addresses
 
 
 
-Amend, et al.             Expires 14 April 2024                [Page 49]
+Amend, et al.             Expires 14 April 2024                [Page 50]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
@@ -2797,4 +2853,4 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 
 
-Amend, et al.             Expires 14 April 2024                [Page 50]
+Amend, et al.             Expires 14 April 2024                [Page 51]
