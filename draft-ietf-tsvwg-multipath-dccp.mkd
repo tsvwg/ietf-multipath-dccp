@@ -1491,7 +1491,7 @@ for each path allows.
 
 A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.
 
-## Maximum number of SubFlows
+## Maximum number of Subflows
 
 In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.
 
