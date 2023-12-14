@@ -1303,7 +1303,7 @@ The basic initial handshake for the first subflow is as follows:
 
 * Host A sends a DCCP-Ack to confirm the proper key exchange.
 
-* Host B sends a DCCP-Ack to complete the handshaking and set both connection ends to the OPEN state.
+* Host B sends a DCCP-Ack to complete the handshake and set both connection ends to the OPEN state.
 
 It should be noted that DCCP is protected against corruption of DCCP header data (section 9 of {{RFC4340}}), so no additional mechanisms beyond the general confirmation are required to ensure that the header data has been properly received.
 
@@ -1315,7 +1315,7 @@ handshake is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
   request and the MP_JOIN option with Host B’s CI-B,
-  taken from the basic initial handshake. Additionally, an own random nonce
+  obtained during the initial handshake. Additionally, an own random nonce
   RA is transmitted with the MP_JOIN.
 
 * Host B computes the HMAC of the DCCP-Request and sends a DCCP-Response
