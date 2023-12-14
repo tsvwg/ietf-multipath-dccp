@@ -714,7 +714,7 @@ is carried by the MP_FAST_CLOSE option.
 After sending the MP_FAST_CLOSE on all subflows, host A will tear down all subflows 
 and the multipath DCCP connection immediately terminates.
 
-Upon reception of the first MP_FAST_CLOSE and successful validation of the 
+Upon reception of the first MP_FAST_CLOSE with successfully validated 
 Key Data, host B will send a DCCP Reset packet response on all subflows to 
 the host A with Reset Code THIS-RESET-CODE to clean potential middlebox states. 
 Host B will then tear down all subflows and terminate the MP-DCCP connection. 
