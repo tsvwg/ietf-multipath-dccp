@@ -823,7 +823,7 @@ to {{RFC2104}} in combination with the SHA256 hash algorithm described in
 {{RFC6234}}, with the output truncated to the leftmost 160 bits (20 bytes).
 
 The "Key" used for the HMAC computation is the derived key (d-key)
-described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADR and MP-REMOVEADDR is a concatenation of:
+described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR is a concatenation of:
 
    * for MP_JOIN: The CI and nonce of the MP_JOIN for which authentication
    shall be performed.
