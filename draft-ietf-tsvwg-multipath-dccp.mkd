@@ -706,7 +706,7 @@ In order to provide an MP-DCCP-level
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
-When host A wants to abruptly close MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
+When host A wants to abruptly close an MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
 using a DCCP-Reset packet with Reset Code THIS-RESET-CODE. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option. 
@@ -716,7 +716,7 @@ and the multipath DCCP connection immediately terminates.
 
 Upon reception of the first MP_FAST_CLOSE with successfully validated 
 Key Data, host B will send a DCCP Reset packet response on all subflows to 
-the host A with Reset Code THIS-RESET-CODE to clean potential middlebox states. 
+host A with Reset Code THIS-RESET-CODE to clean potential middlebox states. 
 Host B will then tear down all subflows and terminate the MP-DCCP connection. 
 
 
