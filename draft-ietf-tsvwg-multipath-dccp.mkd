@@ -825,13 +825,24 @@ to {{RFC2104}} in combination with the SHA256 hash algorithm described in
 The "Key" used for the HMAC computation is the derived key (d-key)
 described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR is a concatenation of:
 
-   * for MP_JOIN: The CI and nonce of the MP_JOIN for which authentication
-   shall be performed.
+   * for MP_JOIN: The nonces of the MP_JOIN messages for which authentication
+   shall be performed. Depending on whether Host A or Host B performs the HMAC-SHA256 calculation, it is carried out as follows:
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)
+   An usage example is shown in {{ref-mp-dccp-handshaking}}.
 
-   * for MP_ADDADDR: The Address ID with associated IP address in network order representation
-   and if defined port, otherwise two octets of value 0.
+   * for MP_ADDADDR: The Address ID with associated IP address and if defined port,
+   otherwise two octets of value 0. IP address and port MUST be used in network byte
+   order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
+   it is carried out as follows:
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+NBO(IP)+NBO(Port))
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+NBO(IP)+NBO(Port))
    
    * for MP_REMOVEADDR: Solely the Address ID.
+   Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
+   it is carried out as follows:
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID)
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID)
 
 MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
 within a single DCCP packet. All these multipath options require an individual
