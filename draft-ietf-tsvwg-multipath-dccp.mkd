@@ -846,7 +846,7 @@ described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP
 
 MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
 within a single DCCP packet. All these multipath options require an individual
-MP_HMAC option. This ensures the MP_HMAC is correctly associated.
+MP_HMAC option. This ensures that the MP_HMAC is correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
 MP_REMOVEADDR. Therefore, a MP_HMAC MUST directly follow its associated multipath
 option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
