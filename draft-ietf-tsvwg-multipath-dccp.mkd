@@ -819,7 +819,7 @@ chosen in MP_SEQ are considered sufficiently large.
 
 The MP_HMAC suboption is used to provide authentication for the
 MP_ADDADDR, and MP_REMOVEADDR suboptions. In addition, it provides
-authentication for subflows joinning an existing MP_DCCP connection,
+authentication for subflows joining an existing MP_DCCP connection,
 as described in the second and third step of the handshake of a
 subsequent subflow in {{handshaking}}. For this specification of MP-DCCP,
 the HMAC code is generated according to {{RFC2104}} in combination
