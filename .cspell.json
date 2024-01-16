@@ -97,6 +97,10 @@
        "DTLS",
        "CWND",
        "QUIC",
-       "quic"
+       "quic",
+       "TIMEWAIT",
+       "PARTOPEN",
+       "Gorry",
+       "Fairhurst"
     ]
 }
