@@ -386,12 +386,12 @@ Address A1    Address A2             Address B1    Address B2
 # MP-DCCP Protocol {#protocol}
 
 The DCCP protocol feature list ({{RFC4340}}, Section 6.4) is
-updated by adding  a new Multipath feature with Feature number THIS-FEATURE, as
+updated by adding  a new Multipath feature with Feature number 10, as
 shown in {{ref-feature-list}}.
 
 | Number       | Meaning                      | Rec'n Rule | Initial Value | Req'd |
 |:------------:|:-----------------------------|:----------:|:-------------:|:-----:|
-| THIS-FEATURE | Multipath Capable            |     SP     |       0       |   N   |
+|      10      | Multipath Capable            |     SP     |       0       |   N   |
 {: #ref-feature-list title='Multipath Feature'}
 
 Rec'n Rule:
@@ -420,13 +420,13 @@ shown in {{ref-option-list}}.
 
 A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.
 
-The Multipath Capable feature (MP_CAPABLE) has feature number THIS-FEATURE and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself indicated by the feature number THIS-VERSION, also one ore several values can be exchanged. This value field has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation. The leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
-MP-DCCP implementation (THIS-VER for this specification, which results in the version field being set to 000THIS-VER). The following four bits are unassigned in version, THIS-VER. The unassigned bits MUST be set to zero by the sender and MUST be ignored by the receiver.
+The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one ore several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation if required for example to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
+MP-DCCP implementation and MUST be set to 0 following this specification. The four bits following the Version field are unassigned in version 0 and MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
     0  1  2  3   4  5  6  7
    +-----------+------------+
-   | THIS-VER  | Unassigned |
+   |  Version  | Unassigned |
    +-----------+------------+
 ~~~~
 {: #ref-mp-capable-format title='Format of the Multipath Capable feature value field'}
@@ -448,7 +448,7 @@ supported version(s), ordered by preference. Any subflow added to an existing MP
 version negotiated for the first subflow.
 
 If no agreement is found, the Server MUST reply with an empty Confirm L option
-with feature number THIS-FEATURE and no values.
+with feature number 10 and no values.
 
 
 An example of successful version negotiation is shown hereafter and follows the negotiation example shown in {{RFC4340}} Section 6.5: 
@@ -687,7 +687,7 @@ In order to provide an MP-DCCP-level
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
 
 When host A wants to abruptly close an MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
-using a DCCP-Reset packet with Reset Code THIS-RESET-CODE. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
+using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option. 
 
@@ -696,10 +696,8 @@ and the multipath DCCP connection immediately terminates.
 
 Upon reception of the first MP_FAST_CLOSE with successfully validated 
 Key Data, host B will send a DCCP Reset packet response on all subflows to 
-host A with Reset Code THIS-RESET-CODE to clean potential middlebox states. 
+host A with Reset Code 13 to clean potential middlebox states. 
 Host B will then tear down all subflows and terminate the MP-DCCP connection. 
-
-
 
 
 ### MP_KEY {#MP_KEY}
@@ -1712,21 +1710,21 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 
 | Value            | Feature Name               | Specification   |
 |:----------------:|:--------------------------:|:---------------:|
-|  THIS-FEATURE (10 suggested)  | MP-DCCP capability feature | [ThisDocument]  |
+|   10 suggested   | MP-DCCP capability feature | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
 Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
-   |  Version  | Value | Specification  |
-   |:---------:|:-----------:|:--------------:|
-   | THIS-VER  |  Suggested 0000 | [ThisDocument] |
-   | Unassigned| 0001 - 1111     |      |
+   |  Version  | Value           | Specification  |
+   |:---------:|:---------------:|:--------------:|
+   |     0     |  0000 suggested | [ThisDocument] |
+   | Unassigned|    0001 - 1111  |                |
 {:#ref-add-version-list title='MP-DCCP Versions Registry'}
 
 Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
-This document requests IANA to assign a new DCCP protocol option THIS-DCCP-OPTION (suggested type=46) as described in {{MP_OPT}}. In this document, THIS-DCCP-OPTION is replaced by 46 for better readability.
+This document requests IANA to assign a new DCCP protocol option 46 as described in {{MP_OPT}}.
 
 IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in {{ref-add-proto-opt-list}} should be added to the new 'MP-DCCP Suboptions' registry. The registry in {{ref-add-proto-opt-list}} has an upper boundary of 255 in the numeric value field. 
 
@@ -1750,9 +1748,9 @@ IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP 
  
 Future MP-DCCP sub-options with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
-In addition IANA is requested to assign a new DCCP Reset Code value THIS-RESET-CODE (13 suggested) in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this THIS-VER of the protocol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Value | Key Type             | Name or Meaning                  | Reference  |
