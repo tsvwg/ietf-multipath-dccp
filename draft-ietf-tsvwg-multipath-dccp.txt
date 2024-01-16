@@ -414,15 +414,14 @@ Internet-Draft               Multipath DCCP                 October 2023
 4.  MP-DCCP Protocol
 
    The DCCP protocol feature list ([RFC4340], Section 6.4) is updated by
-   adding a new Multipath feature with Feature number THIS-FEATURE, as
-   shown in Table 1.
+   adding a new Multipath feature with Feature number 10, as shown in
+   Table 1.
 
-     +==============+===========+============+===============+=======+
-     |    Number    | Meaning   | Rec'n Rule | Initial Value | Req'd |
-     +==============+===========+============+===============+=======+
-     | THIS-FEATURE | Multipath |     SP     |       0       |   N   |
-     |              | Capable   |            |               |       |
-     +--------------+-----------+------------+---------------+-------+
+    +========+===================+============+===============+=======+
+    | Number | Meaning           | Rec'n Rule | Initial Value | Req'd |
+    +========+===================+============+===============+=======+
+    |   10   | Multipath Capable |     SP     |       0       |   N   |
+    +--------+-------------------+------------+---------------+-------+
 
                          Table 1: Multipath Feature
 
@@ -445,6 +444,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
 
 
+
 Amend, et al.             Expires 14 April 2024                 [Page 8]
 
 Internet-Draft               Multipath DCCP                 October 2023
@@ -463,22 +463,22 @@ Internet-Draft               Multipath DCCP                 October 2023
    A DCCP endpoint negotiates the Multipath Capable Feature to determine
    whether multipath extensions can be enabled for a DCCP connection.
 
-   The Multipath Capable feature (MP_CAPABLE) has feature number THIS-
-   FEATURE and follows the structure for features given in [RFC4340]
-   Section 6.  Beside the negotiation of the feature itself indicated by
-   the feature number THIS-VERSION, also one ore several values can be
-   exchanged.  This value field has a length of one-byte and can be
-   repeated several times within the DCCP option for feature
-   negotiation.  The leftmost four bits in Figure 3 specify the
-   compatible version of the MP-DCCP implementation (THIS-VER for this
-   specification, which results in the version field being set to
-   000THIS-VER).  The following four bits are unassigned in version,
-   THIS-VER.  The unassigned bits MUST be set to zero by the sender and
-   MUST be ignored by the receiver.
+   The Multipath Capable feature (MP_CAPABLE) has feature number 10 and
+   follows the structure for features given in [RFC4340] Section 6.
+   Beside the negotiation of the feature itself, also one ore several
+   values can be exchanged.  The value field specified here for the
+   Multipath Capable feature has a length of one-byte and can be
+   repeated several times within the DCCP option for feature negotiation
+   if required for example to announce support of different versions of
+   the protocol.  For that, the leftmost four bits in Figure 3 specify
+   the compatible version of the MP-DCCP implementation and MUST be set
+   to 0 following this specification.  The four bits following the
+   Version field are unassigned in version 0 and MUST be set to zero by
+   the sender and MUST be ignored by the receiver.
 
        0  1  2  3   4  5  6  7
       +-----------+------------+
-      | THIS-VER  | Unassigned |
+      |  Version  | Unassigned |
       +-----------+------------+
 
        Figure 3: Format of the Multipath Capable feature value field
@@ -513,7 +513,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    negotiated for the first subflow.
 
    If no agreement is found, the Server MUST reply with an empty Confirm
-   L option with feature number THIS-FEATURE and no values.
+   L option with feature number 10 and no values.
 
    An example of successful version negotiation is shown hereafter and
    follows the negotiation example shown in [RFC4340] Section 6.5:
@@ -871,12 +871,12 @@ Internet-Draft               Multipath DCCP                 October 2023
    When host A wants to abruptly close an MP-DCCP connection with host
    B, it will send out the MP_FAST_CLOSE.  The MP_FAST_CLOSE suboption
    MUST be sent from host A on all subflows using a DCCP-Reset packet
-   with Reset Code THIS-RESET-CODE.  The requirement to send the
-   MP_FAST_CLOSE on all subflows increases the probability that host B
-   will receive the MP_FAST_CLOSE to take the same action.  To protect
-   from unauthorized shutdown of a MP-DCCP connection, the selected Key
-   Data of the peer host during the handshaking procedure is carried by
-   the MP_FAST_CLOSE option.
+   with Reset Code 13.  The requirement to send the MP_FAST_CLOSE on all
+   subflows increases the probability that host B will receive the
+   MP_FAST_CLOSE to take the same action.  To protect from unauthorized
+   shutdown of a MP-DCCP connection, the selected Key Data of the peer
+   host during the handshaking procedure is carried by the MP_FAST_CLOSE
+   option.
 
    After sending the MP_FAST_CLOSE on all subflows, host A will tear
    down all subflows and the multipath DCCP connection immediately
@@ -884,9 +884,9 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    Upon reception of the first MP_FAST_CLOSE with successfully validated
    Key Data, host B will send a DCCP Reset packet response on all
-   subflows to host A with Reset Code THIS-RESET-CODE to clean potential
-   middlebox states.  Host B will then tear down all subflows and
-   terminate the MP-DCCP connection.
+   subflows to host A with Reset Code 13 to clean potential middlebox
+   states.  Host B will then tear down all subflows and terminate the
+   MP-DCCP connection.
 
 4.2.4.  MP_KEY
 
@@ -2298,14 +2298,13 @@ Amend, et al.             Expires 14 April 2024                [Page 41]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-   +=============================+====================+================+
-   |            Value            |    Feature Name    | Specification  |
-   +=============================+====================+================+
-   |         THIS-FEATURE        | MP-DCCP capability | [ThisDocument] |
-   |        (10 suggested)       |      feature       |                |
-   +-----------------------------+--------------------+----------------+
+      +==============+============================+================+
+      |    Value     |        Feature Name        | Specification  |
+      +==============+============================+================+
+      | 10 suggested | MP-DCCP capability feature | [ThisDocument] |
+      +--------------+----------------------------+----------------+
 
-             Table 6: Addition to DCCP Feature Numbers registry
+            Table 6: Addition to DCCP Feature Numbers registry
 
    Sect.  Section 4.1 specifies the new 1-Byte entry above includes a
    4-bit part to specify the version of the used MP-DCCP implementation.
@@ -2316,7 +2315,7 @@ Internet-Draft               Multipath DCCP                 October 2023
              +============+================+================+
              |  Version   |     Value      | Specification  |
              +============+================+================+
-             |  THIS-VER  | Suggested 0000 | [ThisDocument] |
+             |     0      | 0000 suggested | [ThisDocument] |
              +------------+----------------+----------------+
              | Unassigned |  0001 - 1111   |                |
              +------------+----------------+----------------+
@@ -2326,10 +2325,8 @@ Internet-Draft               Multipath DCCP                 October 2023
    Future MP-DCCP versions 1 to 15 are assigned from this registry using
    the Specification Required policy (Section 4.6 of [RFC8126]).
 
-   This document requests IANA to assign a new DCCP protocol option
-   THIS-DCCP-OPTION (suggested type=46) as described in Section 4.2.  In
-   this document, THIS-DCCP-OPTION is replaced by 46 for better
-   readability.
+   This document requests IANA to assign a new DCCP protocol option 46
+   as described in Section 4.2.
 
    IANA is requested to create a new 'MP-DCCP Suboptions' registry
    within the DCCP registry group.  The following entries in Table 8
@@ -2346,6 +2343,9 @@ Internet-Draft               Multipath DCCP                 October 2023
       |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
       |           |               |   processing of an  |   4.2.1   |
       |           |               |    MP_OPT option    |           |
+      +-----------+---------------+---------------------+-----------+
+      |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
+      |           |               |   existing MP-DCCP  |   4.2.2   |
 
 
 
@@ -2354,9 +2354,6 @@ Amend, et al.             Expires 14 April 2024                [Page 42]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-      +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
-      |           |               |   existing MP-DCCP  |   4.2.2   |
       |           |               |      connection     |           |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=2 | MP_FAST_CLOSE |    Close MP-DCCP    |  Section  |
@@ -2400,6 +2397,9 @@ Internet-Draft               Multipath DCCP                 October 2023
 
                     Table 8: MP-DCCP Suboptions registry
 
+   Future MP-DCCP sub-options with MP_OPT>11 are assigned from this
+   registry using the Specification Required policy (Section 4.6 of
+   [RFC8126]).
 
 
 
@@ -2410,23 +2410,19 @@ Amend, et al.             Expires 14 April 2024                [Page 43]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-   Future MP-DCCP sub-options with MP_OPT>11 are assigned from this
-   registry using the Specification Required policy (Section 4.6 of
-   [RFC8126]).
-
    In addition IANA is requested to assign a new DCCP Reset Code value
-   THIS-RESET-CODE (13 suggested) in the DCCP Reset Codes Registry, with
-   the short description "Abrupt MP termination".  Use of this reset
-   code is defined in section Section 4.2.3.
+   13 suggested in the DCCP Reset Codes Registry, with the short
+   description "Abrupt MP termination".  Use of this reset code is
+   defined in section Section 4.2.3.
 
    In addition IANA is requested to assign for this version of the MP-
    DCCP protocol a new 'MP_KEY' registry containing three different sub
    options to the MP-KEY option to identify the MP_KEY Key types in
    terms of 8-bit values as specified in Section 4.2.4 according to the
    entries in Table 9 below.  Values in range 3-255 (decimal) inclusive
-   remain unassigned in this THIS-VER of the protocol and are assigned
-   via Specification Required [RFC8126] in potential future versions of
-   the MP-DCCP protocol.
+   remain unassigned in this here specified version 0 of the protocol
+   and are assigned via Specification Required [RFC8126] in potential
+   future versions of the MP-DCCP protocol.
 
     +=======+=====================+===================+===============+
     | Value |       Key Type      |  Name or Meaning  | Reference     |
@@ -2457,6 +2453,10 @@ Internet-Draft               Multipath DCCP                 October 2023
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
+   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
+              Congestion Control Protocol (DCCP)", RFC 4340,
+              DOI 10.17487/RFC4340, March 2006,
+              <https://www.rfc-editor.org/rfc/rfc4340>.
 
 
 
@@ -2465,11 +2465,6 @@ Amend, et al.             Expires 14 April 2024                [Page 44]
 
 Internet-Draft               Multipath DCCP                 October 2023
 
-
-   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
-              Congestion Control Protocol (DCCP)", RFC 4340,
-              DOI 10.17487/RFC4340, March 2006,
-              <https://www.rfc-editor.org/rfc/rfc4340>.
 
 10.2.  Informative References
 
@@ -2513,6 +2508,11 @@ Internet-Draft               Multipath DCCP                 October 2023
               bonding-hybrid-access-03, 22 October 2018,
               <https://datatracker.ietf.org/doc/html/draft-muley-
               network-based-bonding-hybrid-access-03>.
+
+
+
+
+
 
 
 
