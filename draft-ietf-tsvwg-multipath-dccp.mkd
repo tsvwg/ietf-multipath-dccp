@@ -245,7 +245,7 @@ changes to the application itself.
 |      IP       |            |       IP      |      IP       |
 +---------------+            +-------------------------------+
 ~~~~
-{: #ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks title='Comparison of Standard DCCP and MP-DCCP Protocol Stacks'}
+{: #ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks title='Comparison of standard DCCP and MP-DCCP protocol stacks'}
 
 
 ## Terminology {#terminology}
@@ -341,7 +341,7 @@ Address A1    Address A2             Address B1    Address B2
   | merge individual DCCP subflows to one MP-DCCP connection
   |             |                      |             |
 ~~~~
-{: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP Usage Scenario'}
+{: #ref-example-mp-dccp-usage-scenario title='Example MP-DCCP usage scenario'}
  
 
    *  An MP-DCCP connection begins with a 4-way handshake, between 
@@ -392,7 +392,7 @@ shown in {{ref-feature-list}}.
 | Number       | Meaning                      | Rec'n Rule | Initial Value | Req'd |
 |:------------:|:-----------------------------|:----------:|:-------------:|:-----:|
 |      10      | Multipath Capable            |     SP     |       0       |   N   |
-{: #ref-feature-list title='Multipath Feature'}
+{: #ref-feature-list title='Multipath feature'}
 
 Rec'n Rule:
 : The reconciliation rule used for the feature. SP indicates the server-priority,
@@ -413,7 +413,7 @@ shown in {{ref-option-list}}.
 | Type  | Option Length | Meaning               | DCCP-Data? |
 |:-----:|:-------------:|:---------------------:|:----------:|
 |  46   |    variable   | Multipath             |     Y      |
-{: #ref-option-list title='Multipath Option Set'}
+{: #ref-option-list title='Multipath option set'}
 
 
 ## Multipath Capable Feature {#mp_capable}
@@ -488,7 +488,7 @@ MP-DCCP uses one single option to signal various multipath-related operations. T
 +--------+--------+--------+--------+--------+
  Type=46
 ~~~~
-{: #ref-mp-option-format title='Multipath Option Format'}
+{: #ref-mp-option-format title='Multipath option format'}
 
 The fields used by the the multipath option are described in {{ref-mp-option-list}}. MP_OPT refers to an MP-DCCP suboption.
 
@@ -503,10 +503,10 @@ The fields used by the the multipath option are described in {{ref-mp-option-lis
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
-| 46  |       4       |  9 =MP_PRIO      | Change Subflow Priority                              |
+| 46  |       4       |  9 =MP_PRIO      | Change subflow Priority                              |
 | 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 | 46  |       TBD     | >10              | Reserved for future MP suboptions.                   |
-{: #ref-mp-option-list title='MP_OPT Option Types'}
+{: #ref-mp-option-list title='MP_OPT option types'}
 
 Future MP suboptions could be defined in a later version or extension to this specification.
 
@@ -624,7 +624,7 @@ Address A1    Address A2                     Address B1    Address B2
   +--------+--------+--------+--------+
    Type=46  Length=12 MP_OPT=1
 ~~~~
-{: #ref-MP_JOIN title='Format of the MP_JOIN Suboption'}
+{: #ref-MP_JOIN title='Format of the MP_JOIN suboption'}
 
 The MP_JOIN option is used to add a new subflow to an existing MP-DCCP
 connection and REQUIRES a successful establishment of the first subflow using MP_KEY.
@@ -684,7 +684,7 @@ In order to provide an MP-DCCP-level
   +--------+--------+--------+--------+--------+
    Type=46   Length  MP_OPT=2
 ~~~~
-{: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE Suboption'}
+{: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE suboption'}
 
 When host A wants to abruptly close an MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
 using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
@@ -717,7 +717,7 @@ Host B will then tear down all subflows and terminate the MP-DCCP connection.
   +---------------+---------------+
       Type=46          Length         MP_OPT=3
 ~~~~
-{: #ref-MP_KEY title='Format of the MP_KEY Suboption'}
+{: #ref-MP_KEY title='Format of the MP_KEY suboption'}
 
 The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
 hosts for a given connection.
@@ -733,7 +733,7 @@ The set of key types are shown in {{ref-key-type-list}}.
 | 1 =ECDHE-C25519-SHA256 |                 32 | ECDHE with SHA256 and Curve25519 |
 | 2 =ECDHE-C25519-SHA512 |                 64 | ECDHE with SHA512 and Curve25519 |
 | 3-255                  |                    | Unassigned                       |
-{: #ref-key-type-list title='MP_KEY Key Types'}
+{: #ref-key-type-list title='MP_KEY key types'}
 
 
 Plain Text
@@ -780,7 +780,7 @@ indicated in {{fallback}}.
   +--------+--------+
    Type=46  Length=9 MP_OPT=4
 ~~~~
-{: #ref-MP_SEQ title='Format of the MP_SEQ Suboption'}
+{: #ref-MP_SEQ title='Format of the MP_SEQ suboption'}
 
 The MP_SEQ suboption is used for end-to-end datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
@@ -812,7 +812,7 @@ chosen in MP_SEQ are considered sufficiently large.
   +--------+--------+--------+--------+--------+--------+
    Type=46  Length=23 MP_OPT=5
 ~~~~
-{: #ref-MP_HMAC title='Format of the MP_HMAC Suboption'}
+{: #ref-MP_HMAC title='Format of the MP_HMAC suboption'}
 
 The MP_HMAC suboption is used to provide authentication for the
 MP_ADDADDR, and MP_REMOVEADDR suboptions. In addition, it provides
@@ -877,12 +877,12 @@ in DCCP-Ack in response to a DCCP-Response packet containing an MP_JOIN option, 
   +--------+--------+--------+--------+--------+
    Type=46  Length=12 MP_OPT=6
 ~~~~
-{: #ref-MP_RTT title='Format of the MP_RTT Suboption'}
+{: #ref-MP_RTT title='Format of the MP_RTT suboption'}
 
 The MP_RTT suboption is used to transmit RTT values and age
 (represented in milliseconds) that belong to the path over which this information is transmitted.
 This information is useful for the receiving host to
-calculate the RTT difference between the SubFlows and to estimate whether
+calculate the RTT difference between the subflows and to estimate whether
 missing data has been lost.
 
 The RTT and Age information is a 32-bit integer. This covers a period of
@@ -960,7 +960,7 @@ client), there could be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
 port is specified, the receiving host MUST assume that any attempt to
 connect to the specified address uses the port already used by the
-SubFlow on which the MP_ADDADDR signal was sent.
+subflow on which the MP_ADDADDR signal was sent.
 
 Along with the MP_ADDADDR option an MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
@@ -995,7 +995,7 @@ in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
   +-------------------------------+
        Type=46         Length         MP_OPT=7
 ~~~~
-{: #ref-MP_ADDADDR title='Format of the MP_ADDADDR Suboption'}
+{: #ref-MP_ADDADDR title='Format of the MP_ADDADDR suboption'}
  
 Each address has an Address ID that could be used for uniquely
 identifying the address within a connection for address removal.
@@ -1113,7 +1113,7 @@ at the requested Address ID, the receiver will silently ignore the request.
 
 -> followed by MP_HMAC option
 ~~~~
-{: #refMP_REMOVEADDR title='Format of the MP_REMOVEADDR Suboption'}
+{: #refMP_REMOVEADDR title='Format of the MP_REMOVEADDR suboption'}
  
 A subflow that is still functioning MUST be closed with a DCCP-Close
 exchange as in regular DCCP, rather than using this option. For more
@@ -1137,7 +1137,7 @@ of battery, the usage of only a single path may be the preferred choice
 of the user. 
 
 The MP_PRIO suboption, shown below, can be used to set a priority flag
-for the SubFlow over which the suboption is received.
+for the subflow over which the suboption is received.
 
 ~~~~
                         1                   2                   3
@@ -1147,7 +1147,7 @@ for the SubFlow over which the suboption is received.
    +---------------+---------------+---------------+--------------+
        Type=46         Length=4        MP_OPT=9
 ~~~~
-{: #ref-MP_PRIO title='Format of the MP_PRIO Suboption'}
+{: #ref-MP_PRIO title='Format of the MP_PRIO suboption'}
 
 The following values are available for the Prio field:
 
@@ -1204,7 +1204,7 @@ in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
   +--------+--------+--------+--------+--------+
    Type=46   Length  MP_OPT=10
 ~~~~
-{: #ref-MP_CLOSE title='Format of the MP_CLOSE Suboption'}
+{: #ref-MP_CLOSE title='Format of the MP_CLOSE suboption'}
 
 An MP-DCCP connection can be gracefully closed by sending and MP_CLOSE to the peer host. 
 On all subflows, the regular termination procedure as described in {{RFC4340}} 
@@ -1222,7 +1222,7 @@ On reception of the first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data,
 or due to a local decision, all subflows transition to the CLOSING state 
 before transmitting a DCCP-Close carrying MP_CLOSE. 
 The MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of 
-the initial SubFlow during handshake with MP_KEY option. 
+the initial subflow during handshake with MP_KEY option. 
 If the initial subflow no longer exists, the state moves immediately to CLOSED.
 
 Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data 
@@ -1235,9 +1235,9 @@ When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow re
 Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
 
 
-### Experimental MP-DCCP Sub-Option MP_EXP for private use {#MP_EXP}
+### Experimental MP-DCCP Suboption MP_EXP for private use {#MP_EXP}
 
-This section reserves an MP-DCCP sub-option to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
+This section reserves an MP-DCCP suboption to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
 option could be applicable to specific environments or scenarios according to potential new requirements and is meant for private use only. MP_OPT 
 feature number 11 is specified with an exemplary description as below:
 
@@ -1251,7 +1251,7 @@ feature number 11 is specified with an exemplary description as below:
 +---------------------------------------------------------------+
      Type=46         Length         MP_OPT=11
 ~~~~
-{: #ref-MP_EXP title='Format of the MP_EXP Suboption'}
+{: #ref-MP_EXP title='Format of the MP_EXP suboption'}
 
 The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 Bytes.
 
@@ -1285,7 +1285,7 @@ Address A1    Address A2                              Address B1
      |             |<--------------------------------------|
      |             |DCCP-ACK                               |
 ~~~~
-{: #ref-mp-dccp-handshaking title='Example MP-DCCP Handshake'}
+{: #ref-mp-dccp-handshaking title='Example MP-DCCP handshake'}
 
 The basic initial handshake for the first subflow is as follows:
 
@@ -1730,35 +1730,35 @@ IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP 
 
 | Value    | Symbol          | Name                                             | Reference         |
 |:--------:|:---------------:|:------------------------------------------------:|:-----------------:|
-| Type=46  | MP_OPT          | DCCP Multipath option                            | {{MP_OPT}}        |
+| Type=46  | MP_OPT          | DCCP multipath option                            | {{MP_OPT}}        |
 | MP_OPT=0 | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
 | MP_OPT=1 | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
 | MP_OPT=2 | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
 | MP_OPT=3 | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
-| MP_OPT=4 | MP_SEQ          | Multipath Sequence Number                        | {{MP_SEQ}}        |
-| MP_OPT=5 | MP_HMAC         | Hash-based Message Auth. Code for MP-DCCP        | {{MP_HMAC}}       |
+| MP_OPT=4 | MP_SEQ          | Multipath sequence number                        | {{MP_SEQ}}        |
+| MP_OPT=5 | MP_HMAC         | Hash-based message auth. code for MP-DCCP        | {{MP_HMAC}}       |
 | MP_OPT=6 | MP_RTT          | Transmit RTT values and calculation parameters   | {{MP_RTT}}        |
-| MP_OPT=7 | MP_ADDADDR      | Advertise additional Address(es)/Port(s)         | {{MP_ADDADDR}}    |
-| MP_OPT=8 | MP_REMOVEADDR   | Remove Address(es)/ Port(s)                      | {{MP_REMOVEADDR}} |
-| MP_OPT=9 | MP_PRIO         | Change Subflow Priority                          | {{MP_PRIO}}       |
+| MP_OPT=7 | MP_ADDADDR      | Advertise additional address(es)/port(s)         | {{MP_ADDADDR}}    |
+| MP_OPT=8 | MP_REMOVEADDR   | Remove address(es)/ port(s)                      | {{MP_REMOVEADDR}} |
+| MP_OPT=9 | MP_PRIO         | Change subflow priority                          | {{MP_PRIO}}       |
 | MP_OPT=10| MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_CLOSE}}        |
-| MP_OPT=11| MP_EXP          | Experimental Sub-Option for private use          | {{MP_EXP}}        |
+| MP_OPT=11| MP_EXP          | Experimental suboption for private use          | {{MP_EXP}}        |
 | MP_OPT>11| Unassigned      | Reserved for future MP-DCCP suboptions           |                   |
 {:#ref-add-proto-opt-list title='MP-DCCP Suboptions registry'}
  
-Future MP-DCCP sub-options with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future MP-DCCP suboptions with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different sub options to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different suboptions to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Value | Key Type             | Name or Meaning                  | Reference  |
 |:-----:|:--------------------:|:--------------------------------:|:-----------|
-|   0   | Plain Text           | Plain Text Key                   | {{MP_KEY}} |
+|   0   | Plain Text           | Plain text key                   | {{MP_KEY}} |
 |   1   | ECDHE-C25519-SHA256  | ECDHE with SHA256 and Curve25519 | {{MP_KEY}} |
 |   2   | ECDHE-C25519-SHA512  | ECDHE with SHA512 and Curve25519 | {{MP_KEY}} |
-{:#ref-mp_key-sub-opt-list title='MP-DCCP MP_KEY registry with type sub-options for key data exchange on different paths'}
+{:#ref-mp_key-sub-opt-list title='MP-DCCP MP_KEY registry with type suboptions for key data exchange on different paths'}
 
 --- back
 
