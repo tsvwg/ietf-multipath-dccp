@@ -101,7 +101,7 @@ Table of Contents
        4.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  25
        4.2.10. MP_PRIO . . . . . . . . . . . . . . . . . . . . . . .  26
        4.2.11. MP_CLOSE  . . . . . . . . . . . . . . . . . . . . . .  28
-       4.2.12. Experimental MP-DCCP Sub-Option MP_EXP for private
+       4.2.12. Experimental MP-DCCP Suboption MP_EXP for private
                use . . . . . . . . . . . . . . . . . . . . . . . . .  29
      4.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  29
      4.4.  Address knowledge exchange  . . . . . . . . . . . . . . .  31
@@ -208,7 +208,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    |      IP       |            |       IP      |      IP       |
    +---------------+            +-------------------------------+
 
-     Figure 1: Comparison of Standard DCCP and MP-DCCP Protocol Stacks
+     Figure 1: Comparison of standard DCCP and MP-DCCP protocol stacks
 
 1.2.  Terminology
 
@@ -326,7 +326,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      | merge individual DCCP subflows to one MP-DCCP connection
      |             |                      |             |
 
-                  Figure 2: Example MP-DCCP Usage Scenario
+                  Figure 2: Example MP-DCCP usage scenario
 
 
 
@@ -423,7 +423,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     |   10   | Multipath Capable |     SP     |       0       |   N   |
     +--------+-------------------+------------+---------------+-------+
 
-                         Table 1: Multipath Feature
+                         Table 1: Multipath feature
 
    Rec'n Rule:  The reconciliation rule used for the feature.  SP
       indicates the server-priority, NN indicates this is non-
@@ -456,7 +456,7 @@ Internet-Draft               Multipath DCCP                 October 2023
              |  46  |    variable   | Multipath |     Y      |
              +------+---------------+-----------+------------+
 
-                       Table 2: Multipath Option Set
+                       Table 2: Multipath option set
 
 4.1.  Multipath Capable Feature
 
@@ -569,7 +569,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    +--------+--------+--------+--------+--------+
     Type=46
 
-                     Figure 5: Multipath Option Format
+                     Figure 5: Multipath option format
 
    The fields used by the the multipath option are described in Table 3.
    MP_OPT refers to an MP-DCCP suboption.
@@ -601,7 +601,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     | 46   | 4      | 8              | Remove Address                 |
     |      |        | =MP_REMOVEADDR |                                |
     +------+--------+----------------+--------------------------------+
-    | 46   | 4      | 9 =MP_PRIO     | Change Subflow Priority        |
+    | 46   | 4      | 9 =MP_PRIO     | Change subflow Priority        |
     +------+--------+----------------+--------------------------------+
     | 46   | var    | 10 =MP_CLOSE   | Close an MP-DCCP subflow       |
     +------+--------+----------------+--------------------------------+
@@ -609,7 +609,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     |      |        |                | suboptions.                    |
     +------+--------+----------------+--------------------------------+
 
-                        Table 3: MP_OPT Option Types
+                        Table 3: MP_OPT option types
 
 
 
@@ -797,7 +797,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +--------+--------+--------+--------+
       Type=46  Length=12 MP_OPT=1
 
-                 Figure 9: Format of the MP_JOIN Suboption
+                 Figure 9: Format of the MP_JOIN suboption
 
    The MP_JOIN option is used to add a new subflow to an existing MP-
    DCCP connection and REQUIRES a successful establishment of the first
@@ -866,7 +866,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +--------+--------+--------+--------+--------+
       Type=46   Length  MP_OPT=2
 
-              Figure 10: Format of the MP_FAST_CLOSE Suboption
+              Figure 10: Format of the MP_FAST_CLOSE suboption
 
    When host A wants to abruptly close an MP-DCCP connection with host
    B, it will send out the MP_FAST_CLOSE.  The MP_FAST_CLOSE suboption
@@ -911,7 +911,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +---------------+---------------+
          Type=46          Length         MP_OPT=3
 
-                 Figure 11: Format of the MP_KEY Suboption
+                 Figure 11: Format of the MP_KEY suboption
 
    The MP_KEY suboption is used to exchange a Connection Identifier (CI)
    and key material between hosts for a given connection.  The CI is a
@@ -940,7 +940,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     | 3-255                  |                    | Unassigned        |
     +------------------------+--------------------+-------------------+
 
-                         Table 5: MP_KEY Key Types
+                         Table 5: MP_KEY key types
 
    Plain Text
 
@@ -994,7 +994,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +--------+--------+
       Type=46  Length=9 MP_OPT=4
 
-                 Figure 12: Format of the MP_SEQ Suboption
+                 Figure 12: Format of the MP_SEQ suboption
 
    The MP_SEQ suboption is used for end-to-end datagram-based sequence
    numbers of an MP-DCCP connection.  The initial data sequence number
@@ -1034,7 +1034,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +--------+--------+--------+--------+--------+--------+
       Type=46  Length=23 MP_OPT=5
 
-                 Figure 13: Format of the MP_HMAC Suboption
+                 Figure 13: Format of the MP_HMAC suboption
 
    The MP_HMAC suboption is used to provide authentication for the
    MP_ADDADDR, and MP_REMOVEADDR suboptions.  In addition, it provides
@@ -1122,12 +1122,12 @@ Amend, et al.             Expires 14 April 2024                [Page 20]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-                 Figure 14: Format of the MP_RTT Suboption
+                 Figure 14: Format of the MP_RTT suboption
 
    The MP_RTT suboption is used to transmit RTT values and age
    (represented in milliseconds) that belong to the path over which this
    information is transmitted.  This information is useful for the
-   receiving host to calculate the RTT difference between the SubFlows
+   receiving host to calculate the RTT difference between the subflows
    and to estimate whether missing data has been lost.
 
    The RTT and Age information is a 32-bit integer.  This covers a
@@ -1211,7 +1211,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    where the explicit specification of a different port is required.  If
    no port is specified, the receiving host MUST assume that any attempt
    to connect to the specified address uses the port already used by the
-   SubFlow on which the MP_ADDADDR signal was sent.
+   subflow on which the MP_ADDADDR signal was sent.
 
    Along with the MP_ADDADDR option an MP_HMAC option MUST be sent for
    authentication.  The truncated HMAC parameter present in this MP_HMAC
@@ -1254,7 +1254,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +-------------------------------+
           Type=46         Length         MP_OPT=7
 
-               Figure 16: Format of the MP_ADDADDR Suboption
+               Figure 16: Format of the MP_ADDADDR suboption
 
    Each address has an Address ID that could be used for uniquely
    identifying the address within a connection for address removal.
@@ -1411,7 +1411,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
    -> followed by MP_HMAC option
 
-              Figure 17: Format of the MP_REMOVEADDR Suboption
+              Figure 17: Format of the MP_REMOVEADDR suboption
 
    A subflow that is still functioning MUST be closed with a DCCP-Close
    exchange as in regular DCCP, rather than using this option.  For more
@@ -1432,7 +1432,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    preferred choice of the user.
 
    The MP_PRIO suboption, shown below, can be used to set a priority
-   flag for the SubFlow over which the suboption is received.
+   flag for the subflow over which the suboption is received.
 
                            1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1441,7 +1441,7 @@ Internet-Draft               Multipath DCCP                 October 2023
       +---------------+---------------+---------------+--------------+
           Type=46         Length=4        MP_OPT=9
 
-                 Figure 18: Format of the MP_PRIO Suboption
+                 Figure 18: Format of the MP_PRIO suboption
 
    The following values are available for the Prio field:
 
@@ -1523,7 +1523,7 @@ Internet-Draft               Multipath DCCP                 October 2023
      +--------+--------+--------+--------+--------+
       Type=46   Length  MP_OPT=10
 
-                Figure 19: Format of the MP_CLOSE Suboption
+                Figure 19: Format of the MP_CLOSE suboption
 
    An MP-DCCP connection can be gracefully closed by sending and
    MP_CLOSE to the peer host.  On all subflows, the regular termination
@@ -1543,7 +1543,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    valid Key Data, or due to a local decision, all subflows transition
    to the CLOSING state before transmitting a DCCP-Close carrying
    MP_CLOSE.  The MP-DCCP connection socket on the host sending the
-   DCCP-Close reflects the state of the initial SubFlow during handshake
+   DCCP-Close reflects the state of the initial subflow during handshake
    with MP_KEY option.  If the initial subflow no longer exists, the
    state moves immediately to CLOSED.
 
@@ -1570,9 +1570,9 @@ Amend, et al.             Expires 14 April 2024                [Page 28]
 Internet-Draft               Multipath DCCP                 October 2023
 
 
-4.2.12.  Experimental MP-DCCP Sub-Option MP_EXP for private use
+4.2.12.  Experimental MP-DCCP Suboption MP_EXP for private use
 
-   This section reserves an MP-DCCP sub-option to define and specify any
+   This section reserves an MP-DCCP suboption to define and specify any
    experimental additional feature for improving and optimization of the
    MP-DCCP protocol.  This option could be applicable to specific
    environments or scenarios according to potential new requirements and
@@ -1588,7 +1588,7 @@ Internet-Draft               Multipath DCCP                 October 2023
    +---------------------------------------------------------------+
         Type=46         Length         MP_OPT=11
 
-                 Figure 20: Format of the MP_EXP Suboption
+                 Figure 20: Format of the MP_EXP suboption
 
    The Data field can carry any data according to the foreseen use by
    the experimenters with a maximum length of 252 Bytes.
@@ -1651,7 +1651,7 @@ Internet-Draft               Multipath DCCP                 October 2023
         |             |<--------------------------------------|
         |             |DCCP-ACK                               |
 
-                    Figure 21: Example MP-DCCP Handshake
+                    Figure 21: Example MP-DCCP handshake
 
    The basic initial handshake for the first subflow is as follows:
 
@@ -2337,7 +2337,7 @@ Internet-Draft               Multipath DCCP                 October 2023
       +===========+===============+=====================+===========+
       |   Value   |     Symbol    |         Name        | Reference |
       +===========+===============+=====================+===========+
-      |  Type=46  |     MP_OPT    |    DCCP Multipath   |  Section  |
+      |  Type=46  |     MP_OPT    |    DCCP multipath   |  Section  |
       |           |               |        option       |    4.2    |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
@@ -2363,11 +2363,11 @@ Internet-Draft               Multipath DCCP                 October 2023
       |           |               |     material for    |   4.2.4   |
       |           |               |       MP_HMAC       |           |
       +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=4 |     MP_SEQ    |  Multipath Sequence |  Section  |
-      |           |               |        Number       |   4.2.5   |
+      |  MP_OPT=4 |     MP_SEQ    |  Multipath sequence |  Section  |
+      |           |               |        number       |   4.2.5   |
       +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=5 |    MP_HMAC    |  Hash-based Message |  Section  |
-      |           |               | Auth.  Code for MP- |   4.2.6   |
+      |  MP_OPT=5 |    MP_HMAC    |  Hash-based message |  Section  |
+      |           |               |  auth. code for MP- |   4.2.6   |
       |           |               |         DCCP        |           |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=6 |     MP_RTT    | Transmit RTT values |  Section  |
@@ -2376,20 +2376,20 @@ Internet-Draft               Multipath DCCP                 October 2023
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=7 |   MP_ADDADDR  |      Advertise      |  Section  |
       |           |               |      additional     |   4.2.8   |
-      |           |               | Address(es)/Port(s) |           |
+      |           |               | address(es)/port(s) |           |
       +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=8 | MP_REMOVEADDR | Remove Address(es)/ |  Section  |
-      |           |               |       Port(s)       |   4.2.9   |
+      |  MP_OPT=8 | MP_REMOVEADDR | Remove address(es)/ |  Section  |
+      |           |               |       port(s)       |   4.2.9   |
       +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=9 |    MP_PRIO    |    Change Subflow   |  Section  |
-      |           |               |       Priority      |   4.2.10  |
+      |  MP_OPT=9 |    MP_PRIO    |    Change subflow   |  Section  |
+      |           |               |       priority      |   4.2.10  |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
       |           |               |       subflow       |   4.2.11  |
       +-----------+---------------+---------------------+-----------+
-      | MP_OPT=11 |     MP_EXP    |  Experimental Sub-  |  Section  |
-      |           |               |  Option for private |   4.2.12  |
-      |           |               |         use         |           |
+      | MP_OPT=11 |     MP_EXP    |     Experimental    |  Section  |
+      |           |               |    suboption for    |   4.2.12  |
+      |           |               |     private use     |           |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT>11 |   Unassigned  | Reserved for future |           |
       |           |               |  MP-DCCP suboptions |           |
@@ -2397,7 +2397,7 @@ Internet-Draft               Multipath DCCP                 October 2023
 
                     Table 8: MP-DCCP Suboptions registry
 
-   Future MP-DCCP sub-options with MP_OPT>11 are assigned from this
+   Future MP-DCCP suboptions with MP_OPT>11 are assigned from this
    registry using the Specification Required policy (Section 4.6 of
    [RFC8126]).
 
@@ -2416,8 +2416,8 @@ Internet-Draft               Multipath DCCP                 October 2023
    defined in section Section 4.2.3.
 
    In addition IANA is requested to assign for this version of the MP-
-   DCCP protocol a new 'MP_KEY' registry containing three different sub
-   options to the MP-KEY option to identify the MP_KEY Key types in
+   DCCP protocol a new 'MP_KEY' registry containing three different
+   suboptions to the MP-KEY option to identify the MP_KEY Key types in
    terms of 8-bit values as specified in Section 4.2.4 according to the
    entries in Table 9 below.  Values in range 3-255 (decimal) inclusive
    remain unassigned in this here specified version 0 of the protocol
@@ -2427,7 +2427,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     +=======+=====================+===================+===============+
     | Value |       Key Type      |  Name or Meaning  | Reference     |
     +=======+=====================+===================+===============+
-    |   0   |      Plain Text     |   Plain Text Key  | Section 4.2.4 |
+    |   0   |      Plain Text     |   Plain text key  | Section 4.2.4 |
     +-------+---------------------+-------------------+---------------+
     |   1   | ECDHE-C25519-SHA256 | ECDHE with SHA256 | Section 4.2.4 |
     |       |                     |   and Curve25519  |               |
@@ -2436,7 +2436,7 @@ Internet-Draft               Multipath DCCP                 October 2023
     |       |                     |   and Curve25519  |               |
     +-------+---------------------+-------------------+---------------+
 
-       Table 9: MP-DCCP MP_KEY registry with type sub-options for key
+       Table 9: MP-DCCP MP_KEY registry with type suboptions for key
                       data exchange on different paths
 
 10.  References
