@@ -1407,7 +1407,7 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
                     <p id="section-toc.1-1.4.2.2.2.11.1"><a href="#section-4.2.11" class="auto internal xref">4.2.11</a>. <a href="#name-mp_close" class="internal xref">MP_CLOSE</a></p>
 </li>
                   <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.4.2.2.2.12">
-                    <p id="section-toc.1-1.4.2.2.2.12.1"><a href="#section-4.2.12" class="auto internal xref">4.2.12</a>. <a href="#name-experimental-mp-dccp-subopt" class="internal xref">Experimental MP-DCCP Suboption MP_EXP for private use</a></p>
+                    <p id="section-toc.1-1.4.2.2.2.12.1"><a href="#section-4.2.12" class="auto internal xref">4.2.12</a>. <a href="#name-experimental-multipath-subo" class="internal xref">Experimental Multipath Suboption MP_EXP for private use</a></p>
 </li>
                 </ul>
 </li>
@@ -1625,7 +1625,7 @@ when to add or remove subflows are outside the scope of this document.<a href="#
 feature, as specified in <a href="#mp_capable" class="auto internal xref">Section 4.1</a>. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
 variable length multipath-related option, as described in <a href="#protocol" class="auto internal xref">Section 4</a>.
-All MP-DCCP operations are signaled by MP-DCCP suboptions described in <a href="#MP_OPT" class="auto internal xref">Section 4.2</a>. Suboptions that 
+All MP-DCCP operations are signaled by Multipath suboptions described in <a href="#MP_OPT" class="auto internal xref">Section 4.2</a>. Suboptions that 
 require confirmation from the remote peer are retransmitted by the sender until confirmed or until 
 confirmation is no longer considered relevant.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <p id="section-2-6">The following sections define MP-DCCP behavior in detail.<a href="#section-2-6" class="pilcrow">¶</a></p>
@@ -1888,7 +1888,7 @@ for version 1.<a href="#section-4.1-11.1.1" class="pilcrow">¶</a></p>
 <a href="#name-multipath-option-format" class="selfRef">Multipath option format</a>
           </figcaption></figure>
 </div>
-<p id="section-4.2-3">The fields used by the the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to an MP-DCCP suboption.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
+<p id="section-4.2-3">The fields used by the the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to an Multipath suboption.<a href="#section-4.2-3" class="pilcrow">¶</a></p>
 <span id="name-mp_opt-option-types"></span><div id="ref-mp-option-list">
 <table class="center" id="table-3">
           <caption>
@@ -2859,10 +2859,10 @@ MUST be sent on any subflow in response to a received DCCP-Close containing a va
 </div>
 <div id="MP_EXP">
 <section id="section-4.2.12">
-          <h4 id="name-experimental-mp-dccp-subopt">
-<a href="#section-4.2.12" class="section-number selfRef">4.2.12. </a><a href="#name-experimental-mp-dccp-subopt" class="section-name selfRef">Experimental MP-DCCP Suboption MP_EXP for private use</a>
+          <h4 id="name-experimental-multipath-subo">
+<a href="#section-4.2.12" class="section-number selfRef">4.2.12. </a><a href="#name-experimental-multipath-subo" class="section-name selfRef">Experimental Multipath Suboption MP_EXP for private use</a>
           </h4>
-<p id="section-4.2.12-1">This section reserves an MP-DCCP suboption to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
+<p id="section-4.2.12-1">This section reserves an Multipath suboption to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
 option could be applicable to specific environments or scenarios according to potential new requirements and is meant for private use only. MP_OPT 
 feature number 11 is specified with an exemplary description as below:<a href="#section-4.2.12-1" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_exp-subopt"></span><div id="ref-MP_EXP">
@@ -3123,7 +3123,7 @@ subflows, each carrying the MP_FAST_CLOSE option.<a href="#section-4.5-4" class=
 necessary to proceed with a fallback. This may be either falling back 
 to regular DCCP <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> or removing a problematic subflow. The main reasons for 
 subflow failing include: no MP support at peer host, failure to negotiate protocol
-version, loss of MP-DCCP suboptions, faulty/non-supported MP-DCCP options or modification
+version, loss of Multipath suboptions, faulty/non-supported MP-DCCP options or modification
 of payload data.<a href="#section-4.6-1" class="pilcrow">¶</a></p>
 <p id="section-4.6-2">At the start of an MP-DCCP connection, the handshake ensures exchange of MP-DCCP feature and
 options and thus ensures that the path is fully MP-DCCP capable. If during the
@@ -3478,30 +3478,22 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
 </div>
 <p id="section-9-6">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-9-6" class="pilcrow">¶</a></p>
 <p id="section-9-7">This document requests IANA to assign a new DCCP protocol option 46 as described in <a href="#MP_OPT" class="auto internal xref">Section 4.2</a>.<a href="#section-9-7" class="pilcrow">¶</a></p>
-<p id="section-9-8">IANA is requested to create a new 'MP-DCCP Suboptions' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'MP-DCCP Suboptions' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-9-8" class="pilcrow">¶</a></p>
-<span id="name-mp-dccp-suboptions-registry"></span><div id="ref-add-proto-opt-list">
+<p id="section-9-8">IANA is requested to create a new 'Multipath Suboptions' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Suboptions' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-9-8" class="pilcrow">¶</a></p>
+<span id="name-multipath-suboptions-regist"></span><div id="ref-add-proto-opt-list">
 <table class="center" id="table-8">
         <caption>
 <a href="#table-8" class="selfRef">Table 8</a>:
-<a href="#name-mp-dccp-suboptions-registry" class="selfRef">MP-DCCP Suboptions registry</a>
+<a href="#name-multipath-suboptions-regist" class="selfRef">Multipath Suboptions registry</a>
         </caption>
 <thead>
           <tr>
-            <th class="text-center" rowspan="1" colspan="1">Value</th>
-            <th class="text-center" rowspan="1" colspan="1">Symbol</th>
+            <th class="text-center" rowspan="1" colspan="1">Multipath Suboption</th>
             <th class="text-center" rowspan="1" colspan="1">Name</th>
+            <th class="text-center" rowspan="1" colspan="1">Description</th>
             <th class="text-center" rowspan="1" colspan="1">Reference</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">Type=46</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT</td>
-            <td class="text-center" rowspan="1" colspan="1">DCCP multipath option</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_OPT" class="auto internal xref">Section 4.2</a>
-</td>
-          </tr>
           <tr>
             <td class="text-center" rowspan="1" colspan="1">MP_OPT=0</td>
             <td class="text-center" rowspan="1" colspan="1">MP_CONFIRM</td>
@@ -3601,13 +3593,13 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
           <tr>
             <td class="text-center" rowspan="1" colspan="1">MP_OPT&gt;11</td>
             <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-            <td class="text-center" rowspan="1" colspan="1">Reserved for future MP-DCCP suboptions</td>
+            <td class="text-center" rowspan="1" colspan="1">Reserved for future Multipath suboptions</td>
             <td class="text-center" rowspan="1" colspan="1"> </td>
           </tr>
         </tbody>
       </table>
 </div>
-<p id="section-9-10">Future MP-DCCP suboptions with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-9-10" class="pilcrow">¶</a></p>
+<p id="section-9-10">Future Multipath suboptions with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-9-10" class="pilcrow">¶</a></p>
 <p id="section-9-11">In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 4.2.3</a>.<a href="#section-9-11" class="pilcrow">¶</a></p>
 <p id="section-9-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 4.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-9-12" class="pilcrow">¶</a></p>
