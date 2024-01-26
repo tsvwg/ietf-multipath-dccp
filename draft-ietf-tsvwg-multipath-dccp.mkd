@@ -505,7 +505,8 @@ The fields used by the the multipath option are described in {{ref-mp-option-lis
 | 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change subflow Priority                              |
 | 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
-| 46  |       TBD     | >10              | Reserved for future MP suboptions.                   |
+| 46  |       var     | 11 =MP_EXP       | Experimental for private use                         |
+| 46  |       TBD     | >11              | Reserved for future MP suboptions.                   |
 {: #ref-mp-option-list title='MP_OPT option types'}
 
 Future MP suboptions could be defined in a later version or extension to this specification.
