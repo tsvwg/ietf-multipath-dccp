@@ -1750,14 +1750,15 @@ Future MP-DCCP suboptions with MP_OPT>11 are assigned from this registry using t
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different suboptions to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
-| Value | Key Type             | Name or Meaning                  | Reference  |
+| Type  | Name                 | Meaning                          | Reference  |
 |:-----:|:--------------------:|:--------------------------------:|:-----------|
 |   0   | Plain Text           | Plain text key                   | {{MP_KEY}} |
 |   1   | ECDHE-C25519-SHA256  | ECDHE with SHA256 and Curve25519 | {{MP_KEY}} |
 |   2   | ECDHE-C25519-SHA512  | ECDHE with SHA512 and Curve25519 | {{MP_KEY}} |
+| 3-255 | Unassgined           | Reserved for future use          | {{MP_KEY}} |
 {:#ref-mp_key-sub-opt-list title='MP-DCCP MP_KEY registry with type suboptions for key data exchange on different paths'}
 
 --- back
