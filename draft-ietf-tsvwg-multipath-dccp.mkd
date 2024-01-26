@@ -1711,7 +1711,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 
 | Value            | Feature Name               | Specification   |
 |:----------------:|:--------------------------:|:---------------:|
-|   10 suggested   | MP-DCCP capability feature | [ThisDocument]  |
+|   10 suggested   |      Multipath Capable     | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
 Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
