@@ -2439,8 +2439,8 @@ Internet-Draft               Multipath DCCP                 January 2024
     |       |                     |     future use    |               |
     +-------+---------------------+-------------------+---------------+
 
-       Table 9: MP-DCCP MP_KEY registry with type suboptions for key
-                      data exchange on different paths
+       Table 9: Multipath Key Type registry with the MP_KEY Key Types
+                  for key data exchange on different paths
 
 10.  References
 
