@@ -1759,7 +1759,7 @@ in potential future versions of the MP-DCCP protocol.
 |   1   | ECDHE-C25519-SHA256  | ECDHE with SHA256 and Curve25519 | {{MP_KEY}} |
 |   2   | ECDHE-C25519-SHA512  | ECDHE with SHA512 and Curve25519 | {{MP_KEY}} |
 | 3-255 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
-{:#ref-mp_key-sub-opt-list title='MP-DCCP MP_KEY registry with type suboptions for key data exchange on different paths'}
+{:#ref-mp_key-sub-opt-list title='Multipath Key Type registry with the MP_KEY Key Types for key data exchange on different paths'}
 
 --- back
 
