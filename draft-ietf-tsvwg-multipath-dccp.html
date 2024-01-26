@@ -3603,7 +3603,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
 </div>
 <p id="section-9-10">Future MP-DCCP suboptions with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-9-10" class="pilcrow">¶</a></p>
 <p id="section-9-11">In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 4.2.3</a>.<a href="#section-9-11" class="pilcrow">¶</a></p>
-<p id="section-9-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'MP_KEY' registry containing three different suboptions to the MP-KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 4.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+<p id="section-9-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 4.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-9-12" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-mp_key-registry-wit"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
@@ -3613,9 +3613,9 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-9-12" cla
         </caption>
 <thead>
           <tr>
-            <th class="text-center" rowspan="1" colspan="1">Value</th>
-            <th class="text-center" rowspan="1" colspan="1">Key Type</th>
-            <th class="text-center" rowspan="1" colspan="1">Name or Meaning</th>
+            <th class="text-center" rowspan="1" colspan="1">Type</th>
+            <th class="text-center" rowspan="1" colspan="1">Name</th>
+            <th class="text-center" rowspan="1" colspan="1">Meaning</th>
             <th class="text-left" rowspan="1" colspan="1">Reference</th>
           </tr>
         </thead>
@@ -3640,6 +3640,14 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-9-12" cla
             <td class="text-center" rowspan="1" colspan="1">2</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE-C25519-SHA512</td>
             <td class="text-center" rowspan="1" colspan="1">ECDHE with SHA512 and Curve25519</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <a href="#MP_KEY" class="auto internal xref">Section 4.2.4</a>
+</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">3-255</td>
+            <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
+            <td class="text-center" rowspan="1" colspan="1">Reserved for future use</td>
             <td class="text-left" rowspan="1" colspan="1">
               <a href="#MP_KEY" class="auto internal xref">Section 4.2.4</a>
 </td>

@@ -2416,16 +2416,16 @@ Internet-Draft               Multipath DCCP                 January 2024
    defined in section Section 4.2.3.
 
    In addition IANA is requested to assign for this version of the MP-
-   DCCP protocol a new 'MP_KEY' registry containing three different
-   suboptions to the MP-KEY option to identify the MP_KEY Key types in
-   terms of 8-bit values as specified in Section 4.2.4 according to the
-   entries in Table 9 below.  Values in range 3-255 (decimal) inclusive
-   remain unassigned in this here specified version 0 of the protocol
-   and are assigned via Specification Required [RFC8126] in potential
-   future versions of the MP-DCCP protocol.
+   DCCP protocol a new 'Multipath Key Type' registry containing three
+   different suboptions to the MP_KEY option to identify the MP_KEY Key
+   types in terms of 8-bit values as specified in Section 4.2.4
+   according to the entries in Table 9 below.  Values in range 3-255
+   (decimal) inclusive remain unassigned in this here specified version
+   0 of the protocol and are assigned via Specification Required
+   [RFC8126] in potential future versions of the MP-DCCP protocol.
 
     +=======+=====================+===================+===============+
-    | Value |       Key Type      |  Name or Meaning  | Reference     |
+    |  Type |         Name        |      Meaning      | Reference     |
     +=======+=====================+===================+===============+
     |   0   |      Plain Text     |   Plain text key  | Section 4.2.4 |
     +-------+---------------------+-------------------+---------------+
@@ -2434,6 +2434,9 @@ Internet-Draft               Multipath DCCP                 January 2024
     +-------+---------------------+-------------------+---------------+
     |   2   | ECDHE-C25519-SHA512 | ECDHE with SHA512 | Section 4.2.4 |
     |       |                     |   and Curve25519  |               |
+    +-------+---------------------+-------------------+---------------+
+    | 3-255 |      Unassigned     |    Reserved for   | Section 4.2.4 |
+    |       |                     |     future use    |               |
     +-------+---------------------+-------------------+---------------+
 
        Table 9: MP-DCCP MP_KEY registry with type suboptions for key
@@ -2453,10 +2456,7 @@ Internet-Draft               Multipath DCCP                 January 2024
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
-              Congestion Control Protocol (DCCP)", RFC 4340,
-              DOI 10.17487/RFC4340, March 2006,
-              <https://www.rfc-editor.org/rfc/rfc4340>.
+
 
 
 
@@ -2465,6 +2465,11 @@ Amend, et al.             Expires 23 July 2024                 [Page 44]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
+              Congestion Control Protocol (DCCP)", RFC 4340,
+              DOI 10.17487/RFC4340, March 2006,
+              <https://www.rfc-editor.org/rfc/rfc4340>.
 
 10.2.  Informative References
 
@@ -2508,11 +2513,6 @@ Internet-Draft               Multipath DCCP                 January 2024
               bonding-hybrid-access-03, 22 October 2018,
               <https://datatracker.ietf.org/doc/html/draft-muley-
               network-based-bonding-hybrid-access-03>.
-
-
-
-
-
 
 
 
