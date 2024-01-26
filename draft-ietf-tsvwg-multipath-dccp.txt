@@ -91,21 +91,21 @@ Table of Contents
      4.1.  Multipath Capable Feature . . . . . . . . . . . . . . . .   9
      4.2.  Multipath Option  . . . . . . . . . . . . . . . . . . . .  10
        4.2.1.  MP_CONFIRM  . . . . . . . . . . . . . . . . . . . . .  12
-       4.2.2.  MP_JOIN . . . . . . . . . . . . . . . . . . . . . . .  14
+       4.2.2.  MP_JOIN . . . . . . . . . . . . . . . . . . . . . . .  15
        4.2.3.  MP_FAST_CLOSE . . . . . . . . . . . . . . . . . . . .  16
-       4.2.4.  MP_KEY  . . . . . . . . . . . . . . . . . . . . . . .  16
-       4.2.5.  MP_SEQ  . . . . . . . . . . . . . . . . . . . . . . .  18
+       4.2.4.  MP_KEY  . . . . . . . . . . . . . . . . . . . . . . .  17
+       4.2.5.  MP_SEQ  . . . . . . . . . . . . . . . . . . . . . . .  19
        4.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  19
-       4.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  20
-       4.2.8.  MP_ADDADDR  . . . . . . . . . . . . . . . . . . . . .  22
+       4.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  21
+       4.2.8.  MP_ADDADDR  . . . . . . . . . . . . . . . . . . . . .  23
        4.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  25
-       4.2.10. MP_PRIO . . . . . . . . . . . . . . . . . . . . . . .  26
+       4.2.10. MP_PRIO . . . . . . . . . . . . . . . . . . . . . . .  27
        4.2.11. MP_CLOSE  . . . . . . . . . . . . . . . . . . . . . .  28
        4.2.12. Experimental MP-DCCP Suboption MP_EXP for private
                use . . . . . . . . . . . . . . . . . . . . . . . . .  29
-     4.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  29
-     4.4.  Address knowledge exchange  . . . . . . . . . . . . . . .  31
-       4.4.1.  Advertising a new path (MP_ADDADDR) . . . . . . . . .  31
+     4.3.  MP-DCCP Handshaking Procedure . . . . . . . . . . . . . .  30
+     4.4.  Address knowledge exchange  . . . . . . . . . . . . . . .  32
+       4.4.1.  Advertising a new path (MP_ADDADDR) . . . . . . . . .  32
 
 
 
@@ -114,25 +114,25 @@ Amend, et al.             Expires 23 July 2024                  [Page 2]
 Internet-Draft               Multipath DCCP                 January 2024
 
 
-       4.4.2.  Removing a path (MP_REMOVEADDR) . . . . . . . . . . .  32
+       4.4.2.  Removing a path (MP_REMOVEADDR) . . . . . . . . . . .  33
      4.5.  Closing an MP-DCCP connection . . . . . . . . . . . . . .  33
      4.6.  Fallback  . . . . . . . . . . . . . . . . . . . . . . . .  34
      4.7.  State Diagram . . . . . . . . . . . . . . . . . . . . . .  35
-     4.8.  Congestion Control Considerations . . . . . . . . . . . .  36
+     4.8.  Congestion Control Considerations . . . . . . . . . . . .  37
      4.9.  Maximum Packet Size Considerations  . . . . . . . . . . .  37
      4.10. Maximum number of Subflows  . . . . . . . . . . . . . . .  37
      4.11. Path usage strategies . . . . . . . . . . . . . . . . . .  37
-       4.11.1.  Path mobility  . . . . . . . . . . . . . . . . . . .  37
+       4.11.1.  Path mobility  . . . . . . . . . . . . . . . . . . .  38
        4.11.2.  Concurrent path usage  . . . . . . . . . . . . . . .  38
    5.  Security Considerations . . . . . . . . . . . . . . . . . . .  39
-   6.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  40
+   6.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  41
    7.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  41
    8.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  41
    9.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  41
    10. References  . . . . . . . . . . . . . . . . . . . . . . . . .  44
      10.1.  Normative References . . . . . . . . . . . . . . . . . .  44
      10.2.  Informative References . . . . . . . . . . . . . . . . .  45
-   Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  48
+   Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  49
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  51
 
 1.  Introduction
@@ -574,6 +574,50 @@ Internet-Draft               Multipath DCCP                 January 2024
    The fields used by the the multipath option are described in Table 3.
    MP_OPT refers to an MP-DCCP suboption.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 11]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
     +======+========+================+================================+
     | Type | Option | MP_OPT         | Meaning                        |
     |      | Length |                |                                |
@@ -605,18 +649,13 @@ Internet-Draft               Multipath DCCP                 January 2024
     +------+--------+----------------+--------------------------------+
     | 46   | var    | 10 =MP_CLOSE   | Close an MP-DCCP subflow       |
     +------+--------+----------------+--------------------------------+
-    | 46   | TBD    | >10            | Reserved for future MP         |
+    | 46   | var    | 11 =MP_EXP     | Experimental for private use   |
+    +------+--------+----------------+--------------------------------+
+    | 46   | TBD    | >11            | Reserved for future MP         |
     |      |        |                | suboptions.                    |
     +------+--------+----------------+--------------------------------+
 
                         Table 3: MP_OPT option types
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 11]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    Future MP suboptions could be defined in a later version or extension
    to this specification.
@@ -625,6 +664,15 @@ Internet-Draft               Multipath DCCP                 January 2024
    [RFC8684].
 
 4.2.1.  MP_CONFIRM
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 12]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
                  1          2          3           4          5
       01234567 89012345 67890123 45678901 23456789 01234567 89012345
@@ -665,15 +713,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    interpret that the priority value was set to 0 without recognizing
    that the receiver has applied priority value 1.
 
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 12]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    The length of the MP_CONFIRM option and the path over which the
    option is sent depend on the confirmed suboptions and the received
    MP_SEQ, which are both copied verbatim and appended as a list of
@@ -683,6 +722,14 @@ Internet-Draft               Multipath DCCP                 January 2024
    confirmed at once.  This could happen if a datagram with MP_PRIO and
    a first MP_SEQ_1 and another datagram with MP_ADDADDR and a second
    MP_SEQ_2 are received in short succession.  In this case, the
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 13]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    structure described above is concatenated resulting in MP_SEQ_2 +
    MP_ADDADDR + MP_SEQ_1 + MP_PRIO.  The order of the confirmed
    suboptions in the list of confirmations MUST reflect the incoming
@@ -714,22 +761,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    MP_CONFIRM option and a list containing the original sequence number
    (1) together with the associated option (MP_PRIO).
 
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 13]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
              Host A                                     Host B
    ------------------------                     ------------------------
    Address A1    Address A2                     Address B1    Address B2
@@ -747,6 +778,14 @@ Internet-Draft               Multipath DCCP                 January 2024
    A second example to illustrate the same MP-DCCP confirm procedure but
    where an out of date option is also delivered is shown in (Figure 8.
    Here, the first DCCP-Data is sent from Host A to Host B with option
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 14]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    MP_PRIO set to 4.  Host A subsequently sends the second DCCP-Data
    with option MP_PRIO set to 1.  In this case, the delivery of the
    first MP_PRIO is delayed in the network between Host A and Host B and
@@ -776,16 +815,6 @@ Internet-Draft               Multipath DCCP                 January 2024
 
 4.2.2.  MP_JOIN
 
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 14]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
                  1          2          3
       01234567 89012345 67890123 45678901
      +--------+--------+--------+--------+
@@ -805,6 +834,13 @@ Internet-Draft               Multipath DCCP                 January 2024
    the peer host, which was previously exchanged with the MP_KEY option.
    MP_HMAC MUST be set when using MP_JOIN within a DCCP-Response packet
    (See Section 4.2.6 for details).
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 15]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    The MP_JOIN option includes an "Addr ID" (Address ID) generated by
    the sender of the option, used to identify the source address of this
@@ -834,14 +870,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    basis to calculate the HMAC used in the handshaking process as
    described in Section 4.3.
 
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 15]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    If the CI cannot be verified by the receiving host during a handshake
    negotiation, the new subflow MUST be closed, as specified in
    Section 4.6.
@@ -858,6 +886,17 @@ Internet-Draft               Multipath DCCP                 January 2024
    In order to provide an MP-DCCP-level "reset" and thus allow the
    abrupt closure of the MP-DCCP connection, the MP_FAST_CLOSE suboption
    can be used.
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 16]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
                  1          2          3
       01234567 89012345 67890123 45678901 23456789
@@ -890,14 +929,6 @@ Internet-Draft               Multipath DCCP                 January 2024
 
 4.2.4.  MP_KEY
 
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 16]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
                           1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +---------------+---------------+---------------+---------------+
@@ -912,6 +943,16 @@ Internet-Draft               Multipath DCCP                 January 2024
          Type=46          Length         MP_OPT=3
 
                  Figure 11: Format of the MP_KEY suboption
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 17]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    The MP_KEY suboption is used to exchange a Connection Identifier (CI)
    and key material between hosts for a given connection.  The CI is a
@@ -943,17 +984,6 @@ Internet-Draft               Multipath DCCP                 January 2024
                          Table 5: MP_KEY key types
 
    Plain Text
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 17]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
       Key Material is exchanged in plain text between hosts, and the key
       parts (key-a, key-b) are used by each host to generate the derived
       key (d-key) by concatenating the two parts with the local key in
@@ -970,6 +1000,16 @@ Internet-Draft               Multipath DCCP                 January 2024
       issued by a certificate authority.
 
    ECDHE-SHA512-C25519
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 18]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
       Public Key Material is exchanged via ECDHE key exchange with
       SHA512 and Curve 25519 to generate the derived key (d-key) from
       the shared secret.
@@ -1000,16 +1040,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    numbers of an MP-DCCP connection.  The initial data sequence number
    (IDSN) SHOULD be set randomly [RFC4086].
 
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 18]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    The MP_SEQ number space is independent from the path individual
    sequence number space and MUST be sent with all DCCP-Data and DCCP-
    DataACK packets.
@@ -1026,6 +1056,15 @@ Internet-Draft               Multipath DCCP                 January 2024
    considered sufficiently large.
 
 4.2.6.  MP_HMAC
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 19]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
                  1          2          3           4
       01234567 89012345 67890123 45678901 23456789 01234567
@@ -1056,16 +1095,6 @@ Internet-Draft               Multipath DCCP                 January 2024
       MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA) An usage example
       is shown in Figure 21.
 
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 19]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    *  for MP_ADDADDR: The Address ID with associated IP address and if
       defined port, otherwise two octets of value 0.  IP address and
       port MUST be used in network byte order (NBO).  Depending on
@@ -1085,6 +1114,14 @@ Internet-Draft               Multipath DCCP                 January 2024
    options require an individual MP_HMAC option.  This ensures that the
    MP_HMAC is correctly associated.  Otherwise, the receiver cannot
    validate multiple MP_JOIN, MP_ADDADDR or MP_REMOVEADDR.  Therefore, a
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 20]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    MP_HMAC MUST directly follow its associated multipath option.  In the
    likely case of sending a MP_JOIN together with a MP_ADDADDR, this
    results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR +
@@ -1115,13 +1152,6 @@ Internet-Draft               Multipath DCCP                 January 2024
      +--------+--------+--------+--------+--------+
       Type=46  Length=12 MP_OPT=6
 
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 20]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
                  Figure 14: Format of the MP_RTT suboption
 
    The MP_RTT suboption is used to transmit RTT values and age
@@ -1140,6 +1170,14 @@ Internet-Draft               Multipath DCCP                 January 2024
       Raw RTT value of the last Datagram Round-Trip
 
    Min RTT (=1)
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 21]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
       Min RTT value over a given period
 
    Max RTT (=2)
@@ -1171,13 +1209,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    number MP_SEQ, e.g., in a reordering process, can be assumed lost
    after path_delta/2.
 
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 21]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
       MP-DCCP                   MP-DCCP
       Sender                    Receiver
       +--------+  MP_RTT(RTT1)  +-------------+
@@ -1188,6 +1219,20 @@ Internet-Draft               Multipath DCCP                 January 2024
       +--------+                +-------------+
 
            Figure 15: Exemplary flow of MP_RTT exchange and usage
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 22]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
 4.2.8.  MP_ADDADDR
 
@@ -1226,14 +1271,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    MP_ADDADDR option, the HMAC message will include 2 octets of value
    zero.  The rationale for the HMAC is to prevent unauthorized entities
    from injecting MP_ADDADDR signals in an attempt to hijack a
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 22]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    connection.  Note that, additionally, the presence of this HMAC
    prevents the address from being changed in flight unless the key is
    known by an intermediary.  If a host receives an MP_ADDADDR option
@@ -1242,6 +1279,16 @@ Internet-Draft               Multipath DCCP                 January 2024
 
    The presence of an MP_SEQ Section 4.2.5 MUST be ensured in a DCCP
    datagram in which MP_ADDADDR is sent, as described in Section 4.2.1.
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 23]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
                          1                   2                   3
      0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1279,17 +1326,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    as soft state, and the sender MAY choose to refresh advertisements
    periodically.
 
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 23]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    A host MAY advertise private addresses, e.g., because there is a NAT
    on the path.  It is desirable to allow this, since there could be
    cases where both hosts have additional interfaces on the same private
@@ -1300,6 +1336,15 @@ Internet-Draft               Multipath DCCP                 January 2024
    contains a 32-bit CI that uniquely identifies a connection to the
    receiving host.  If the CI is unknown, the host MUST send a DCCP-
    Reset.
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 24]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    Further security considerations around the issue of MP_ADDADDR
    messages that accidentally misdirect, or maliciously direct, new
@@ -1331,21 +1376,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    combination can therefore refresh the MP_ADDADDR information by
    sending the option again.
 
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 24]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
 4.2.9.  MP_REMOVEADDR
 
    If, during the lifetime of an MP-DCCP connection, a previously
@@ -1364,6 +1394,13 @@ Internet-Draft               Multipath DCCP                 January 2024
    case of Host B, Key-B followed by Key-A.  These are the keys that
    were exchanged and selected in the original MP_KEY handshake.  The
    message for the HMAC is the Address ID.
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 25]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    The rationale for using a HMAC is to prevent unauthorized entities
    from injecting MP_REMOVEADDR signals in an attempt to hijack a
@@ -1392,16 +1429,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    address at the requested Address ID, the receiver will silently
    ignore the request.
 
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 25]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +---------------+---------------+---------------+---------------+
@@ -1416,6 +1443,20 @@ Internet-Draft               Multipath DCCP                 January 2024
    A subflow that is still functioning MUST be closed with a DCCP-Close
    exchange as in regular DCCP, rather than using this option.  For more
    information, see Section 4.5.
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 26]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
 4.2.10.  MP_PRIO
 
@@ -1447,17 +1488,6 @@ Internet-Draft               Multipath DCCP                 January 2024
 
    *  0: Do not use.  The path is not available.
 
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 26]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    *  1: Standby: do not use this path for traffic scheduling, if
       another path (secondary or primary) is available.  The path will
       only be used if other secondary or primary paths are not
@@ -1469,6 +1499,20 @@ Internet-Draft               Multipath DCCP                 January 2024
       primary paths are congested or are not available.  This is the
       recommended setting for paths that have costs or data caps as
       these paths will be used less frequently then primary paths.
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 27]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    *  3 - 15: Primary: The path can be used for packet scheduling
       decisions.  The priority number indicates the relative priority of
@@ -1505,15 +1549,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    A MP_SEQ Section 4.2.5 MUST be present in a DCCP datagram in which
    MP_PRIO is sent.  Further details are given in Section 4.2.1.
 
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 27]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
 4.2.11.  MP_CLOSE
 
                  1          2          3
@@ -1524,6 +1559,16 @@ Internet-Draft               Multipath DCCP                 January 2024
       Type=46   Length  MP_OPT=10
 
                 Figure 19: Format of the MP_CLOSE suboption
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 28]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
    An MP-DCCP connection can be gracefully closed by sending and
    MP_CLOSE to the peer host.  On all subflows, the regular termination
@@ -1559,17 +1604,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    Contrary to a MP_FAST_CLOSE Section 4.2.3, no single-sided abrupt
    termination is applied.
 
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 28]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
 4.2.12.  Experimental MP-DCCP Suboption MP_EXP for private use
 
    This section reserves an MP-DCCP suboption to define and specify any
@@ -1578,6 +1612,19 @@ Internet-Draft               Multipath DCCP                 January 2024
    environments or scenarios according to potential new requirements and
    is meant for private use only.  MP_OPT feature number 11 is specified
    with an exemplary description as below:
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 29]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
 
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1597,34 +1644,6 @@ Internet-Draft               Multipath DCCP                 January 2024
 
    An example to illustrate the MP-DCCP handshake procedure is shown in
    Figure 21.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 29]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
              Host A                                         Host B
    ------------------------                              ----------
@@ -1655,6 +1674,14 @@ Internet-Draft               Multipath DCCP                 January 2024
 
    The basic initial handshake for the first subflow is as follows:
 
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 30]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    *  Host A sends a DCCP-Request with the MP-Capable feature Change
       request and the MP_KEY option with an Host-specific CI-A and a
       Key-A for each of the supported key types as described in
@@ -1670,17 +1697,6 @@ Internet-Draft               Multipath DCCP                 January 2024
 
    *  Host B sends a DCCP-Ack to complete the handshake and set both
       connection ends to the OPEN state.
-
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 30]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    It should be noted that DCCP is protected against corruption of DCCP
    header data (section 9 of [RFC4340]), so no additional mechanisms
@@ -1714,6 +1730,14 @@ Internet-Draft               Multipath DCCP                 January 2024
       nonce RA and the nonce received with MP_JOIN(B) as message and the
       derived key described in Section 4.2.4 as key:
 
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 31]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
       MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
 
    *  Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
@@ -1730,14 +1754,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    the new IP address which is used as a reference in subsequent control
    exchanges. * the IP address of the new path (A2_IP) * A pair of
    octets specifying the port number associated with this IP address.
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 31]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    The value of 00 here indicates that the port number is the same as
    that used for the initial subflow address A1_IP
 
@@ -1768,6 +1784,16 @@ Internet-Draft               Multipath DCCP                 January 2024
 
                 Figure 22: Example MP-DCCP ADDADDR procedure
 
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 32]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
 4.4.2.  Removing a path (MP_REMOVEADDR)
 
    When a host (Host A) wants to indicate that a path is no longer
@@ -1786,14 +1812,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-
    Ack containing the MP_CONFIRM option.  The parameters supplied in
    this response are as follows: * an MP_CONFIRM containing the MP_SEQ
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 32]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    number (seqno 33) of the packet carrying the option that we are
    confirming, together with the MP_REMOVEADDR option * the leftmost 20
    bytes of the HMAC(B) generated during the initial handshaking
@@ -1824,6 +1842,14 @@ Internet-Draft               Multipath DCCP                 January 2024
    [DCCP.Parameter] for DCCP operations.  This could be, for example,
    sending reset code 5 (Option Error) when an MP-DCCP option provides
    invalid data or reset code 9 (Too Busy) when the maximum number of
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 33]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    maintainable paths is reached.  Note that receiving a reset code 9
    for secondary subflows SHOULD NOT impact already existing active
    subflows.  If necessary, these subflows are terminated in a
@@ -1833,22 +1859,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    termination specified in section 5.5 of [RFC4340] on each subflow
    with the first packet on each subflow carrying MP_CLOSE (see
    Section 4.2.11).
-
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 33]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
      Host A                                   Host B
      ------                                   ------
@@ -1889,6 +1899,13 @@ Internet-Draft               Multipath DCCP                 January 2024
    and the handshake SHOULD fallback to regular DCCP (if this is not
    possible it MUST be closed).
 
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 34]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    A connection SHOULD fallback to regular DCCP if the endpoints fail to
    agree on a protocol version to use during the Multipath Capable
    feature negotiation.  This is described in Section 4.1.  The protocol
@@ -1897,14 +1914,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    protocol version negotiation is not successful during the initial
    connection establishment, MP-DCCP connection will fallback to regular
    DCCP.
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 34]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    The fallback procedure to regular DCCP MUST be also applied if the
    MP_KEY Section 4.2.4 Key Type cannot be negotiated.
@@ -1943,15 +1952,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    are arcs (not shown) from several additional states to TIMEWAIT,
    contingent on the receipt of a valid DCCP-Reset.
 
-   The states transitioned when moving from the CLOSED to OPEN state
-   during the four-way handshake remain the same as for DCCP, but it is
-   no longer possible to transmit application data while in the REQUEST
-   state.  The fast close procedure can be triggered by either the
-   client or the server and results in the transmission of a Reset
-   packet.  The fast close procedure moves the state of the client and
-   server directly to TIMEWAIT and CLOSED, respectively.
-
-
 
 
 
@@ -1961,6 +1961,14 @@ Amend, et al.             Expires 23 July 2024                 [Page 35]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   The states transitioned when moving from the CLOSED to OPEN state
+   during the four-way handshake remain the same as for DCCP, but it is
+   no longer possible to transmit application data while in the REQUEST
+   state.  The fast close procedure can be triggered by either the
+   client or the server and results in the transmission of a Reset
+   packet.  The fast close procedure moves the state of the client and
+   server directly to TIMEWAIT and CLOSED, respectively.
 
      +----------------------------+    +------------------------------+
      |                            v    v                              |
@@ -2002,14 +2010,6 @@ Internet-Draft               Multipath DCCP                 January 2024
                                                           +-----------+
                                                       2MSL timer expires
 
-4.8.  Congestion Control Considerations
-
-   Senders MUST manage per-path congestion status, and avoid to sending
-   more data on a given path than congestion control for each path
-   allows.
-
-
-
 
 
 
@@ -2017,6 +2017,12 @@ Amend, et al.             Expires 23 July 2024                 [Page 36]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+4.8.  Congestion Control Considerations
+
+   Senders MUST manage per-path congestion status, and avoid to sending
+   more data on a given path than congestion control for each path
+   allows.
 
 4.9.  Maximum Packet Size Considerations
 
@@ -2057,6 +2063,17 @@ Internet-Draft               Multipath DCCP                 January 2024
    implementation over the Internet or in controlled environments such
    as Hybrid Access or 5G ATSSS.
 
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 37]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
 4.11.1.  Path mobility
 
    The path mobility strategy provides the use of a single path with a
@@ -2066,14 +2083,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    due to either the occurrence of certain error conditions (e.g., DCCP
    timeout, packet loss threshold, RTT threshold, closed/removed) or
    adjustments from the MP-DCCP user.  When there is outbound data to
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 37]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
    send and the primary path becomes inactive (e.g., due to failures) or
    de-prioritized, the MP-DCCP endpoint SHOULD try to send the data
    through an alternate path with a different source or destination
@@ -2101,6 +2110,26 @@ Internet-Draft               Multipath DCCP                 January 2024
    design that could seek to maximize reliability, throughput,
    minimizing latency, etc.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 38]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    Concurrent path usage over the Internet can have implications.  When
    a Multipath DCCP connection uses two or more paths, there is no
    guarantee that these paths are fully disjoint.  When two (or more)
@@ -2122,13 +2151,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    paths for the general Internet, the framework specified in this
    document could be used to provide an IETF recommended method for MP-
    DCCP.
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 38]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
 5.  Security Considerations
 
@@ -2155,28 +2177,6 @@ Internet-Draft               Multipath DCCP                 January 2024
       connection is valid for a peer to receive traffic at before using
       it.
 
-   *  Provide replay protection, i.e., ensure that a request to add/
-      remove a subflow is 'fresh'.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2185,6 +2185,9 @@ Amend, et al.             Expires 23 July 2024                 [Page 39]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   *  Provide replay protection, i.e., ensure that a request to add/
+      remove a subflow is 'fresh'.
 
    To achieve these goals, MP-DCCP includes a hash-based handshake
    algorithm documented in Sections Section 4.2.4, Section 4.2.6 and
@@ -2226,14 +2229,11 @@ Internet-Draft               Multipath DCCP                 January 2024
    could detect an attempt to reduce the MPS less than a minimum MPS,
    and then stop using these paths.
 
-6.  Interactions with Middleboxes
 
-   Issues from interaction with on-path middleboxes such as NATs,
-   firewalls, proxies, intrusion detection systems (IDSs), and others
-   have to be considered for all extensions to standard protocols since
-   otherwise unexpected reactions of middleboxes may hinder its
-   deployment.  DCCP already provides means to mitigate the potential
-   impact of middleboxes, also in comparison to TCP (see [RFC4043],
+
+
+
+
 
 
 
@@ -2242,6 +2242,14 @@ Amend, et al.             Expires 23 July 2024                 [Page 40]
 Internet-Draft               Multipath DCCP                 January 2024
 
 
+6.  Interactions with Middleboxes
+
+   Issues from interaction with on-path middleboxes such as NATs,
+   firewalls, proxies, intrusion detection systems (IDSs), and others
+   have to be considered for all extensions to standard protocols since
+   otherwise unexpected reactions of middleboxes may hinder its
+   deployment.  DCCP already provides means to mitigate the potential
+   impact of middleboxes, also in comparison to TCP (see [RFC4043],
    Section 16).  When both hosts are located behind a NAT or firewall
    entity, specific measures have to be applied such as the [RFC5596]-
    specified simultaneous-open technique that update the (traditionally
@@ -2283,20 +2291,19 @@ Internet-Draft               Multipath DCCP                 January 2024
    the IANA DCCP Feature Numbers registry and three new registries to be
    allocated in the DCCP registry group.
 
-   This document requests IANA to assign a new DCCP feature parameter
-   for negotiating the support of multipath capability for DCCP sessions
-   between hosts as described in Section 4.  The following entry in
-   Table 6 should be added to the Feature Numbers registry in the DCCP
-   registry group according to [RFC4340], Section 19.4. under the "DCCP
-   Protocol" heading.
-
-
 
 
 Amend, et al.             Expires 23 July 2024                 [Page 41]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   This document requests IANA to assign a new DCCP feature parameter
+   for negotiating the support of multipath capability for DCCP sessions
+   between hosts as described in Section 4.  The following entry in
+   Table 6 should be added to the Feature Numbers registry in the DCCP
+   registry group according to [RFC4340], Section 19.4. under the "DCCP
+   Protocol" heading.
 
       +==============+============================+================+
       |    Value     |        Feature Name        | Specification  |
@@ -2334,6 +2341,19 @@ Internet-Draft               Multipath DCCP                 January 2024
    registry in Table 8 has an upper boundary of 255 in the numeric value
    field.
 
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 42]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
       +===========+===============+=====================+===========+
       |   Value   |     Symbol    |         Name        | Reference |
       +===========+===============+=====================+===========+
@@ -2346,14 +2366,6 @@ Internet-Draft               Multipath DCCP                 January 2024
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
       |           |               |   existing MP-DCCP  |   4.2.2   |
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 42]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
-
       |           |               |      connection     |           |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=2 | MP_FAST_CLOSE |    Close MP-DCCP    |  Section  |
@@ -2390,6 +2402,14 @@ Internet-Draft               Multipath DCCP                 January 2024
       | MP_OPT=11 |     MP_EXP    |     Experimental    |  Section  |
       |           |               |    suboption for    |   4.2.12  |
       |           |               |     private use     |           |
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 43]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
       +-----------+---------------+---------------------+-----------+
       | MP_OPT>11 |   Unassigned  | Reserved for future |           |
       |           |               |  MP-DCCP suboptions |           |
@@ -2400,15 +2420,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    Future MP-DCCP suboptions with MP_OPT>11 are assigned from this
    registry using the Specification Required policy (Section 4.6 of
    [RFC8126]).
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 43]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    In addition IANA is requested to assign a new DCCP Reset Code value
    13 suggested in the DCCP Reset Codes Registry, with the short
@@ -2446,6 +2457,15 @@ Internet-Draft               Multipath DCCP                 January 2024
 
 10.1.  Normative References
 
+
+
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 44]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    [DCCP.Parameter]
               "IANA Datagram Congestion Control Protocol (DCCP)
               Parameters", n.d., <https://www.iana.org/assignments/dccp-
@@ -2455,16 +2475,6 @@ Internet-Draft               Multipath DCCP                 January 2024
               Requirement Levels", BCP 14, RFC 2119,
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
-
-
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 44]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
               Congestion Control Protocol (DCCP)", RFC 4340,
@@ -2505,6 +2515,13 @@ Internet-Draft               Multipath DCCP                 January 2024
               <https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-
               access-network-architecture-02>.
 
+
+
+Amend, et al.             Expires 23 July 2024                 [Page 45]
+
+Internet-Draft               Multipath DCCP                 January 2024
+
+
    [I-D.muley-network-based-bonding-hybrid-access]
               Muley, P., Henderickx, W., Geng, L., Liu, H., Cardullo,
               L., Newton, J., Seo, S., Draznin, S., and B. Patil,
@@ -2513,14 +2530,6 @@ Internet-Draft               Multipath DCCP                 January 2024
               bonding-hybrid-access-03, 22 October 2018,
               <https://datatracker.ietf.org/doc/html/draft-muley-
               network-based-bonding-hybrid-access-03>.
-
-
-
-
-Amend, et al.             Expires 23 July 2024                 [Page 45]
-
-Internet-Draft               Multipath DCCP                 January 2024
-
 
    [IETF115.Slides]
               Amend, M., "MP-DCCP for enabling transfer of UDP/IP
@@ -2562,21 +2571,17 @@ Internet-Draft               Multipath DCCP                 January 2024
               RFC 3711, DOI 10.17487/RFC3711, March 2004,
               <https://www.rfc-editor.org/rfc/rfc3711>.
 
-   [RFC4043]  Pinkas, D. and T. Gindin, "Internet X.509 Public Key
-              Infrastructure Permanent Identifier", RFC 4043,
-              DOI 10.17487/RFC4043, May 2005,
-              <https://www.rfc-editor.org/rfc/rfc4043>.
-
-
-
-
-
 
 
 Amend, et al.             Expires 23 July 2024                 [Page 46]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   [RFC4043]  Pinkas, D. and T. Gindin, "Internet X.509 Public Key
+              Infrastructure Permanent Identifier", RFC 4043,
+              DOI 10.17487/RFC4043, May 2005,
+              <https://www.rfc-editor.org/rfc/rfc4043>.
 
    [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
               "Randomness Requirements for Security", BCP 106, RFC 4086,
@@ -2618,11 +2623,6 @@ Internet-Draft               Multipath DCCP                 January 2024
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
               2012, <https://www.rfc-editor.org/rfc/rfc6773>.
 
-   [RFC6824]  Ford, A., Raiciu, C., Handley, M., and O. Bonaventure,
-              "TCP Extensions for Multipath Operation with Multiple
-              Addresses", RFC 6824, DOI 10.17487/RFC6824, January 2013,
-              <https://www.rfc-editor.org/rfc/rfc6824>.
-
 
 
 
@@ -2633,6 +2633,11 @@ Amend, et al.             Expires 23 July 2024                 [Page 47]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+   [RFC6824]  Ford, A., Raiciu, C., Handley, M., and O. Bonaventure,
+              "TCP Extensions for Multipath Operation with Multiple
+              Addresses", RFC 6824, DOI 10.17487/RFC6824, January 2013,
+              <https://www.rfc-editor.org/rfc/rfc6824>.
 
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
@@ -2674,11 +2679,6 @@ Internet-Draft               Multipath DCCP                 January 2024
               <https://www.3gpp.org/ftp//Specs/
               archive/23_series/23.501/23501-g70.zip>.
 
-Appendix A.  Differences from Multipath TCP
-
-   This appendix is Informative.
-
-
 
 
 
@@ -2689,6 +2689,10 @@ Amend, et al.             Expires 23 July 2024                 [Page 48]
 
 Internet-Draft               Multipath DCCP                 January 2024
 
+
+Appendix A.  Differences from Multipath TCP
+
+   This appendix is Informative.
 
    Multipath DCCP is similar to Multipath TCP [RFC8684], in that it
    extends the related basic DCCP transport protocol [RFC4340] with
@@ -2707,10 +2711,6 @@ Internet-Draft               Multipath DCCP                 January 2024
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
 
 
 
