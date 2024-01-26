@@ -2305,13 +2305,13 @@ Internet-Draft               Multipath DCCP                 January 2024
    registry group according to [RFC4340], Section 19.4. under the "DCCP
    Protocol" heading.
 
-      +==============+============================+================+
-      |    Value     |        Feature Name        | Specification  |
-      +==============+============================+================+
-      | 10 suggested | MP-DCCP capability feature | [ThisDocument] |
-      +--------------+----------------------------+----------------+
+           +==============+===================+================+
+           |    Value     |    Feature Name   | Specification  |
+           +==============+===================+================+
+           | 10 suggested | Multipath Capable | [ThisDocument] |
+           +--------------+-------------------+----------------+
 
-            Table 6: Addition to DCCP Feature Numbers registry
+             Table 6: Addition to DCCP Feature Numbers registry
 
    Sect.  Section 4.1 specifies the new 1-Byte entry above includes a
    4-bit part to specify the version of the used MP-DCCP implementation.
