@@ -1606,9 +1606,9 @@ Internet-Draft               Multipath DCCP                 January 2024
 
 4.2.12.  Experimental Multipath Suboption MP_EXP for private use
 
-   This section reserves an Multipath suboption to define and specify
-   any experimental additional feature for improving and optimization of
-   the MP-DCCP protocol.  This option could be applicable to specific
+   This section reserves a Multipath suboption to define and specify any
+   experimental additional feature for improving and optimization of the
+   MP-DCCP protocol.  This option could be applicable to specific
    environments or scenarios according to potential new requirements and
    is meant for private use only.  MP_OPT feature number 11 is specified
    with an exemplary description as below:
