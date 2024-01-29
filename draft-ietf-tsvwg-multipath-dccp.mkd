@@ -1238,7 +1238,7 @@ Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt terminatio
 
 ### Experimental Multipath Suboption MP_EXP for private use {#MP_EXP}
 
-This section reserves an Multipath suboption to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
+This section reserves a Multipath suboption to define and specify any experimental additional feature for improving and optimization of the MP-DCCP protocol. This
 option could be applicable to specific environments or scenarios according to potential new requirements and is meant for private use only. MP_OPT 
 feature number 11 is specified with an exemplary description as below:
 
