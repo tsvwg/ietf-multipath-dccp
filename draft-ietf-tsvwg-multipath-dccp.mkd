@@ -11,7 +11,6 @@ area: transport
 wg: Transport Area Working Group
 keyword: Internet-Draft
 submissiontype: IETF
-#mp
 coding: us-ascii
 stand_alone: true
 
