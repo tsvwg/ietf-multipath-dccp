@@ -220,9 +220,8 @@ This is not considered in the present specification.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
-in a similar way as MP-DCCP is based on DCCP. 
-In contrast to MP-DCCP, MP-QUIC encrypts the traffic using TLS 1.3. and supports
-multiple streams. When the datagram option is used, MP-QUIC provides a congestion-controlled unreliable unordered datagram service, similar to MP-DCCP; on the other hand, MP-DCCP defines procedures that facilitate subsequent reordering.
+in a similar way as MP-DCCP is based on DCCP.
+MP-QUIC inherits the properties of QUIC with its various facets of encryption, multi-streaming and the STREAM and DATAGRAM transport characteristic. This makes a practical multipath implementation very complex. In contrast, MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted, MP-DCCP is the more efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic, improve performance, as shown in {{MP-DCCP.Paper}}, and are not available in MP-QUIC.
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
@@ -273,6 +272,15 @@ pairs) that forms one of the multipath flows used by a single connection.
 In addition to these
 terms, within the framework of MP-DCCP, the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in {{protocol}}.
+
+## Requirements Language
+
+   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
+   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
+   "OPTIONAL" in this document are to be interpreted as described in
+   BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
+   capitals, as shown here.
+
 
 # Operation Overview {#op_overview}
 
@@ -374,15 +382,6 @@ Address A1    Address A2             Address B1    Address B2
    *  Subflows are terminated in the same way as regular DCCP connections, as described
       in ({{RFC4340}}, Section 8.3). MP-DCCP connections are closed by including an MP_CLOSE option in subflow DCCP-CloseReq or DCCP-Close messages. An MP-DCCP connection may also be reset through the use of an MP_FAST_CLOSE option. Key data from the initial handshake is included in the MP_CLOSE and MP_FAST_CLOSE to protect from unauthorized shutdown of MP-DCCP connections.
 
-# Requirements Language
-
-   The key words "MUST", "MUST NOT", "REQUIRED", "SHALL", "SHALL NOT",
-   "SHOULD", "SHOULD NOT", "RECOMMENDED", "NOT RECOMMENDED", "MAY", and
-   "OPTIONAL" in this document are to be interpreted as described in
-   BCP 14 {{RFC2119}} {{RFC8174}} when, and only when, they appear in all
-   capitals, as shown here.
-
-
 # MP-DCCP Protocol {#protocol}
 
 The DCCP protocol feature list ({{RFC4340}}, Section 6.4) is
@@ -395,8 +394,7 @@ shown in {{ref-feature-list}}.
 {: #ref-feature-list title='Multipath feature'}
 
 Rec'n Rule:
-: The reconciliation rule used for the feature. SP indicates the server-priority,
-  NN indicates this is non-negotiable.
+: The reconciliation rule used for the feature. SP indicates the server-priority.
 
 Initial Value:
 : The initial value for the feature. Every feature has a known initial value.
@@ -420,7 +418,7 @@ shown in {{ref-option-list}}.
 
 A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.
 
-The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one ore several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation if required for example to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
+The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one or several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation if required for example to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
 MP-DCCP implementation and MUST be set to 0 following this specification. The four bits following the Version field are unassigned in version 0 and MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
@@ -451,7 +449,7 @@ If no agreement is found, the Server MUST reply with an empty Confirm L option
 with feature number 10 and no values.
 
 
-An example of successful version negotiation is shown hereafter and follows the negotiation example shown in {{RFC4340}} Section 6.5: 
+An example of successful version negotiation is shown hereafter and follows the negotiation example shown in {{RFC4340}} Section 6.5. For better understanding, this example uses the unspecified MP-DCCP versions 1 and 2 in addition to the MP-DCCP version 0 specified in this document: 
 
 ~~~~
       Client                                             Server
@@ -472,6 +470,8 @@ for version 1.
 2. Server agrees on using MP-DCCP version 1 indicated by the first value, and supplies its own preference list with the following values.
 
 3. MP-DCCP is then enabled between the Client and Server with version 1.
+
+Unlike the example in {{ref-mp-capable-example}}, this document only allows the negotiation of MP-DCCP version 0, which means that client and server must support it.
 
 If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fallback to regular DCCP or MUST close the connection. Further details are specified in {{fallback}}
 
@@ -783,7 +783,7 @@ indicated in {{fallback}}.
 ~~~~
 {: #ref-MP_SEQ title='Format of the MP_SEQ suboption'}
 
-The MP_SEQ suboption is used for end-to-end datagram-based sequence
+The MP_SEQ suboption is used for end-to-end 48-bit datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
 number (IDSN) SHOULD be set randomly {{RFC4086}}. 
 
@@ -1191,6 +1191,8 @@ schedule when the multipath scheduler strictly respects MP_PRIO value 0.
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see {{ref-mp-option-confirm}}).
 
+The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in {{path_usage_strategy}}. In the case of path mobility {{path_mobility}}, only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage ({{concurrent_usage}}), the definition is up to the multipath scheduler logic.
+
 A MP_SEQ {{MP_SEQ}} MUST be present in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 
@@ -1537,6 +1539,7 @@ directly to TIMEWAIT and CLOSED, respectively.
                                                         +-----------+
                                                     2MSL timer expires
 ~~~~
+{: #ref-mp-dccp-state-transition title='Most common state transitions of a MP-DCCP subflow'}
 
 ## Congestion Control Considerations
 
@@ -1554,7 +1557,7 @@ In theory, an infinite number of subflows can be created within an MP-DCCP conne
 
 It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in {{RFC4340}} if this limit is exceeded.
 
-## Path usage strategies
+## Path usage strategies {#path_usage_strategy}
 
 MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
 Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
@@ -1567,7 +1570,7 @@ When there is outbound data to send and the primary path becomes inactive (e.g.,
 Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
 Path mobility is supported in the current Linux reference implementation {{multipath-dccp.org}}.
 
-### Concurrent path usage
+### Concurrent path usage {#concurrent_usage}
 Different to a path mobility strategy, the selection between MP-DCCP
 subflows is a per-packet decision that is a part of the multipath
 scheduling process. This method would allow multiple subflows to be
