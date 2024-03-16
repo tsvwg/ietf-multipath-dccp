@@ -11,7 +11,7 @@ area: transport
 wg: Transport Area Working Group
 keyword: Internet-Draft
 submissiontype: IETF
-
+#mp
 coding: us-ascii
 stand_alone: true
 
@@ -619,7 +619,7 @@ Address A1    Address A2                     Address B1    Address B2
   +--------+--------+--------+--------+
   |00101110|00001100|00000001| Addr ID|
   +--------+--------+--------+--------+
-  | Connection Identifier            |
+  | Connection Identifier             |
   +--------+--------+--------+--------+
   | Nonce                             |
   +--------+--------+--------+--------+
