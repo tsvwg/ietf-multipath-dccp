@@ -201,7 +201,7 @@ guaranteed delivery services, such as Audio/Video streaming.
 
 In addition to the integration into DCCP services, other use cases of MP-DCCP are the support of
 3GPP 5G multi-access solutions {{I-D.amend-tsvwg-multipath-framework-mpdccp}} or hybrid access networks
-{{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D. muley-network-based-bonding-hybrid-access}}, in
+{{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}, in
 which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
 (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS) in 3GPP terminology {{TS23.501}}).
 More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
