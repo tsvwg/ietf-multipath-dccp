@@ -164,7 +164,7 @@ Emerging networking experiments and technologies, ACM"
 --- abstract
 
 
-DCCP communications as defined in {{RFC4340}} are restricted to a single path per
+DCCP communications as defined in (RFC4340) are restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
 simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
@@ -184,7 +184,7 @@ different paths simultaneously.
 
 # Introduction {#intro}
 
-Datagram Congestion Control Protocol (DCCP) (RFC4340) is a
+Datagram Congestion Control Protocol (DCCP) {{RFC4340}} is a
 transport protocol that provides bidirectional unicast connections of
 congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
 This document specifies a set of protocol changes that add multipath
