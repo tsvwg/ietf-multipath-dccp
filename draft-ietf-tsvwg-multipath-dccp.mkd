@@ -97,7 +97,7 @@ informative:
   RFC7323:
   RFC8041:
   RFC8684:
-  RFC9293
+  RFC9293:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
     author:
