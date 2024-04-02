@@ -412,6 +412,7 @@ shown in {{ref-option-list}}.
 |  46   |    variable   | Multipath             |     Y      |
 {: #ref-option-list title='Multipath option set'}
 
+> Note to the RFC Editor: Please update the Number and Type with the value assigned by IANA.
 
 ## Multipath Capable Feature {#mp_capable}
 
@@ -795,8 +796,8 @@ be wrapped. {{RFC7323}} provides guidance on selecting an appropriately
 sized sequence number space according to the maximum segment lifetime of
 TCP. 64 bits is the recommended size for TCP to avoid the sequence number
 space going through within the segment lifetime. For DCCP, the Maximum
-Segment Lifetime is the same as that of TCP as specified in {{RFC4340}},
-Section 3.4. Compared to TCP, the sequence number for DCCP is incremented
+Segment Lifetime is the same as that of TCP as specified in {{Section 3.4 of RFC4340}}.
+Compared to TCP, the sequence number for DCCP is incremented
 per packet rather than per byte transmitted. For this reason, the 48 bits
 chosen in MP_SEQ are considered sufficiently large.
 
@@ -1169,11 +1170,12 @@ The following values are available for the Prio field:
        data caps associated with them as these paths will be frequently used.
 
 Example use cases include:
+
 1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
-   clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
+   clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
    will be used and Cellular will be used only if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
@@ -1343,17 +1345,20 @@ handshake is as follows:
 
 When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
 shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
+
 * an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
 * the IP address of the new path (A2_IP)
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
 The following options MUST be included in a packet carrying MP_ADDADDR:
+
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 * the MP_SEQ option with the sequence number (seqno 12) for this message according to {{MP_SEQ}}.
 
 Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
 response are as follows:
+
 * an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
 
@@ -1374,14 +1379,17 @@ Address A1    Address A2                               Address B1
 ### Removing a path (MP_REMOVEADDR)
 When a host (Host A) wants to indicate that a path is no longer available, it should use the MP_REMOVEADDR option ({{MP_REMOVEADDR}}) as
 shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
+
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
 
-The following options must be included in a packet carrying MP_REMOVEADDR
+The following options MUST be included in a packet carrying MP_REMOVEADDR:
+
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 * the MP_SEQ option with the sequence number (seqno 33) for this message according to {{MP_SEQ}}.
 
 Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
 response are as follows:
+
 * an MP_CONFIRM containing the MP_SEQ number (seqno 33) of the packet carrying the option that we are confirming, together with the MP_REMOVEADDR option
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
 
@@ -1566,7 +1574,8 @@ Selecting an appropriate method can allow MP-DCCP to realize different path util
 The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
 When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
-Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
+
+> Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
 Path mobility is supported in the current Linux reference implementation {{multipath-dccp.org}}.
 
 ### Concurrent path usage {#concurrent_usage}
