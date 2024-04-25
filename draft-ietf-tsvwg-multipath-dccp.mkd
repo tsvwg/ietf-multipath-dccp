@@ -199,11 +199,11 @@ multiple paths. In addition, the multipath extensions enable to tradeoff timelin
 which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
 
-In addition to the integration into DCCP services, other use cases of MP-DCCP are the support of
-3GPP 5G multi-access solutions {{I-D.amend-tsvwg-multipath-framework-mpdccp}} or hybrid access networks
+In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks
 {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}, in
 which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
-(referred to as Access Traffic Steering, Switching, and Splitting (ATSSS) in 3GPP terminology {{TS23.501}}).
+using a framework such as {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
 More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
