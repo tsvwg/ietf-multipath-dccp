@@ -207,7 +207,7 @@ which MP-DCCP can be used for load balancing, seamless session handover and band
 More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
-The encapsulation of non-DCCP traffic (e.g. UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification and is the subject of {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
+The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
 Similarly, the encapsulation of DCCP traffic in UDP is not discussed in detail in this document. This method can be used to pass middleboxes that do not support DCCP and is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
