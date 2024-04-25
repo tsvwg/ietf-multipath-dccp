@@ -208,7 +208,7 @@ More details on potential use cases for MP-DCCP are provided in {{multipath-dccp
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
-Similarly, the encapsulation of DCCP traffic in UDP is not discussed in detail in this document. This method can be used to pass middleboxes that do not support DCCP and is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
+Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
