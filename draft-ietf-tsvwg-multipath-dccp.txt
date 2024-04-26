@@ -2542,9 +2542,9 @@ Internet-Draft               Multipath DCCP                   March 2024
               Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
               C., and M. Kuehlewind, "Multipath Extension for QUIC",
               Work in Progress, Internet-Draft, draft-ietf-quic-
-              multipath-06, 23 October 2023,
+              multipath-07, 10 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              multipath-06>.
+              multipath-07>.
 
    [I-D.lhwxz-hybrid-access-network-architecture]
               Leymann, N., Heidemann, C., Cullen, M., Xue, L., and M.
