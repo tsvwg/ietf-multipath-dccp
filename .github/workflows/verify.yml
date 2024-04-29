@@ -23,7 +23,7 @@ jobs:
           ruby-version: '3.0'
           bundler-cache: true
 
-      - run: sudo npm install cspell@cspell4 -g
+      - run: npm install -g cspell
       - run: gem install kramdown-rfc2629
       - run: pip install xml2rfc
       - name: "Convert Markdown to RFC" 

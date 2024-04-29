@@ -25,10 +25,10 @@ full: spell all
 	$(xml2rfc) $< -o $@ --text
 
 spell: $(SOURCES)
-	cspell --no-summary --color $(SOURCES)
+	cspell lint --no-summary --color $(SOURCES)
 	
 spell_list: $(SOURCES)
-	cspell --no-summary --wordsOnly -u $(SOURCES)|sed 's/.*/       "&"/'|sed '$$!s/$$/,/'
+	cspell lint --no-summary --words-only -u $(SOURCES)|sed 's/.*/       "&"/'|sed '$$!s/$$/,/'
 
 clean: $(SOURCES)
 	$(foreach source, $(SOURCES), \
