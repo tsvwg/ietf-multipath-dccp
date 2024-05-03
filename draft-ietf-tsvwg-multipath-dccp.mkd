@@ -66,27 +66,29 @@ author:
 
 normative:
   RFC2119:
+  RFC4086:
   RFC4340:
+  RFC6234:
+  RFC8126:
+  RFC8174:
   DCCP.Parameter:
     title: IANA Datagram Congestion Control Protocol (DCCP) Parameters
     target: https://www.iana.org/assignments/dccp-parameters/dccp-parameters.xhtml
 
 informative:
   I-D.amend-tsvwg-multipath-framework-mpdccp:
+  I-D.amend-tsvwg-dccp-udp-header-conversion:
   I-D.lhwxz-hybrid-access-network-architecture:
   I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-iccrg-multipath-reordering:
   I-D.ietf-quic-multipath:
-  RFC0793:
   RFC2104:
   RFC3711:
   RFC4043:
-  RFC4086:
   RFC5238:
   RFC5595:
   RFC5596:
   RFC5597:
-  RFC6234:
   RFC6356:
   RFC6773:
   RFC6824:
@@ -94,9 +96,8 @@ informative:
   RFC6951:
   RFC7323:
   RFC8041:
-  RFC8126:
-  RFC8174:
   RFC8684:
+  RFC9293:
   TS23.501:
     title: System architecture for the 5G System; Stage 2; Release 16
     author:
@@ -163,7 +164,7 @@ Emerging networking experiments and technologies, ACM"
 --- abstract
 
 
-DCCP communications as defined in {{RFC4340}} are restricted to a single path per
+DCCP communications as defined in RFC 4340 are restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
 simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
@@ -171,13 +172,10 @@ experience through higher throughput and improved resilience to
 network failures.
 Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
 a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to the existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic (e.g., UDP or plain IP).  
+or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery.  
 
 This document specifies a set of extensions to
-DCCP to support multipath operations.  Multipath DCCP provides 
-the ability to simultaneously use multiple
-paths between peers.  The protocol offers
+DCCP to support multipath operations. The protocol offers
 the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously.
@@ -201,21 +199,16 @@ multiple paths. In addition, the multipath extensions enable to tradeoff timelin
 which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
 
-MP-DCCP was first suggested
-in the context of the 3GPP work on 5G multi-access solutions
-{{I-D.amend-tsvwg-multipath-framework-mpdccp}} and for hybrid access
-networks {{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}, where
-MP-DCCP can be applied for load-balancing, seamless session handover, and bandwidth
-aggregation (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
-in the 3GPP terminology {{TS23.501}}).
+In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks
+{{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}, in
+which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
+using a framework such as {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
 More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
-Encapsulation for DCCP in UDP is defined in {{RFC6773}}.
-{{I-D.amend-tsvwg-multipath-framework-mpdccp}} proposes a 
-lightweight encapsulation for DCCP flow headers appropriate for unreliable 
-IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
-This is not considered in the present specification. 
+The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
+Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
@@ -225,9 +218,9 @@ MP-QUIC inherits the properties of QUIC with its various facets of encryption, m
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
 MP-DCCP provides a set of features to DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering. 
-It operates at the transport layer and can be used as a transport for
+MP-DCCP operates at the transport layer and can be used as a transport for
 both higher and lower layers. 
-It is
+The protocol is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.
 
@@ -383,7 +376,7 @@ Address A1    Address A2             Address B1    Address B2
 
 # MP-DCCP Protocol {#protocol}
 
-The DCCP protocol feature list ({{RFC4340}}, Section 6.4) is
+The DCCP protocol feature list ({{Section 6.4 of RFC4340}}) is
 updated by adding  a new Multipath feature with Feature number 10, as
 shown in {{ref-feature-list}}.
 
@@ -489,7 +482,7 @@ MP-DCCP uses one single option to signal various multipath-related operations. T
 ~~~~
 {: #ref-mp-option-format title='Multipath option format'}
 
-The fields used by the the multipath option are described in {{ref-mp-option-list}}. MP_OPT refers to an Multipath option.
+The fields used by the multipath option are described in {{ref-mp-option-list}}. MP_OPT refers to an Multipath option.
 
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
@@ -1173,7 +1166,7 @@ Example use cases include:
    Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
-   clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
+   clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
    will be used and Cellular will be used only if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
@@ -1190,9 +1183,9 @@ schedule when the multipath scheduler strictly respects MP_PRIO value 0.
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see {{ref-mp-option-confirm}}).
 
-The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in {{path_usage_strategy}}. In the case of path mobility {{path_mobility}}, only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage ({{concurrent_usage}}), the definition is up to the multipath scheduler logic.
+The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in {{path_usage_strategy}}. In the case of path mobility ({{path_mobility}}), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage ({{concurrent_usage}}), the definition is up to the multipath scheduler logic.
 
-A MP_SEQ {{MP_SEQ}} MUST be present in a DCCP datagram
+A MP_SEQ ({{MP_SEQ}}) MUST be present in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
 
 ### MP_CLOSE {#MP_CLOSE}
@@ -1234,7 +1227,7 @@ MUST be sent on any subflow in response to a received DCCP-Close containing a va
 
 When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.
 
-Contrary to a MP_FAST_CLOSE {{MP_FAST_CLOSE}}, no single-sided abrupt termination is applied.
+Contrary to a MP_FAST_CLOSE ({{MP_FAST_CLOSE}}), no single-sided abrupt termination is applied.
 
 
 ### Experimental Multipath option MP_EXP for private use {#MP_EXP}
@@ -1292,7 +1285,7 @@ Address A1    Address A2                              Address B1
 The basic initial handshake for the first subflow is as follows:
 
 * Host A sends a DCCP-Request with the MP-Capable feature Change
-  request and the MP_KEY option with an Host-specific CI-A and a Key-A for
+  request and the MP_KEY option with a Host-specific CI-A and a Key-A for
   each of the supported key types as described in {{MP_KEY}}. CI-A is a unique identifier during the
   lifetime of a MP-DCCP connection.
 
@@ -1343,18 +1336,25 @@ handshake is as follows:
 
 When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option ({{MP_ADDADDR}}) as
 shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
+
 * an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
+
 * the IP address of the new path (A2_IP)
+
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
 The following options MUST be included in a packet carrying MP_ADDADDR:
+
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
+
 * the MP_SEQ option with the sequence number (seqno 12) for this message according to {{MP_SEQ}}.
 
 Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
 response are as follows:
+
 * an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option
+
 * the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure {{handshaking}}
 
 ~~~~
@@ -1772,7 +1772,7 @@ This appendix is Informative.
 Multipath DCCP is similar to Multipath TCP {{RFC8684}}, in that it
 extends the related basic DCCP transport protocol {{RFC4340}} with
 multipath capabilities in the same way as Multipath TCP extends TCP
-{{RFC0793}}.
+{{RFC9293}}.
 However, because of the differences between the underlying TCP and DCCP
 protocols, the transport characteristics of MPTCP and MP-DCCP are
 different.
