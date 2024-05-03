@@ -3433,7 +3433,7 @@ extensions to standard protocols since otherwise unexpected reactions of
 middleboxes may hinder its deployment. DCCP already provides means to
 mitigate the potential impact of middleboxes, also in comparison to TCP (see
 <span>[<a href="#RFC4043" class="cite xref">RFC4043</a>]</span>, Section 16). When both hosts are located behind a NAT or
-firewall entity, specific measures have to be applied such as the <span>[<a href="#RFC5596" class="cite xref">RFC5596</a>]</span>-specified
+firewall entity, specific measures have to be applied such as the <span>[<a href="#RFC5596" class="cite xref">RFC5596</a>]</span> specified
 simultaneous-open technique that update the (traditionally asymmetric)
 connection-establishment procedures for DCCP.  Further standardized technologies
 addressing middleboxes operating as NATs are provided in <span>[<a href="#RFC5597" class="cite xref">RFC5597</a>]</span>.<a href="#section-5-1" class="pilcrow">¶</a></p>
@@ -3457,7 +3457,7 @@ demonstrations of a laboratory setup have been executed and have been published 
       <h2 id="name-acknowledgments">
 <a href="#section-7" class="section-number selfRef">7. </a><a href="#name-acknowledgments" class="section-name selfRef">Acknowledgments</a>
       </h2>
-<p id="section-7-1"><span>[<a href="#RFC6824" class="cite xref">RFC6824</a>]</span> and <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span> defined Multipath TCP and provided important
+<p id="section-7-1"><span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span> defines Multipath TCP and provided important
 inputs for this specification.<a href="#section-7-1" class="pilcrow">¶</a></p>
 <p id="section-7-2">The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry Fairhurst and Behcet Sarikaya.<a href="#section-7-2" class="pilcrow">¶</a></p>
 </section>
@@ -3495,7 +3495,12 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
         </tbody>
       </table>
 </div>
-<p id="section-8-4">Sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-4" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8-4.1">
+          <p id="section-8-4.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-8-5">Sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-5" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-versions-registry"></span><div id="ref-add-version-list">
 <table class="center" id="table-7">
         <caption>
@@ -3523,9 +3528,14 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
         </tbody>
       </table>
 </div>
-<p id="section-8-6">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-6" class="pilcrow">¶</a></p>
-<p id="section-8-7">This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>.<a href="#section-8-7" class="pilcrow">¶</a></p>
-<p id="section-8-8">IANA is requested to create a new 'Multipath Options' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Options' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-8" class="pilcrow">¶</a></p>
+<ul class="normal ulEmpty">
+<li class="normal ulEmpty" id="section-8-7.1">
+          <p id="section-8-7.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-7.1.1" class="pilcrow">¶</a></p>
+</li>
+      </ul>
+<p id="section-8-8">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-8" class="pilcrow">¶</a></p>
+<p id="section-8-9">This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>.<a href="#section-8-9" class="pilcrow">¶</a></p>
+<p id="section-8-10">IANA is requested to create a new 'Multipath Options' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Options' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-10" class="pilcrow">¶</a></p>
 <span id="name-multipath-options-registry"></span><div id="ref-add-proto-opt-list">
 <table class="center" id="table-8">
         <caption>
@@ -3646,10 +3656,10 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
         </tbody>
       </table>
 </div>
-<p id="section-8-10">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-10" class="pilcrow">¶</a></p>
-<p id="section-8-11">In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-11" class="pilcrow">¶</a></p>
-<p id="section-8-12">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
-in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" class="pilcrow">¶</a></p>
+<p id="section-8-12">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-12" class="pilcrow">¶</a></p>
+<p id="section-8-13">In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-13" class="pilcrow">¶</a></p>
+<p id="section-8-14">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" class="pilcrow">¶</a></p>
 <span id="name-multipath-key-type-registry"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
         <caption>
@@ -3824,10 +3834,6 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dt id="RFC6773">[RFC6773]</dt>
         <dd>
 <span class="refAuthor">Phelan, T.</span>, <span class="refAuthor">Fairhurst, G.</span>, and <span class="refAuthor">C. Perkins</span>, <span class="refTitle">"DCCP-UDP: A Datagram Congestion Control Protocol UDP Encapsulation for NAT Traversal"</span>, <span class="seriesInfo">RFC 6773</span>, <span class="seriesInfo">DOI 10.17487/RFC6773</span>, <time datetime="2012-11" class="refDate">November 2012</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6773">https://www.rfc-editor.org/rfc/rfc6773</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC6824">[RFC6824]</dt>
-        <dd>
-<span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">O. Bonaventure</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 6824</span>, <span class="seriesInfo">DOI 10.17487/RFC6824</span>, <time datetime="2013-01" class="refDate">January 2013</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6824">https://www.rfc-editor.org/rfc/rfc6824</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6904">[RFC6904]</dt>
         <dd>

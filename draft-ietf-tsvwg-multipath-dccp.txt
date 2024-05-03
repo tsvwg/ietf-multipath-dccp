@@ -2307,7 +2307,7 @@ Internet-Draft               Multipath DCCP                   March 2024
    deployment.  DCCP already provides means to mitigate the potential
    impact of middleboxes, also in comparison to TCP (see [RFC4043],
    Section 16).  When both hosts are located behind a NAT or firewall
-   entity, specific measures have to be applied such as the [RFC5596]-
+   entity, specific measures have to be applied such as the [RFC5596]
    specified simultaneous-open technique that update the (traditionally
    asymmetric) connection-establishment procedures for DCCP.  Further
    standardized technologies addressing middleboxes operating as NATs
@@ -2330,8 +2330,8 @@ Internet-Draft               Multipath DCCP                   March 2024
 
 7.  Acknowledgments
 
-   [RFC6824] and [RFC8684] defined Multipath TCP and provided important
-   inputs for this specification.
+   [RFC8684] defines Multipath TCP and provided important inputs for
+   this specification.
 
    The authors gratefully acknowledge significant input into this
    document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef,
@@ -2369,6 +2369,9 @@ Internet-Draft               Multipath DCCP                   March 2024
 
              Table 6: Addition to DCCP Feature Numbers registry
 
+      Note to RFC Editor: Please replace [ThisDocument] with a reference
+      to the final RFC
+
    Sect.  Section 3.1 specifies the new 1-Byte entry above includes a
    4-bit part to specify the version of the used MP-DCCP implementation.
    This document requests IANA to create a new 'MP-DCCP Versions'
@@ -2385,6 +2388,9 @@ Internet-Draft               Multipath DCCP                   March 2024
 
                     Table 7: MP-DCCP Versions Registry
 
+      Note to RFC Editor: Please replace [ThisDocument] with a reference
+      to the final RFC
+
    Future MP-DCCP versions 1 to 15 are assigned from this registry using
    the Specification Required policy (Section 4.6 of [RFC8126]).
 
@@ -2396,12 +2402,6 @@ Internet-Draft               Multipath DCCP                   March 2024
    added to the new 'Multipath Options' registry.  The registry in
    Table 8 has an upper boundary of 255 in the numeric value field.
 
-      +===========+===============+=====================+===========+
-      | Multipath |      Name     |     Description     | Reference |
-      |   Option  |               |                     |           |
-      +===========+===============+=====================+===========+
-      |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
-      |           |               |   processing of an  |   3.2.1   |
 
 
 
@@ -2410,6 +2410,12 @@ Amend, et al.           Expires 18 September 2024              [Page 43]
 Internet-Draft               Multipath DCCP                   March 2024
 
 
+      +===========+===============+=====================+===========+
+      | Multipath |      Name     |     Description     | Reference |
+      |   Option  |               |                     |           |
+      +===========+===============+=====================+===========+
+      |  MP_OPT=0 |   MP_CONFIRM  |  Confirm reception/ |  Section  |
+      |           |               |   processing of an  |   3.2.1   |
       |           |               |    MP_OPT option    |           |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=1 |    MP_JOIN    |   Join subflow to   |  Section  |
@@ -2452,12 +2458,6 @@ Internet-Draft               Multipath DCCP                   March 2024
       |           |               |     private use     |           |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT>11 |   Unassigned  | Reserved for future |           |
-      |           |               |  Multipath Options  |           |
-      +-----------+---------------+---------------------+-----------+
-
-                    Table 8: Multipath Options registry
-
-
 
 
 
@@ -2465,6 +2465,11 @@ Amend, et al.           Expires 18 September 2024              [Page 44]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+      |           |               |  Multipath Options  |           |
+      +-----------+---------------+---------------------+-----------+
+
+                    Table 8: Multipath Options registry
 
    Future Multipath options with MP_OPT>11 are assigned from this
    registry using the Specification Required policy (Section 4.6 of
@@ -2506,11 +2511,6 @@ Internet-Draft               Multipath DCCP                   March 2024
 
 9.1.  Normative References
 
-   [DCCP.Parameter]
-              "IANA Datagram Congestion Control Protocol (DCCP)
-              Parameters", n.d., <https://www.iana.org/assignments/dccp-
-              parameters/dccp-parameters.xhtml>.
-
 
 
 
@@ -2521,6 +2521,11 @@ Amend, et al.           Expires 18 September 2024              [Page 45]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+   [DCCP.Parameter]
+              "IANA Datagram Congestion Control Protocol (DCCP)
+              Parameters", n.d., <https://www.iana.org/assignments/dccp-
+              parameters/dccp-parameters.xhtml>.
 
    [RFC2119]  Bradner, S., "Key words for use in RFCs to Indicate
               Requirement Levels", BCP 14, RFC 2119,
@@ -2560,13 +2565,8 @@ Internet-Draft               Multipath DCCP                   March 2024
               <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
               multipath-reordering-03>.
 
-   [I-D.amend-tsvwg-dccp-udp-header-conversion]
-              Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
-              "Lossless and overhead free DCCP - UDP header conversion
-              (U-DCCP)", Work in Progress, Internet-Draft, draft-amend-
-              tsvwg-dccp-udp-header-conversion-01, 8 July 2019,
-              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
-              dccp-udp-header-conversion-01>.
+
+
 
 
 
@@ -2577,6 +2577,14 @@ Amend, et al.           Expires 18 September 2024              [Page 46]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+   [I-D.amend-tsvwg-dccp-udp-header-conversion]
+              Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
+              "Lossless and overhead free DCCP - UDP header conversion
+              (U-DCCP)", Work in Progress, Internet-Draft, draft-amend-
+              tsvwg-dccp-udp-header-conversion-01, 8 July 2019,
+              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
+              dccp-udp-header-conversion-01>.
 
    [I-D.amend-tsvwg-multipath-framework-mpdccp]
               Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and
@@ -2612,14 +2620,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               <https://datatracker.ietf.org/doc/html/draft-muley-
               network-based-bonding-hybrid-access-03>.
 
-   [IETF115.Slides]
-              Amend, M., "MP-DCCP for enabling transfer of UDP/IP
-              traffic over multiple data paths in multi-connectivity
-              networks", IETF105 , n.d.,
-              <https://datatracker.ietf.org/meeting/105/materials/
-              slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-
-              operation-00>.
-
 
 
 
@@ -2633,6 +2633,14 @@ Amend, et al.           Expires 18 September 2024              [Page 47]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+   [IETF115.Slides]
+              Amend, M., "MP-DCCP for enabling transfer of UDP/IP
+              traffic over multiple data paths in multi-connectivity
+              networks", IETF105 , n.d.,
+              <https://datatracker.ietf.org/meeting/105/materials/
+              slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-
+              operation-00>.
 
    [MP-DCCP.Paper]
               Amend, M., Bogenfeld, E., Cvjetkovic, M., Rakocevic, V.,
@@ -2672,14 +2680,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               RFC 5238, DOI 10.17487/RFC5238, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5238>.
 
-   [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
-              (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
-              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
-
-   [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
-              (DCCP) Simultaneous-Open Technique to Facilitate NAT/
-              Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
-              September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
 
 
@@ -2689,6 +2689,15 @@ Amend, et al.           Expires 18 September 2024              [Page 48]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+   [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
+              (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
+
+   [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
+              (DCCP) Simultaneous-Open Technique to Facilitate NAT/
+              Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
+              September 2009, <https://www.rfc-editor.org/rfc/rfc5596>.
 
    [RFC5597]  Denis-Courmont, R., "Network Address Translation (NAT)
               Behavioral Requirements for the Datagram Congestion
@@ -2705,11 +2714,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               Datagram Congestion Control Protocol UDP Encapsulation for
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
               2012, <https://www.rfc-editor.org/rfc/rfc6773>.
-
-   [RFC6824]  Ford, A., Raiciu, C., Handley, M., and O. Bonaventure,
-              "TCP Extensions for Multipath Operation with Multiple
-              Addresses", RFC 6824, DOI 10.17487/RFC6824, January 2013,
-              <https://www.rfc-editor.org/rfc/rfc6824>.
 
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
@@ -2732,10 +2736,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
 
-   [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
-              Paasch, "TCP Extensions for Multipath Operation with
-              Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
-              2020, <https://www.rfc-editor.org/rfc/rfc8684>.
 
 
 
@@ -2745,6 +2745,11 @@ Amend, et al.           Expires 18 September 2024              [Page 49]
 
 Internet-Draft               Multipath DCCP                   March 2024
 
+
+   [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
+              Paasch, "TCP Extensions for Multipath Operation with
+              Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
+              2020, <https://www.rfc-editor.org/rfc/rfc8684>.
 
    [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
               STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
@@ -2776,11 +2781,6 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
-
 
 
 
