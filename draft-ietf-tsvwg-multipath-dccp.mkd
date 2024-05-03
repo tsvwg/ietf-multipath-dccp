@@ -91,7 +91,6 @@ informative:
   RFC5597:
   RFC6356:
   RFC6773:
-  RFC6824:
   RFC6904:
   RFC6951:
   RFC7323:
@@ -1681,7 +1680,7 @@ extensions to standard protocols since otherwise unexpected reactions of
 middleboxes may hinder its deployment. DCCP already provides means to
 mitigate the potential impact of middleboxes, also in comparison to TCP (see
 {{RFC4043}}, Section 16). When both hosts are located behind a NAT or
-firewall entity, specific measures have to be applied such as the {{RFC5596}}-specified
+firewall entity, specific measures have to be applied such as the {{RFC5596}} specified
 simultaneous-open technique that update the (traditionally asymmetric)
 connection-establishment procedures for DCCP.  Further standardized technologies
 addressing middleboxes operating as NATs are provided in {{RFC5597}}.
@@ -1701,7 +1700,7 @@ demonstrations of a laboratory setup have been executed and have been published 
 
 # Acknowledgments
 
-{{RFC6824}} and {{RFC8684}} defined Multipath TCP and provided important
+{{RFC8684}} defines Multipath TCP and provided important
 inputs for this specification.
 
 The authors gratefully acknowledge significant input into this document from Dirk von Hugo, Nathalie Romo Moreno, Omar Nassef, Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry Fairhurst and Behcet Sarikaya.
@@ -1722,6 +1721,8 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 |   10 suggested   |      Multipath Capable     | [ThisDocument]  |
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
+> Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
+
 Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
@@ -1730,6 +1731,8 @@ Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part 
    |     0     |  0000 suggested | [ThisDocument] |
    | Unassigned|    0001 - 1111  |                |
 {:#ref-add-version-list title='MP-DCCP Versions Registry'}
+
+> Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
 
 Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
