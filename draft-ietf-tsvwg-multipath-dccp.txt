@@ -19,25 +19,24 @@ Expires: 18 September 2024                                    A. Kassler
 
 Abstract
 
-   DCCP communications as defined in [RFC4340] are restricted to a
-   single path per connection, yet multiple paths often exist between
-   peers.  The simultaneous use of available multiple paths for a DCCP
-   session could improve resource usage within the network and, thus,
-   improve user experience through higher throughput and improved
-   resilience to network failures.  Use cases for Multipath DCCP (MP-
-   DCCP) are mobile devices (e.g., handsets, vehicles) and residential
-   home gateways simultaneously connected to distinct networks as, e.g.,
-   a cellular and a Wireless Local Area (WLAN) network or a cellular and
-   a fixed access network.  Compared to the existing multipath
-   protocols, such as MPTCP, MP-DCCP provides specific support for non-
-   TCP user traffic (e.g., UDP or plain IP).
+   DCCP communications as defined in RFC 4340 are restricted to a single
+   path per connection, yet multiple paths often exist between peers.
+   The simultaneous use of available multiple paths for a DCCP session
+   could improve resource usage within the network and, thus, improve
+   user experience through higher throughput and improved resilience to
+   network failures.  Use cases for Multipath DCCP (MP-DCCP) are mobile
+   devices (e.g., handsets, vehicles) and residential home gateways
+   simultaneously connected to distinct networks as, e.g., a cellular
+   and a Wireless Local Area (WLAN) network or a cellular and a fixed
+   access network.  Compared to existing multipath protocols such as
+   MPTCP, MP-DCCP offers special support for latency-sensitive services
+   with different requirements for reliability and in-order delivery.
 
    This document specifies a set of extensions to DCCP to support
-   multipath operations.  Multipath DCCP provides the ability to
-   simultaneously use multiple paths between peers.  The protocol offers
-   the same type of service to applications as DCCP and provides the
-   components necessary to establish and use multiple DCCP flows across
-   different paths simultaneously.
+   multipath operations.  The protocol offers the same type of service
+   to applications as DCCP and provides the components necessary to
+   establish and use multiple DCCP flows across different paths
+   simultaneously.
 
 Status of This Memo
 
@@ -48,6 +47,7 @@ Status of This Memo
    Task Force (IETF).  Note that other groups may also distribute
    working documents as Internet-Drafts.  The list of current Internet-
    Drafts is at https://datatracker.ietf.org/drafts/current/.
+
 
 
 
@@ -131,7 +131,7 @@ Internet-Draft               Multipath DCCP                   March 2024
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  42
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  45
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  45
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  45
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  46
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  49
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  52
 
@@ -154,14 +154,14 @@ Internet-Draft               Multipath DCCP                   March 2024
    which is important for low-latency applications that do not require
    guaranteed delivery services, such as Audio/Video streaming.
 
-   MP-DCCP was first suggested in the context of the 3GPP work on 5G
-   multi-access solutions [I-D.amend-tsvwg-multipath-framework-mpdccp]
-   and for hybrid access networks [I-D.lhwxz-hybrid-access-network-archi
-   tecture][I-D.muley-network-based-bonding-hybrid-access], where MP-
-   DCCP can be applied for load-balancing, seamless session handover,
-   and bandwidth aggregation (referred to as Access Traffic Steering,
-   Switching, and Splitting (ATSSS) in the 3GPP terminology [TS23.501]).
-   More details on potential use cases for MP-DCCP are provided in
+   In addition to the integration into DCCP services, implementers or
+   future specification could choose MP-DCCP for other use cases like
+   3GPP 5G multi-access solutions (e.g., Access Traffic Steering,
+   Switching, and Splitting (ATSSS) specified in [TS23.501]) or hybrid
+   access networks [I-D.lhwxz-hybrid-access-network-architecture][I-D.mu
+   ley-network-based-bonding-hybrid-access], in which MP-DCCP can be
+   used for load balancing, seamless session handover and bandwidth
+   aggregation using a framework such as
 
 
 
@@ -170,15 +170,20 @@ Amend, et al.           Expires 18 September 2024               [Page 3]
 Internet-Draft               Multipath DCCP                   March 2024
 
 
-   [multipath-dccp.org], [IETF115.Slides], and [MP-DCCP.Paper].  All
-   these use cases profit from an Open Source Linux reference
-   implementation provided under [multipath-dccp.org].
+   [I-D.amend-tsvwg-multipath-framework-mpdccp].  More details on
+   potential use cases for MP-DCCP are provided in [multipath-dccp.org],
+   [IETF115.Slides], and [MP-DCCP.Paper].  All these use cases profit
+   from an Open Source Linux reference implementation provided under
+   [multipath-dccp.org].
 
-   Encapsulation for DCCP in UDP is defined in [RFC6773].
-   [I-D.amend-tsvwg-multipath-framework-mpdccp] proposes a lightweight
-   encapsulation for DCCP flow headers appropriate for unreliable IP
-   traffic in terms of UDP and other non-TCP packets in comparison to
-   MPTCP.  This is not considered in the present specification.
+   The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to
+   enable the above-mentioned use cases is not considered in this
+   specification; such matters are further detailed in
+   [I-D.amend-tsvwg-multipath-framework-mpdccp].  Also out of scope is
+   the encapsulation of DCCP traffic in UDP to pass middleboxes that do
+   not support DCCP.  A possible method is defined in [RFC6773] or is
+   considered in [I-D.amend-tsvwg-dccp-udp-header-conversion] to achieve
+   the same with less overhead.
 
    Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous
    usage of multiple paths for a single connection
@@ -197,10 +202,10 @@ Internet-Draft               Multipath DCCP                   March 2024
 1.1.  Multipath DCCP in the Networking Stack
 
    MP-DCCP provides a set of features to DCCP; Figure 1 illustrates this
-   layering.  It operates at the transport layer and can be used as a
-   transport for both higher and lower layers.  It is designed to be
-   used by applications in the same way as DCCP with no changes to the
-   application itself.
+   layering.  MP-DCCP operates at the transport layer and can be used as
+   a transport for both higher and lower layers.  The protocol is
+   designed to be used by applications in the same way as DCCP with no
+   changes to the application itself.
 
                                 +-------------------------------+
                                 |           Application         |
@@ -213,11 +218,6 @@ Internet-Draft               Multipath DCCP                   March 2024
    +---------------+            +-------------------------------+
 
      Figure 1: Comparison of standard DCCP and MP-DCCP protocol stacks
-
-
-
-
-
 
 
 
@@ -424,8 +424,8 @@ Internet-Draft               Multipath DCCP                   March 2024
 
 3.  MP-DCCP Protocol
 
-   The DCCP protocol feature list ([RFC4340], Section 6.4) is updated by
-   adding a new Multipath feature with Feature number 10, as shown in
+   The DCCP protocol feature list (Section 6.4 of [RFC4340]) is updated
+   by adding a new Multipath feature with Feature number 10, as shown in
    Table 1.
 
     +========+===================+============+===============+=======+
@@ -583,7 +583,7 @@ Internet-Draft               Multipath DCCP                   March 2024
 
                      Figure 5: Multipath option format
 
-   The fields used by the the multipath option are described in Table 3.
+   The fields used by the multipath option are described in Table 3.
    MP_OPT refers to an Multipath option.
 
 
@@ -1528,7 +1528,7 @@ Internet-Draft               Multipath DCCP                   March 2024
    available.  Such setting results in using the Cellular path only
    temporally, if more capacity is needed than the WiFi path can
    provide, indicating a clear priority of the Wi-Fi path over the
-   Cellular due to e.g. cost reasons. 2) Setting Wi-Fi path to Primary
+   Cellular due to, e.g., cost reasons. 2) Setting Wi-Fi path to Primary
    and Cellular to Standby.  In this case Wi-Fi will be used and
    Cellular will be used only if the Wi-Fi path is not available.  3)
    Setting Wi-Fi path to Primary and Cellular path to Primary.  In this
@@ -1548,14 +1548,14 @@ Internet-Draft               Multipath DCCP                   March 2024
 
    The relative ratio of the primary path values 3-15 depends on the
    path usage strategy, which is described in more detail in
-   Section 3.11.  In the case of path mobility Section 3.11.1, only one
-   path can be used at a time and MUST be the appropriate one that has
-   the highest available priority value including also the prio numbers
-   1 and 2.  In the other case of concurrent path usage
+   Section 3.11.  In the case of path mobility (Section 3.11.1), only
+   one path can be used at a time and MUST be the appropriate one that
+   has the highest available priority value including also the prio
+   numbers 1 and 2.  In the other case of concurrent path usage
    (Section 3.11.2), the definition is up to the multipath scheduler
    logic.
 
-   A MP_SEQ Section 3.2.5 MUST be present in a DCCP datagram in which
+   A MP_SEQ (Section 3.2.5) MUST be present in a DCCP datagram in which
    MP_PRIO is sent.  Further details are given in Section 3.2.1.
 
 3.2.11.  MP_CLOSE
@@ -1610,7 +1610,7 @@ Internet-Draft               Multipath DCCP                   March 2024
    When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new
    subflow requests using MP_JOIN MUST be ignored.
 
-   Contrary to a MP_FAST_CLOSE Section 3.2.3, no single-sided abrupt
+   Contrary to a MP_FAST_CLOSE (Section 3.2.3), no single-sided abrupt
    termination is applied.
 
 
@@ -1712,7 +1712,7 @@ Internet-Draft               Multipath DCCP                   March 2024
    The basic initial handshake for the first subflow is as follows:
 
    *  Host A sends a DCCP-Request with the MP-Capable feature Change
-      request and the MP_KEY option with an Host-specific CI-A and a
+      request and the MP_KEY option with a Host-specific CI-A and a
       Key-A for each of the supported key types as described in
       Section 3.2.4.  CI-A is a unique identifier during the lifetime of
       a MP-DCCP connection.
@@ -1782,10 +1782,10 @@ Internet-Draft               Multipath DCCP                   March 2024
    When a host (Host A) wants to advertise the availability of a new
    path, it should use the MP_ADDADDR option (Section 3.2.8) as shown in
    the example in Figure 22.  The MP_ADDADDR option passed in the DCCP-
-   Data contains the following parameters: * an identifier (id 2) for
-   the new IP address which is used as a reference in subsequent control
-   exchanges. * the IP address of the new path (A2_IP) * A pair of
-   octets specifying the port number associated with this IP address.
+   Data contains the following parameters:
+
+   *  an identifier (id 2) for the new IP address which is used as a
+      reference in subsequent control exchanges.
 
 
 
@@ -1794,22 +1794,31 @@ Amend, et al.           Expires 18 September 2024              [Page 32]
 Internet-Draft               Multipath DCCP                   March 2024
 
 
-   The value of 00 here indicates that the port number is the same as
-   that used for the initial subflow address A1_IP
+   *  the IP address of the new path (A2_IP)
+
+   *  A pair of octets specifying the port number associated with this
+      IP address.  The value of 00 here indicates that the port number
+      is the same as that used for the initial subflow address A1_IP
 
    The following options MUST be included in a packet carrying
-   MP_ADDADDR: * the leftmost 20 bytes of the HMAC(A) generated during
-   the initial handshaking procedure described in Section 3.3 and
-   Section 3.2.6 * the MP_SEQ option with the sequence number (seqno 12)
-   for this message according to Section 3.2.5.
+   MP_ADDADDR:
+
+   *  the leftmost 20 bytes of the HMAC(A) generated during the initial
+      handshaking procedure described in Section 3.3 and Section 3.2.6
+
+   *  the MP_SEQ option with the sequence number (seqno 12) for this
+      message according to Section 3.2.5.
 
    Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack
    containing the MP_CONFIRM option.  The parameters supplied in this
-   response are as follows: * an MP_CONFIRM containing the MP_SEQ number
-   (seqno 12) of the packet carrying the option that we are confirming
-   together with the MP_ADDADDR option * the leftmost 20 bytes of the
-   HMAC(B) generated during the initial handshaking procedure
-   Section 3.3
+   response are as follows:
+
+   *  an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the
+      packet carrying the option that we are confirming together with
+      the MP_ADDADDR option
+
+   *  the leftmost 20 bytes of the HMAC(B) generated during the initial
+      handshaking procedure Section 3.3
 
              Host A                                         Host B
    ------------------------                              -----------
@@ -1833,6 +1842,14 @@ Internet-Draft               Multipath DCCP                   March 2024
    (id 2) for the IP address to remove (A2_IP) and which was specified
    in a previous MP_ADDADDR message.
 
+
+
+
+Amend, et al.           Expires 18 September 2024              [Page 33]
+
+Internet-Draft               Multipath DCCP                   March 2024
+
+
    The following options must be included in a packet carrying
    MP_REMOVEADDR * the leftmost 20 bytes of the HMAC(A) generated during
    the initial handshaking procedure described in Section 3.3 and
@@ -1842,14 +1859,6 @@ Internet-Draft               Multipath DCCP                   March 2024
    Host B acknowledges receipt of the MP_REMOVEADDR message with a DCCP-
    Ack containing the MP_CONFIRM option.  The parameters supplied in
    this response are as follows: * an MP_CONFIRM containing the MP_SEQ
-
-
-
-Amend, et al.           Expires 18 September 2024              [Page 33]
-
-Internet-Draft               Multipath DCCP                   March 2024
-
-
    number (seqno 33) of the packet carrying the option that we are
    confirming, together with the MP_REMOVEADDR option * the leftmost 20
    bytes of the HMAC(B) generated during the initial handshaking
@@ -1889,15 +1898,6 @@ Internet-Draft               Multipath DCCP                   March 2024
    termination specified in section 5.5 of [RFC4340] on each subflow
    with the first packet on each subflow carrying MP_CLOSE (see
    Section 3.2.11).
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2507,12 +2507,12 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC2119, March 1997,
               <https://www.rfc-editor.org/rfc/rfc2119>.
 
-   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
-              Congestion Control Protocol (DCCP)", RFC 4340,
-              DOI 10.17487/RFC4340, March 2006,
-              <https://www.rfc-editor.org/rfc/rfc4340>.
+   [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
+              "Randomness Requirements for Security", BCP 106, RFC 4086,
+              DOI 10.17487/RFC4086, June 2005,
+              <https://www.rfc-editor.org/rfc/rfc4086>.
 
-9.2.  Informative References
+
 
 
 
@@ -2522,12 +2522,41 @@ Amend, et al.           Expires 18 September 2024              [Page 45]
 Internet-Draft               Multipath DCCP                   March 2024
 
 
+   [RFC4340]  Kohler, E., Handley, M., and S. Floyd, "Datagram
+              Congestion Control Protocol (DCCP)", RFC 4340,
+              DOI 10.17487/RFC4340, March 2006,
+              <https://www.rfc-editor.org/rfc/rfc4340>.
+
+   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
+              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
+              DOI 10.17487/RFC6234, May 2011,
+              <https://www.rfc-editor.org/rfc/rfc6234>.
+
+   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
+              Writing an IANA Considerations Section in RFCs", BCP 26,
+              RFC 8126, DOI 10.17487/RFC8126, June 2017,
+              <https://www.rfc-editor.org/rfc/rfc8126>.
+
+   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
+              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
+              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
+
+9.2.  Informative References
+
    [I-D.amend-iccrg-multipath-reordering]
               Amend, M. and D. Von Hugo, "Multipath sequence
               maintenance", Work in Progress, Internet-Draft, draft-
               amend-iccrg-multipath-reordering-03, 25 October 2021,
               <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
               multipath-reordering-03>.
+
+   [I-D.amend-tsvwg-dccp-udp-header-conversion]
+              Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
+              "Lossless and overhead free DCCP - UDP header conversion
+              (U-DCCP)", Work in Progress, Internet-Draft, draft-amend-
+              tsvwg-dccp-udp-header-conversion-01, 8 July 2019,
+              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
+              dccp-udp-header-conversion-01>.
 
    [I-D.amend-tsvwg-multipath-framework-mpdccp]
               Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and
@@ -2541,6 +2570,14 @@ Internet-Draft               Multipath DCCP                   March 2024
    [I-D.ietf-quic-multipath]
               Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
               C., and M. Kuehlewind, "Multipath Extension for QUIC",
+
+
+
+Amend, et al.           Expires 18 September 2024              [Page 46]
+
+Internet-Draft               Multipath DCCP                   March 2024
+
+
               Work in Progress, Internet-Draft, draft-ietf-quic-
               multipath-07, 10 April 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
@@ -2571,13 +2608,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               slides-105-tsvwg-sessa-62-dccp-extensions-for-multipath-
               operation-00>.
 
-
-
-Amend, et al.           Expires 18 September 2024              [Page 46]
-
-Internet-Draft               Multipath DCCP                   March 2024
-
-
    [MP-DCCP.Paper]
               Amend, M., Bogenfeld, E., Cvjetkovic, M., Rakocevic, V.,
               Pieska, M., Kassler, A., and A. Brunstrom, "A Framework
@@ -2596,9 +2626,13 @@ Internet-Draft               Multipath DCCP                   March 2024
               international conference on Emerging networking
               experiments and technologies, ACM , 2012.
 
-   [RFC0793]  Postel, J., "Transmission Control Protocol", RFC 793,
-              DOI 10.17487/RFC0793, September 1981,
-              <https://www.rfc-editor.org/rfc/rfc793>.
+
+
+
+Amend, et al.           Expires 18 September 2024              [Page 47]
+
+Internet-Draft               Multipath DCCP                   March 2024
+
 
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
@@ -2615,24 +2649,10 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC4043, May 2005,
               <https://www.rfc-editor.org/rfc/rfc4043>.
 
-   [RFC4086]  Eastlake 3rd, D., Schiller, J., and S. Crocker,
-              "Randomness Requirements for Security", BCP 106, RFC 4086,
-              DOI 10.17487/RFC4086, June 2005,
-              <https://www.rfc-editor.org/rfc/rfc4086>.
-
    [RFC5238]  Phelan, T., "Datagram Transport Layer Security (DTLS) over
               the Datagram Congestion Control Protocol (DCCP)",
               RFC 5238, DOI 10.17487/RFC5238, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5238>.
-
-
-
-
-
-Amend, et al.           Expires 18 September 2024              [Page 47]
-
-Internet-Draft               Multipath DCCP                   March 2024
-
 
    [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
               (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
@@ -2649,11 +2669,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC5597, September 2009,
               <https://www.rfc-editor.org/rfc/rfc5597>.
 
-   [RFC6234]  Eastlake 3rd, D. and T. Hansen, "US Secure Hash Algorithms
-              (SHA and SHA-based HMAC and HKDF)", RFC 6234,
-              DOI 10.17487/RFC6234, May 2011,
-              <https://www.rfc-editor.org/rfc/rfc6234>.
-
    [RFC6356]  Raiciu, C., Handley, M., and D. Wischik, "Coupled
               Congestion Control for Multipath Transport Protocols",
               RFC 6356, DOI 10.17487/RFC6356, October 2011,
@@ -2663,6 +2678,17 @@ Internet-Draft               Multipath DCCP                   March 2024
               Datagram Congestion Control Protocol UDP Encapsulation for
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
               2012, <https://www.rfc-editor.org/rfc/rfc6773>.
+
+
+
+
+
+
+
+Amend, et al.           Expires 18 September 2024              [Page 48]
+
+Internet-Draft               Multipath DCCP                   March 2024
+
 
    [RFC6824]  Ford, A., Raiciu, C., Handley, M., and O. Bonaventure,
               "TCP Extensions for Multipath Operation with Multiple
@@ -2680,16 +2706,6 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC6951, May 2013,
               <https://www.rfc-editor.org/rfc/rfc6951>.
 
-
-
-
-
-
-Amend, et al.           Expires 18 September 2024              [Page 48]
-
-Internet-Draft               Multipath DCCP                   March 2024
-
-
    [RFC7323]  Borman, D., Braden, B., Jacobson, V., and R.
               Scheffenegger, Ed., "TCP Extensions for High Performance",
               RFC 7323, DOI 10.17487/RFC7323, September 2014,
@@ -2700,19 +2716,14 @@ Internet-Draft               Multipath DCCP                   March 2024
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
 
-   [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
-              Writing an IANA Considerations Section in RFCs", BCP 26,
-              RFC 8126, DOI 10.17487/RFC8126, June 2017,
-              <https://www.rfc-editor.org/rfc/rfc8126>.
-
-   [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
-              2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
-              May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
-
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
               Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
               2020, <https://www.rfc-editor.org/rfc/rfc8684>.
+
+   [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
+              STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
+              <https://www.rfc-editor.org/rfc/rfc9293>.
 
    [TS23.501] 3GPP, "System architecture for the 5G System; Stage 2;
               Release 16", December 2020,
@@ -2722,17 +2733,6 @@ Internet-Draft               Multipath DCCP                   March 2024
 Appendix A.  Differences from Multipath TCP
 
    This appendix is Informative.
-
-   Multipath DCCP is similar to Multipath TCP [RFC8684], in that it
-   extends the related basic DCCP transport protocol [RFC4340] with
-   multipath capabilities in the same way as Multipath TCP extends TCP
-   [RFC0793].  However, because of the differences between the
-   underlying TCP and DCCP protocols, the transport characteristics of
-   MPTCP and MP-DCCP are different.
-
-
-
-
 
 
 
@@ -2746,6 +2746,13 @@ Amend, et al.           Expires 18 September 2024              [Page 49]
 Internet-Draft               Multipath DCCP                   March 2024
 
 
+   Multipath DCCP is similar to Multipath TCP [RFC8684], in that it
+   extends the related basic DCCP transport protocol [RFC4340] with
+   multipath capabilities in the same way as Multipath TCP extends TCP
+   [RFC9293].  However, because of the differences between the
+   underlying TCP and DCCP protocols, the transport characteristics of
+   MPTCP and MP-DCCP are different.
+
    Table 10 compares the protocol characteristics of TCP and DCCP, which
    are by nature inherited by their respective multipath extensions.  A
    major difference lies in the delivery of payload, which is for TCP an
@@ -2756,13 +2763,6 @@ Internet-Draft               Multipath DCCP                   March 2024
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
-
-
-
 
 
 

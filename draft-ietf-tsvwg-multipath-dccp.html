@@ -11,7 +11,7 @@
 <meta content="Veselin Rakocevic" name="author">
 <meta content="Stephen Johnson" name="author">
 <meta content="
-       DCCP communications as defined in   are restricted to a single path per
+       DCCP communications as defined in RFC 4340 are restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
 simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
@@ -19,12 +19,9 @@ experience through higher throughput and improved resilience to
 network failures.
 Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
 a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to the existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic (e.g., UDP or plain IP). 
+or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery. 
        This document specifies a set of extensions to
-DCCP to support multipath operations.  Multipath DCCP provides 
-the ability to simultaneously use multiple
-paths between peers.  The protocol offers
+DCCP to support multipath operations. The protocol offers
 the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
@@ -1283,7 +1280,7 @@ li > p:last-of-type:only-child {
 <h1 id="title">DCCP Extensions for Multipath Operation with Multiple Addresses</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">DCCP communications as defined in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> are restricted to a single path per
+<p id="section-abstract-1">DCCP communications as defined in RFC 4340 are restricted to a single path per
 connection, yet multiple paths often exist between peers.  The
 simultaneous use of available multiple paths for a DCCP session could
 improve resource usage within the network and, thus, improve user
@@ -1291,12 +1288,9 @@ experience through higher throughput and improved resilience to
 network failures.
 Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
 a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to the existing multipath protocols, such as MPTCP, MP-DCCP provides specific support for non-TCP user
-traffic (e.g., UDP or plain IP).<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
 <p id="section-abstract-2">This document specifies a set of extensions to
-DCCP to support multipath operations.  Multipath DCCP provides 
-the ability to simultaneously use multiple
-paths between peers.  The protocol offers
+DCCP to support multipath operations. The protocol offers
 the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
@@ -1517,20 +1511,15 @@ large amounts of data, by utilizing the capacity/connectivity offered by
 multiple paths. In addition, the multipath extensions enable to tradeoff timeliness and reliability,
 which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.<a href="#section-1-2" class="pilcrow">¶</a></p>
-<p id="section-1-3">MP-DCCP was first suggested
-in the context of the 3GPP work on 5G multi-access solutions
-<span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span> and for hybrid access
-networks <span>[<a href="#I-D.lhwxz-hybrid-access-network-architecture" class="cite xref">I-D.lhwxz-hybrid-access-network-architecture</a>]</span><span>[<a href="#I-D.muley-network-based-bonding-hybrid-access" class="cite xref">I-D.muley-network-based-bonding-hybrid-access</a>]</span>, where
-MP-DCCP can be applied for load-balancing, seamless session handover, and bandwidth
-aggregation (referred to as Access Traffic Steering, Switching, and Splitting (ATSSS)
-in the 3GPP terminology <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>).
+<p id="section-1-3">In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>) or hybrid access networks
+<span>[<a href="#I-D.lhwxz-hybrid-access-network-architecture" class="cite xref">I-D.lhwxz-hybrid-access-network-architecture</a>]</span><span>[<a href="#I-D.muley-network-based-bonding-hybrid-access" class="cite xref">I-D.muley-network-based-bonding-hybrid-access</a>]</span>, in
+which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
+using a framework such as <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span>.
 More details on potential use cases for MP-DCCP are provided in <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>, <span>[<a href="#IETF115.Slides" class="cite xref">IETF115.Slides</a>]</span>, and <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>.
 All these use cases profit from an Open Source Linux reference implementation provided under <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">Encapsulation for DCCP in UDP is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span>.
-<span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span> proposes a 
-lightweight encapsulation for DCCP flow headers appropriate for unreliable 
-IP traffic in terms of UDP and other non-TCP packets in comparison to MPTCP.
-This is not considered in the present specification.<a href="#section-1-4" class="pilcrow">¶</a></p>
+<p id="section-1-4">The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span>.
+Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span> or is considered in <span>[<a href="#I-D.amend-tsvwg-dccp-udp-header-conversion" class="cite xref">I-D.amend-tsvwg-dccp-udp-header-conversion</a>]</span> to achieve the same with less overhead.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection <span>[<a href="#I-D.ietf-quic-multipath" class="cite xref">I-D.ietf-quic-multipath</a>]</span>. MP-QUIC is based on QUIC 
 in a similar way as MP-DCCP is based on DCCP.
@@ -1541,9 +1530,9 @@ MP-QUIC inherits the properties of QUIC with its various facets of encryption, m
 <a href="#section-1.1" class="section-number selfRef">1.1. </a><a href="#name-multipath-dccp-in-the-netwo" class="section-name selfRef">Multipath DCCP in the Networking Stack</a>
         </h3>
 <p id="section-1.1-1">MP-DCCP provides a set of features to DCCP; <a href="#ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks" class="auto internal xref">Figure 1</a> illustrates this layering. 
-It operates at the transport layer and can be used as a transport for
+MP-DCCP operates at the transport layer and can be used as a transport for
 both higher and lower layers. 
-It is
+The protocol is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.<a href="#section-1.1-1" class="pilcrow">¶</a></p>
 <span id="name-comparison-of-standard-dccp"></span><div id="ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks">
@@ -1725,7 +1714,7 @@ in (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 8.3
       <h2 id="name-mp-dccp-protocol">
 <a href="#section-3" class="section-number selfRef">3. </a><a href="#name-mp-dccp-protocol" class="section-name selfRef">MP-DCCP Protocol</a>
       </h2>
-<p id="section-3-1">The DCCP protocol feature list (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 6.4) is
+<p id="section-3-1">The DCCP protocol feature list (<span><a href="https://rfc-editor.org/rfc/rfc4340#section-6.4" class="relref">Section 6.4</a> of [<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>) is
 updated by adding  a new Multipath feature with Feature number 10, as
 shown in <a href="#ref-feature-list" class="auto internal xref">Table 1</a>.<a href="#section-3-1" class="pilcrow">¶</a></p>
 <span id="name-multipath-feature"></span><div id="ref-feature-list">
@@ -1894,7 +1883,7 @@ for version 1.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
 <a href="#name-multipath-option-format" class="selfRef">Multipath option format</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-3">The fields used by the the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to an Multipath option.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The fields used by the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to an Multipath option.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <span id="name-mp_opt-option-types"></span><div id="ref-mp-option-list">
 <table class="center" id="table-3">
           <caption>
@@ -2798,7 +2787,7 @@ for the subflow over which the suboption is received.<a href="#section-3.2.10-2"
    Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
-   clear priority of the Wi-Fi path over the Cellular due to e.g. cost reasons.
+   clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.
 2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
    will be used and Cellular will be used only if the Wi-Fi path is not available. 
 3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
@@ -2813,8 +2802,8 @@ MP_PRIO value of zero. This helps an MP-DCCP connection to
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
 MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
 mechanisms (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).<a href="#section-3.2.10-7" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-8">The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility <a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>, only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-9">A MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be present in a DCCP datagram
+<p id="section-3.2.10-8">The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
+<p id="section-3.2.10-9">A MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2861,7 +2850,7 @@ at the peer host, all subflows, as well as the MP-DCCP connection socket,
 move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 
 MUST be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-6">Contrary to a MP_FAST_CLOSE <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>, no single-sided abrupt termination is applied.<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-6">Contrary to a MP_FAST_CLOSE (<a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>), no single-sided abrupt termination is applied.<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_EXP">
@@ -2939,7 +2928,7 @@ Address A1    Address A2                              Address B1
 <ul class="normal">
 <li class="normal" id="section-3.3-4.1">
             <p id="section-3.3-4.1.1">Host A sends a DCCP-Request with the MP-Capable feature Change
-request and the MP_KEY option with an Host-specific CI-A and a Key-A for
+request and the MP_KEY option with a Host-specific CI-A and a Key-A for
 each of the supported key types as described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>. CI-A is a unique identifier during the
 lifetime of a MP-DCCP connection.<a href="#section-3.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
@@ -3004,21 +2993,41 @@ handshaking.<a href="#section-3.3-8.4.1" class="pilcrow">¶</a></p>
 <a href="#section-3.4.1" class="section-number selfRef">3.4.1. </a><a href="#name-advertising-a-new-path-mp_a" class="section-name selfRef">Advertising a new path (MP_ADDADDR)</a>
           </h4>
 <p id="section-3.4.1-1">When a host (Host A) wants to advertise the availability of a new path, it should use the MP_ADDADDR option (<a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>) as
-shown in the example in <a href="#ref-mp-dccp-add-address" class="auto internal xref">Figure 22</a>. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:
-* an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
-* the IP address of the new path (A2_IP)
-* A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
-  as that used for the initial subflow address A1_IP<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
-<p id="section-3.4.1-2">The following options MUST be included in a packet carrying MP_ADDADDR:
-* the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in <a href="#handshaking" class="auto internal xref">Section 3.3</a> and <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>
-* the MP_SEQ option with the sequence number (seqno 12) for this message according to <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>.<a href="#section-3.4.1-2" class="pilcrow">¶</a></p>
-<p id="section-3.4.1-3">Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
-response are as follows:
-* an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option
-* the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.4.1-3" class="pilcrow">¶</a></p>
+shown in the example in <a href="#ref-mp-dccp-add-address" class="auto internal xref">Figure 22</a>. The MP_ADDADDR option passed in the DCCP-Data contains the following parameters:<a href="#section-3.4.1-1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.1-2.1">
+              <p id="section-3.4.1-2.1.1">an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.<a href="#section-3.4.1-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.2">
+              <p id="section-3.4.1-2.2.1">the IP address of the new path (A2_IP)<a href="#section-3.4.1-2.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.3">
+              <p id="section-3.4.1-2.3.1">A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
+as that used for the initial subflow address A1_IP<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.4.1-3">The following options MUST be included in a packet carrying MP_ADDADDR:<a href="#section-3.4.1-3" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.1-4.1">
+              <p id="section-3.4.1-4.1.1">the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in <a href="#handshaking" class="auto internal xref">Section 3.3</a> and <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a><a href="#section-3.4.1-4.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-4.2">
+              <p id="section-3.4.1-4.2.1">the MP_SEQ option with the sequence number (seqno 12) for this message according to <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>.<a href="#section-3.4.1-4.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
+<p id="section-3.4.1-5">Host B acknowledges receipt of the MP_ADDADDR message with a DCCP-Ack containing the MP_CONFIRM option. The parameters supplied in this
+response are as follows:<a href="#section-3.4.1-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.4.1-6.1">
+              <p id="section-3.4.1-6.1.1">an MP_CONFIRM containing the MP_SEQ number (seqno 12) of the packet carrying the option that we are confirming together with the MP_ADDADDR option<a href="#section-3.4.1-6.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-6.2">
+              <p id="section-3.4.1-6.2.1">the leftmost 20 bytes of the HMAC(B) generated during the initial handshaking procedure <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.4.1-6.2.1" class="pilcrow">¶</a></p>
+</li>
+          </ul>
 <span id="name-example-mp-dccp-addaddr-pro"></span><div id="ref-mp-dccp-add-address">
 <figure id="figure-22">
-            <div class="alignLeft art-text artwork" id="section-3.4.1-4.1">
+            <div class="alignLeft art-text artwork" id="section-3.4.1-7.1">
 <pre>
           Host A                                         Host B
 ------------------------                              -----------
@@ -3686,9 +3695,25 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
         <dd>
 <span class="refAuthor">Bradner, S.</span>, <span class="refTitle">"Key words for use in RFCs to Indicate Requirement Levels"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 2119</span>, <span class="seriesInfo">DOI 10.17487/RFC2119</span>, <time datetime="1997-03" class="refDate">March 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2119">https://www.rfc-editor.org/rfc/rfc2119</a>&gt;</span>. </dd>
 <dd class="break"></dd>
+<dt id="RFC4086">[RFC4086]</dt>
+        <dd>
+<span class="refAuthor">Eastlake 3rd, D.</span>, <span class="refAuthor">Schiller, J.</span>, and <span class="refAuthor">S. Crocker</span>, <span class="refTitle">"Randomness Requirements for Security"</span>, <span class="seriesInfo">BCP 106</span>, <span class="seriesInfo">RFC 4086</span>, <span class="seriesInfo">DOI 10.17487/RFC4086</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4086">https://www.rfc-editor.org/rfc/rfc4086</a>&gt;</span>. </dd>
+<dd class="break"></dd>
 <dt id="RFC4340">[RFC4340]</dt>
-      <dd>
+        <dd>
 <span class="refAuthor">Kohler, E.</span>, <span class="refAuthor">Handley, M.</span>, and <span class="refAuthor">S. Floyd</span>, <span class="refTitle">"Datagram Congestion Control Protocol (DCCP)"</span>, <span class="seriesInfo">RFC 4340</span>, <span class="seriesInfo">DOI 10.17487/RFC4340</span>, <time datetime="2006-03" class="refDate">March 2006</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4340">https://www.rfc-editor.org/rfc/rfc4340</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC6234">[RFC6234]</dt>
+        <dd>
+<span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6234">https://www.rfc-editor.org/rfc/rfc6234</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8126">[RFC8126]</dt>
+        <dd>
+<span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8126">https://www.rfc-editor.org/rfc/rfc8126</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC8174">[RFC8174]</dt>
+      <dd>
+<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 </dl>
 </section>
@@ -3702,6 +3727,10 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dt id="I-D.amend-iccrg-multipath-reordering">[I-D.amend-iccrg-multipath-reordering]</dt>
         <dd>
 <span class="refAuthor">Amend, M.</span> and <span class="refAuthor">D. Von Hugo</span>, <span class="refTitle">"Multipath sequence maintenance"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-iccrg-multipath-reordering-03</span>, <time datetime="2021-10-25" class="refDate">25 October 2021</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-iccrg-multipath-reordering-03">https://datatracker.ietf.org/doc/html/draft-amend-iccrg-multipath-reordering-03</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="I-D.amend-tsvwg-dccp-udp-header-conversion">[I-D.amend-tsvwg-dccp-udp-header-conversion]</dt>
+        <dd>
+<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"Lossless and overhead free DCCP - UDP header conversion (U-DCCP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-dccp-udp-header-conversion-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="I-D.amend-tsvwg-multipath-framework-mpdccp">[I-D.amend-tsvwg-multipath-framework-mpdccp]</dt>
         <dd>
@@ -3735,10 +3764,6 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
         <dd>
 <span class="refAuthor">Khalili, R.</span>, <span class="refAuthor">Gast, N.</span>, <span class="refAuthor">Popovic, M.</span>, <span class="refAuthor">Upadhyay, U.</span>, and <span class="refAuthor">J. Le Boudec</span>, <span class="refTitle">"MPTCP is not pareto-optimal: performance issues and a possible solution"</span>, <span class="seriesInfo">Proceedings of the 8th international conference on Emerging networking experiments and technologies, ACM </span>, <time datetime="2012" class="refDate">2012</time>. </dd>
 <dd class="break"></dd>
-<dt id="RFC0793">[RFC0793]</dt>
-        <dd>
-<span class="refAuthor">Postel, J.</span>, <span class="refTitle">"Transmission Control Protocol"</span>, <span class="seriesInfo">RFC 793</span>, <span class="seriesInfo">DOI 10.17487/RFC0793</span>, <time datetime="1981-09" class="refDate">September 1981</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc793">https://www.rfc-editor.org/rfc/rfc793</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC2104">[RFC2104]</dt>
         <dd>
 <span class="refAuthor">Krawczyk, H.</span>, <span class="refAuthor">Bellare, M.</span>, and <span class="refAuthor">R. Canetti</span>, <span class="refTitle">"HMAC: Keyed-Hashing for Message Authentication"</span>, <span class="seriesInfo">RFC 2104</span>, <span class="seriesInfo">DOI 10.17487/RFC2104</span>, <time datetime="1997-02" class="refDate">February 1997</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc2104">https://www.rfc-editor.org/rfc/rfc2104</a>&gt;</span>. </dd>
@@ -3750,10 +3775,6 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dt id="RFC4043">[RFC4043]</dt>
         <dd>
 <span class="refAuthor">Pinkas, D.</span> and <span class="refAuthor">T. Gindin</span>, <span class="refTitle">"Internet X.509 Public Key Infrastructure Permanent Identifier"</span>, <span class="seriesInfo">RFC 4043</span>, <span class="seriesInfo">DOI 10.17487/RFC4043</span>, <time datetime="2005-05" class="refDate">May 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4043">https://www.rfc-editor.org/rfc/rfc4043</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC4086">[RFC4086]</dt>
-        <dd>
-<span class="refAuthor">Eastlake 3rd, D.</span>, <span class="refAuthor">Schiller, J.</span>, and <span class="refAuthor">S. Crocker</span>, <span class="refTitle">"Randomness Requirements for Security"</span>, <span class="seriesInfo">BCP 106</span>, <span class="seriesInfo">RFC 4086</span>, <span class="seriesInfo">DOI 10.17487/RFC4086</span>, <time datetime="2005-06" class="refDate">June 2005</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc4086">https://www.rfc-editor.org/rfc/rfc4086</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC5238">[RFC5238]</dt>
         <dd>
@@ -3770,10 +3791,6 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <dt id="RFC5597">[RFC5597]</dt>
         <dd>
 <span class="refAuthor">Denis-Courmont, R.</span>, <span class="refTitle">"Network Address Translation (NAT) Behavioral Requirements for the Datagram Congestion Control Protocol"</span>, <span class="seriesInfo">BCP 150</span>, <span class="seriesInfo">RFC 5597</span>, <span class="seriesInfo">DOI 10.17487/RFC5597</span>, <time datetime="2009-09" class="refDate">September 2009</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc5597">https://www.rfc-editor.org/rfc/rfc5597</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC6234">[RFC6234]</dt>
-        <dd>
-<span class="refAuthor">Eastlake 3rd, D.</span> and <span class="refAuthor">T. Hansen</span>, <span class="refTitle">"US Secure Hash Algorithms (SHA and SHA-based HMAC and HKDF)"</span>, <span class="seriesInfo">RFC 6234</span>, <span class="seriesInfo">DOI 10.17487/RFC6234</span>, <time datetime="2011-05" class="refDate">May 2011</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc6234">https://www.rfc-editor.org/rfc/rfc6234</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="RFC6356">[RFC6356]</dt>
         <dd>
@@ -3803,17 +3820,13 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
         <dd>
 <span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Paasch, C.</span>, and <span class="refAuthor">G. Detal</span>, <span class="refTitle">"Use Cases and Operational Experience with Multipath TCP"</span>, <span class="seriesInfo">RFC 8041</span>, <span class="seriesInfo">DOI 10.17487/RFC8041</span>, <time datetime="2017-01" class="refDate">January 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8041">https://www.rfc-editor.org/rfc/rfc8041</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="RFC8126">[RFC8126]</dt>
-        <dd>
-<span class="refAuthor">Cotton, M.</span>, <span class="refAuthor">Leiba, B.</span>, and <span class="refAuthor">T. Narten</span>, <span class="refTitle">"Guidelines for Writing an IANA Considerations Section in RFCs"</span>, <span class="seriesInfo">BCP 26</span>, <span class="seriesInfo">RFC 8126</span>, <span class="seriesInfo">DOI 10.17487/RFC8126</span>, <time datetime="2017-06" class="refDate">June 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8126">https://www.rfc-editor.org/rfc/rfc8126</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="RFC8174">[RFC8174]</dt>
-        <dd>
-<span class="refAuthor">Leiba, B.</span>, <span class="refTitle">"Ambiguity of Uppercase vs Lowercase in RFC 2119 Key Words"</span>, <span class="seriesInfo">BCP 14</span>, <span class="seriesInfo">RFC 8174</span>, <span class="seriesInfo">DOI 10.17487/RFC8174</span>, <time datetime="2017-05" class="refDate">May 2017</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8174">https://www.rfc-editor.org/rfc/rfc8174</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="RFC8684">[RFC8684]</dt>
         <dd>
 <span class="refAuthor">Ford, A.</span>, <span class="refAuthor">Raiciu, C.</span>, <span class="refAuthor">Handley, M.</span>, <span class="refAuthor">Bonaventure, O.</span>, and <span class="refAuthor">C. Paasch</span>, <span class="refTitle">"TCP Extensions for Multipath Operation with Multiple Addresses"</span>, <span class="seriesInfo">RFC 8684</span>, <span class="seriesInfo">DOI 10.17487/RFC8684</span>, <time datetime="2020-03" class="refDate">March 2020</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc8684">https://www.rfc-editor.org/rfc/rfc8684</a>&gt;</span>. </dd>
+<dd class="break"></dd>
+<dt id="RFC9293">[RFC9293]</dt>
+        <dd>
+<span class="refAuthor">Eddy, W., Ed.</span>, <span class="refTitle">"Transmission Control Protocol (TCP)"</span>, <span class="seriesInfo">STD 7</span>, <span class="seriesInfo">RFC 9293</span>, <span class="seriesInfo">DOI 10.17487/RFC9293</span>, <time datetime="2022-08" class="refDate">August 2022</time>, <span>&lt;<a href="https://www.rfc-editor.org/rfc/rfc9293">https://www.rfc-editor.org/rfc/rfc9293</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="TS23.501">[TS23.501]</dt>
       <dd>
@@ -3832,7 +3845,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-12" cla
 <p id="appendix-A-2">Multipath DCCP is similar to Multipath TCP <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>, in that it
 extends the related basic DCCP transport protocol <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> with
 multipath capabilities in the same way as Multipath TCP extends TCP
-<span>[<a href="#RFC0793" class="cite xref">RFC0793</a>]</span>.
+<span>[<a href="#RFC9293" class="cite xref">RFC9293</a>]</span>.
 However, because of the differences between the underlying TCP and DCCP
 protocols, the transport characteristics of MPTCP and MP-DCCP are
 different.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
