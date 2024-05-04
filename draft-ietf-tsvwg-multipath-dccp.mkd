@@ -86,7 +86,6 @@ informative:
   RFC3711:
   RFC4043:
   RFC5238:
-  RFC5595:
   RFC5596:
   RFC5597:
   RFC6356:
