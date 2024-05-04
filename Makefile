@@ -26,7 +26,7 @@ full: spell all
 
 idnits: $(TEXT)
 	#idnits --mode submission $(TEXT)
-	./idnits --verbose --submitcheck $(TEXT)
+	./idnits --verbose --nitcount  $(TEXT)
 
 spell: $(SOURCES)
 	cspell lint --no-summary --color $(SOURCES)
