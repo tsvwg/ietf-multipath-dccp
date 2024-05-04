@@ -25,7 +25,8 @@ full: spell all
 	$(xml2rfc) $< -o $@ --text
 
 idnits: $(TEXT)
-	idnits --mode submission $(TEXT)
+	#idnits --mode submission $(TEXT)
+	idnits --vebose --submitcheck $(TEXT)
 
 spell: $(SOURCES)
 	cspell lint --no-summary --color $(SOURCES)

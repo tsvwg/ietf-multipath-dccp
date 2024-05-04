@@ -26,7 +26,8 @@ jobs:
       - run: npm install -g cspell
       - run: gem install kramdown-rfc2629
       - run: pip install xml2rfc
-      - run: npm install -g @ietf-tools/idnits
+      - run: wget https://raw.githubusercontent.com/ietf-tools/idnits/v2/idnits && chmod +x idnits
+      #- run: npm install -g @ietf-tools/idnits
 
       - name: "Convert Markdown to RFC" 
         run: make full
