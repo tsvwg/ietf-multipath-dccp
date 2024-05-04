@@ -2690,10 +2690,6 @@ Amend, et al.            Expires 4 November 2024               [Page 48]
 Internet-Draft               Multipath DCCP                     May 2024
 
 
-   [RFC5595]  Fairhurst, G., "The Datagram Congestion Control Protocol
-              (DCCP) Service Codes", RFC 5595, DOI 10.17487/RFC5595,
-              September 2009, <https://www.rfc-editor.org/rfc/rfc5595>.
-
    [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
               (DCCP) Simultaneous-Open Technique to Facilitate NAT/
               Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
@@ -2736,6 +2732,10 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
 
+   [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
+              Paasch, "TCP Extensions for Multipath Operation with
+              Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
+              2020, <https://www.rfc-editor.org/rfc/rfc8684>.
 
 
 
@@ -2745,11 +2745,6 @@ Amend, et al.            Expires 4 November 2024               [Page 49]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
-
-   [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
-              Paasch, "TCP Extensions for Multipath Operation with
-              Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
-              2020, <https://www.rfc-editor.org/rfc/rfc8684>.
 
    [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
               STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
@@ -2781,6 +2776,11 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
+
+
+
+
+
 
 
 
