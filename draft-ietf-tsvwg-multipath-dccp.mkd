@@ -287,7 +287,7 @@ described in detail in {{protocol}}.
 At a high level of the MP-DCCP operation, the data 
 stream from a DCCP application is split 
 by MP-DCCP operation into one or more subflows which can be 
-transmitted via different paths, for example using routes via different links.
+transmitted via different paths, for example using paths via different links.
 The corresponding control information allows the receiver to optionally 
 re-assemble and deliver the received data in the originally transmitted order to the 
 recipient application. This may be necessary because DCCP does not guarantee in-order delivery.
