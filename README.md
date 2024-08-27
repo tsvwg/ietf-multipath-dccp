@@ -16,7 +16,7 @@ Get latest `.txt` and `.html` view from `tsvwg/ietf-multipath-dccp` `master` bra
 **`.html`**
 [ietf-multipath-dccp.html](https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.html)
 
-[Comparison with latest published IETF version](https://www.ietf.org/rfcdiff?url1=draft-ietf-tsvwg-multipath-dccp&url2=https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
+[Comparison with latest published IETF version](https://author-tools.ietf.org/iddiff?url1=draft-ietf-tsvwg-multipath-dccp&url2=https://tsvwg.github.io/ietf-multipath-dccp/draft-ietf-tsvwg-multipath-dccp.txt)
 
 `make` is used to automate the build process and supports:
 
