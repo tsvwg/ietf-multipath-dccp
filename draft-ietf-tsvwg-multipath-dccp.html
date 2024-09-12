@@ -1559,15 +1559,15 @@ for multipath transport or are defined in the context of MP-DCCP,
 similar to <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>, as follows:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Path: A sequence of links between a sender and a receiver, defined in
 this context by a 4-tuple of source and destination address/port pairs.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">(MP-DCCP) Connection: A set of one or more subflows, over which an
+<p id="section-1.2-3">Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
+pairs) that forms one of the multipath flows used by a single connection.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
+<p id="section-1.2-4">(MP-DCCP) Connection: A set of one or more subflows, over which an
 application can communicate between two hosts. The MP-DCCP connection is
-exposed as single DCCP socket to the application.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">Connection Identifier (CI): A locally unique identifier given to a multipath connection by a
-host.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
-<p id="section-1.2-5">Host: An end host operating an MP-DCCP implementation, and either
-initiating or accepting an MP-DCCP connection.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2-6">Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
-pairs) that forms one of the multipath flows used by a single connection.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+exposed as single DCCP socket to the application.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">Connection Identifier (CI): A locally unique identifier given to a multipath connection by a
+host.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">Host: An end host operating an MP-DCCP implementation, and either
+initiating or accepting an MP-DCCP connection.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
 <p id="section-1.2-7">In addition to these
 terms, within the framework of MP-DCCP, the interpretation of, and effect on,
 regular single-path DCCP semantics is discussed in <a href="#protocol" class="auto internal xref">Section 3</a>.<a href="#section-1.2-7" class="pilcrow">¶</a></p>

@@ -230,6 +230,10 @@ Internet-Draft               Multipath DCCP                     May 2024
    this context by a 4-tuple of source and destination address/port
    pairs.
 
+   Subflow: A subflow refers to a DCCP flow transmitted using a specific
+   path (4-tuple of source and destination address/port pairs) that
+   forms one of the multipath flows used by a single connection.
+
    (MP-DCCP) Connection: A set of one or more subflows, over which an
    application can communicate between two hosts.  The MP-DCCP
    connection is exposed as single DCCP socket to the application.
@@ -239,10 +243,6 @@ Internet-Draft               Multipath DCCP                     May 2024
 
    Host: An end host operating an MP-DCCP implementation, and either
    initiating or accepting an MP-DCCP connection.
-
-   Subflow: A subflow refers to a DCCP flow transmitted using a specific
-   path (4-tuple of source and destination address/port pairs) that
-   forms one of the multipath flows used by a single connection.
 
    In addition to these terms, within the framework of MP-DCCP, the
    interpretation of, and effect on, regular single-path DCCP semantics
