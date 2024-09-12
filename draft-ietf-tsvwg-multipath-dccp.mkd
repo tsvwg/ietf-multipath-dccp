@@ -1543,11 +1543,13 @@ for each path allows.
 
 A DCCP implementation maintains the maximum packet size (MPS) during operation of a DCCP session. This procedure is specified for single-path DCCP in {{RFC4340}}, Section 14. Without any restrictions, this is adopted for MP-DCCP operations, in particular the PMTU measurement and the Sender Behaviour. The DCCP application interface SHOULD allow the application to discover the current MPS. This reflects the current supported largest size for the data stream that can be used across the set of all active MP-DCCP subflows.
 
-## Maximum number of Subflows
+## Maximum number of Subflows Considerations
 
 In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.
 
-It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in {{RFC4340}} if this limit is exceeded.
+In typical multi-homing scenarios such as use in a smartphone or a hybrid access gateway (host1), the access paths are limited to two connections cellular and WiFi/fixed. Depending on the path usage strategy ({{path_usage_strategy}}), this leads to the creation of no more than 2-4 subflows, depending on whether the peer (host2) is equipped with one or two network interfaces and the maximum path resources are to be utilized (N interfaces host1 x M interfaces host2). Anything beyond this is unlikely to add value and the creation of further subflows SHOULD be avoided.
+
+It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code “too busy” according to {{RFC4340}} if the resource limit is exceeded or it is known that the multipath connection will not benefit from further subflows. Likewise, the host that wants to create the subflows is RECOMMENDED to consider the aspect of available resources and the possible gains.
 
 ## Path usage strategies {#path_usage_strategy}
 
