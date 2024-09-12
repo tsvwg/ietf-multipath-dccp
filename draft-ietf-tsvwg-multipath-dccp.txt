@@ -271,9 +271,9 @@ Internet-Draft               Multipath DCCP                     May 2024
 
    At a high level of the MP-DCCP operation, the data stream from a DCCP
    application is split by MP-DCCP operation into one or more subflows
-   which can be transmitted via different - also physically isolated -
-   paths.  The corresponding control information allows the receiver to
-   optionally re-assemble and deliver the received data in the
+   which can be transmitted via different paths, for example using paths
+   via different links.  The corresponding control information allows
+   the receiver to optionally re-assemble and deliver the received data
 
 
 
@@ -282,11 +282,11 @@ Amend, et al.            Expires 5 November 2024                [Page 5]
 Internet-Draft               Multipath DCCP                     May 2024
 
 
-   originally transmitted order to the recipient application.  This may
-   be necessary because DCCP does not guarantee in-order delivery.  The
-   details of the transmission scheduling mechanism and optional
-   reordering mechanism are up to the sender and receiver, respectively,
-   and are outside the scope of this document.
+   in the originally transmitted order to the recipient application.
+   This may be necessary because DCCP does not guarantee in-order
+   delivery.  The details of the transmission scheduling mechanism and
+   optional reordering mechanism are up to the sender and receiver,
+   respectively, and are outside the scope of this document.
 
    A Multipath DCCP connection provides a bidirectional connection of
    datagrams between two hosts exchanging data using DCCP.  It does not
