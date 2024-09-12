@@ -132,8 +132,8 @@ Internet-Draft               Multipath DCCP                     May 2024
    9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  45
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  45
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  46
-   Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  50
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  52
+   Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  49
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  51
 
 1.  Introduction
 
@@ -158,10 +158,10 @@ Internet-Draft               Multipath DCCP                     May 2024
    future specification could choose MP-DCCP for other use cases like
    3GPP 5G multi-access solutions (e.g., Access Traffic Steering,
    Switching, and Splitting (ATSSS) specified in [TS23.501]) or hybrid
-   access networks [I-D.lhwxz-hybrid-access-network-architecture][I-D.mu
-   ley-network-based-bonding-hybrid-access], in which MP-DCCP can be
-   used for load balancing, seamless session handover and bandwidth
-   aggregation using a framework such as
+   access networks that either combine a 3GPP and a non-3GPP access or a
+   fixed and cellular access between user user-equipment/residential
+   gateway and operator network.  MP-DCCP can be used in these scenarios
+   for load balancing, seamless session handover and bandwidth
 
 
 
@@ -170,20 +170,19 @@ Amend, et al.            Expires 5 November 2024                [Page 3]
 Internet-Draft               Multipath DCCP                     May 2024
 
 
-   [I-D.amend-tsvwg-multipath-framework-mpdccp].  More details on
-   potential use cases for MP-DCCP are provided in [multipath-dccp.org],
-   [IETF115.Slides], and [MP-DCCP.Paper].  All these use cases profit
-   from an Open Source Linux reference implementation provided under
-   [multipath-dccp.org].
+   aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated
+   into MP-DCCP.  More details on potential use cases for MP-DCCP are
+   provided in [multipath-dccp.org], [IETF115.Slides], and
+   [MP-DCCP.Paper].  All these use cases profit from an Open Source
+   Linux reference implementation provided under [multipath-dccp.org].
 
    The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to
    enable the above-mentioned use cases is not considered in this
-   specification; such matters are further detailed in
-   [I-D.amend-tsvwg-multipath-framework-mpdccp].  Also out of scope is
-   the encapsulation of DCCP traffic in UDP to pass middleboxes that do
-   not support DCCP.  A possible method is defined in [RFC6773] or is
-   considered in [I-D.amend-tsvwg-dccp-udp-header-conversion] to achieve
-   the same with less overhead.
+   specification.  Also out of scope is the encapsulation of DCCP
+   traffic in UDP to pass middleboxes that do not support DCCP.  A
+   possible method is defined in [RFC6773] or is considered in
+   [I-D.amend-tsvwg-dccp-udp-header-conversion] to achieve the same with
+   less overhead.
 
    Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous
    usage of multiple paths for a single connection
@@ -218,6 +217,7 @@ Internet-Draft               Multipath DCCP                     May 2024
    +---------------+            +-------------------------------+
 
      Figure 1: Comparison of standard DCCP and MP-DCCP protocol stacks
+
 
 
 
@@ -2586,15 +2586,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
               dccp-udp-header-conversion-01>.
 
-   [I-D.amend-tsvwg-multipath-framework-mpdccp]
-              Amend, M., Bogenfeld, E., Brunstrom, A., Kassler, A., and
-              V. Rakocevic, "A multipath framework for UDP traffic over
-              heterogeneous access networks", Work in Progress,
-              Internet-Draft, draft-amend-tsvwg-multipath-framework-
-              mpdccp-01, 8 July 2019,
-              <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
-              multipath-framework-mpdccp-01>.
-
    [I-D.ietf-quic-multipath]
               Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
               C., and M. Kuehlewind, "Multipath Extension for QUIC",
@@ -2602,37 +2593,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               multipath-10, 8 July 2024,
               <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
               multipath-10>.
-
-   [I-D.lhwxz-hybrid-access-network-architecture]
-              Leymann, N., Heidemann, C., Cullen, M., Xue, L., and M.
-              Zhang, "Hybrid Access Network Architecture", Work in
-              Progress, Internet-Draft, draft-lhwxz-hybrid-access-
-              network-architecture-02, 13 January 2015,
-              <https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-
-              access-network-architecture-02>.
-
-   [I-D.muley-network-based-bonding-hybrid-access]
-              Muley, P., Henderickx, W., Geng, L., Liu, H., Cardullo,
-              L., Newton, J., Seo, S., Draznin, S., and B. Patil,
-              "Network based Bonding solution for Hybrid Access", Work
-              in Progress, Internet-Draft, draft-muley-network-based-
-              bonding-hybrid-access-03, 22 October 2018,
-              <https://datatracker.ietf.org/doc/html/draft-muley-
-              network-based-bonding-hybrid-access-03>.
-
-
-
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 47]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [IETF115.Slides]
               Amend, M., "MP-DCCP for enabling transfer of UDP/IP
@@ -2665,6 +2625,15 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC2104, February 1997,
               <https://www.rfc-editor.org/rfc/rfc2104>.
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 47]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    [RFC3711]  Baugher, M., McGrew, D., Naslund, M., Carrara, E., and K.
               Norrman, "The Secure Real-time Transport Protocol (SRTP)",
               RFC 3711, DOI 10.17487/RFC3711, March 2004,
@@ -2679,16 +2648,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               the Datagram Congestion Control Protocol (DCCP)",
               RFC 5238, DOI 10.17487/RFC5238, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5238>.
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 48]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
               (DCCP) Simultaneous-Open Technique to Facilitate NAT/
@@ -2722,6 +2681,15 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC6951, May 2013,
               <https://www.rfc-editor.org/rfc/rfc6951>.
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 48]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    [RFC7323]  Borman, D., Braden, B., Jacobson, V., and R.
               Scheffenegger, Ed., "TCP Extensions for High Performance",
               RFC 7323, DOI 10.17487/RFC7323, September 2014,
@@ -2736,15 +2704,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               Paasch, "TCP Extensions for Multipath Operation with
               Multiple Addresses", RFC 8684, DOI 10.17487/RFC8684, March
               2020, <https://www.rfc-editor.org/rfc/rfc8684>.
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 49]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [RFC9293]  Eddy, W., Ed., "Transmission Control Protocol (TCP)",
               STD 7, RFC 9293, DOI 10.17487/RFC9293, August 2022,
@@ -2782,22 +2741,7 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 50]
+Amend, et al.            Expires 5 November 2024               [Page 49]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2853,7 +2797,7 @@ Internet-Draft               Multipath DCCP                     May 2024
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 51]
+Amend, et al.            Expires 5 November 2024               [Page 50]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2909,7 +2853,7 @@ Authors' Addresses
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 52]
+Amend, et al.            Expires 5 November 2024               [Page 51]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2965,4 +2909,4 @@ Internet-Draft               Multipath DCCP                     May 2024
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 53]
+Amend, et al.            Expires 5 November 2024               [Page 52]

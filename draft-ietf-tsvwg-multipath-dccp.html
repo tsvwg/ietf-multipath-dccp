@@ -33,11 +33,11 @@ different paths simultaneously.
   xml2rfc 3.23.0
     Python 3.10.14
     ConfigArgParse 1.7
-    google-i18n-address 3.1.0
+    google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
     lxml 4.9.4
-    platformdirs 4.2.2
+    platformdirs 4.3.2
     pycountry 24.6.1
     PyYAML 6.0.2
     requests 2.32.3
@@ -1511,13 +1511,10 @@ multiple paths. In addition, the multipath extensions enable to tradeoff timelin
 which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.<a href="#section-1-2" class="pilcrow">¶</a></p>
 <p id="section-1-3">In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
-3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>) or hybrid access networks
-<span>[<a href="#I-D.lhwxz-hybrid-access-network-architecture" class="cite xref">I-D.lhwxz-hybrid-access-network-architecture</a>]</span><span>[<a href="#I-D.muley-network-based-bonding-hybrid-access" class="cite xref">I-D.muley-network-based-bonding-hybrid-access</a>]</span>, in
-which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
-using a framework such as <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span>.
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in <span>[<a href="#TS23.501" class="cite xref">TS23.501</a>]</span>) or hybrid access networks that either combine a 3GPP and a non-3GPP access or a fixed and cellular access between user user-equipment/residential gateway and operator network. MP-DCCP can be used in these scenarios for load balancing, seamless session handover and bandwidth aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated into MP-DCCP.
 More details on potential use cases for MP-DCCP are provided in <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>, <span>[<a href="#IETF115.Slides" class="cite xref">IETF115.Slides</a>]</span>, and <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>.
 All these use cases profit from an Open Source Linux reference implementation provided under <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
-<p id="section-1-4">The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in <span>[<a href="#I-D.amend-tsvwg-multipath-framework-mpdccp" class="cite xref">I-D.amend-tsvwg-multipath-framework-mpdccp</a>]</span>.
+<p id="section-1-4">The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
 Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span> or is considered in <span>[<a href="#I-D.amend-tsvwg-dccp-udp-header-conversion" class="cite xref">I-D.amend-tsvwg-dccp-udp-header-conversion</a>]</span> to achieve the same with less overhead.<a href="#section-1-4" class="pilcrow">¶</a></p>
 <p id="section-1-5">Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
 multiple paths for a single connection <span>[<a href="#I-D.ietf-quic-multipath" class="cite xref">I-D.ietf-quic-multipath</a>]</span>. MP-QUIC is based on QUIC 
@@ -3767,21 +3764,9 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" cla
         <dd>
 <span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"Lossless and overhead free DCCP - UDP header conversion (U-DCCP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-dccp-udp-header-conversion-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01</a>&gt;</span>. </dd>
 <dd class="break"></dd>
-<dt id="I-D.amend-tsvwg-multipath-framework-mpdccp">[I-D.amend-tsvwg-multipath-framework-mpdccp]</dt>
-        <dd>
-<span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Bogenfeld, E.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"A multipath framework for UDP traffic over heterogeneous access networks"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-multipath-framework-mpdccp-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-multipath-framework-mpdccp-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-multipath-framework-mpdccp-01</a>&gt;</span>. </dd>
-<dd class="break"></dd>
 <dt id="I-D.ietf-quic-multipath">[I-D.ietf-quic-multipath]</dt>
         <dd>
 <span class="refAuthor">Liu, Y.</span>, <span class="refAuthor">Ma, Y.</span>, <span class="refAuthor">De Coninck, Q.</span>, <span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Huitema, C.</span>, and <span class="refAuthor">M. Kuehlewind</span>, <span class="refTitle">"Multipath Extension for QUIC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-multipath-10</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-10">https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-10</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.lhwxz-hybrid-access-network-architecture">[I-D.lhwxz-hybrid-access-network-architecture]</dt>
-        <dd>
-<span class="refAuthor">Leymann, N.</span>, <span class="refAuthor">Heidemann, C.</span>, <span class="refAuthor">Cullen, M.</span>, <span class="refAuthor">Xue, L.</span>, and <span class="refAuthor">M. Zhang</span>, <span class="refTitle">"Hybrid Access Network Architecture"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-lhwxz-hybrid-access-network-architecture-02</span>, <time datetime="2015-01-13" class="refDate">13 January 2015</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-access-network-architecture-02">https://datatracker.ietf.org/doc/html/draft-lhwxz-hybrid-access-network-architecture-02</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.muley-network-based-bonding-hybrid-access">[I-D.muley-network-based-bonding-hybrid-access]</dt>
-        <dd>
-<span class="refAuthor">Muley, P.</span>, <span class="refAuthor">Henderickx, W.</span>, <span class="refAuthor">Geng, L.</span>, <span class="refAuthor">Liu, H.</span>, <span class="refAuthor">Cardullo, L.</span>, <span class="refAuthor">Newton, J.</span>, <span class="refAuthor">Seo, S.</span>, <span class="refAuthor">Draznin, S.</span>, and <span class="refAuthor">B. Patil</span>, <span class="refTitle">"Network based Bonding solution for Hybrid Access"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-muley-network-based-bonding-hybrid-access-03</span>, <time datetime="2018-10-22" class="refDate">22 October 2018</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-muley-network-based-bonding-hybrid-access-03">https://datatracker.ietf.org/doc/html/draft-muley-network-based-bonding-hybrid-access-03</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IETF115.Slides">[IETF115.Slides]</dt>
         <dd>
