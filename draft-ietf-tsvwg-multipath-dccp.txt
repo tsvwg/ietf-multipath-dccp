@@ -83,7 +83,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Multipath DCCP in the Networking Stack  . . . . . . . . .   4
-     1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   5
+     1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
      1.3.  Requirements Language . . . . . . . . . . . . . . . . . .   5
    2.  Operation Overview  . . . . . . . . . . . . . . . . . . . . .   5
      2.1.  MP-DCCP Concept . . . . . . . . . . . . . . . . . . . . .   6
@@ -184,19 +184,14 @@ Internet-Draft               Multipath DCCP                     May 2024
    [I-D.amend-tsvwg-dccp-udp-header-conversion] to achieve the same with
    less overhead.
 
-   Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous
-   usage of multiple paths for a single connection
-   [I-D.ietf-quic-multipath].  MP-QUIC is based on QUIC in a similar way
-   as MP-DCCP is based on DCCP.  MP-QUIC inherits the properties of QUIC
-   with its various facets of encryption, multi-streaming and the STREAM
-   and DATAGRAM transport characteristic.  This makes a practical
-   multipath implementation very complex.  In contrast, MP-DCCP is based
-   exclusively on the lean concept of DCCP.  For traffic that is already
-   encrypted, MP-DCCP is the more efficient choice as it does not apply
-   its own encryption mechanisms.  Also, the procedures defined by MP-
-   DCCP, which allow subsequent reordering of traffic, improve
-   performance, as shown in [MP-DCCP.Paper], and are not available in
-   MP-QUIC.
+   MP-DCCP is based exclusively on the lean concept of DCCP.  For
+   traffic that is already encrypted or does not need encryption, MP-
+   DCCP is an efficient choice as it does not apply its own encryption
+   mechanisms.  Also, the procedures defined by MP-DCCP, which allow
+   subsequent reordering of traffic and efficient traffic scheduling,
+   improve performance, as shown in [MP-DCCP.Paper], and take into
+   account the interaction of the protocol with the further elements
+   required for multi-path transport.
 
 1.1.  Multipath DCCP in the Networking Stack
 
@@ -218,6 +213,11 @@ Internet-Draft               Multipath DCCP                     May 2024
 
      Figure 1: Comparison of standard DCCP and MP-DCCP protocol stacks
 
+1.2.  Terminology
+
+   This document uses terms that are either specific for multipath
+   transport or are defined in the context of MP-DCCP, similar to
+   [RFC8684], as follows:
 
 
 
@@ -225,12 +225,6 @@ Amend, et al.            Expires 5 November 2024                [Page 4]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
-
-1.2.  Terminology
-
-   This document uses terms that are either specific for multipath
-   transport or are defined in the context of MP-DCCP, similar to
-   [RFC8684], as follows:
 
    Path: A sequence of links between a sender and a receiver, defined in
    this context by a 4-tuple of source and destination address/port
@@ -275,6 +269,12 @@ Internet-Draft               Multipath DCCP                     May 2024
    The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
    detail in Section 3.
 
+   At a high level of the MP-DCCP operation, the data stream from a DCCP
+   application is split by MP-DCCP operation into one or more subflows
+   which can be transmitted via different - also physically isolated -
+   paths.  The corresponding control information allows the receiver to
+   optionally re-assemble and deliver the received data in the
+
 
 
 Amend, et al.            Expires 5 November 2024                [Page 5]
@@ -282,11 +282,6 @@ Amend, et al.            Expires 5 November 2024                [Page 5]
 Internet-Draft               Multipath DCCP                     May 2024
 
 
-   At a high level of the MP-DCCP operation, the data stream from a DCCP
-   application is split by MP-DCCP operation into one or more subflows
-   which can be transmitted via different - also physically isolated -
-   paths.  The corresponding control information allows the receiver to
-   optionally re-assemble and deliver the received data in the
    originally transmitted order to the recipient application.  This may
    be necessary because DCCP does not guarantee in-order delivery.  The
    details of the transmission scheduling mechanism and optional
@@ -321,6 +316,11 @@ Internet-Draft               Multipath DCCP                     May 2024
 
    Figure 2 provides a general overview of the MP-DCCP working mode,
    whose main characteristics are summarized in this section.
+
+
+
+
+
 
 
 
@@ -2586,14 +2586,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
               dccp-udp-header-conversion-01>.
 
-   [I-D.ietf-quic-multipath]
-              Liu, Y., Ma, Y., De Coninck, Q., Bonaventure, O., Huitema,
-              C., and M. Kuehlewind, "Multipath Extension for QUIC",
-              Work in Progress, Internet-Draft, draft-ietf-quic-
-              multipath-10, 8 July 2024,
-              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
-              multipath-10>.
-
    [IETF115.Slides]
               Amend, M., "MP-DCCP for enabling transfer of UDP/IP
               traffic over multiple data paths in multi-connectivity
@@ -2625,15 +2617,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC2104, February 1997,
               <https://www.rfc-editor.org/rfc/rfc2104>.
 
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 47]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
-
    [RFC3711]  Baugher, M., McGrew, D., Naslund, M., Carrara, E., and K.
               Norrman, "The Secure Real-time Transport Protocol (SRTP)",
               RFC 3711, DOI 10.17487/RFC3711, March 2004,
@@ -2643,6 +2626,13 @@ Internet-Draft               Multipath DCCP                     May 2024
               Infrastructure Permanent Identifier", RFC 4043,
               DOI 10.17487/RFC4043, May 2005,
               <https://www.rfc-editor.org/rfc/rfc4043>.
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 47]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
 
    [RFC5238]  Phelan, T., "Datagram Transport Layer Security (DTLS) over
               the Datagram Congestion Control Protocol (DCCP)",
@@ -2681,15 +2671,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC6951, May 2013,
               <https://www.rfc-editor.org/rfc/rfc6951>.
 
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 48]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
-
    [RFC7323]  Borman, D., Braden, B., Jacobson, V., and R.
               Scheffenegger, Ed., "TCP Extensions for High Performance",
               RFC 7323, DOI 10.17487/RFC7323, September 2014,
@@ -2699,6 +2680,15 @@ Internet-Draft               Multipath DCCP                     May 2024
               Operational Experience with Multipath TCP", RFC 8041,
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 48]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
@@ -2735,6 +2725,16 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1516,10 +1516,7 @@ More details on potential use cases for MP-DCCP are provided in <span>[<a href="
 All these use cases profit from an Open Source Linux reference implementation provided under <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-1-3" class="pilcrow">¶</a></p>
 <p id="section-1-4">The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
 Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in <span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span> or is considered in <span>[<a href="#I-D.amend-tsvwg-dccp-udp-header-conversion" class="cite xref">I-D.amend-tsvwg-dccp-udp-header-conversion</a>]</span> to achieve the same with less overhead.<a href="#section-1-4" class="pilcrow">¶</a></p>
-<p id="section-1-5">Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
-multiple paths for a single connection <span>[<a href="#I-D.ietf-quic-multipath" class="cite xref">I-D.ietf-quic-multipath</a>]</span>. MP-QUIC is based on QUIC 
-in a similar way as MP-DCCP is based on DCCP.
-MP-QUIC inherits the properties of QUIC with its various facets of encryption, multi-streaming and the STREAM and DATAGRAM transport characteristic. This makes a practical multipath implementation very complex. In contrast, MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted, MP-DCCP is the more efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic, improve performance, as shown in <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>, and are not available in MP-QUIC.<a href="#section-1-5" class="pilcrow">¶</a></p>
+<p id="section-1-5">MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted or does not need encryption, MP-DCCP is an efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic and efficient traffic scheduling, improve performance, as shown in <span>[<a href="#MP-DCCP.Paper" class="cite xref">MP-DCCP.Paper</a>]</span>, and take into account the interaction of the protocol with the further elements required for multi-path transport.<a href="#section-1-5" class="pilcrow">¶</a></p>
 <div id="mpdccp_network_stack">
 <section id="section-1.1">
         <h3 id="name-multipath-dccp-in-the-netwo">
@@ -3763,10 +3760,6 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" cla
 <dt id="I-D.amend-tsvwg-dccp-udp-header-conversion">[I-D.amend-tsvwg-dccp-udp-header-conversion]</dt>
         <dd>
 <span class="refAuthor">Amend, M.</span>, <span class="refAuthor">Brunstrom, A.</span>, <span class="refAuthor">Kassler, A.</span>, and <span class="refAuthor">V. Rakocevic</span>, <span class="refTitle">"Lossless and overhead free DCCP - UDP header conversion (U-DCCP)"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-amend-tsvwg-dccp-udp-header-conversion-01</span>, <time datetime="2019-07-08" class="refDate">8 July 2019</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01">https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-dccp-udp-header-conversion-01</a>&gt;</span>. </dd>
-<dd class="break"></dd>
-<dt id="I-D.ietf-quic-multipath">[I-D.ietf-quic-multipath]</dt>
-        <dd>
-<span class="refAuthor">Liu, Y.</span>, <span class="refAuthor">Ma, Y.</span>, <span class="refAuthor">De Coninck, Q.</span>, <span class="refAuthor">Bonaventure, O.</span>, <span class="refAuthor">Huitema, C.</span>, and <span class="refAuthor">M. Kuehlewind</span>, <span class="refTitle">"Multipath Extension for QUIC"</span>, <span class="refContent">Work in Progress</span>, <span class="seriesInfo">Internet-Draft, draft-ietf-quic-multipath-10</span>, <time datetime="2024-07-08" class="refDate">8 July 2024</time>, <span>&lt;<a href="https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-10">https://datatracker.ietf.org/doc/html/draft-ietf-quic-multipath-10</a>&gt;</span>. </dd>
 <dd class="break"></dd>
 <dt id="IETF115.Slides">[IETF115.Slides]</dt>
         <dd>
