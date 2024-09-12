@@ -922,7 +922,7 @@ Internet-Draft               Multipath DCCP                     May 2024
    terminates.
 
    Upon reception of the first MP_FAST_CLOSE with successfully validated
-   Key Data, host B will send a DCCP Reset packet response on all
+   Key Data, host B will send a DCCP-Reset packet response on all
    subflows to host A with Reset Code 13 to clean potential middlebox
    states.  Host B will then tear down all subflows and terminate the
    MP-DCCP connection.
@@ -1891,7 +1891,7 @@ Internet-Draft               Multipath DCCP                     May 2024
    it sends a DCCP-Close/DCCP-Reset on the subflow.  This may be
    preceded by a DCCP-CloseReq.  In the event of an irregular
    termination of a subflow, e.g., during subflow establishment, it MUST
-   use an appropriate DCCP reset code as specified in IANA
+   use an appropriate DCCP-Reset code as specified in IANA
    [DCCP.Parameter] for DCCP operations.  This could be, for example,
    sending reset code 5 (Option Error) when an MP-DCCP option provides
    invalid data or reset code 9 (Too Busy) when the maximum number of
@@ -2475,8 +2475,8 @@ Internet-Draft               Multipath DCCP                     May 2024
    registry using the Specification Required policy (Section 4.6 of
    [RFC8126]).
 
-   In addition IANA is requested to assign a new DCCP Reset Code value
-   13 suggested in the DCCP Reset Codes Registry, with the short
+   In addition IANA is requested to assign a new DCCP-Reset Code value
+   13 suggested in the DCCP-Reset Codes Registry, with the short
    description "Abrupt MP termination".  Use of this reset code is
    defined in section Section 3.2.3.
 
