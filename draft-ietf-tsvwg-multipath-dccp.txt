@@ -404,8 +404,8 @@ Internet-Draft               Multipath DCCP                     May 2024
       implementation.  If a MP-DCCP peer host limits the maximum number
       of paths that can be maintained (e.g., similar to what is
       discussed in Section 3.4 of [RFC8041], the creation of new
-      subflows from that peer host needs to be avoided and incoming
-      subflow requests terminated.
+      subflows from that peer host needs to be avoided by terminating
+      incoming subflow requests.
 
    *  Through the use of multipath options, MP-DCCP adds connection-
       level sequence numbers and exchange of Round-Trip Time (RTT)
@@ -510,15 +510,15 @@ Internet-Draft               Multipath DCCP                     May 2024
    described in Section 3.3.  No subsequent re-negotiation of the
    MP_CAPABLE feature is allowed for the same MP-DCCP connection.
 
-   Clients MUST include a Change R option during the initial handshake
-   request to supply a list of supported MP-DCCP protocol versions,
-   ordered by preference.
+   Clients MUST include a Change R ([RFC4340], Section 6) option during
+   the initial handshake request to supply a list of supported MP-DCCP
+   protocol versions, ordered by preference.
 
-   Servers MUST include a Confirm L option in the subsequent response to
-   agree on an MP-DCCP version to be used from the Client list, followed
-   by its own supported version(s), ordered by preference.  Any subflow
-   added to an existing MP-DCCP connection MUST use the version
-   negotiated for the first subflow.
+   Servers MUST include a Confirm L ([RFC4340], Section 6) option in the
+   subsequent response to agree on an MP-DCCP version to be used from
+   the Client list, followed by its own supported version(s), ordered by
+   preference.  Any subflow added to an existing MP-DCCP connection MUST
+   use the version negotiated for the first subflow.
 
    If no agreement is found, the Server MUST reply with an empty Confirm
    L option with feature number 10 and no values.

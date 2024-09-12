@@ -1687,7 +1687,7 @@ alternatively have been initiated from B1 or B2.<a href="#section-2.1-3.3.1" cla
 through a path management method including the logic and details of the procedures for adding/removing subflows;
 this document describes measures to allow a host to initiate new subflows and signal available addresses 
 between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
-corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host needs to be avoided and incoming subflow requests terminated.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
+corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host needs to be avoided by terminating incoming subflow requests.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.5">
             <p id="section-2.1-3.5.1">Through the use of multipath options, MP-DCCP adds connection-level sequence numbers and exchange of
@@ -1815,9 +1815,9 @@ specified in order of priority.<a href="#section-3.1-4" class="pilcrow">¶</a></
 <p id="section-3.1-5">The negotiation MUST be a part of the initial handshake procedure
  described in <a href="#handshaking" class="auto internal xref">Section 3.3</a>. No subsequent re-negotiation of
 the MP_CAPABLE feature is allowed for the same MP-DCCP connection.<a href="#section-3.1-5" class="pilcrow">¶</a></p>
-<p id="section-3.1-6">Clients MUST include a Change R option during the initial handshake request to
+<p id="section-3.1-6">Clients MUST include a Change R (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>], <a href="https://rfc-editor.org/rfc/rfc4340#section-6" class="relref">Section 6</a></span>) option during the initial handshake request to
 supply a list of supported MP-DCCP protocol versions, ordered by preference.<a href="#section-3.1-6" class="pilcrow">¶</a></p>
-<p id="section-3.1-7">Servers MUST include a Confirm L option in the subsequent response to agree on
+<p id="section-3.1-7">Servers MUST include a Confirm L (<span>[<a href="#RFC4340" class="cite xref">RFC4340</a>], <a href="https://rfc-editor.org/rfc/rfc4340#section-6" class="relref">Section 6</a></span>) option in the subsequent response to agree on
 an MP-DCCP version to be used from the Client list, followed by its own
 supported version(s), ordered by preference. Any subflow added to an existing MP-DCCP connection MUST use the
 version negotiated for the first subflow.<a href="#section-3.1-7" class="pilcrow">¶</a></p>
