@@ -76,10 +76,7 @@ normative:
     target: https://www.iana.org/assignments/dccp-parameters/dccp-parameters.xhtml
 
 informative:
-  I-D.amend-tsvwg-multipath-framework-mpdccp:
   I-D.amend-tsvwg-dccp-udp-header-conversion:
-  I-D.lhwxz-hybrid-access-network-architecture:
-  I-D.muley-network-based-bonding-hybrid-access:
   I-D.amend-iccrg-multipath-reordering:
   I-D.ietf-quic-multipath:
   RFC2104:
@@ -198,14 +195,11 @@ which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
 
 In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
-3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks
-{{I-D.lhwxz-hybrid-access-network-architecture}}{{I-D.muley-network-based-bonding-hybrid-access}}, in
-which MP-DCCP can be used for load balancing, seamless session handover and bandwidth aggregation
-using a framework such as {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks that either combine a 3GPP and a non-3GPP access or a fixed and cellular access between user user-equipment/residential gateway and operator network. MP-DCCP can be used in these scenarios for load balancing, seamless session handover and bandwidth aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated into MP-DCCP.
 More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
-The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification; such matters are further detailed in {{I-D.amend-tsvwg-multipath-framework-mpdccp}}.
+The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
 Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
 Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
