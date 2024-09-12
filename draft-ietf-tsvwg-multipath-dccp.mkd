@@ -677,7 +677,7 @@ After sending the MP_FAST_CLOSE on all subflows, host A will tear down all subfl
 and the multipath DCCP connection immediately terminates.
 
 Upon reception of the first MP_FAST_CLOSE with successfully validated 
-Key Data, host B will send a DCCP Reset packet response on all subflows to 
+Key Data, host B will send a DCCP-Reset packet response on all subflows to 
 host A with Reset Code 13 to clean potential middlebox states. 
 Host B will then tear down all subflows and terminate the MP-DCCP connection. 
 
@@ -1399,7 +1399,7 @@ When a host wants to close an existing subflow but not the whole MP-DCCP
 connection, it MUST initiate the regular DCCP connection termination procedure 
 as described in Section 5.6 of {{RFC4340}}, i.e., it sends a DCCP-Close/DCCP-Reset on the subflow. This
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
-e.g., during subflow establishment, it MUST use an appropriate DCCP reset code as specified in IANA {{DCCP.Parameter}} for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
+e.g., during subflow establishment, it MUST use an appropriate DCCP-Reset code as specified in IANA {{DCCP.Parameter}} for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
 is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
@@ -1748,7 +1748,7 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
  
 Future Multipath options with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
 
-In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+In addition IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
 In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
