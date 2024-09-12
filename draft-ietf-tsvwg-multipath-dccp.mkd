@@ -78,7 +78,6 @@ normative:
 informative:
   I-D.amend-tsvwg-dccp-udp-header-conversion:
   I-D.amend-iccrg-multipath-reordering:
-  I-D.ietf-quic-multipath:
   RFC2104:
   RFC3711:
   RFC4043:
@@ -202,10 +201,7 @@ All these use cases profit from an Open Source Linux reference implementation pr
 The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
 Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
-Similar to MP-DCCP, MP-QUIC is designed to enable the simultaneous usage of 
-multiple paths for a single connection {{I-D.ietf-quic-multipath}}. MP-QUIC is based on QUIC 
-in a similar way as MP-DCCP is based on DCCP.
-MP-QUIC inherits the properties of QUIC with its various facets of encryption, multi-streaming and the STREAM and DATAGRAM transport characteristic. This makes a practical multipath implementation very complex. In contrast, MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted, MP-DCCP is the more efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic, improve performance, as shown in {{MP-DCCP.Paper}}, and are not available in MP-QUIC.
+MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted or does not need encryption, MP-DCCP is an efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic and efficient traffic scheduling, improve performance, as shown in {{MP-DCCP.Paper}}, and take into account the interaction of the protocol with the further elements required for multi-path transport.
 
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
