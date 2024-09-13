@@ -1455,7 +1455,7 @@ possible it MUST be closed).
 
 A connection SHOULD fallback to regular DCCP if the endpoints fail to agree on a
 protocol version to use during the Multipath Capable feature negotiation. This is described in
-{{mp_capable}}. ol version negotiation distinguishes between negotiation
+{{mp_capable}}. The protocol version negotiation distinguishes between negotiation
 for the initial connection establishment, and addition of subsequent subflows. If
 protocol version negotiation is not successful during the initial connection establishment,
 MP-DCCP connection will fallback to regular DCCP. 
@@ -1553,7 +1553,7 @@ A DCCP implementation maintains the maximum packet size (MPS) during operation o
 
 ## Maximum number of Subflows
 
-In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in ol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.
+In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.
 
 It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" as specified in {{RFC4340}} if this limit is exceeded.
 
@@ -1758,7 +1758,7 @@ Future Multipath options with MP_OPT>11 are assigned from this registry using th
 
 In addition IANA is requested to assign a new DCCP Reset Code value 13 suggested in the DCCP Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of ol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Type  | Name                 | Meaning                          | Reference  |
