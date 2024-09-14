@@ -1553,7 +1553,6 @@ To avoid further inefficiencies with subflows due to short-lived connections, it
 
 While in the socket buffer based approach the number of initial subflows can be derived by opening new subflows until their initial windows cover the amount of buffered application data, the timing based approach delays the start of additional subflows based on a certain time period, load or knowledge of traffic and path properties. The delay based approach also provides resilience for low‑bandwidth but long-lived applications. All this could also be supported by advanced APIs that signal application traffic requests to the MP-DCCP.
 
-
 ## Path usage strategies {#path_usage_strategy}
 
 MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
