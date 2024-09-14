@@ -1549,9 +1549,9 @@ In theory, an infinite number of subflows can be created within an MP-DCCP conne
 
 It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code “too busy” according to {{RFC4340}} if the resource limit is exceeded or it is known that the multipath connection will not benefit from further subflows. Likewise, the host that wants to create the subflows is RECOMMENDED to consider the aspect of available resources and the possible gains.
 
-To avoid further inefficiencies with subflows due to short-lived connections, it MAY be useful to delay the start of additional subflows. The decision on the initial number of subflows can be based on the occupancy of the socket buffer and/or the timing.
+To avoid further inefficiencies with subflows due to short lived connections, it MAY be useful to delay the start of additional subflows. The decision on the initial number of subflows can be based on the occupancy of the socket buffer and/or the timing.
 
-While in the socket buffer based approach the number of initial subflows can be derived by opening new subflows until their initial windows cover the amount of buffered application data, the timing based approach delays the start of additional subflows based on a certain time period, load or knowledge of traffic and path properties. The delay based approach also provides resilience for low‑bandwidth but long-lived applications. All this could also be supported by advanced APIs that signal application traffic requests to the MP-DCCP.
+While in the socket buffer based approach the number of initial subflows can be derived by opening new subflows until their initial windows cover the amount of buffered application data, the timing based approach delays the start of additional subflows based on a certain time period, load or knowledge of traffic and path properties. The delay based approach also provides resilience for low bandwidth but long lived applications. All this could also be supported by advanced APIs that signal application traffic requests to the MP-DCCP.
 
 ## Path usage strategies {#path_usage_strategy}
 
