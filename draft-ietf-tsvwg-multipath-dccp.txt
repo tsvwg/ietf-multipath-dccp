@@ -196,10 +196,8 @@ Internet-Draft               Multipath DCCP                     May 2024
 1.1.  Multipath DCCP in the Networking Stack
 
    MP-DCCP provides a set of features to DCCP; Figure 1 illustrates this
-   layering.  MP-DCCP operates at the transport layer and can be used as
-   a transport for both higher and lower layers.  The protocol is
-   designed to be used by applications in the same way as DCCP with no
-   changes to the application itself.
+   layering.  MP-DCCP is designed to be used by applications in the same
+   way as DCCP with no changes to the application itself.
 
                                 +-------------------------------+
                                 |           Application         |
@@ -218,6 +216,8 @@ Internet-Draft               Multipath DCCP                     May 2024
    This document uses terms that are either specific for multipath
    transport or are defined in the context of MP-DCCP, similar to
    [RFC8684], as follows:
+
+
 
 
 
