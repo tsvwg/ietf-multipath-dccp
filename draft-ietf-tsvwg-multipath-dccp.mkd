@@ -206,9 +206,7 @@ MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is al
 ## Multipath DCCP in the Networking Stack {#mpdccp_network_stack}
 
 MP-DCCP provides a set of features to DCCP; {{ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks}} illustrates this layering. 
-MP-DCCP operates at the transport layer and can be used as a transport for
-both higher and lower layers. 
-The protocol is
+MP-DCCP is
 designed to be used by applications in the same way as DCCP with no
 changes to the application itself.
 
