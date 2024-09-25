@@ -120,20 +120,20 @@ Internet-Draft               Multipath DCCP                     May 2024
      3.7.  State Diagram . . . . . . . . . . . . . . . . . . . . . .  36
      3.8.  Congestion Control Considerations . . . . . . . . . . . .  38
      3.9.  Maximum Packet Size Considerations  . . . . . . . . . . .  38
-     3.10. Maximum number of Subflows  . . . . . . . . . . . . . . .  38
-     3.11. Path usage strategies . . . . . . . . . . . . . . . . . .  38
+     3.10. Maximum number of Subflows Considerations . . . . . . . .  38
+     3.11. Path usage strategies . . . . . . . . . . . . . . . . . .  39
        3.11.1.  Path mobility  . . . . . . . . . . . . . . . . . . .  39
-       3.11.2.  Concurrent path usage  . . . . . . . . . . . . . . .  39
+       3.11.2.  Concurrent path usage  . . . . . . . . . . . . . . .  40
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .  40
    5.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  42
    6.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  42
-   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  42
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  42
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  45
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  45
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  46
+   7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  43
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  43
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  46
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  46
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  47
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  49
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  51
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  52
 
 1.  Introduction
 
@@ -2093,7 +2093,7 @@ Internet-Draft               Multipath DCCP                     May 2024
    current supported largest size for the data stream that can be used
    across the set of all active MP-DCCP subflows.
 
-3.10.  Maximum number of Subflows
+3.10.  Maximum number of Subflows Considerations
 
    In theory, an infinite number of subflows can be created within an
    MP-DCCP connection, as there is no element in the protocol that
@@ -2103,8 +2103,42 @@ Internet-Draft               Multipath DCCP                     May 2024
 
    It is RECOMMENDED to limit the number of subflows in implementations
    and to reject incoming subflow requests with a DCCP-Reset using the
-   Reset Code "too busy" as specified in [RFC4340] if this limit is
-   exceeded.
+   Reset Code "too busy" according to [RFC4340] if the resource limit is
+   exceeded or it is known that the multipath connection will not
+   benefit from further subflows.  Likewise, the host that wants to
+   create the subflows is RECOMMENDED to consider the aspect of
+   available resources and the possible gains.
+
+   To avoid further inefficiencies with subflows due to short-lived
+   connections, it MAY be useful to delay the start of additional
+   subflows.  The decision on the initial number of subflows can be
+   based on the occupancy of the socket buffer and/or the timing.
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 38]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
+   While in the socket buffer based approach the number of initial
+   subflows can be derived by opening new subflows until their initial
+   windows cover the amount of buffered application data, the timing
+   based approach delays the start of additional subflows based on a
+   certain time period, load or knowledge of traffic and path
+   properties.  The delay based approach also provides resilience for
+   low-bandwidth but long-lived applications.  All this could also be
+   supported by advanced APIs that signal application traffic requests
+   to the MP-DCCP.
 
 3.11.  Path usage strategies
 
@@ -2120,15 +2154,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    utilization strategies that make MP-DCCP suitable for end-to-end
    implementation over the Internet or in controlled environments such
    as Hybrid Access or 5G ATSSS.
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 38]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
 3.11.1.  Path mobility
 
@@ -2152,6 +2177,15 @@ Internet-Draft               Multipath DCCP                     May 2024
       this document.  Path mobility is supported in the current Linux
       reference implementation [multipath-dccp.org].
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 39]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
 3.11.2.  Concurrent path usage
 
    Different to a path mobility strategy, the selection between MP-DCCP
@@ -2166,25 +2200,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    characteristic.  A concurrent path usage method uses a scheduling
    design that could seek to maximize reliability, throughput,
    minimizing latency, etc.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 39]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    Concurrent path usage over the Internet can have implications.  When
    a Multipath DCCP connection uses two or more paths, there is no
@@ -2219,6 +2234,14 @@ Internet-Draft               Multipath DCCP                     May 2024
    for authentication.  Together with Encryption of Header Extensions in
    SRTP, as provided by [RFC6904], also integrity would be provided.
 
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 40]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    DCCP [RFC4340] provides protection against hijacking and limits the
    potential impact of some denial-of-service attacks, but DCCP provides
    no inherent protection against an on-path attacker snooping on data
@@ -2232,15 +2255,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    *  Provide verification that the new address to be included in a MP
       connection is valid for a peer to receive traffic at before using
       it.
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 40]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    *  Provide replay protection, i.e., ensure that a request to add/
       remove a subflow is 'fresh'.
@@ -2267,6 +2281,23 @@ Internet-Draft               Multipath DCCP                     May 2024
    provide the same level of protection against attacks on individual
    DCCP subflows as exists for regular DCCP.
 
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 41]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    As discussed in Section 3.2.8, a host may advertise its private
    addresses, but these might point to different hosts in the receiver's
    network.  The MP_JOIN handshake (Section 3.2.2) is designed to ensure
@@ -2284,19 +2315,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    all paths.  To mitigate attacks that seek to force a low MPS, MP-DCCP
    could detect an attempt to reduce the MPS less than a minimum MPS,
    and then stop using these paths.
-
-
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 41]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
 5.  Interactions with Middleboxes
 
@@ -2328,6 +2346,14 @@ Internet-Draft               Multipath DCCP                     May 2024
    extensively tested.  Also demonstrations of a laboratory setup have
    been executed and have been published at [multipath-dccp.org].
 
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 42]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
 7.  Acknowledgments
 
    [RFC8684] defines Multipath TCP and provided important inputs for
@@ -2346,13 +2372,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    document defines one new value which is requested to be allocated in
    the IANA DCCP Feature Numbers registry and three new registries to be
    allocated in the DCCP registry group.
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 42]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    This document requests IANA to assign a new DCCP feature parameter
    for negotiating the support of multipath capability for DCCP sessions
@@ -2378,6 +2397,19 @@ Internet-Draft               Multipath DCCP                     May 2024
    registry within the DCCP registry group to track the MP-DCCP version.
    The initial content of this registry is as follows:
 
+
+
+
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 43]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
              +============+================+================+
              |  Version   |     Value      | Specification  |
              +============+================+================+
@@ -2401,14 +2433,6 @@ Internet-Draft               Multipath DCCP                     May 2024
    the DCCP registry group.  The following entries in Table 8 should be
    added to the new 'Multipath Options' registry.  The registry in
    Table 8 has an upper boundary of 255 in the numeric value field.
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 43]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
       +===========+===============+=====================+===========+
       | Multipath |      Name     |     Description     | Reference |
@@ -2434,6 +2458,14 @@ Internet-Draft               Multipath DCCP                     May 2024
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=5 |    MP_HMAC    |  Hash-based message |  Section  |
       |           |               |  auth. code for MP- |   3.2.6   |
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 44]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
       |           |               |         DCCP        |           |
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=6 |     MP_RTT    | Transmit RTT values |  Section  |
@@ -2458,14 +2490,6 @@ Internet-Draft               Multipath DCCP                     May 2024
       |           |               |     private use     |           |
       +-----------+---------------+---------------------+-----------+
       | MP_OPT>11 |   Unassigned  | Reserved for future |           |
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 44]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
-
       |           |               |  Multipath Options  |           |
       +-----------+---------------+---------------------+-----------+
 
@@ -2489,6 +2513,15 @@ Internet-Draft               Multipath DCCP                     May 2024
    0 of the protocol and are assigned via Specification Required
    [RFC8126] in potential future versions of the MP-DCCP protocol.
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 45]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
     +=======+=====================+===================+===============+
     |  Type |         Name        |      Meaning      | Reference     |
     +=======+=====================+===================+===============+
@@ -2510,17 +2543,6 @@ Internet-Draft               Multipath DCCP                     May 2024
 9.  References
 
 9.1.  Normative References
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 45]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [DCCP.Parameter]
               "IANA Datagram Congestion Control Protocol (DCCP)
@@ -2547,6 +2569,15 @@ Internet-Draft               Multipath DCCP                     May 2024
               DOI 10.17487/RFC6234, May 2011,
               <https://www.rfc-editor.org/rfc/rfc6234>.
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 46]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    [RFC8126]  Cotton, M., Leiba, B., and T. Narten, "Guidelines for
               Writing an IANA Considerations Section in RFCs", BCP 26,
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
@@ -2564,19 +2595,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               amend-iccrg-multipath-reordering-03, 25 October 2021,
               <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
               multipath-reordering-03>.
-
-
-
-
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 46]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [I-D.amend-tsvwg-dccp-udp-header-conversion]
               Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
@@ -2606,6 +2624,16 @@ Internet-Draft               Multipath DCCP                     May 2024
               "Multipath extension for DCCP", n.d.,
               <https://multipath-dccp.org/>.
 
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 47]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    [OLIA]     Khalili, R., Gast, N., Popovic, M., Upadhyay, U., and J.
               Le Boudec, "MPTCP is not pareto-optimal: performance
               issues and a possible solution", Proceedings of the 8th
@@ -2626,13 +2654,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               Infrastructure Permanent Identifier", RFC 4043,
               DOI 10.17487/RFC4043, May 2005,
               <https://www.rfc-editor.org/rfc/rfc4043>.
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 47]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [RFC5238]  Phelan, T., "Datagram Transport Layer Security (DTLS) over
               the Datagram Congestion Control Protocol (DCCP)",
@@ -2660,6 +2681,15 @@ Internet-Draft               Multipath DCCP                     May 2024
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
               2012, <https://www.rfc-editor.org/rfc/rfc6773>.
 
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 48]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
+
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
               DOI 10.17487/RFC6904, April 2013,
@@ -2680,15 +2710,6 @@ Internet-Draft               Multipath DCCP                     May 2024
               Operational Experience with Multipath TCP", RFC 8041,
               DOI 10.17487/RFC8041, January 2017,
               <https://www.rfc-editor.org/rfc/rfc8041>.
-
-
-
-
-
-Amend, et al.            Expires 5 November 2024               [Page 48]
-
-Internet-Draft               Multipath DCCP                     May 2024
-
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
@@ -2714,6 +2735,16 @@ Appendix A.  Differences from Multipath TCP
    [RFC9293].  However, because of the differences between the
    underlying TCP and DCCP protocols, the transport characteristics of
    MPTCP and MP-DCCP are different.
+
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 49]
+
+Internet-Draft               Multipath DCCP                     May 2024
+
 
    Table 10 compares the protocol characteristics of TCP and DCCP, which
    are by nature inherited by their respective multipath extensions.  A
@@ -2741,7 +2772,32 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 49]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.            Expires 5 November 2024               [Page 50]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2797,7 +2853,7 @@ Internet-Draft               Multipath DCCP                     May 2024
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 50]
+Amend, et al.            Expires 5 November 2024               [Page 51]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2853,7 +2909,7 @@ Authors' Addresses
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 51]
+Amend, et al.            Expires 5 November 2024               [Page 52]
 
 Internet-Draft               Multipath DCCP                     May 2024
 
@@ -2909,4 +2965,4 @@ Internet-Draft               Multipath DCCP                     May 2024
 
 
 
-Amend, et al.            Expires 5 November 2024               [Page 52]
+Amend, et al.            Expires 5 November 2024               [Page 53]
