@@ -722,8 +722,8 @@ Plain Text
   key (d-key) by concatenating the two parts with the local key
   in front. That is,
   
-  * Host A d-keyA=(KeyA+KeyB)
-  * Host B d-keyB=(KeyB+KeyA)
+  * Host A: d-keyA=(KeyA+KeyB)
+  * Host B: d-keyB=(KeyB+KeyA)
 {: vspace='0'}
 
 
