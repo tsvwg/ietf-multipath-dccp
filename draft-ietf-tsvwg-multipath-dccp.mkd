@@ -842,7 +842,7 @@ on which suboption was being verified. If the suboption to be authenticated was 
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see {{fallback}}).
 In the event that an MP_HMAC cannot be associated with a suboption, unless it is an MP_HMAC sent
-in DCCP-Ack in response to a DCCP-Response packet containing an MP_JOIN option, this MP_HMAC MUST be ignored.
+in DCCP-Ack without suboption (penultimate arrow in {{ref-mp-dccp-handshaking}}) in response to a DCCP-Response packet containing an MP_JOIN option, this MP_HMAC MUST be ignored.
 
 ### MP_RTT {#MP_RTT}
 
