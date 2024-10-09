@@ -1440,8 +1440,8 @@ At the start of an MP-DCCP connection, the handshake ensures exchange of MP-DCCP
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
 messages do not carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fallback to regular DCCP (if this is not 
-possible it MUST be closed). 
+established and the handshake SHOULD fallback to regular DCCP. If this is not 
+possible the connection MUST be closed. 
 
 A connection SHOULD fallback to regular DCCP if the endpoints fail to agree on a
 protocol version to use during the Multipath Capable feature negotiation. This is described in
