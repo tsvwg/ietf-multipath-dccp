@@ -721,8 +721,9 @@ Plain Text
   parts (KeyA, KeyB) are used by each host to generate the derived
   key (d-key) by concatenating the two parts with the local key
   in front. That is,
+  
   * Host A d-keyA=(KeyA+KeyB)
-  * Host B d-keyB=(KeyB+KeyA)).
+  * Host B d-keyB=(KeyB+KeyA)
 {: vspace='0'}
 
 
