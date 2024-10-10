@@ -481,7 +481,7 @@ The fields used by the multipath option are described in {{ref-mp-option-list}}.
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
-| 46  |       4       |  8 =VEADDR| Remove Address                                       |
+| 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change subflow Priority                              |
 | 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 | 46  |       var     | 11 =MP_EXP       | Experimental for private use                         |
@@ -512,7 +512,7 @@ receiving host is not the subject of MP_CONFIRM.
 
 Multipath options could arrive out-of-order, therefore multipath options defined in {{ref-mp-option-confirm}}
 MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows a receiver to identify whether
-multipath options are associated with obsolete datasets (information carried in the option header) that would otherwise conflict with newer datasets. In the case of MP_ADDADDR or VEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
+multipath options are associated with obsolete datasets (information carried in the option header) that would otherwise conflict with newer datasets. In the case of MP_ADDADDR orMP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
 multipath option is detected at the receiver if a previous multipath option referring to the same dataset contained a higher sequence number
 in the MP_SEQ. An MP_CONFIRM MAY be generated for multipath options that are identified as outdated.
 
@@ -530,7 +530,7 @@ once. This could happen if a datagram with MP_PRIO and a first MP_SEQ_1 and anot
 received in short succession. In this case, the structure described above is concatenated resulting in MP_SEQ_2 + MP_ADDADDR + MP_SEQ_1 + MP_PRIO.
 The order of the confirmed multipath options in the list of confirmations MUST reflect the incoming order at the host who sends the MP_CONFIRM, with the most
 recent suboption received listed first. This could allow the host receiving the MP_CONFIRM to verify that the options were applied in the correct order
-and to take countermeasures if they were not, e.g., if an VEADDR overtakes an MP_ADDADDR that refers to the same dataset.
+and to take countermeasures if they were not, e.g., if anMP_REMOVEADDR overtakes an MP_ADDADDR that refers to the same dataset.
 
 
 
