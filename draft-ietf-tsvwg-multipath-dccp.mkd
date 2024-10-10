@@ -813,7 +813,7 @@ described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP
    An usage example is shown in {{ref-mp-dccp-handshaking}}.
 
    * for MP_ADDADDR: The Address ID with associated IP address and if defined port,
-   otherwise two octets of value 0. IP address and port MUST be used in network byte
+   otherwise two bytes of value 0. IP address and port MUST be used in network byte
    order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
    MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+NBO(IP)+NBO(Port))
@@ -931,7 +931,7 @@ can simultaneously advertise new addresses.
 The Length is variable depending on the address family (IPv4 or IPv6) and whether a port number is
 used. This field is in range between 8 and 22 bytes.
 
-The final 2 octets, optionally specify the DCCP port number to
+The final 2 bytes, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
@@ -952,7 +952,7 @@ Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
 the Address ID, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
-the HMAC message will include 2 octets of value zero.
+the HMAC message will include 2 bytes of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
 injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
@@ -1329,7 +1329,7 @@ shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passe
 
 * the IP address of the new path (A2_IP)
 
-* A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
+* A pair of bytes specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
 The following options MUST be included in a packet carrying MP_ADDADDR:
