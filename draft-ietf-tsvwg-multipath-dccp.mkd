@@ -995,7 +995,7 @@ information for a connection. Note that an implementation
 MAY discard incoming address advertisements. Reasons for this are for example:
 
 * to avoid the required mapping state, or
-* because advertised addresses are of no use to is.
+* because advertised addresses are of no use to it.
 
 Possible scenarios in which this applies are the lack of resources to store
 a mapping or when IPv6 addresses are advertised even though the host only
