@@ -1643,7 +1643,13 @@ Guidance on generating random numbers suitable for use as keys is given
 in {{RFC4086}}. During normal operation, regular DCCP protection
 mechanisms (such as header checksum to protect DCCP headers against
 corruption) is designed to provide the same level of protection against attacks on
-individual DCCP subflows as exists for regular DCCP. 
+individual DCCP subflows as exists for regular DCCP.
+
+The selection of the Key Type described in {{MP_KEY}} for the exchange of the initial
+key pair determines whether authentication between hosts is possible. The use of
+ECDHE-based key types can provide this functionality if, for example, it is combined
+with a separate certificate validation by a certification authority. The plaintext
+Key Type does not offer this mechanism.
 
 As discussed in {{MP_ADDADDR}}, a host may advertise its private
 addresses, but these might point to different hosts in the receiver's
