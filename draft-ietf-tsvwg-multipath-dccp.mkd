@@ -992,11 +992,16 @@ Address-ID-to-address mappings for a connection (identified by a CI
 pair). In this way, there is a stored mapping between the Address ID,
 the observed source address, and the CI pair for future processing of control
 information for a connection. Note that an implementation
-MAY discard incoming address advertisements - for example, to
-avoid the required mapping state, or because advertised addresses
-are of no use to it (for example, IPv6 addresses when it has IPv4
-only).  Therefore, a host MUST treat address advertisements as soft
-state, and the sender MAY choose to refresh advertisements periodically.
+MAY discard incoming address advertisements. Reasons for this are for example:
+
+* to avoid the required mapping state, or
+* because advertised addresses are of no use to is.
+
+Possible scenarios in which this applies are the lack of resources to store
+a mapping or when IPv6 addresses are advertised even though the host only
+supports IPv4. Therefore, a host MUST treat address announcements as soft state.
+However, a sender MAY choose to update the announcements periodically to
+overcome temporary limitations.
 
 A host
 MAY advertise private addresses, e.g., because there is a 
