@@ -1543,7 +1543,10 @@ A DCCP implementation maintains the maximum packet size (MPS) during operation o
 
 ## Maximum number of Subflows Considerations
 
-In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.
+MP-DCCP does not support any explicit procedure to negotiate
+the maximum number of subflows between endpoints. In practical
+scenarios, however, there will be resource limitations on the host
+or use cases that do not benefit from additional subflows.
 
 It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code “too busy” according to {{RFC4340}} if the resource limit is exceeded or it is known that the multipath connection will not benefit from further subflows. Likewise, the host that wants to create the subflows is RECOMMENDED to consider the aspect of available resources and the possible gains.
 
