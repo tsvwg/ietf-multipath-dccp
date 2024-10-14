@@ -26,11 +26,11 @@ the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.23.1" name="generator">
+<meta content="xml2rfc 3.23.2" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-17" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.23.1
+  xml2rfc 3.23.2
     Python 3.10.15
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -3276,7 +3276,10 @@ for each path allows.<a href="#section-3.8-1" class="pilcrow">¶</a></p>
         <h3 id="name-maximum-number-of-subflows-">
 <a href="#section-3.10" class="section-number selfRef">3.10. </a><a href="#name-maximum-number-of-subflows-" class="section-name selfRef">Maximum number of Subflows Considerations</a>
         </h3>
-<p id="section-3.10-1">In theory, an infinite number of subflows can be created within an MP-DCCP connection, as there is no element in the protocol that represents a restriction. In practical scenarios, however, there will be resource limitations on the host or use cases that do not benefit from additional subflows.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
+<p id="section-3.10-1">MP-DCCP does not support any explicit procedure to negotiate
+the maximum number of subflows between endpoints. In practical
+scenarios, however, there will be resource limitations on the host
+or use cases that do not benefit from additional subflows.<a href="#section-3.10-1" class="pilcrow">¶</a></p>
 <p id="section-3.10-2">It is RECOMMENDED to limit the number of subflows in implementations and to reject incoming subflow requests with a DCCP-Reset using the Reset Code "too busy" according to <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> if the resource limit is exceeded or it is known that the multipath connection will not benefit from further subflows. Likewise, the host that wants to create the subflows is RECOMMENDED to consider the aspect of available resources and the possible gains.<a href="#section-3.10-2" class="pilcrow">¶</a></p>
 <p id="section-3.10-3">To avoid further inefficiencies with subflows due to short-lived connections, it MAY be useful to delay the start of additional subflows. The decision on the initial number of subflows can be based on the occupancy of the socket buffer and/or the timing.<a href="#section-3.10-3" class="pilcrow">¶</a></p>
 <p id="section-3.10-4">While in the socket buffer based approach the number of initial subflows can be derived by opening new subflows until their initial windows cover the amount of buffered application data, the timing based approach delays the start of additional subflows based on a certain time period, load or knowledge of traffic and path properties. The delay based approach also provides resilience for low-bandwidth but long-lived applications. All this could also be supported by advanced APIs that signal application traffic requests to the MP-DCCP.<a href="#section-3.10-4" class="pilcrow">¶</a></p>
