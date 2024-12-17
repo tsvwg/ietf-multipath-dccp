@@ -1168,8 +1168,8 @@ connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
 MP_PRIO value of zero. This helps an MP-DCCP connection to 
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
-MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
-mechanisms (see {{ref-mp-option-confirm}}).
+MP_PRIO MUST be acknowledged via MP_CONFIRM 
+(see {{ref-mp-option-confirm}}) to ensure reliable transmission.
 
 The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in {{path_usage_strategy}}. In the case of path mobility ({{path_mobility}}), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage ({{concurrent_usage}}), the definition is up to the multipath scheduler logic.
 
