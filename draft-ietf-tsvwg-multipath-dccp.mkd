@@ -481,7 +481,7 @@ The fields used by the multipath option are described in {{ref-mp-option-list}}.
 | 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
 | 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
 | 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
-| 46  |       4       |  8 =MP_REMOVEADDR| Remove Address                                       |
+| 46  |       8       |  8 =MP_REMOVEADDR| Remove Address                                       |
 | 46  |       4       |  9 =MP_PRIO      | Change subflow Priority                              |
 | 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
 | 46  |       var     | 11 =MP_EXP       | Experimental for private use                         |
@@ -1101,7 +1101,7 @@ at the requested Address ID, the receiver will silently ignore the request.
 +---------------+---------------+---------------+---------------+
 |                             Nonce                             |
 +-------------------------------+-------------------------------+
-     Type=46        Length=4         MP_OPT=8
+     Type=46        Length=8         MP_OPT=8
 
 -> followed by MP_HMAC option
 ~~~~
