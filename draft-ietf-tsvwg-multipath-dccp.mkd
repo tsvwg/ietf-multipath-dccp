@@ -812,18 +812,18 @@ described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP
    MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)
    An usage example is shown in {{ref-mp-dccp-handshaking}}.
 
-   * for MP_ADDADDR: The Address ID with associated IP address and if defined port,
+   * for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
    otherwise two octets of value 0. IP address and port MUST be used in network byte
    order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+NBO(IP)+NBO(Port))
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+NBO(IP)+NBO(Port))
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))
    
    * for MP_REMOVEADDR: Solely the Address ID.
    Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID)
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID)
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce)
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce)
 
 MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
 within a single DCCP packet. All these multipath options require an individual
@@ -929,7 +929,11 @@ Multiple instances of this suboption within a packet
 can simultaneously advertise new addresses.
 
 The Length is variable depending on the address family (IPv4 or IPv6) and whether a port number is
-used. This field is in range between 8 and 22 bytes.
+used. This field is in range between 12 and 26 bytes.
+
+The Nonce is a 32-bit random value that is generated locally for
+each MP_ADDADDR option and is used in the HMAC calculation process
+to prevent replay attacks.
 
 The final 2 octets, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
@@ -950,7 +954,7 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID, IP address, and port number that precede the HMAC in the
+the Address ID, Nonce, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
 the HMAC message will include 2 octets of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
@@ -969,6 +973,8 @@ in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
   +---------------+---------------+-------+-------+---------------+
   |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 1 1 1|  Address ID   |
   +---------------+---------------+-------+-------+---------------+
+  |                             Nonce                             |
+  +-------------------------------+-------------------------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
   |   Port (2 bytes, optional)    | + MP_HMAC option
@@ -1049,6 +1055,10 @@ added address with an Address ID from a connection
 using the Remove Address (MP_REMOVEADDR) suboption. This
 will terminate any subflows currently using that address.
 
+The Nonce is a 32-bit random value that is generated locally for
+each MP_REMOVEADDR option and is used in the HMAC calculation process
+to prevent replay attacks.
+
 Along with the MP_REMOVEADDR suboption a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
@@ -1089,6 +1099,8 @@ at the requested Address ID, the receiver will silently ignore the request.
 +---------------+---------------+---------------+---------------+
 |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 0|   Address ID  |
 +---------------+---------------+---------------+---------------+
+|                             Nonce                             |
++-------------------------------+-------------------------------+
      Type=46        Length=4         MP_OPT=8
 
 -> followed by MP_HMAC option
@@ -1327,6 +1339,8 @@ shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passe
 
 * an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.
 
+* a Nonce value to prevent replay attacks
+
 * the IP address of the new path (A2_IP)
 
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
@@ -1351,7 +1365,7 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +        |
+     |   DCCP-Data +  MP_ADDADDR(id 2, Nonce, A2_IP, 00) + |
      |------- MP_HMAC(A) + MP_SEQ(seqno 12) -------------->|
      |             |                                       |      
      |   DCCP-Ack + MP_HMAC(B) +                           |
@@ -1364,6 +1378,8 @@ When a host (Host A) wants to indicate that a path is no longer available, it sh
 shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option passed in the DCCP-Data contains the following parameters:
 
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
+
+* a Nonce value to prevent replay attacks
 
 The following options MUST be included in a packet carrying MP_REMOVEADDR:
 
@@ -1382,7 +1398,7 @@ response are as follows:
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_REMOVEADDR(id 2) +                |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2, Nonce) +         |
      |------- MP_HMAC(A) + MP_SEQ(seqno 33) -------------->|
      |             |                                       |      
      |   DCCP-Ack + MP_HMAC(B) +                           |
