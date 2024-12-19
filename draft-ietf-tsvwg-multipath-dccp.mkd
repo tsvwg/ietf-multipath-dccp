@@ -350,9 +350,8 @@ Address A1    Address A2             Address B1    Address B2
 
    *  The discovery and setup of additional subflows is achieved
       through a path management method including the logic and details of the procedures for adding/removing subflows;
-      this document describes measures to allow a host to initiate new subflows and signal available addresses 
-      between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
-      corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of {{RFC8041}}, the creation of new subflows from that peer host needs to be avoided by terminating incoming subflow requests.
+      this document describes the procedures that enable a host to initiate new subflows or to signal available IP addresses between peers. However, the definition of a path management method, in which sequence and when subflows are created, is outside the scope of this document. This method is subject to a 
+      corresponding policy and the specifics of the implementation. If a MP-DCCP peer host wishes to limit the maximum number of paths that can be maintained (e.g. similar to that discussed in section 3.4 of {{RFC8041}}), the creation of new subflows from that peer host must be avoided by terminating incoming subflow requests.
 
    *  Through the use of multipath options, MP-DCCP adds connection-level sequence numbers and exchange of
       Round-Trip Time (RTT) information to enable optional reordering features. As a hint for scheduling decisions, a multipath option that allows a peer to indicate its priorities for what path to use is also defined.
