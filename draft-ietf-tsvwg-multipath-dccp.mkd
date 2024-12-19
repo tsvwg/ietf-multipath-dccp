@@ -180,7 +180,14 @@ different paths simultaneously.
 
 Datagram Congestion Control Protocol (DCCP) {{RFC4340}} is a
 transport protocol that provides bidirectional unicast connections of
-congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
+congestion-controlled unreliable datagrams. DCCP communications are
+restricted to one single path. Other fundamentals of the DCCP protocol
+are summarized in section 1 of {{RFC4340}}, such as the reliable
+handshake process in section 4.7 and the reliable negotiation of features
+in section 4.5, form an important basis for this document. This also
+applies to the DCCP sequencing scheme, which is packet-based (section 4.2),
+and the principles for loss and retransmission of features as described in
+more detail in section 6.6.3.
 This document specifies a set of protocol changes that add multipath
 support to DCCP; specifically, support for signaling and setting up
 multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
