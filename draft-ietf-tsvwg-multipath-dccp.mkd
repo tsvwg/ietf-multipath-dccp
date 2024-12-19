@@ -1102,7 +1102,7 @@ information, see {{closing}}.
 
 ### MP_PRIO {#MP_PRIO}
 
-The path priority SHOULD be considered as hints 
+The path priority signaled with the MP_PRIO options are hints 
 for the packet scheduler when making decisions which path to use for 
 payload traffic.
 When a single specific path from the set of available
