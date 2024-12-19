@@ -1332,7 +1332,7 @@ shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passe
 * A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
-The following options MUST be included in a packet carrying MP_ADDADDR:
+According to {{MP_ADDADDR}}, the following options are required in a packet carrying MP_ADDADDR:
 
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 
@@ -1365,7 +1365,7 @@ shown in the example in {{ref-mp-dccp-remove-address}}. The MP_REMOVEADDR option
 
 * an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.
 
-The following options MUST be included in a packet carrying MP_REMOVEADDR:
+According to {{MP_REMOVEADDR}}, the following options are required in a packet carrying MP_REMOVEADDR:
 
 * the leftmost 20 bytes of the HMAC(A) generated during the initial handshaking procedure described in {{handshaking}} and {{MP_HMAC}}
 * the MP_SEQ option with the sequence number (seqno 33) for this message according to {{MP_SEQ}}.
