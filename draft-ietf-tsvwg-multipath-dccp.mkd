@@ -1443,7 +1443,7 @@ messages do not carry the MP_CAPABLE feature, the MP-DCCP connection will not be
 established and the handshake SHOULD fallback to regular DCCP (if this is not 
 possible it MUST be closed). 
 
-A connection SHOULD fallback to regular DCCP if the endpoints fail to agree on a
+A connection MUST either fallback to regular DCCP or closed if the endpoints fail to agree on a
 protocol version to use during the Multipath Capable feature negotiation. This is described in
 {{mp_capable}}. The protocol version negotiation distinguishes between negotiation
 for the initial connection establishment, and addition of subsequent subflows. If
