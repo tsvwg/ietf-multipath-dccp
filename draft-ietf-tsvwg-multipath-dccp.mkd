@@ -635,9 +635,9 @@ removed from a local or remote host. An Address ID always MUST be unique
 over the lifetime of a subflow and can only be re-assigned if sender and
 receiver no longer have them in use.
 
-The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
+The Nonce is a 32-bit random value that is generated locally each time a MP_JOIN request is created.
 Together with the CI, the Nonce value builds the basis to calculate the
-HMAC used in the handshaking process as described in {{handshaking}}.
+HMAC used in the handshaking process as described in {{handshaking}} to avoid replay attacks.
 
 If the CI cannot be verified by the receiving host during a handshake negotiation, 
 the new subflow MUST be closed, as specified in {{fallback}}.
