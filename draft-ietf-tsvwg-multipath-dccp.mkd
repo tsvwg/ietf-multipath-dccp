@@ -184,7 +184,7 @@ congestion-controlled unreliable datagrams. DCCP communications are
 restricted to one single path. Other fundamentals of the DCCP protocol
 are summarized in section 1 of {{RFC4340}}, such as the reliable
 handshake process in section 4.7 and the reliable negotiation of features
-in section 4.5, form an important basis for this document. This also
+in section 4.5. These are an important basis for this document. This also
 applies to the DCCP sequencing scheme, which is packet-based (section 4.2),
 and the principles for loss and retransmission of features as described in
 more detail in section 6.6.3.
