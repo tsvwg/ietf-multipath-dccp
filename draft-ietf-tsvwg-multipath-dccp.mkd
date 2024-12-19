@@ -450,7 +450,7 @@ for version 1.
 
 3. MP-DCCP is then enabled between the Client and Server with version 1.
 
-Unlike the example in {{ref-mp-capable-example}}, this document only allows the negotiation of MP-DCCP version 0, which means that client and server must support it.
+Unlike the example in {{ref-mp-capable-example}}, this document only allows the negotiation of MP-DCCP version 0.
 
 If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection SHOULD fallback to regular DCCP or MUST close the connection. Further details are specified in {{fallback}}
 
