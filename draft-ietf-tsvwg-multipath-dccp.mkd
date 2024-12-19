@@ -958,7 +958,7 @@ injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
 address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
-cannot validate the HMAC, it SHOULD silently ignore the option.
+cannot validate the HMAC, it MUST silently ignore the option.
 
 The presence of an MP_SEQ {{MP_SEQ}} MUST be ensured in a DCCP datagram
 in which MP_ADDADDR is sent, as described in {{MP_CONFIRM}}.
