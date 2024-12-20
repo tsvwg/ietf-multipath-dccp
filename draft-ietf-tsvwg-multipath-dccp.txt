@@ -83,7 +83,7 @@ Table of Contents
 
    1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   3
      1.1.  Multipath DCCP in the Networking Stack  . . . . . . . . .   4
-     1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   4
+     1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   5
      1.3.  Requirements Language . . . . . . . . . . . . . . . . . .   5
    2.  Operation Overview  . . . . . . . . . . . . . . . . . . . . .   5
      2.1.  MP-DCCP Concept . . . . . . . . . . . . . . . . . . . . .   6
@@ -140,11 +140,17 @@ Internet-Draft               Multipath DCCP               September 2024
    Datagram Congestion Control Protocol (DCCP) [RFC4340] is a transport
    protocol that provides bidirectional unicast connections of
    congestion-controlled unreliable datagrams.  DCCP communications are
-   restricted to one single path.  This document specifies a set of
-   protocol changes that add multipath support to DCCP; specifically,
-   support for signaling and setting up multiple paths (a.k.a,
-   "subflows"), managing these subflows, reordering of data, and
-   termination of sessions.
+   restricted to one single path.  Other fundamentals of the DCCP
+   protocol are summarized in section 1 of [RFC4340], such as the
+   reliable handshake process in section 4.7 and the reliable
+   negotiation of features in section 4.5.  These are an important basis
+   for this document.  This also applies to the DCCP sequencing scheme,
+   which is packet-based (section 4.2), and the principles for loss and
+   retransmission of features as described in more detail in section
+   6.6.3.  This document specifies a set of protocol changes that add
+   multipath support to DCCP; specifically, support for signaling and
+   setting up multiple paths (a.k.a, "subflows"), managing these
+   subflows, reordering of data, and termination of sessions.
 
    Multipath DCCP (MP-DCCP) enables a DCCP connection to simultaneously
    establish a flow across multiple paths.  This can be beneficial to
@@ -154,14 +160,8 @@ Internet-Draft               Multipath DCCP               September 2024
    which is important for low-latency applications that do not require
    guaranteed delivery services, such as Audio/Video streaming.
 
-   In addition to the integration into DCCP services, implementers or
-   future specification could choose MP-DCCP for other use cases like
-   3GPP 5G multi-access solutions (e.g., Access Traffic Steering,
-   Switching, and Splitting (ATSSS) specified in [TS23.501]) or hybrid
-   access networks that either combine a 3GPP and a non-3GPP access or a
-   fixed and cellular access between user user-equipment/residential
-   gateway and operator network.  MP-DCCP can be used in these scenarios
-   for load balancing, seamless session handover and bandwidth
+
+
 
 
 
@@ -170,6 +170,14 @@ Amend, et al.             Expires 29 March 2025                 [Page 3]
 Internet-Draft               Multipath DCCP               September 2024
 
 
+   In addition to the integration into DCCP services, implementers or
+   future specification could choose MP-DCCP for other use cases like
+   3GPP 5G multi-access solutions (e.g., Access Traffic Steering,
+   Switching, and Splitting (ATSSS) specified in [TS23.501]) or hybrid
+   access networks that either combine a 3GPP and a non-3GPP access or a
+   fixed and cellular access between user user-equipment/residential
+   gateway and operator network.  MP-DCCP can be used in these scenarios
+   for load balancing, seamless session handover and bandwidth
    aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated
    into MP-DCCP.  More details on potential use cases for MP-DCCP are
    provided in [multipath-dccp.org], [IETF115.Slides], and
@@ -211,20 +219,18 @@ Internet-Draft               Multipath DCCP               September 2024
 
      Figure 1: Comparison of standard DCCP and MP-DCCP protocol stacks
 
-1.2.  Terminology
-
-   This document uses terms that are either specific for multipath
-   transport or are defined in the context of MP-DCCP, similar to
-   [RFC8684], as follows:
-
-
-
 
 
 Amend, et al.             Expires 29 March 2025                 [Page 4]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+1.2.  Terminology
+
+   This document uses terms that are either specific for multipath
+   transport or are defined in the context of MP-DCCP, similar to
+   [RFC8684], as follows:
 
    Path: A sequence of links between a sender and a receiver, defined in
    this context by a 4-tuple of source and destination address/port
@@ -269,12 +275,6 @@ Internet-Draft               Multipath DCCP               September 2024
    The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
    detail in Section 3.
 
-   At a high level of the MP-DCCP operation, the data stream from a DCCP
-   application is split by MP-DCCP operation into one or more subflows
-   which can be transmitted via different paths, for example using paths
-   via different links.  The corresponding control information allows
-   the receiver to optionally re-assemble and deliver the received data
-
 
 
 Amend, et al.             Expires 29 March 2025                 [Page 5]
@@ -282,6 +282,11 @@ Amend, et al.             Expires 29 March 2025                 [Page 5]
 Internet-Draft               Multipath DCCP               September 2024
 
 
+   At a high level of the MP-DCCP operation, the data stream from a DCCP
+   application is split by MP-DCCP operation into one or more subflows
+   which can be transmitted via different paths, for example using paths
+   via different links.  The corresponding control information allows
+   the receiver to optionally re-assemble and deliver the received data
    in the originally transmitted order to the recipient application.
    This may be necessary because DCCP does not guarantee in-order
    delivery.  The details of the transmission scheduling mechanism and
@@ -316,11 +321,6 @@ Internet-Draft               Multipath DCCP               September 2024
 
    Figure 2 provides a general overview of the MP-DCCP working mode,
    whose main characteristics are summarized in this section.
-
-
-
-
-
 
 
 

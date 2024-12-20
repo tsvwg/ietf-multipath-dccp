@@ -26,17 +26,17 @@ the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.23.2" name="generator">
+<meta content="xml2rfc 3.25.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-17" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.23.2
+  xml2rfc 3.25.0
     Python 3.10.15
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.4
-    lxml 4.9.4
+    lxml 5.3.0
     platformdirs 4.3.6
     pycountry 24.6.1
     PyYAML 6.0.2
@@ -1499,7 +1499,14 @@ different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶<
       </h2>
 <p id="section-1-1">Datagram Congestion Control Protocol (DCCP) <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> is a
 transport protocol that provides bidirectional unicast connections of
-congestion-controlled unreliable datagrams. DCCP communications are restricted to one single path. 
+congestion-controlled unreliable datagrams. DCCP communications are
+restricted to one single path. Other fundamentals of the DCCP protocol
+are summarized in section 1 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, such as the reliable
+handshake process in section 4.7 and the reliable negotiation of features
+in section 4.5. These are an important basis for this document. This also
+applies to the DCCP sequencing scheme, which is packet-based (section 4.2),
+and the principles for loss and retransmission of features as described in
+more detail in section 6.6.3.
 This document specifies a set of protocol changes that add multipath
 support to DCCP; specifically, support for signaling and setting up
 multiple paths (a.k.a, "subflows"), managing these subflows, reordering of
