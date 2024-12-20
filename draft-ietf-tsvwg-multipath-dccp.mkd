@@ -771,7 +771,10 @@ indicated in {{fallback}}.
 
 The MP_SEQ suboption is used for end-to-end 48-bit datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
-number (IDSN) SHOULD be set randomly {{RFC4086}}. 
+number (IDSN) SHOULD be set randomly {{RFC4086}}. As with the standard DCCP
+sequence number, the data sequence number should not start at zero, but at
+a random value to make blind session hijacking more difficult, see also
+section 7.2 in {{RFC4340}}.
 
 The MP_SEQ number space is
 independent from the path individual sequence number space and MUST be
