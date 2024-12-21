@@ -1473,7 +1473,7 @@ Internet-Draft               Multipath DCCP               September 2024
    preferred choice of the user.
 
    The MP_PRIO suboption, shown below, can be used to set a priority
-   flag for the subflow over which the suboption is received.
+   value for the subflow over which the suboption is received.
 
                            1                   2                   3
        0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
