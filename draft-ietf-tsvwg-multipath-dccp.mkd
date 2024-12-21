@@ -1123,7 +1123,7 @@ could also change, for example, when a mobile host runs out
 of battery, the usage of only a single path may be the preferred choice
 of the user. 
 
-The MP_PRIO suboption, shown below, can be used to set a priority flag
+The MP_PRIO suboption, shown below, can be used to set a priority value
 for the subflow over which the suboption is received.
 
 ~~~~
