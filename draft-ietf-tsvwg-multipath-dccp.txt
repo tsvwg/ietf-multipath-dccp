@@ -552,8 +552,8 @@ Internet-Draft               Multipath DCCP               September 2024
        version 1.
 
    Unlike the example in Figure 4, this document only allows the
-   negotiation of MP-DCCP version 0, which means that client and server
-   must support it.
+   negotiation of MP-DCCP version 0.
+
 
 
 
