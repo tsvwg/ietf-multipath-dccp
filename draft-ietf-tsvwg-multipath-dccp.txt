@@ -564,7 +564,7 @@ Internet-Draft               Multipath DCCP               September 2024
 
    If the version negotiation fails or the MP_CAPABLE feature is not
    present in the DCCP-Request or DCCP-Response packets of the initial
-   handshake procedure, the MP-DCCP connection SHOULD fallback to
+   handshake procedure, the MP-DCCP connection MUST either fallback to
    regular DCCP or MUST close the connection.  Further details are
    specified in Section 3.6
 
