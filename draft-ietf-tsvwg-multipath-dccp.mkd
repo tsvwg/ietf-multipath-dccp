@@ -1032,12 +1032,13 @@ connection. If a sender, however, wishes to trigger a new incoming
 connection attempt on a previously advertised address/port combination
 can therefore refresh the MP_ADDADDR information by sending the option again.
 
-A host MAY send therefore an MP_ADDADDR message with an already assigned Address
-ID, but the IP Address MUST be the same as previously assigned to this
-Address ID. A new MP_ADDADDR may have the same port number or a different port number. 
-If these conditions are not met, the receiver
-MUST silently ignore the MP_ADDADDR.  A host wishing to replace an
-existing Address ID MUST first remove the existing one ({{MP_REMOVEADDR}}).
+A host MAY send an MP_ADDADDR message with an already assigned Address
+ID using the IP Address previously assigned to this Address ID. The new
+MP_ADDADDR may have the same port number or a different port number. The
+receiver MUST silently ignore the MP_ADDADDR if the IP Address is not the
+same as that previously assigned to this Address ID. A host wishing to
+replace an existing Address ID MUST first remove the existing one
+({{MP_REMOVEADDR}}).
 
 
 ### MP_REMOVEADDR {#MP_REMOVEADDR}
