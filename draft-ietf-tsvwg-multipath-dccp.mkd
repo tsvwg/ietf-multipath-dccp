@@ -506,9 +506,12 @@ These operations are largely inspired by the signals defined in {{RFC8684}}.
 ~~~~
 {: #ref-mp-confirm-format title='Format of the MP_CONFIRM option'}
 
-Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}). Such options will be retransmitted by the sender 
-until an MP_CONFIRM is received or the confirmation of options is considered irrelevant because the data is outdated. The further processing of the multipath options in the
-receiving host is not the subject of MP_CONFIRM.
+Some multipath options require confirmation from the remote peer (see {{ref-mp-option-confirm}}).
+Such options will be retransmitted by the sender until an MP_CONFIRM is received or the confirmation
+of options is considered irrelevant because the data contained in the options has already been
+replaced by newer information. This can happen, for example, with an MP_PRIO option if the path prioritization
+is changed while the previous prioritization has not yet been confirmed. The further processing
+of the multipath options in the receiving host is not the subject of MP_CONFIRM.
 
 Multipath options could arrive out-of-order, therefore multipath options defined in {{ref-mp-option-confirm}}
 MUST be sent in a DCCP datagram with MP_SEQ {{MP_SEQ}}. This allows a receiver to identify whether
