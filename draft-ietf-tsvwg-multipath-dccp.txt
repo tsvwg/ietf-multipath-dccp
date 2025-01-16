@@ -1139,9 +1139,9 @@ Internet-Draft               Multipath DCCP               September 2024
    the receiving host MUST silently ignore it (see Section 3.2.8 and
    Section 3.2.9).  If the suboption to be authenticated was MP_JOIN,
    the subflow MUST be closed (see Section 3.6).  In the event that an
-   MP_HMAC cannot be associated with a suboption, unless it is an
-   MP_HMAC sent in DCCP-Ack in response to a DCCP-Response packet
-   containing an MP_JOIN option, this MP_HMAC MUST be ignored.
+   MP_HMAC cannot be associated with a suboption this MP_HMAC MUST be
+   ignored, unless it is a single MP_HMAC that was sent in a DCCP-Ack
+   corresponding to a DCCP response packet with MP_JOIN (Section 3.3).
 
 3.2.7.  MP_RTT
 

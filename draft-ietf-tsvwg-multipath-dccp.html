@@ -2445,8 +2445,8 @@ cannot be validated by a receiving host because the HMAC validation fails, the s
 on which suboption was being verified. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a> and <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see <a href="#fallback" class="auto internal xref">Section 3.6</a>).
-In the event that an MP_HMAC cannot be associated with a suboption, unless it is an MP_HMAC sent
-in DCCP-Ack in response to a DCCP-Response packet containing an MP_JOIN option, this MP_HMAC MUST be ignored.<a href="#section-3.2.6-6" class="pilcrow">¶</a></p>
+In the event that an MP_HMAC cannot be associated with a suboption this MP_HMAC MUST be ignored, unless
+it is a single MP_HMAC that was sent in a DCCP-Ack corresponding to a DCCP response packet with MP_JOIN (<a href="#handshaking" class="auto internal xref">Section 3.3</a>).<a href="#section-3.2.6-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_RTT">
