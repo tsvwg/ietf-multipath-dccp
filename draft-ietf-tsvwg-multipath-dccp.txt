@@ -426,9 +426,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 3.  MP-DCCP Protocol
 
-   The DCCP protocol feature list (Section 6.4 of [RFC4340]) is updated
-   by adding a new Multipath feature with Feature number 10, as shown in
-   Table 1.
+   The DCCP protocol feature list (Section 6.4 of [RFC4340]) is extended
+   in this document by adding a new Multipath feature with Feature
+   number 10, as shown in Table 1.
 
     +========+===================+============+===============+=======+
     | Number | Meaning           | Rec'n Rule | Initial Value | Req'd |
