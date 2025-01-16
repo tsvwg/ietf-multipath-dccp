@@ -2004,9 +2004,12 @@ for version 1.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
 <a href="#name-format-of-the-mp_confirm-op" class="selfRef">Format of the MP_CONFIRM option</a>
             </figcaption></figure>
 </div>
-<p id="section-3.2.1-2">Some multipath options require confirmation from the remote peer (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>). Such options will be retransmitted by the sender 
-until an MP_CONFIRM is received or confirmation of options is identified outdated. The further processing of the multipath options in the
-receiving host is not the subject of MP_CONFIRM.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.1-2">Some multipath options require confirmation from the remote peer (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).
+Such options will be retransmitted by the sender until an MP_CONFIRM is received or the confirmation
+of options is considered irrelevant because the data contained in the options has already been
+replaced by newer information. This can happen, for example, with an MP_PRIO option if the path prioritization
+is changed while the previous prioritization has not yet been confirmed. The further processing
+of the multipath options in the receiving host is not the subject of MP_CONFIRM.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.1-3">Multipath options could arrive out-of-order, therefore multipath options defined in <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>
 MUST be sent in a DCCP datagram with MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>. This allows a receiver to identify whether
 multipath options are associated with obsolete datasets (information carried in the option header) that would otherwise conflict with newer datasets. In the case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
