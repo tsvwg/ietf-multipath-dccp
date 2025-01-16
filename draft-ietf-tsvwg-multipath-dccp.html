@@ -2215,12 +2215,12 @@ subflows.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
 using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option.<a href="#section-3.2.3-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.3-5">After sending the MP_FAST_CLOSE on all subflows, host A will tear down all subflows 
+<p id="section-3.2.3-5">After sending the MP_FAST_CLOSE on all subflows, host A MUST tear down all subflows 
 and the multipath DCCP connection immediately terminates.<a href="#section-3.2.3-5" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-6">Upon reception of the first MP_FAST_CLOSE with successfully validated 
 Key Data, host B will send a DCCP-Reset packet response on all subflows to 
 host A with Reset Code 13 to clean potential middlebox states. 
-Host B will then tear down all subflows and terminate the MP-DCCP connection.<a href="#section-3.2.3-6" class="pilcrow">¶</a></p>
+Host B MUST then tear down all subflows and terminate the MP-DCCP connection.<a href="#section-3.2.3-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_KEY">
