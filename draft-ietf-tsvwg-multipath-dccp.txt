@@ -244,8 +244,10 @@ Internet-Draft               Multipath DCCP               September 2024
    application can communicate between two hosts.  The MP-DCCP
    connection is exposed as single DCCP socket to the application.
 
-   Connection Identifier (CI): A locally unique identifier given to a
-   multipath connection by a host.
+   Connection Identifier (CI): A unique identifier that is assigned to a
+   multipath connection by the host to distinguish several multipath
+   connections locally.  The CIs must therefore be locally unique per
+   host and do not have to be the same across the peers.
 
    Host: An end host operating an MP-DCCP implementation, and either
    initiating or accepting an MP-DCCP connection.
@@ -272,8 +274,6 @@ Internet-Draft               Multipath DCCP               September 2024
    does not provide built-in support for managing multiple subflows
    within one DCCP connection.
 
-   The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
-   detail in Section 3.
 
 
 
@@ -281,6 +281,9 @@ Amend, et al.             Expires 29 March 2025                 [Page 5]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+   The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
+   detail in Section 3.
 
    At a high level of the MP-DCCP operation, the data stream from a DCCP
    application is split by MP-DCCP operation into one or more subflows
@@ -321,9 +324,6 @@ Internet-Draft               Multipath DCCP               September 2024
 
    Figure 2 provides a general overview of the MP-DCCP working mode,
    whose main characteristics are summarized in this section.
-
-
-
 
 
 
