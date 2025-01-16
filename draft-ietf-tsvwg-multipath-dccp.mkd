@@ -709,7 +709,7 @@ Host B MUST then tear down all subflows and terminate the MP-DCCP connection.
 
 The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
 hosts for a given connection.
-The CI is a unique number that is configured per host during the initial exchange of a connection with MP_KEY and is necessary to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
+The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
 According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 Bytes for a single-key message, and up to
 115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
 specifies the type of the following key data. 
