@@ -368,7 +368,7 @@ Address A1    Address A2             Address B1    Address B2
 # MP-DCCP Protocol {#protocol}
 
 The DCCP protocol feature list ({{Section 6.4 of RFC4340}}) is
-updated by adding  a new Multipath feature with Feature number 10, as
+extended in this document by adding a new Multipath feature with Feature number 10, as
 shown in {{ref-feature-list}}.
 
 | Number       | Meaning                      | Rec'n Rule | Initial Value | Req'd |
