@@ -482,13 +482,14 @@ Internet-Draft               Multipath DCCP               September 2024
    Beside the negotiation of the feature itself, also one or several
    values can be exchanged.  The value field specified here for the
    Multipath Capable feature has a length of one-byte and can be
-   repeated several times within the DCCP option for feature negotiation
-   if required for example to announce support of different versions of
-   the protocol.  For that, the leftmost four bits in Figure 3 specify
-   the compatible version of the MP-DCCP implementation and MUST be set
-   to 0 following this specification.  The four bits following the
-   Version field are unassigned in version 0 and MUST be set to zero by
-   the sender and MUST be ignored by the receiver.
+   repeated several times within the DCCP option for feature
+   negotiation.  This can be for example required to announce support of
+   different versions of the protocol.  For that, the leftmost four bits
+   in Figure 3 specify the compatible version of the MP-DCCP
+   implementation and MUST be set to 0 following this specification.
+   The four bits following the Version field are unassigned in version 0
+   and MUST be set to zero by the sender and MUST be ignored by the
+   receiver.
 
        0  1  2  3   4  5  6  7
       +-----------+------------+
@@ -496,7 +497,6 @@ Internet-Draft               Multipath DCCP               September 2024
       +-----------+------------+
 
        Figure 3: Format of the Multipath Capable feature value field
-
 
 
 
