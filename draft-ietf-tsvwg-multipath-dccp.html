@@ -2585,7 +2585,7 @@ injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
 address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
-cannot validate the HMAC, it SHOULD silently ignore the option.<a href="#section-3.2.8-4" class="pilcrow">¶</a></p>
+cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.8-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-5">The presence of an MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
 in which MP_ADDADDR is sent, as described in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.8-5" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_addaddr-su"></span><div id="ref-MP_ADDADDR">
@@ -2657,7 +2657,7 @@ information.<a href="#section-3.2.8-12" class="pilcrow">¶</a></p>
 ID, but the Address MUST be the same as previously assigned to this
 Address ID, and the Port MUST be different from one already in use
 for this Address ID.  If these conditions are not met, the receiver
-SHOULD silently ignore the MP_ADDADDR.  A host wishing to replace an
+MUST silently ignore the MP_ADDADDR.  A host wishing to replace an
 existing Address ID MUST first remove the existing one (<a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>).<a href="#section-3.2.8-13" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-14">A host that receives an MP_ADDADDR, but finds at connection set up
 that the IP address and port number is unsuccessful, SHOULD NOT perform
@@ -2692,7 +2692,7 @@ injecting MP_REMOVEADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
 address from being modified in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
-cannot validate the HMAC, it SHOULD silently ignore the option.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
+cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-4">A receiver MUST include a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> in a DCCP datagram that sends
 an  MP_REMOVEADDR. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.9-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-5">The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
