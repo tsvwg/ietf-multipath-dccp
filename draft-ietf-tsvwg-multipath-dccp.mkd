@@ -1011,7 +1011,10 @@ A host
 MAY advertise private addresses, e.g., because there is a 
 NAT on the path.  It is
 desirable to allow this, since there could be cases where both hosts
-have additional interfaces on the same private network. 
+have additional interfaces on the same private network. The advertisement
+of broadcast or multicast IP addresses MUST be ignored by the recipient of
+this option, as it is not permitted according to the unicast principle of the
+basic DCCP.
 
 The MP_JOIN handshake to
 create a new subflow ({{MP_JOIN}}) provides mechanisms to minimize
