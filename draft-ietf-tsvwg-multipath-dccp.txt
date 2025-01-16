@@ -95,7 +95,7 @@ Table of Contents
        3.2.3.  MP_FAST_CLOSE . . . . . . . . . . . . . . . . . . . .  16
        3.2.4.  MP_KEY  . . . . . . . . . . . . . . . . . . . . . . .  17
        3.2.5.  MP_SEQ  . . . . . . . . . . . . . . . . . . . . . . .  19
-       3.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  19
+       3.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  20
        3.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  21
        3.2.8.  MP_ADDADDR  . . . . . . . . . . . . . . . . . . . . .  23
        3.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  25
@@ -1038,7 +1038,10 @@ Internet-Draft               Multipath DCCP               September 2024
 
    The MP_SEQ suboption is used for end-to-end 48-bit datagram-based
    sequence numbers of an MP-DCCP connection.  The initial data sequence
-   number (IDSN) SHOULD be set randomly [RFC4086].
+   number (IDSN) SHOULD be set randomly [RFC4086].  As with the standard
+   DCCP sequence number, the data sequence number should not start at
+   zero, but at a random value to make blind session hijacking more
+   difficult, see also section 7.2 in [RFC4340].
 
    The MP_SEQ number space is independent from the path individual
    sequence number space and MUST be sent with all DCCP-Data and DCCP-
@@ -1055,9 +1058,6 @@ Internet-Draft               Multipath DCCP               September 2024
    per byte transmitted.  For this reason, the 48 bits chosen in MP_SEQ
    are considered sufficiently large.
 
-3.2.6.  MP_HMAC
-
-
 
 
 
@@ -1065,6 +1065,8 @@ Amend, et al.             Expires 29 March 2025                [Page 19]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+3.2.6.  MP_HMAC
 
                  1          2          3           4
       01234567 89012345 67890123 45678901 23456789 01234567
@@ -1112,8 +1114,6 @@ Internet-Draft               Multipath DCCP               September 2024
    MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used
    multiple times within a single DCCP packet.  All these multipath
    options require an individual MP_HMAC option.  This ensures that the
-   MP_HMAC is correctly associated.  Otherwise, the receiver cannot
-   validate multiple MP_JOIN, MP_ADDADDR or MP_REMOVEADDR.  Therefore, a
 
 
 
@@ -1122,6 +1122,8 @@ Amend, et al.             Expires 29 March 2025                [Page 20]
 Internet-Draft               Multipath DCCP               September 2024
 
 
+   MP_HMAC is correctly associated.  Otherwise, the receiver cannot
+   validate multiple MP_JOIN, MP_ADDADDR or MP_REMOVEADDR.  Therefore, a
    MP_HMAC MUST directly follow its associated multipath option.  In the
    likely case of sending a MP_JOIN together with a MP_ADDADDR, this
    results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR +
@@ -1169,8 +1171,6 @@ Internet-Draft               Multipath DCCP               September 2024
    Raw RTT (=0)
       Raw RTT value of the last Datagram Round-Trip
 
-   Min RTT (=1)
-
 
 
 Amend, et al.             Expires 29 March 2025                [Page 21]
@@ -1178,6 +1178,7 @@ Amend, et al.             Expires 29 March 2025                [Page 21]
 Internet-Draft               Multipath DCCP               September 2024
 
 
+   Min RTT (=1)
       Min RTT value over a given period
 
    Max RTT (=2)
@@ -1219,7 +1220,6 @@ Internet-Draft               Multipath DCCP               September 2024
       +--------+                +-------------+
 
            Figure 15: Exemplary flow of MP_RTT exchange and usage
-
 
 
 

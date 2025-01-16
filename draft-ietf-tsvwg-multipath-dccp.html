@@ -31,7 +31,7 @@ different paths simultaneously.
 <meta content="draft-ietf-tsvwg-multipath-dccp-17" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.25.0
-    Python 3.10.15
+    Python 3.10.16
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
@@ -2356,7 +2356,10 @@ indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a h
 </div>
 <p id="section-3.2.5-2">The MP_SEQ suboption is used for end-to-end 48-bit datagram-based sequence
 numbers of an MP-DCCP connection. The initial data sequence
-number (IDSN) SHOULD be set randomly <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
+number (IDSN) SHOULD be set randomly <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>. As with the standard DCCP
+sequence number, the data sequence number should not start at zero, but at
+a random value to make blind session hijacking more difficult, see also
+section 7.2 in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-3">The MP_SEQ number space is
 independent from the path individual sequence number space and MUST be
 sent with all DCCP-Data and DCCP-DataACK packets.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
