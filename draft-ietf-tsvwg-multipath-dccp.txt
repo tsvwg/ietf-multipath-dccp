@@ -1018,7 +1018,7 @@ Internet-Draft               Multipath DCCP               September 2024
    handshake procedure for the first subflow.  This allows the hosts to
    agree on a single key type to be used, as described in Section 3.3
 
-   It is possible that not all hosts will have all key types.  If the
+   It is possible that not all hosts will support all key types.  If the
    key type cannot be agreed in the handshake procedure, the MP-DCCP
    connection MUST fall back to not using MP-DCCP, as indicated in
    Section 3.6.
