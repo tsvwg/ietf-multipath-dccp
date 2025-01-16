@@ -2629,7 +2629,10 @@ state, and the sender MAY choose to refresh advertisements periodically.<a href=
 MAY advertise private addresses, e.g., because there is a 
 NAT on the path.  It is
 desirable to allow this, since there could be cases where both hosts
-have additional interfaces on the same private network.<a href="#section-3.2.8-9" class="pilcrow">¶</a></p>
+have additional interfaces on the same private network. The advertisement
+of broadcast or multicast IP addresses MUST be ignored by the recipient of
+this option, as it is not permitted according to the unicast principle of the
+basic DCCP.<a href="#section-3.2.8-9" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-10">The MP_JOIN handshake to
 create a new subflow (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) provides mechanisms to minimize
 security risks.  The MP_JOIN message contains a 32-bit CI that

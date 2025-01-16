@@ -1329,15 +1329,15 @@ Internet-Draft               Multipath DCCP               September 2024
    A host MAY advertise private addresses, e.g., because there is a NAT
    on the path.  It is desirable to allow this, since there could be
    cases where both hosts have additional interfaces on the same private
-   network.
+   network.  The advertisement of broadcast or multicast IP addresses
+   MUST be ignored by the recipient of this option, as it is not
+   permitted according to the unicast principle of the basic DCCP.
 
    The MP_JOIN handshake to create a new subflow (Section 3.2.2)
    provides mechanisms to minimize security risks.  The MP_JOIN message
    contains a 32-bit CI that uniquely identifies a connection to the
    receiving host.  If the CI is unknown, the host MUST send a DCCP-
    Reset.
-
-
 
 
 
