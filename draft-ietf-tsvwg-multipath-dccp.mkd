@@ -402,7 +402,7 @@ shown in {{ref-option-list}}.
 
 A DCCP endpoint negotiates the Multipath Capable Feature to determine whether multipath extensions can be enabled for a DCCP connection.
 
-The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one or several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation if required for example to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
+The Multipath Capable feature (MP_CAPABLE) has feature number 10 and follows the structure for features given in {{RFC4340}} Section 6. Beside the negotiation of the feature itself, also one or several values can be exchanged. The value field specified here for the Multipath Capable feature has a length of one-byte and can be repeated several times within the DCCP option for feature negotiation. This can be for example required to announce support of different versions of the protocol. For that, the leftmost four bits in {{ref-mp-capable-format}} specify the compatible version of the
 MP-DCCP implementation and MUST be set to 0 following this specification. The four bits following the Version field are unassigned in version 0 and MUST be set to zero by the sender and MUST be ignored by the receiver.
 
 ~~~~
