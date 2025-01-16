@@ -1688,10 +1688,9 @@ alternatively have been initiated from B1 or B2.<a href="#section-2.1-3.3.1" cla
 </li>
           <li class="normal" id="section-2.1-3.4">
             <p id="section-2.1-3.4.1">The discovery and setup of additional subflows is achieved
-through a path management method including the logic and details of the procedures for adding/removing subflows;
-this document describes measures to allow a host to initiate new subflows and signal available addresses 
-between peers. The definition of a path management method is, however, out of scope of this document and subject to a 
-corresponding policy and the specifics of the implementation. If a MP-DCCP peer host limits  the maximum number of paths that can be maintained (e.g., similar to what is discussed in Section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>, the creation of new subflows from that peer host needs to be avoided by terminating incoming subflow requests.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
+through a path management method including the logic and details of the procedures for adding/removing subflows.
+This document describes the procedures that enable a host to initiate new subflows or to signal available IP addresses between peers. However, the definition of a path management method, in which sequence and when subflows are created, is outside the scope of this document. This method is subject to a 
+corresponding policy and the specifics of the implementation. If a MP-DCCP peer host wishes to limit the maximum number of paths that can be maintained (e.g. similar to that discussed in section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>), the creation of new subflows from that peer host is omitted when the threshold of maximum paths is exceeded and incoming subflow requests MUST be rejected.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.5">
             <p id="section-2.1-3.5.1">Through the use of multipath options, MP-DCCP adds connection-level sequence numbers and exchange of

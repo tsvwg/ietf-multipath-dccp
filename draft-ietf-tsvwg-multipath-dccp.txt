@@ -396,16 +396,18 @@ Internet-Draft               Multipath DCCP               September 2024
 
    *  The discovery and setup of additional subflows is achieved through
       a path management method including the logic and details of the
-      procedures for adding/removing subflows; this document describes
-      measures to allow a host to initiate new subflows and signal
-      available addresses between peers.  The definition of a path
-      management method is, however, out of scope of this document and
-      subject to a corresponding policy and the specifics of the
-      implementation.  If a MP-DCCP peer host limits the maximum number
-      of paths that can be maintained (e.g., similar to what is
-      discussed in Section 3.4 of [RFC8041], the creation of new
-      subflows from that peer host needs to be avoided by terminating
-      incoming subflow requests.
+      procedures for adding/removing subflows.  This document describes
+      the procedures that enable a host to initiate new subflows or to
+      signal available IP addresses between peers.  However, the
+      definition of a path management method, in which sequence and when
+      subflows are created, is outside the scope of this document.  This
+      method is subject to a corresponding policy and the specifics of
+      the implementation.  If a MP-DCCP peer host wishes to limit the
+      maximum number of paths that can be maintained (e.g. similar to
+      that discussed in section 3.4 of [RFC8041]), the creation of new
+      subflows from that peer host is omitted when the threshold of
+      maximum paths is exceeded and incoming subflow requests MUST be
+      rejected.
 
    *  Through the use of multipath options, MP-DCCP adds connection-
       level sequence numbers and exchange of Round-Trip Time (RTT)
@@ -440,8 +442,6 @@ Internet-Draft               Multipath DCCP               September 2024
       indicates the server-priority.
 
    Initial Value:  The initial value for the feature.  Every feature has
-      a known initial value.
-
 
 
 
@@ -449,6 +449,8 @@ Amend, et al.             Expires 29 March 2025                 [Page 8]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+      a known initial value.
 
    Req'd:  This column is "Y" if and only if every DCCP implementation
       MUST understand the feature.  If it is "N", then the feature
@@ -495,9 +497,7 @@ Internet-Draft               Multipath DCCP               September 2024
 
        Figure 3: Format of the Multipath Capable feature value field
 
-   The setting of the MP_CAPABLE feature MUST follow the server-priority
-   reconciliation rule described in ([RFC4340], Section 6.3.1).  This
-   allows multiple versions to be specified in order of priority.
+
 
 
 
@@ -505,6 +505,10 @@ Amend, et al.             Expires 29 March 2025                 [Page 9]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+   The setting of the MP_CAPABLE feature MUST follow the server-priority
+   reconciliation rule described in ([RFC4340], Section 6.3.1).  This
+   allows multiple versions to be specified in order of priority.
 
    The negotiation MUST be a part of the initial handshake procedure
    described in Section 3.3.  No subsequent re-negotiation of the
@@ -551,16 +555,15 @@ Internet-Draft               Multipath DCCP               September 2024
    3.  MP-DCCP is then enabled between the Client and Server with
        version 1.
 
-   Unlike the example in Figure 4, this document only allows the
-   negotiation of MP-DCCP version 0.
-
-
 
 
 Amend, et al.             Expires 29 March 2025                [Page 10]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+   Unlike the example in Figure 4, this document only allows the
+   negotiation of MP-DCCP version 0.
 
    If the version negotiation fails or the MP_CAPABLE feature is not
    present in the DCCP-Request or DCCP-Response packets of the initial
@@ -585,9 +588,6 @@ Internet-Draft               Multipath DCCP               September 2024
 
    The fields used by the multipath option are described in Table 3.
    MP_OPT refers to an Multipath option.
-
-
-
 
 
 
