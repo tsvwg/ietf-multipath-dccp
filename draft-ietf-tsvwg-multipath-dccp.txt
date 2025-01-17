@@ -96,7 +96,7 @@ Table of Contents
        3.2.4.  MP_KEY  . . . . . . . . . . . . . . . . . . . . . . .  17
        3.2.5.  MP_SEQ  . . . . . . . . . . . . . . . . . . . . . . .  19
        3.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  20
-       3.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  21
+       3.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  22
        3.2.8.  MP_ADDADDR  . . . . . . . . . . . . . . . . . . . . .  23
        3.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  26
        3.2.10. MP_PRIO . . . . . . . . . . . . . . . . . . . . . . .  27
@@ -970,17 +970,18 @@ Internet-Draft               Multipath DCCP                 January 2025
                  Figure 11: Format of the MP_KEY suboption
 
    The MP_KEY suboption is used to exchange a Connection Identifier (CI)
-   and key material between hosts for a given connection.  The CI is a
-   unique number in the host for each multipath connection and is
-   generated for inclusion in the first exchange of a connection with
-   MP_KEY.  With the CI it is possible to connect other DCCP subflows to
-   an MP-DCCP connection with MP_JOIN (Section 3.2.2).  Its size of
-   32-bits also defines the maximum number of simultaneous MP-DCCP
-   connections in a host to 2^32.  According to the Key related elements
-   of the MP_KEY suboption, the Length varies between 17 and 73 Bytes
-   for a single-key message, and up to 115 Bytes when all specified Key
-   Types 0-2 are provided.  The Key Type field specifies the type of the
-   following key data.  The set of key types are shown in Table 5.
+   and key material between hosts (host A, host B) for a given
+   connection.  The CI is a unique number in the host for each multipath
+   connection and is generated for inclusion in the first exchange of a
+   connection with MP_KEY.  With the CI it is possible to connect other
+   DCCP subflows to an MP-DCCP connection with MP_JOIN (Section 3.2.2).
+   Its size of 32-bits also defines the maximum number of simultaneous
+   MP-DCCP connections in a host to 2^32.  According to the Key related
+   elements of the MP_KEY suboption, the Length varies between 17 and 73
+   Bytes for a single-key message, and up to 115 Bytes when all
+   specified Key Types 0-2 are provided.  The Key Type field specifies
+   the type of the following key data.  The set of key types are shown
+   in Table 5.
 
     +========================+====================+===================+
     | Key Type               | Key Length (Bytes) | Meaning           |
@@ -1004,17 +1005,19 @@ Internet-Draft               Multipath DCCP                 January 2025
 
 
 
-
 Amend, et al.             Expires 21 July 2025                 [Page 18]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
 
-      Key Material is exchanged in plain text between hosts, and the key
-      parts (key-a, key-b) are used by each host to generate the derived
-      key (d-key) by concatenating the two parts with the local key in
-      front (e.g. hostA d-key(A)=(key-a+key-b), hostB d-key(B)=(key-
-      b+key-a)).
+      Key Material is exchanged in plain text between hosts (Host A,
+      Host B), and the respective key parts (KeyA, KeyB) are used by
+      each host to generate the derived key (d-key) by concatenating the
+      two parts with the local key in front.  That is,
+
+      *  Host A: d-keyA=(KeyA+KeyB)
+
+      *  Host B: d-keyB=(KeyB+KeyA)
 
    ECDHE-SHA256-C25519
       Public Key Material is exchanged via ECDHE key exchange with
@@ -1055,9 +1058,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    The MP_SEQ suboption is used for end-to-end 48-bit datagram-based
    sequence numbers of an MP-DCCP connection.  The initial data sequence
    number (IDSN) SHOULD be set randomly [RFC4086].  As with the standard
-   DCCP sequence number, the data sequence number should not start at
-   zero, but at a random value to make blind session hijacking more
-   difficult, see also section 7.2 in [RFC4340].
 
 
 
@@ -1065,6 +1065,10 @@ Amend, et al.             Expires 21 July 2025                 [Page 19]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   DCCP sequence number, the data sequence number should not start at
+   zero, but at a random value to make blind session hijacking more
+   difficult, see also section 7.2 in [RFC4340].
 
    The MP_SEQ number space is independent from the path individual
    sequence number space and MUST be sent with all DCCP-Data and DCCP-
@@ -1107,12 +1111,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    described in Section 3.2.4, while the HMAC "Message" for MP_JOIN,
    MP_ADDADDR and MP_REMOVEADDR is a concatenation of:
 
-   *  for MP_JOIN: The nonces of the MP_JOIN messages for which
-      authentication shall be performed.  Depending on whether Host A or
-      Host B performs the HMAC-SHA256 calculation, it is carried out as
-      follows: MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
-      MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA) An usage example
-      is shown in Figure 21.
+
+
 
 
 
@@ -1122,20 +1122,36 @@ Amend, et al.             Expires 21 July 2025                 [Page 20]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+   *  for MP_JOIN: The nonces of the MP_JOIN messages for which
+      authentication shall be performed.  Depending on whether Host A or
+      Host B performs the HMAC-SHA256 calculation, it is carried out as
+      follows:
+
+      -  MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)
+
+      -  MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=RB+RA)
+
+   An usage example is shown in Figure 21.
+
    *  for MP_ADDADDR: The Address ID and Nonce with associated IP
       address and if defined port, otherwise two octets of value 0.  IP
       address and port MUST be used in network byte order (NBO).
       Depending on whether Host A or Host B performs the HMAC-SHA256
-      calculation, it is carried out as follows: MP_HMAC(A) = HMAC-
-      SHA256(Key=d-key(A), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))
-      MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address
-      ID+Nonce+NBO(IP)+NBO(Port))
+      calculation, it is carried out as follows:
+
+      -  MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=Address
+         ID+Nonce+NBO(IP)+NBO(Port))
+
+      -  MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=Address
+         ID+Nonce+NBO(IP)+NBO(Port))
 
    *  for MP_REMOVEADDR: Solely the Address ID.  Depending on whether
       Host A or Host B performs the HMAC-SHA256 calculation, it is
-      carried out as follows: MP_HMAC(A) = HMAC-SHA256(Key=d-key(A),
-      Msg=Address ID+Nonce) MP_HMAC(B) = HMAC-SHA256(Key=d-key(B),
-      Msg=Address ID+Nonce)
+      carried out as follows:
+
+      -  MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=Address ID+Nonce)
+
+      -  MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=Address ID+Nonce)
 
    MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used
    multiple times within a single DCCP packet.  All these multipath
@@ -1154,6 +1170,14 @@ Internet-Draft               Multipath DCCP                 January 2025
    a receiving host because the HMAC validation fails, the subsequent
    handling depends on which suboption was being verified.  If the
    suboption to be authenticated was either MP_ADDADDR or MP_REMOVEADDR,
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 21]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    the receiving host MUST silently ignore it (see Section 3.2.8 and
    Section 3.2.9).  If the suboption to be authenticated was MP_JOIN,
    the subflow MUST be closed (see Section 3.6).  In the event that an
@@ -1162,21 +1186,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    corresponding to a DCCP response packet with MP_JOIN (Section 3.3).
 
 3.2.7.  MP_RTT
-
-
-
-
-
-
-
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 21]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
                  1          2          3           4          5
       01234567 89012345 67890123 45678901 23456789 01234567 89012345
@@ -1218,21 +1227,18 @@ Internet-Draft               Multipath DCCP                 January 2025
    types, to be used in the MP_RTT option, depends on the CCID
    implementation in place.
 
-   Age
-      The Age parameter defines the time difference between now -
-      creation of the MP_RTT option - and the conducted RTT measurement
-      in milliseconds.  If no previous measurement exists, e.g., when
-      initialized, the value is 0.
-
-
-
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 22]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   Age
+      The Age parameter defines the time difference between now -
+      creation of the MP_RTT option - and the conducted RTT measurement
+      in milliseconds.  If no previous measurement exists, e.g., when
+      initialized, the value is 0.
 
    An example of a flow showing the exchange of path individual RTT
    information is provided in Figure 15.  RTT1 refers to the first path
@@ -1279,12 +1285,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
 
 
-
-
-
-
-
-
 Amend, et al.             Expires 21 July 2025                 [Page 23]
 
 Internet-Draft               Multipath DCCP                 January 2025
@@ -1306,8 +1306,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    option is the leftmost 20 bytes of an HMAC, negotiated and calculated
    as described in Section 3.2.6.  In the same way as for MP_JOIN, the
    key for the HMAC algorithm, in the case of the message transmitted by
-   Host A, will be Key-A followed by Key-B, and in the case of Host B,
-   Key-B followed by Key-A.  These are the keys that were exchanged and
+   Host A, will be KeyA followed by KeyB, and in the case of Host B,
+   KeyB followed by KeyA.  These are the keys that were exchanged and
    selected in the original MP_KEY handshake.  The message for the HMAC
    is the Address ID, Nonce, IP address, and port number that precede
    the HMAC in the MP_ADDADDR option.  If the port number is not present
@@ -1445,10 +1445,10 @@ Internet-Draft               Multipath DCCP                 January 2025
    MP_HMAC option is the leftmost 20 bytes of an HMAC, negotiated and
    calculated as described in Section 3.2.6.  In the same way as for
    MP_JOIN, the key for the HMAC algorithm, in the case of the message
-   transmitted by Host A, will be Key-A followed by Key-B, and in the
-   case of Host B, Key-B followed by Key-A.  These are the keys that
-   were exchanged and selected in the original MP_KEY handshake.  The
-   message for the HMAC is the Address ID.
+   transmitted by Host A, will be KeyA followed by KeyB, and in the case
+   of Host B, KeyB followed by KeyA.  These are the keys that were
+   exchanged and selected in the original MP_KEY handshake.  The message
+   for the HMAC is the Address ID.
 
 
 
@@ -1696,8 +1696,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    ----------    ----------                              ----------
         |             |                                       |
         |           DCCP-Request + Change R (MP_CAPABLE,...)  |
-        |---- MP_KEY(CI-A + Key-A(1), Key-A(2),...) --------->|
-        |<------------------- MP_KEY(CI-B + Key-B) -----------|
+        |----- MP_KEY(CI-A + KeyA(1), KeyA(2),...) ---------->|
+        |<------------------- MP_KEY(CI-B + KeyB) ------------|
         |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
         |             |                                       |
         |   DCCP-Ack  |                                       |
@@ -1720,15 +1720,15 @@ Internet-Draft               Multipath DCCP                 January 2025
    The basic initial handshake for the first subflow is as follows:
 
    *  Host A sends a DCCP-Request with the MP-Capable feature Change
-      request and the MP_KEY option with a Host-specific CI-A and a
-      Key-A for each of the supported key types as described in
-      Section 3.2.4.  CI-A is a unique identifier during the lifetime of
-      a MP-DCCP connection.
+      request and the MP_KEY option with a Host-specific CI-A and a KeyA
+      for each of the supported key types as described in Section 3.2.4.
+      CI-A is a unique identifier during the lifetime of a MP-DCCP
+      connection.
 
    *  Host B sends a DCCP-Response with Confirm feature for MP-Capable
       and the MP_Key option with a unique Host-specific CI-B and a
-      single Host-specific Key-B.  The type of the key is chosen from
-      the list of supported types from the previous request.
+      single Host-specific KeyB.  The type of the key is chosen from the
+      list of supported types from the previous request.
 
 
 
@@ -1767,7 +1767,7 @@ Internet-Draft               Multipath DCCP                 January 2025
       using the nonce received with MP_JOIN(A) and the local nonce RB as
       message and the derived key described in Section 3.2.4 as key:
 
-      MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)
+      MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=RB+RA)
 
    *  Host A sends a DCCP-Ack with the HMAC computed for the DCCP-
       Response.  The HMAC is calculated by taking the leftmost 20 bytes
@@ -1775,7 +1775,7 @@ Internet-Draft               Multipath DCCP                 January 2025
       nonce RA and the nonce received with MP_JOIN(B) as message and the
       derived key described in Section 3.2.4 as key:
 
-      MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
+      MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)
 
    *  Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
       handshaking.
@@ -2002,8 +2002,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    be closed.
 
    The subflow closing procedure MUST be also applied if a final ACK
-   carrying MP_KEY with wrong Key-A/Key-B is received or MP_KEY option
-   is malformed.
+   carrying MP_KEY with wrong KeyA/KeyB is received or MP_KEY option is
+   malformed.
 
    Another relevant case is when payload data is modified by
    middleboxes.  DCCP uses checksum to protect the data, as described in

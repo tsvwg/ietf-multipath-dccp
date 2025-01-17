@@ -2251,7 +2251,7 @@ Host B MUST then tear down all subflows and terminate the MP-DCCP connection.<a 
             </figcaption></figure>
 </div>
 <p id="section-3.2.4-2">The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
-hosts for a given connection.
+hosts (host A, host B) for a given connection.
 The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
 According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 Bytes for a single-key message, and up to
 115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
@@ -2297,10 +2297,18 @@ The set of key types are shown in <a href="#ref-key-type-list" class="auto inter
 <span class="break"></span><dl class="dlNewline" id="section-3.2.4-4">
             <dt id="section-3.2.4-4.1">Plain Text</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.4-4.2">
-              <p id="section-3.2.4-4.2.1">Key Material is exchanged in plain text between hosts, and the key
-parts (key-a, key-b) are used by each host to generate the derived
+              <p id="section-3.2.4-4.2.1">Key Material is exchanged in plain text between hosts (Host A, Host B), and the respective key
+parts (KeyA, KeyB) are used by each host to generate the derived
 key (d-key) by concatenating the two parts with the local key
-in front (e.g. hostA d-key(A)=(key-a+key-b), hostB d-key(B)=(key-b+key-a)).<a href="#section-3.2.4-4.2.1" class="pilcrow">¶</a></p>
+in front. That is,<a href="#section-3.2.4-4.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.4-4.2.2.1">
+                  <p id="section-3.2.4-4.2.2.1.1">Host A: d-keyA=(KeyA+KeyB)<a href="#section-3.2.4-4.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-3.2.4-4.2.2.2">
+                  <p id="section-3.2.4-4.2.2.2.1">Host B: d-keyB=(KeyB+KeyA)<a href="#section-3.2.4-4.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
 </dd>
           <dd class="break"></dd>
 </dl>
@@ -2411,28 +2419,48 @@ described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, whi
 <ul class="normal">
 <li class="normal" id="section-3.2.6-4.1">
               <p id="section-3.2.6-4.1.1">for MP_JOIN: The nonces of the MP_JOIN messages for which authentication
-   shall be performed. Depending on whether Host A or Host B performs the HMAC-SHA256 calculation, it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)
-   An usage example is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 21</a>.<a href="#section-3.2.6-4.1.1" class="pilcrow">¶</a></p>
+   shall be performed. Depending on whether Host A or Host B performs the HMAC-SHA256 calculation, it is carried out as follows:<a href="#section-3.2.6-4.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.6-4.1.2.1">
+                  <p id="section-3.2.6-4.1.2.1.1">MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)<a href="#section-3.2.6-4.1.2.1.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.6-4.2">
-              <p id="section-3.2.6-4.2.1">for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
-   otherwise two octets of value 0. IP address and port MUST be used in network byte
-   order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
-   it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))<a href="#section-3.2.6-4.2.1" class="pilcrow">¶</a></p>
+                <li class="normal" id="section-3.2.6-4.1.2.2">
+                  <p id="section-3.2.6-4.1.2.2.1">MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=RB+RA)<a href="#section-3.2.6-4.1.2.2.1" class="pilcrow">¶</a></p>
 </li>
-            <li class="normal" id="section-3.2.6-4.3">
-              <p id="section-3.2.6-4.3.1">for MP_REMOVEADDR: Solely the Address ID.
-   Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
-   it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce)
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce)<a href="#section-3.2.6-4.3.1" class="pilcrow">¶</a></p>
+              </ul>
 </li>
           </ul>
-<p id="section-3.2.6-5">MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
+<p id="section-3.2.6-5">An usage example is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 21</a>.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.6-6.1">
+              <p id="section-3.2.6-6.1.1">for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
+   otherwise two octets of value 0. IP address and port MUST be used in network byte
+   order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
+   it is carried out as follows:<a href="#section-3.2.6-6.1.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.6-6.1.2.1">
+                  <p id="section-3.2.6-6.1.2.1.1">MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=Address ID+Nonce+NBO(IP)+NBO(Port))<a href="#section-3.2.6-6.1.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-3.2.6-6.1.2.2">
+                  <p id="section-3.2.6-6.1.2.2.1">MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=Address ID+Nonce+NBO(IP)+NBO(Port))<a href="#section-3.2.6-6.1.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+            <li class="normal" id="section-3.2.6-6.2">
+              <p id="section-3.2.6-6.2.1">for MP_REMOVEADDR: Solely the Address ID.
+   Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
+   it is carried out as follows:<a href="#section-3.2.6-6.2.1" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-3.2.6-6.2.2.1">
+                  <p id="section-3.2.6-6.2.2.1.1">MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=Address ID+Nonce)<a href="#section-3.2.6-6.2.2.1.1" class="pilcrow">¶</a></p>
+</li>
+                <li class="normal" id="section-3.2.6-6.2.2.2">
+                  <p id="section-3.2.6-6.2.2.2.1">MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=Address ID+Nonce)<a href="#section-3.2.6-6.2.2.2.1" class="pilcrow">¶</a></p>
+</li>
+              </ul>
+</li>
+          </ul>
+<p id="section-3.2.6-7">MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
 within a single DCCP packet. All these multipath options require an individual
 MP_HMAC option. This ensures that the MP_HMAC is correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
@@ -2440,15 +2468,15 @@ MP_REMOVEADDR. Therefore, a MP_HMAC MUST directly follow its associated multipat
 option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
 results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
 first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
-MP_ADDADDR suboption.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.6-6">On the receiver side, the HMAC validation of the suboptions MUST be carried out according to
+MP_ADDADDR suboption.<a href="#section-3.2.6-7" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-8">On the receiver side, the HMAC validation of the suboptions MUST be carried out according to
 the sending sequence in which the associated MP_HMAC follows a suboption. If the suboption
 cannot be validated by a receiving host because the HMAC validation fails, the subsequent handling depends
 on which suboption was being verified. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a> and <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see <a href="#fallback" class="auto internal xref">Section 3.6</a>).
 In the event that an MP_HMAC cannot be associated with a suboption this MP_HMAC MUST be ignored, unless
-it is a single MP_HMAC that was sent in a DCCP-Ack corresponding to a DCCP response packet with MP_JOIN (<a href="#handshaking" class="auto internal xref">Section 3.3</a>).<a href="#section-3.2.6-6" class="pilcrow">¶</a></p>
+it is a single MP_HMAC that was sent in a DCCP-Ack corresponding to a DCCP response packet with MP_JOIN (<a href="#handshaking" class="auto internal xref">Section 3.3</a>).<a href="#section-3.2.6-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_RTT">
@@ -2579,8 +2607,8 @@ authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>. In the same way as for MP_JOIN,
 the key for the HMAC algorithm, in the case of the message transmitted
-by Host A, will be Key-A followed by Key-B, and in the case of Host B,
-Key-B followed by Key-A.  These are the keys that were exchanged and
+by Host A, will be KeyA followed by KeyB, and in the case of Host B,
+KeyB followed by KeyA.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
 the Address ID, Nonce, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
@@ -2698,8 +2726,8 @@ authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>. In the same way as for MP_JOIN,
 the key for the HMAC algorithm, in the case of the message transmitted
-by Host A, will be Key-A followed by Key-B, and in the case of Host B,
-Key-B followed by Key-A.  These are the keys that were exchanged and
+by Host A, will be KeyA followed by KeyB, and in the case of Host B,
+KeyB followed by KeyA.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
 the Address ID.<a href="#section-3.2.9-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-5">The rationale for using a HMAC is to prevent unauthorized entities from
@@ -2924,8 +2952,8 @@ Address A1    Address A2                              Address B1
 ----------    ----------                              ----------
      |             |                                       |
      |           DCCP-Request + Change R (MP_CAPABLE,...)  |
-     |---- MP_KEY(CI-A + Key-A(1), Key-A(2),...) ---------&gt;|
-     |&lt;------------------- MP_KEY(CI-B + Key-B) -----------|
+     |----- MP_KEY(CI-A + KeyA(1), KeyA(2),...) ----------&gt;|
+     |&lt;------------------- MP_KEY(CI-B + KeyB) ------------|
      |       DCCP-Response +  Confirm L (MP_CAPABLE, ...)  |
      |             |                                       |
      |   DCCP-Ack  |                                       |
@@ -2952,13 +2980,13 @@ Address A1    Address A2                              Address B1
 <ul class="normal">
 <li class="normal" id="section-3.3-4.1">
             <p id="section-3.3-4.1.1">Host A sends a DCCP-Request with the MP-Capable feature Change
-request and the MP_KEY option with a Host-specific CI-A and a Key-A for
+request and the MP_KEY option with a Host-specific CI-A and a KeyA for
 each of the supported key types as described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>. CI-A is a unique identifier during the
 lifetime of a MP-DCCP connection.<a href="#section-3.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-4.2">
             <p id="section-3.3-4.2.1">Host B sends a DCCP-Response with Confirm feature for
-MP-Capable and the MP_Key option with a unique Host-specific CI-B and a single Host-specific Key-B.
+MP-Capable and the MP_Key option with a unique Host-specific CI-B and a single Host-specific KeyB.
 The type of the key is chosen from the list of supported types
 from the previous request.<a href="#section-3.3-4.2.1" class="pilcrow">¶</a></p>
 </li>
@@ -2989,7 +3017,7 @@ The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
 of a HMAC code created by using the nonce received with MP_JOIN(A) and the
 local nonce RB as message and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-8.2.1" class="pilcrow">¶</a></p>
 <p id="section-3.3-8.2.2">
-MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA)<a href="#section-3.3-8.2.2" class="pilcrow">¶</a></p>
+MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=RB+RA)<a href="#section-3.3-8.2.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-8.3">
             <p id="section-3.3-8.3.1">Host A sends a DCCP-Ack with the HMAC computed for the DCCP-Response.
@@ -2997,7 +3025,7 @@ The HMAC is calculated by taking the leftmost 20 bytes from the SHA256 hash
 of a HMAC code created by using the local nonce RA and the nonce received
 with MP_JOIN(B) as message and the derived key described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> as key:<a href="#section-3.3-8.3.1" class="pilcrow">¶</a></p>
 <p id="section-3.3-8.3.2">
-MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=RA+RB)<a href="#section-3.3-8.3.2" class="pilcrow">¶</a></p>
+MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)<a href="#section-3.3-8.3.2" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-8.4">
             <p id="section-3.3-8.4.1">Host B sends a DCCP-Ack to confirm the HMAC and to conclude the
@@ -3206,7 +3234,7 @@ This is especially the case if a different MP_CAPABLE version than the originall
 version is used. Reception of a non-verifiable MP_HMAC (<a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>) or an invalid
 CI used in MP_JOIN (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) during flow establishment MUST cause the
 subflow to be closed.<a href="#section-3.6-5" class="pilcrow">¶</a></p>
-<p id="section-3.6-6">The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong Key-A/Key-B is
+<p id="section-3.6-6">The subflow closing procedure MUST be also applied if a final ACK carrying MP_KEY with wrong KeyA/KeyB is
 received or MP_KEY option is malformed.<a href="#section-3.6-6" class="pilcrow">¶</a></p>
 <p id="section-3.6-7">Another relevant case is when payload data is modified by middleboxes. DCCP uses 
 checksum to protect the data, as described in section 9 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>. A checksum will 
