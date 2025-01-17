@@ -1800,8 +1800,8 @@ Internet-Draft               Multipath DCCP               September 2024
       IP address.  The value of 00 here indicates that the port number
       is the same as that used for the initial subflow address A1_IP
 
-   The following options MUST be included in a packet carrying
-   MP_ADDADDR:
+   According to Section 3.2.8, the following options are required in a
+   packet carrying MP_ADDADDR:
 
    *  the leftmost 20 bytes of the HMAC(A) generated during the initial
       handshaking procedure described in Section 3.3 and Section 3.2.6
@@ -1850,8 +1850,8 @@ Amend, et al.             Expires 29 March 2025                [Page 33]
 Internet-Draft               Multipath DCCP               September 2024
 
 
-   The following options MUST be included in a packet carrying
-   MP_REMOVEADDR:
+   According to Section 3.2.9, the following options are required in a
+   packet carrying MP_REMOVEADDR:
 
    *  the leftmost 20 bytes of the HMAC(A) generated during the initial
       handshaking procedure described in Section 3.3 and Section 3.2.6
