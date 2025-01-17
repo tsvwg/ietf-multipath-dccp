@@ -2882,11 +2882,11 @@ connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
 MP_PRIO value of zero. This helps an MP-DCCP connection to 
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
-MP_PRIO MUST be acknowledged via MP_CONFIRM 
-(see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>) to ensure reliable transmission.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
+To ensure reliable transmission, the MP_PRIO suboption MUST be acknowledged via an MP_CONFIRM 
+(see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-9">The relative ratio of the primary path values 3-15 depend on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-10">A MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
-in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-10" class="pilcrow">¶</a></p>
+in which the MP_PRIO suboption is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-10" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_CLOSE">
@@ -3391,7 +3391,7 @@ Selecting an appropriate method can allow MP-DCCP to realize different path util
           </h4>
 <p id="section-3.11.1-1">The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
-When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.<a href="#section-3.11.1-1" class="pilcrow">¶</a></p>
+When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by the MP_PRIO suboption or if not available pick the most divergent source-destination pair from the original used source-destination pair.<a href="#section-3.11.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-3.11.1-2.1">
               <p id="section-3.11.1-2.1.1">Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.

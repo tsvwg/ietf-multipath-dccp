@@ -1628,9 +1628,9 @@ Internet-Draft               Multipath DCCP                 January 2025
 
    connection enters a state where all paths remain with an MP_PRIO
    value of zero.  This helps an MP-DCCP connection to schedule when the
-   multipath scheduler strictly respects MP_PRIO value 0.  MP_PRIO MUST
-   be acknowledged via MP_CONFIRM (see Table 4) to ensure reliable
-   transmission.
+   multipath scheduler strictly respects MP_PRIO value 0.  To ensure
+   reliable transmission, the MP_PRIO suboption MUST be acknowledged via
+   an MP_CONFIRM (see Table 4).
 
    The relative ratio of the primary path values 3-15 depend on the path
    usage strategy, which is described in more detail in Section 3.11.
@@ -1641,7 +1641,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    definition is up to the multipath scheduler logic.
 
    A MP_SEQ (Section 3.2.5) MUST be present in a DCCP datagram in which
-   MP_PRIO is sent.  Further details are given in Section 3.2.1.
+   the MP_PRIO suboption is sent.  Further details are given in
+   Section 3.2.1.
 
 3.2.11.  MP_CLOSE
 
@@ -1667,7 +1668,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    included in by the MP_CLOSE option and must be validated by the peer
    host.  Note, the Key Data is different between MP_CLOSE option
    carried by DCCP-CloseReq or DCCP-Close.
-
 
 
 
@@ -2270,9 +2270,9 @@ Internet-Draft               Multipath DCCP                 January 2025
    de-prioritized, the MP-DCCP endpoint SHOULD try to send the data
    through an alternate path with a different source or destination
    address (depending on the point of failure), if one exists.  This
-   process SHOULD respect the path priority configured by MP_PRIO or if
-   not available pick the most divergent source-destination pair from
-   the original used source-destination pair.
+   process SHOULD respect the path priority configured by the MP_PRIO
+   suboption or if not available pick the most divergent source-
+   destination pair from the original used source-destination pair.
 
       Note: Rules for picking the most appropriate source-destination
       pair are an implementation decision and are not specified within
