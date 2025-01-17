@@ -555,7 +555,7 @@ and to take countermeasures if they were not, e.g., if an MP_REMOVEADDR overtake
 
 
 
-An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm-good}}. The host A sends a 
+An example to illustrate the MP-DCCP confirm procedure for the MP_PRIO option is shown in {{ref-mp-dccp-confirm-good}}. The Host A sends a 
 DCCP-Request on path A2-B2 with an MP_PRIO option with value 1 and associated sequence number of 1. Host B replies on the same path in 
 this instance (any path can be used) with a DCCP-Response containing the MP_CONFIRM option and a list containing the original sequence number (1)
 together with the associated option (MP_PRIO).
@@ -678,17 +678,17 @@ In order to provide an MP-DCCP-level
 ~~~~
 {: #ref-MP_FAST_CLOSE title='Format of the MP_FAST_CLOSE suboption'}
 
-When host A wants to abruptly close an MP-DCCP connection with host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from host A on all subflows 
-using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
+When Host A wants to abruptly close an MP-DCCP connection with Host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from Host A on all subflows 
+using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that Host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option. 
 
-After sending the MP_FAST_CLOSE on all subflows, host A MUST tear down all subflows 
+After sending the MP_FAST_CLOSE on all subflows, Host A MUST tear down all subflows 
 and the multipath DCCP connection immediately terminates.
 
 Upon reception of the first MP_FAST_CLOSE with successfully validated 
-Key Data, host B will send a DCCP-Reset packet response on all subflows to 
-host A with Reset Code 13 to clean potential middlebox states. 
+Key Data, Host B will send a DCCP-Reset packet response on all subflows to 
+Host A with Reset Code 13 to clean potential middlebox states. 
 Host B MUST then tear down all subflows and terminate the MP-DCCP connection. 
 
 
@@ -1337,7 +1337,7 @@ The basic initial handshake for the first subflow is as follows:
 
 It should be noted that DCCP is protected against corruption of DCCP header data (section 9 of {{RFC4340}}), so no additional mechanisms beyond the general confirmation are required to ensure that the header data has been properly received.
 
-Host A waits for the final DCCP-Ack from host B before starting any
+Host A waits for the final DCCP-Ack from Host B before starting any
 establishment of additional subflow connections.
 
 The handshake for subsequent subflows based on a successful initial
