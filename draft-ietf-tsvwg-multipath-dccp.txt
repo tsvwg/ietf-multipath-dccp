@@ -1314,22 +1314,22 @@ Internet-Draft               Multipath DCCP                 January 2025
    option is the leftmost 20 bytes of an HMAC, negotiated and calculated
    as described in Section 3.2.6.  In the same way as for MP_JOIN, the
    key for the HMAC algorithm, in the case of the message transmitted by
-   Host A, will be KeyA followed by KeyB, and in the case of Host B,
-   KeyB followed by KeyA.  These are the keys that were exchanged and
-   selected in the original MP_KEY handshake.  The message for the HMAC
-   is the Address ID, Nonce, IP address, and port number that precede
-   the HMAC in the MP_ADDADDR option.  If the port number is not present
-   in the MP_ADDADDR option, the HMAC message will include 2 octets of
-   value zero.  The rationale for the HMAC is to prevent unauthorized
-   entities from injecting MP_ADDADDR signals in an attempt to hijack a
-   connection.  Note that, additionally, the presence of this HMAC
-   prevents the address from being changed in flight unless the key is
-   known by an intermediary.  If a host receives an MP_ADDADDR option
-   for which it cannot validate the HMAC, it MUST silently ignore the
-   option.
+   Host A, will be d-KeyA, and in the case of Host B, d-KeyB.  These are
+   the keys that were exchanged and selected in the original MP_KEY
+   handshake.  The message for the HMAC is the Address ID, Nonce, IP
+   address, and port number that precede the HMAC in the MP_ADDADDR
+   option.  If the port number is not present in the MP_ADDADDR option,
+   the HMAC message will include 2 octets of value zero.  The rationale
+   for the HMAC is to prevent unauthorized entities from injecting
+   MP_ADDADDR signals in an attempt to hijack a connection.  Note that,
+   additionally, the presence of this HMAC prevents the address from
+   being changed in flight unless the key is known by an intermediary.
+   If a host receives an MP_ADDADDR option for which it cannot validate
+   the HMAC, it MUST silently ignore the option.
 
    The presence of an MP_SEQ Section 3.2.5 MUST be ensured in a DCCP
    datagram in which MP_ADDADDR is sent, as described in Section 3.2.1.
+
 
 
 
@@ -1481,10 +1481,10 @@ Internet-Draft               Multipath DCCP                 January 2025
    MP_HMAC option is the leftmost 20 bytes of an HMAC, negotiated and
    calculated as described in Section 3.2.6.  In the same way as for
    MP_JOIN, the key for the HMAC algorithm, in the case of the message
-   transmitted by Host A, will be KeyA followed by KeyB, and in the case
-   of Host B, KeyB followed by KeyA.  These are the keys that were
-   exchanged and selected in the original MP_KEY handshake.  The message
-   for the HMAC is the Address ID.
+   transmitted by Host A, will be d-KeyA, and in the case of Host B,
+   d-KeyB.  These are the keys that were exchanged and selected in the
+   original MP_KEY handshake.  The message for the HMAC is the Address
+   ID.
 
    The rationale for using a HMAC is to prevent unauthorized entities
    from injecting MP_REMOVEADDR signals in an attempt to hijack a
