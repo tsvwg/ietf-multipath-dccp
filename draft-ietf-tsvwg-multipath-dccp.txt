@@ -5,17 +5,17 @@
 Transport Area Working Group                               M. Amend, Ed.
 Internet-Draft                                                        DT
 Intended status: Standards Track                            A. Brunstrom
-Expires: 29 March 2025                                        A. Kassler
+Expires: 21 July 2025                                         A. Kassler
                                                      Karlstad University
                                                             V. Rakocevic
                                               City, University of London
                                                               S. Johnson
                                                                       BT
-                                                       25 September 2024
+                                                         17 January 2025
 
 
     DCCP Extensions for Multipath Operation with Multiple Addresses
-                   draft-ietf-tsvwg-multipath-dccp-17
+                   draft-ietf-tsvwg-multipath-dccp-18
 
 Abstract
 
@@ -53,9 +53,9 @@ Status of This Memo
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 1]
+Amend, et al.             Expires 21 July 2025                  [Page 1]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    Internet-Drafts are draft documents valid for a maximum of six months
@@ -63,11 +63,11 @@ Internet-Draft               Multipath DCCP               September 2024
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 29 March 2025.
+   This Internet-Draft will expire on 21 July 2025.
 
 Copyright Notice
 
-   Copyright (c) 2024 IETF Trust and the persons identified as the
+   Copyright (c) 2025 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
@@ -109,9 +109,9 @@ Table of Contents
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 2]
+Amend, et al.             Expires 21 July 2025                  [Page 2]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
        3.4.2.  Removing a path (MP_REMOVEADDR) . . . . . . . . . . .  33
@@ -165,9 +165,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 3]
+Amend, et al.             Expires 21 July 2025                  [Page 3]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    In addition to the integration into DCCP services, implementers or
@@ -221,9 +221,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 4]
+Amend, et al.             Expires 21 July 2025                  [Page 4]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
 1.2.  Terminology
@@ -277,9 +277,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 5]
+Amend, et al.             Expires 21 July 2025                  [Page 5]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
@@ -333,9 +333,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 6]
+Amend, et al.             Expires 21 July 2025                  [Page 6]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
               Host A                               Host B
@@ -389,9 +389,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 7]
+Amend, et al.             Expires 21 July 2025                  [Page 7]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    *  The discovery and setup of additional subflows is achieved through
@@ -445,9 +445,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 8]
+Amend, et al.             Expires 21 July 2025                  [Page 8]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       a known initial value.
@@ -501,9 +501,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                 [Page 9]
+Amend, et al.             Expires 21 July 2025                  [Page 9]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The setting of the MP_CAPABLE feature MUST follow the server-priority
@@ -557,9 +557,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 10]
+Amend, et al.             Expires 21 July 2025                 [Page 10]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    Unlike the example in Figure 4, this document only allows the
@@ -613,9 +613,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 11]
+Amend, et al.             Expires 21 July 2025                 [Page 11]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
     +======+========+================+================================+
@@ -669,9 +669,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 12]
+Amend, et al.             Expires 21 July 2025                 [Page 12]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
                  1          2          3           4          5
@@ -725,9 +725,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 13]
+Amend, et al.             Expires 21 July 2025                 [Page 13]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    to confirm.  The same rules apply when multipath options with
@@ -781,9 +781,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 14]
+Amend, et al.             Expires 21 July 2025                 [Page 14]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    A second example to illustrate the same MP-DCCP confirm procedure but
@@ -837,9 +837,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 15]
+Amend, et al.             Expires 21 July 2025                 [Page 15]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    the peer host, which was previously exchanged with the MP_KEY option.
@@ -893,9 +893,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 16]
+Amend, et al.             Expires 21 July 2025                 [Page 16]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
                  1          2          3
@@ -949,9 +949,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 17]
+Amend, et al.             Expires 21 July 2025                 [Page 17]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The MP_KEY suboption is used to exchange a Connection Identifier (CI)
@@ -1005,9 +1005,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 18]
+Amend, et al.             Expires 21 July 2025                 [Page 18]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       Public Key Material is exchanged via ECDHE key exchange with
@@ -1061,9 +1061,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 19]
+Amend, et al.             Expires 21 July 2025                 [Page 19]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    When the sequence number space is exhausted, the sequence number MUST
@@ -1117,9 +1117,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 20]
+Amend, et al.             Expires 21 July 2025                 [Page 20]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       is carried out as follows: MP_HMAC(A) = HMAC-SHA256(Key=d-key(A),
@@ -1173,9 +1173,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 21]
+Amend, et al.             Expires 21 July 2025                 [Page 21]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The MP_RTT suboption is used to transmit RTT values and age
@@ -1229,9 +1229,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 22]
+Amend, et al.             Expires 21 July 2025                 [Page 22]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       MP-DCCP                   MP-DCCP
@@ -1285,9 +1285,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 23]
+Amend, et al.             Expires 21 July 2025                 [Page 23]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    connection.  Note that, additionally, the presence of this HMAC
@@ -1341,9 +1341,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 24]
+Amend, et al.             Expires 21 July 2025                 [Page 24]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    network.  The advertisement of broadcast or multicast IP addresses
@@ -1397,9 +1397,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 25]
+Amend, et al.             Expires 21 July 2025                 [Page 25]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    MP_REMOVEADDR is only used to close already established subflows that
@@ -1453,9 +1453,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 26]
+Amend, et al.             Expires 21 July 2025                 [Page 26]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
                         1                   2                   3
@@ -1509,9 +1509,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 27]
+Amend, et al.             Expires 21 July 2025                 [Page 27]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    *  2: Secondary: do not use this path for traffic scheduling, if the
@@ -1565,9 +1565,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 28]
+Amend, et al.             Expires 21 July 2025                 [Page 28]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The relative ratio of the primary path values 3-15 depends on the
@@ -1621,9 +1621,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 29]
+Amend, et al.             Expires 21 July 2025                 [Page 29]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid
@@ -1677,9 +1677,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 30]
+Amend, et al.             Expires 21 July 2025                 [Page 30]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
              Host A                                         Host B
@@ -1733,9 +1733,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 31]
+Amend, et al.             Expires 21 July 2025                 [Page 31]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    It should be noted that DCCP is protected against corruption of DCCP
@@ -1789,9 +1789,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 32]
+Amend, et al.             Expires 21 July 2025                 [Page 32]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    *  the IP address of the new path (A2_IP)
@@ -1845,9 +1845,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 33]
+Amend, et al.             Expires 21 July 2025                 [Page 33]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    According to Section 3.2.9, the following options are required in a
@@ -1901,9 +1901,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 34]
+Amend, et al.             Expires 21 July 2025                 [Page 34]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    subsequent step using the procedures described in this section.
@@ -1957,9 +1957,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 35]
+Amend, et al.             Expires 21 July 2025                 [Page 35]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    If the endpoints fail to agree on the protocol version to use during
@@ -2013,9 +2013,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 36]
+Amend, et al.             Expires 21 July 2025                 [Page 36]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    The states transitioned when moving from the CLOSED to OPEN state
@@ -2069,9 +2069,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 37]
+Amend, et al.             Expires 21 July 2025                 [Page 37]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       Figure 24: Most common state transitions of a MP-DCCP subflow
@@ -2125,9 +2125,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 38]
+Amend, et al.             Expires 21 July 2025                 [Page 38]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
 3.11.  Path usage strategies
@@ -2181,9 +2181,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 39]
+Amend, et al.             Expires 21 July 2025                 [Page 39]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    characteristic.  A concurrent path usage method uses a scheduling
@@ -2237,9 +2237,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 40]
+Amend, et al.             Expires 21 July 2025                 [Page 40]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    *  Provide verification that the new address to be included in a MP
@@ -2293,9 +2293,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 41]
+Amend, et al.             Expires 21 July 2025                 [Page 41]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
 5.  Interactions with Middleboxes
@@ -2349,9 +2349,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 42]
+Amend, et al.             Expires 21 July 2025                 [Page 42]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    This document requests IANA to assign a new DCCP feature parameter
@@ -2405,9 +2405,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 43]
+Amend, et al.             Expires 21 July 2025                 [Page 43]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       +===========+===============+=====================+===========+
@@ -2461,9 +2461,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 44]
+Amend, et al.             Expires 21 July 2025                 [Page 44]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
       |           |               |  Multipath Options  |           |
@@ -2517,9 +2517,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 45]
+Amend, et al.             Expires 21 July 2025                 [Page 45]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    [DCCP.Parameter]
@@ -2573,9 +2573,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 46]
+Amend, et al.             Expires 21 July 2025                 [Page 46]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    [I-D.amend-tsvwg-dccp-udp-header-conversion]
@@ -2629,9 +2629,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 47]
+Amend, et al.             Expires 21 July 2025                 [Page 47]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    [RFC5238]  Phelan, T., "Datagram Transport Layer Security (DTLS) over
@@ -2685,9 +2685,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 48]
+Amend, et al.             Expires 21 July 2025                 [Page 48]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
@@ -2741,9 +2741,9 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 49]
+Amend, et al.             Expires 21 July 2025                 [Page 49]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
     +=======================+=================+======================+
@@ -2797,9 +2797,9 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 50]
+Amend, et al.             Expires 21 July 2025                 [Page 50]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
           +==================+=======================+==========+
@@ -2853,9 +2853,9 @@ Authors' Addresses
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 51]
+Amend, et al.             Expires 21 July 2025                 [Page 51]
 
-Internet-Draft               Multipath DCCP               September 2024
+Internet-Draft               Multipath DCCP                 January 2025
 
 
    Email: Markus.Amend@telekom.de
@@ -2909,4 +2909,4 @@ Internet-Draft               Multipath DCCP               September 2024
 
 
 
-Amend, et al.             Expires 29 March 2025                [Page 52]
+Amend, et al.             Expires 21 July 2025                 [Page 52]
