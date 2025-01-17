@@ -821,8 +821,8 @@ the HMAC code is generated according to {{RFC2104}} in combination
 with the SHA256 hash algorithm described in {{RFC6234}}, with the
 output truncated to the leftmost 160 bits (20 bytes).
 
-The "Key" used for the HMAC computation is the derived key (d-key)
-described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR is a concatenation of:
+The "Key" used for the HMAC computation is the derived key (d-keyA for Host A or d-KeyB for Host B)
+described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR must be calculated in both hosts in order to protect on the one hand and validate on the other, and is a concatenation of:
 
    * for MP_JOIN: The nonces of the MP_JOIN messages for which authentication
    shall be performed. Depending on whether Host A or Host B performs the HMAC-SHA256 calculation, it is carried out as follows:
