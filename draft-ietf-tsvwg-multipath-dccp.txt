@@ -1962,14 +1962,14 @@ Amend, et al.             Expires 29 March 2025                [Page 35]
 Internet-Draft               Multipath DCCP               September 2024
 
 
-   A connection SHOULD fallback to regular DCCP if the endpoints fail to
-   agree on a protocol version to use during the Multipath Capable
-   feature negotiation.  This is described in Section 3.1.  The protocol
-   version negotiation distinguishes between negotiation for the initial
-   connection establishment, and addition of subsequent subflows.  If
-   protocol version negotiation is not successful during the initial
-   connection establishment, MP-DCCP connection will fallback to regular
-   DCCP.
+   If the endpoints fail to agree on the protocol version to use during
+   the Multipath Capable feature negotiation, the connection MUST either
+   be closed or fallback to regular DCCP.  This is described in
+   Section 3.1.  The protocol version negotiation distinguishes between
+   negotiation for the initial connection establishment, and addition of
+   subsequent subflows.  If protocol version negotiation is not
+   successful during the initial connection establishment, MP-DCCP
+   connection will fallback to regular DCCP.
 
    The fallback procedure to regular DCCP MUST be also applied if the
    MP_KEY Section 3.2.4 Key Type cannot be negotiated.
