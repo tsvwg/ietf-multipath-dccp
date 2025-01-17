@@ -3221,8 +3221,8 @@ of payload data.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
 messages do not carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fallback to regular DCCP (if this is not 
-possible it MUST be closed).<a href="#section-3.6-2" class="pilcrow">¶</a></p>
+established and the handshake SHOULD fallback to regular DCCP. If this is not 
+possible the connection MUST be closed.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 <p id="section-3.6-3">If the endpoints fail to agree on the protocol version to use during the Multipath
 Capable feature negotiation, the connection MUST either be closed or fallback
 to regular DCCP. This is described in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. The protocol version negotiation
