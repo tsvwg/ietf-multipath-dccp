@@ -1604,43 +1604,43 @@ regular single-path DCCP semantics is discussed in <a href="#protocol" class="au
       <h2 id="name-operation-overview">
 <a href="#section-2" class="section-number selfRef">2. </a><a href="#name-operation-overview" class="section-name selfRef">Operation Overview</a>
       </h2>
-<p id="section-2-1">DCCP transmits congestion-controlled unreliable datagrams over a single path.<br>
+<p id="section-2-1">DCCP transmits congestion-controlled unreliable datagrams over a single path.
 Various congestion control mechanisms have been specified to optimize
 DCCP performance for specific traffic types in terms of profiles denoted
 by a Congestion Control IDentifier (CCID).
-However, DCCP does not provide built-in 
-support for managing multiple subflows within one DCCP connection.<a href="#section-2-1" class="pilcrow">¶</a></p>
-<p id="section-2-2">The extension of DCCP for Multipath-DCCP (MP-DCCP) is 
-described in detail in <a href="#protocol" class="auto internal xref">Section 3</a>.<a href="#section-2-2" class="pilcrow">¶</a></p>
-<p id="section-2-3">At a high level of the MP-DCCP operation, the data 
-stream from a DCCP application is split 
-by MP-DCCP operation into one or more subflows which can be 
+However, DCCP does not provide built-in
+support for managing multiple subflows within one DCCP connection. The
+extension of DCCP for Multipath-DCCP (MP-DCCP) is described in detail
+in <a href="#protocol" class="auto internal xref">Section 3</a>.<a href="#section-2-1" class="pilcrow">¶</a></p>
+<p id="section-2-2">At a high level of the MP-DCCP operation, the data
+stream from a DCCP application is split
+by MP-DCCP operation into one or more subflows which can be
 transmitted via different paths, for example using paths via different links.
-The corresponding control information allows the receiver to optionally 
-re-assemble and deliver the received data in the originally transmitted order to the 
+The corresponding control information allows the receiver to optionally
+re-assemble and deliver the received data in the originally transmitted order to the
 recipient application. This may be necessary because DCCP does not guarantee in-order delivery.
-The details of the transmission scheduling mechanism and 
+The details of the transmission scheduling mechanism and
 optional reordering mechanism are up to the sender and receiver, respectively,
-and are outside the scope of this document.<a href="#section-2-3" class="pilcrow">¶</a></p>
-<p id="section-2-4">A Multipath DCCP connection provides a bidirectional connection of datagrams 
-between two hosts exchanging data using DCCP. It does not require 
-any change to the applications. Multipath DCCP enables the 
-hosts to use multiple paths with different 4-tuples to transport 
-the packets of an MP-DCCP connection. MP-DCCP manages the request, 
+and are outside the scope of this document.<a href="#section-2-2" class="pilcrow">¶</a></p>
+<p id="section-2-3">A Multipath DCCP connection provides a bidirectional connection of datagrams
+between two hosts exchanging data using DCCP. It does not require
+any change to the applications. Multipath DCCP enables the
+hosts to use multiple paths with different 4-tuples to transport
+the packets of an MP-DCCP connection. MP-DCCP manages the request,
 set-up, authentication, prioritization, modification, and removal of
-the DCCP subflows on different paths as well as the exchange of performance 
+the DCCP subflows on different paths as well as the exchange of performance
 parameters.<br>
 The number of DCCP subflows can vary during the 
 lifetime of a Multipath DCCP connection. The details of the path management decisions for
-when to add or remove subflows are outside the scope of this document.<a href="#section-2-4" class="pilcrow">¶</a></p>
-<p id="section-2-5">The Multipath Capability for MP-DCCP is negotiated with a new DCCP 
+when to add or remove subflows are outside the scope of this document.<a href="#section-2-3" class="pilcrow">¶</a></p>
+<p id="section-2-4">The Multipath Capability for MP-DCCP is negotiated with a new DCCP 
 feature, as specified in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. Once 
 negotiated, all subsequent MP-DCCP operations for that connection are signalled with a 
 variable length multipath-related option, as described in <a href="#protocol" class="auto internal xref">Section 3</a>.
 All MP-DCCP operations are signaled by Multipath options described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>. Options that 
 require confirmation from the remote peer are retransmitted by the sender until confirmed or until 
-confirmation is no longer considered relevant.<a href="#section-2-5" class="pilcrow">¶</a></p>
-<p id="section-2-6">The following sections define MP-DCCP behavior in detail.<a href="#section-2-6" class="pilcrow">¶</a></p>
+confirmation is no longer considered relevant.<a href="#section-2-4" class="pilcrow">¶</a></p>
+<p id="section-2-5">The following sections define MP-DCCP behavior in detail.<a href="#section-2-5" class="pilcrow">¶</a></p>
 <div id="concept">
 <section id="section-2.1">
         <h3 id="name-mp-dccp-concept">
@@ -1677,13 +1677,13 @@ Address A1    Address A2             Address B1    Address B2
             <p id="section-2.1-3.1.1">An MP-DCCP connection begins with a 4-way handshake, between 
 two hosts. In <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a>,
 an MP-DCCP connection is established between addresses A1 and B1 on Hosts
-A and B, respectively. In the handshake, a Multipath Capable feature is used to negotiate multipath support for the connection. Host specific keys are also exchanged between Host A and Host B during the handshake. The details of the MP-DCCP handshaking procedure is described in <a href="#handshaking" class="auto internal xref">Section 3.3</a>. MP-DCCP does not require both peers to have 
+A and B. In the handshake, a Multipath Capable feature is used to negotiate multipath support for the connection. Host specific keys are also exchanged between Host A and Host B during the handshake. The details of the MP-DCCP handshaking procedure is described in <a href="#handshaking" class="auto internal xref">Section 3.3</a>. MP-DCCP does not require both peers to have 
 more than one address.<a href="#section-2.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.2">
             <p id="section-2.1-3.2.1">When additional paths and corresponding addresses/ports are available, additional DCCP subflows can be created on 
 these paths and attached to the existing MP-DCCP connection. An MP_JOIN option is used to connect a new DCCP subflow to an existing MP-DCCP connection. It contains a Connection Identifier during the setup of the initial subflow and is exchanged in the 4-way handshake for the subflow together with the Multipath Capable feature. The example in <a href="#ref-example-mp-dccp-usage-scenario" class="auto internal xref">Figure 2</a> illustrates creation of an additional DCCP subflow between Address A2 on Host A and Address B1 on Host B. The two subflows
-continues to provide a single connection to the applications at both
+continue to provide a single connection to the applications at both
 endpoints.<a href="#section-2.1-3.2.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.3">
@@ -2022,7 +2022,7 @@ replaced by newer information. This can happen, for example, with an MP_PRIO opt
 is changed while the previous prioritization has not yet been confirmed. The further processing
 of the multipath options in the receiving host is not the subject of MP_CONFIRM.<a href="#section-3.2.1-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.1-3">Multipath options could arrive out-of-order, therefore multipath options defined in <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>
-MUST be sent in a DCCP datagram with MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>. This allows a receiver to identify whether
+MUST be sent in a DCCP datagram with MP_SEQ; see <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>. This allows a receiver to identify whether
 multipath options are associated with obsolete datasets (information carried in the option header) that would otherwise conflict with newer datasets. In the case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
 multipath option is detected at the receiver if a previous multipath option referring to the same dataset contained a higher sequence number
 in the MP_SEQ. An MP_CONFIRM MAY be generated for multipath options that are identified as outdated.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
@@ -2162,14 +2162,14 @@ Address A1    Address A2                     Address B1    Address B2
 connection and REQUIRES a successful establishment of the first subflow using MP_KEY.
 The Connection Identifier (CI) is the one from the peer host,
 which was previously exchanged with the MP_KEY option.
-MP_HMAC MUST be set when using MP_JOIN within a DCCP-Response packet (See
-<a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a> for details). Similar to the setup of the first subflow, MP_JOIN also exchanges the Multipath Capable feature MP_CAPABLE as described in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. This procedure includes the DCCP Confirm principle and thus ensures a reliable exchange of the MP_JOIN in accordance with section 6.6.4 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.<a href="#section-3.2.2-2" class="pilcrow">¶</a></p>
+MP_HMAC MUST be set when using MP_JOIN within a DCCP-Response packet; see
+<a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a> for details. Similar to the setup of the first subflow, MP_JOIN also exchanges the Multipath Capable feature MP_CAPABLE as described in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. This procedure includes the DCCP Confirm principle and thus ensures a reliable exchange of the MP_JOIN in accordance with section 6.6.4 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.<a href="#section-3.2.2-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-3">The MP_JOIN option includes an "Addr ID" (Address ID) generated by the sender of the option, used to identify the source
 address of this packet, even if the IP header was changed in
 transit by a middlebox.  The value of this field is generated
 by the sender and MUST map uniquely to a source IP address for the
 sending host.  The Address ID allows address removal (<a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>)
-without needing to know what the source address at the receiver is,
+without the need to know the source address at the receiver,
 thus allowing address removal through NATs.  The Address ID also
 allows correlation between new subflow setup attempts and address
 signaling (<a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>), to prevent setting up duplicate subflows
@@ -2568,7 +2568,7 @@ RTT1 refers to the first path and RTT2 to the second path. The
 RTT values could be extracted from the sender's Congestion Control procedure and are conveyed to the receiving host using the MP_RTT suboption. With the reception of RTT1
 and RTT2, the receiver is able to calculate the path_delta which corresponds to
 the absolute difference of both values.
-In the case that the path individual RTTs are symmetric in the down- and uplink directions and there is no jitter, packets with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed lost after path_delta/2.<a href="#section-3.2.7-11" class="pilcrow">¶</a></p>
+In the case that the path individual RTTs are symmetric in the down-link and up-link directions and there is no jitter, packets with missing sequence number MP_SEQ, e.g., in a reordering process, can be assumed lost after path_delta/2.<a href="#section-3.2.7-11" class="pilcrow">¶</a></p>
 <span id="name-exemplary-flow-of-mp_rtt-ex"></span><div id="ref-MP_RTT_example">
 <figure id="figure-15">
             <div class="alignLeft art-text artwork" id="section-3.2.7-12.1">
@@ -2632,7 +2632,7 @@ Note that, additionally, the presence of this HMAC prevents the
 address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
 cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.8-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-6">The presence of an MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
+<p id="section-3.2.8-6">The presence of an MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be ensured in a DCCP datagram
 in which MP_ADDADDR is sent, as described in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.8-6" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_addaddr-su"></span><div id="ref-MP_ADDADDR">
 <figure id="figure-16">
@@ -2758,15 +2758,15 @@ Note that, additionally, the presence of this HMAC prevents the
 address from being modified in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.9-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-6">A receiver MUST include a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> in a DCCP datagram that sends
+<p id="section-3.2.9-6">A receiver MUST include a MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) in a DCCP datagram that sends
 an MP_REMOVEADDR. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-7">The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 (<a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>). This ensures reliable exchange of address
 information. To avoid inconsistent states, the sender releases 
 the address ID only after MP_REMOVEADDR has been confirmed.<a href="#section-3.2.9-7" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-8">The sending and receiving of this message SHOULD trigger the closing procedure
-described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> between the client and the server, respectively on the affected
-subflow(s) (if possible). This helps remove middlebox state, before
+described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> between the client and the server on the affected
+subflow(s), if possible. This helps remove middlebox state, before
 removing any local state.<a href="#section-3.2.9-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-9">Address removal is done by Address ID to allow the use of NATs and other
 middleboxes that rewrite source addresses.  If there is no address
@@ -2857,15 +2857,23 @@ for the subflow over which the suboption is received.<a href="#section-3.2.10-2"
 </li>
           </ul>
 <p id="section-3.2.10-6">Example use cases include:<a href="#section-3.2.10-6" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-7">1) Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
+<ol start="1" type="1" class="normal type-1" id="section-3.2.10-7">
+<li id="section-3.2.10-7.1">
+              <p id="section-3.2.10-7.1.1">Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
    if more capacity is needed than the WiFi path can provide, indicating a 
-   clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.
-2) Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
-   will be used and Cellular will be used only if the Wi-Fi path is not available. 
-3) Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
-   both paths can be used when making packet scheduling decisions.<a href="#section-3.2.10-7" class="pilcrow">¶</a></p>
+   clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.<a href="#section-3.2.10-7.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-3.2.10-7.2">
+              <p id="section-3.2.10-7.2.1">Setting Wi-Fi path to Primary and Cellular to Standby. In this case Wi-Fi
+   will be used and Cellular will be used only if the Wi-Fi path is not available.<a href="#section-3.2.10-7.2.1" class="pilcrow">¶</a></p>
+</li>
+            <li id="section-3.2.10-7.3">
+              <p id="section-3.2.10-7.3.1">Setting Wi-Fi path to Primary and Cellular path to Primary. In this case,
+   both paths can be used when making packet scheduling decisions.<a href="#section-3.2.10-7.3.1" class="pilcrow">¶</a></p>
+</li>
+          </ol>
 <p id="section-3.2.10-8">If not specified, the default behavior is to always use a path for 
 packet scheduling decisions (MP_PRIO=3), when the path has been established and 
 added to an existing MP-DCCP connection. At least one path ought to have a 
@@ -2876,7 +2884,7 @@ MP_PRIO value of zero. This helps an MP-DCCP connection to
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
 MP_PRIO MUST be acknowledged via MP_CONFIRM 
 (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>) to ensure reliable transmission.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-9">The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
+<p id="section-3.2.10-9">The relative ratio of the primary path values 3-15 depend on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-10">A MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-10" class="pilcrow">¶</a></p>
 </section>
@@ -3401,13 +3409,13 @@ Path mobility is supported in the current Linux reference implementation <span>[
 subflows is a per-packet decision that is a part of the multipath
 scheduling process. This method would allow multiple subflows to be
 simultaneously used to aggregate the path resources to obtain higher
-connection throughput.<a href="#section-3.11.2-1" class="pilcrow">¶</a></p>
-<p id="section-3.11.2-2">In this scenario, the selection of congestion control, per-packet scheduling
+connection throughput.<br>
+In this scenario, the selection of congestion control, per-packet scheduling
 and potential re-ordering method determines a concurrent path utilization
 strategy and result in a particular transport characteristic.
-A concurrent path usage method uses a scheduling design that could seek to 
-maximize reliability, throughput, minimizing latency, etc.<a href="#section-3.11.2-2" class="pilcrow">¶</a></p>
-<p id="section-3.11.2-3">Concurrent path usage over the Internet can have implications. When a 
+A concurrent path usage method uses a scheduling design that could seek to
+maximize reliability, throughput, minimizing latency, etc.<a href="#section-3.11.2-1" class="pilcrow">¶</a></p>
+<p id="section-3.11.2-2">Concurrent path usage over the Internet can have implications. When a 
 Multipath DCCP connection uses two or more paths, there is no guarantee 
 that these paths are fully disjoint.  When two (or more) subflows share 
 the same bottleneck, using a standard congestion control scheme could 
@@ -3417,13 +3425,13 @@ Multipath TCP uses the coupled congestion control Linked Increases
 Algorithm (LIA) specified in the experimental specification <span>[<a href="#RFC6356" class="cite xref">RFC6356</a>]</span> to solve this problem.  This 
 scheme could also be specified for Multipath DCCP.  The same applies to 
 other coupled congestion control schemes that have been proposed for 
-Multipath TCP such as Opportunistic Linked Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.11.2-3" class="pilcrow">¶</a></p>
-<p id="section-3.11.2-4">The specification of scheduling for concurrent multipath and related the 
+Multipath TCP such as Opportunistic Linked Increases Algorithm <span>[<a href="#OLIA" class="cite xref">OLIA</a>]</span>.<a href="#section-3.11.2-2" class="pilcrow">¶</a></p>
+<p id="section-3.11.2-3">The specification of scheduling for concurrent multipath and related the 
 congestion control algorithms and re-ordering methods for use in the general
 Internet are outside the scope of this document. If, and when, the IETF
 specifies a method for concurrent usage of multiple paths for the
 general Internet, the framework specified in this document could be used to 
-provide an IETF recommended method for MP-DCCP.<a href="#section-3.11.2-4" class="pilcrow">¶</a></p>
+provide an IETF recommended method for MP-DCCP.<a href="#section-3.11.2-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3525,7 +3533,7 @@ addressing middleboxes operating as NATs are provided in <span>[<a href="#RFC559
 <p id="section-5-2"><span>[<a href="#RFC6773" class="cite xref">RFC6773</a>]</span> specifies UDP Encapsulation for NAT Traversal of DCCP sessions,
 similar to other UDP encapsulations such as for SCTP <span>[<a href="#RFC6951" class="cite xref">RFC6951</a>]</span>. Future
 specifications by the IETF could specify other methods for DCCP encapsulation.<a href="#section-5-2" class="pilcrow">¶</a></p>
-<p id="section-5-3">The security impact of MP-DCCP aware middleboxes is discussed in <a href="#security" class="auto internal xref">Section 4</a><a href="#section-5-3" class="pilcrow">¶</a></p>
+<p id="section-5-3">The security impact of MP-DCCP aware middleboxes is discussed in <a href="#security" class="auto internal xref">Section 4</a>.<a href="#section-5-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="implementation">
