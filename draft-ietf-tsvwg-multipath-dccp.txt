@@ -1460,17 +1460,17 @@ Internet-Draft               Multipath DCCP               September 2024
 
 3.2.10.  MP_PRIO
 
-   The path priority SHOULD be considered as hints for the packet
-   scheduler when making decisions which path to use for payload
-   traffic.  When a single specific path from the set of available paths
-   is treated with higher priority compared to the others when making
-   scheduling decisions for payload traffic, a host can signal such
-   change in priority to the peer.  This could be used when there are
-   different costs for using different paths (e.g., WiFi is free while
-   cellular has limit on volume, 5G has higher energy consumption).  The
-   priority of a path could also change, for example, when a mobile host
-   runs out of battery, the usage of only a single path may be the
-   preferred choice of the user.
+   The path priority signaled with the MP_PRIO option provides hints for
+   the packet scheduler when making decisions about which path to use
+   for payload traffic.  When a single specific path from the set of
+   available paths is treated with higher priority compared to the
+   others when making scheduling decisions for payload traffic, a host
+   can signal such change in priority to the peer.  This could be used
+   when there are different costs for using different paths (e.g., WiFi
+   is free while cellular has limit on volume, 5G has higher energy
+   consumption).  The priority of a path could also change, for example,
+   when a mobile host runs out of battery, the usage of only a single
+   path may be the preferred choice of the user.
 
    The MP_PRIO suboption, shown below, can be used to set a priority
    value for the subflow over which the suboption is received.
