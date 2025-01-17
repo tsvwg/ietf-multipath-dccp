@@ -714,12 +714,12 @@ Host B MUST then tear down all subflows and terminate the MP-DCCP connection.
 The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
 hosts (host A, host B) for a given connection.
 The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
-According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 Bytes for a single-key message, and up to
-115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
+According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 bytes for a single-key message, and up to
+115 bytes when all specified Key Types 0-2 are provided. The Key Type field 
 specifies the type of the following key data. 
 The set of key types are shown in {{ref-key-type-list}}.
 
-| Key  Type              | Key Length (Bytes) | Meaning                          |
+| Key  Type              | Key Length (bytes) | Meaning                          |
 |------------------------|--------------------|----------------------------------|
 | 0 =Plain Text          |                  8 | Plain Text Key                   |
 | 1 =ECDHE-C25519-SHA256 |                 32 | ECDHE with SHA256 and Curve25519 |
@@ -837,7 +837,7 @@ described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP
    An usage example is shown in {{ref-mp-dccp-handshaking}}.
 
    * for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
-   otherwise two octets of value 0. IP address and port MUST be used in network byte
+   otherwise two bytes of value 0. IP address and port MUST be used in network byte
    order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
 
@@ -962,7 +962,7 @@ The Nonce is a 32-bit random value that is generated locally for
 each MP_ADDADDR option and is used in the HMAC calculation process
 to prevent replay attacks.
 
-The final 2 octets, optionally specify the DCCP port number to
+The final 2 bytes, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
@@ -983,7 +983,7 @@ d-KeyB.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
 the Address ID, Nonce, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
-the HMAC message will include 2 octets of value zero.
+the HMAC message will include 2 bytes of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
 injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
@@ -1285,7 +1285,7 @@ feature number 11 is specified with an exemplary description as below:
 ~~~~
 {: #ref-MP_EXP title='Format of the MP_EXP suboption'}
 
-The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 Bytes.
+The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 bytes.
 
 ## MP-DCCP Handshaking Procedure {#handshaking}
 
@@ -1380,7 +1380,7 @@ shown in the example in {{ref-mp-dccp-add-address}}. The MP_ADDADDR option passe
 
 * the IP address of the new path (A2_IP)
 
-* A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
+* A pair of bytes specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
   as that used for the initial subflow address A1_IP
 
 According to {{MP_ADDADDR}}, the following options are required in a packet carrying MP_ADDADDR:
@@ -1776,7 +1776,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
 
-Sect. {{mp_capable}} specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
+Sect. {{mp_capable}} specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
    |  Version  | Value           | Specification  |
