@@ -2814,8 +2814,8 @@ connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
 MP_PRIO value of zero. This helps an MP-DCCP connection to 
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
-MP_PRIO is assumed to be exchanged reliably using the MP_CONFIRM 
-mechanisms (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
+MP_PRIO MUST be acknowledged via MP_CONFIRM 
+(see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>) to ensure reliable transmission.<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-9">The relative ratio of the primary path values 3-15 depends on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-10">A MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
 in which MP_PRIO is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-10" class="pilcrow">¶</a></p>

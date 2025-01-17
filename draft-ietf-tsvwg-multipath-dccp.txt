@@ -1551,9 +1551,9 @@ Internet-Draft               Multipath DCCP                 January 2025
    at least one path to a non-zero MP_PRIO value when an MP-DCCP
    connection enters a state where all paths remain with an MP_PRIO
    value of zero.  This helps an MP-DCCP connection to schedule when the
-   multipath scheduler strictly respects MP_PRIO value 0.  MP_PRIO is
-   assumed to be exchanged reliably using the MP_CONFIRM mechanisms (see
-   Table 4).
+   multipath scheduler strictly respects MP_PRIO value 0.  MP_PRIO MUST
+   be acknowledged via MP_CONFIRM (see Table 4) to ensure reliable
+   transmission.
 
 
 
