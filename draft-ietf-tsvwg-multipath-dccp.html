@@ -3464,7 +3464,12 @@ in <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>. During norma
 mechanisms (such as header checksum to protect DCCP headers against
 corruption) is designed to provide the same level of protection against attacks on
 individual DCCP subflows as exists for regular DCCP.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">As discussed in <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>, a host may advertise its private
+<p id="section-4-5">The selection of the Key Type described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> for the exchange of the initial
+key pair determines whether authentication between hosts is possible. The use of
+ECDHE-based key types can provide this functionality if, for example, it is combined
+with a separate certificate validation by a certification authority. The plaintext
+Key Type does not offer this mechanism.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">As discussed in <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>, a host may advertise its private
 addresses, but these might point to different hosts in the receiver's
 network.  The MP_JOIN handshake (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) is designed to ensure that this
 does not set up a subflow to the incorrect host.
@@ -3473,13 +3478,13 @@ feature of MP-DCCP could be a target for denial-of-service exploits,
 with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
-sender and receiver to reduce the impact of this.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+sender and receiver to reduce the impact of this.<a href="#section-4-6" class="pilcrow">¶</a></p>
+<p id="section-4-7">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
 If MP-DCCP exposes a minimum MPS across all paths,
 any change to one path impacts the sender for all paths.
 To mitigate attacks that seek to force a low MPS, MP-DCCP
 could detect an attempt to reduce the MPS less than a minimum MPS, and then
-stop using these paths.<a href="#section-4-6" class="pilcrow">¶</a></p>
+stop using these paths.<a href="#section-4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="middlebox">

@@ -128,9 +128,9 @@ Internet-Draft               Multipath DCCP                 January 2025
    5.  Interactions with Middleboxes . . . . . . . . . . . . . . . .  44
    6.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  44
    7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  44
-   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  44
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  47
-     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  47
+   8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  45
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  48
+     9.1.  Normative References  . . . . . . . . . . . . . . . . . .  48
      9.2.  Informative References  . . . . . . . . . . . . . . . . .  48
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  51
    Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  53
@@ -2383,6 +2383,13 @@ Internet-Draft               Multipath DCCP                 January 2025
    provide the same level of protection against attacks on individual
    DCCP subflows as exists for regular DCCP.
 
+   The selection of the Key Type described in Section 3.2.4 for the
+   exchange of the initial key pair determines whether authentication
+   between hosts is possible.  The use of ECDHE-based key types can
+   provide this functionality if, for example, it is combined with a
+   separate certificate validation by a certification authority.  The
+   plaintext Key Type does not offer this mechanism.
+
    As discussed in Section 3.2.8, a host may advertise its private
    addresses, but these might point to different hosts in the receiver's
    network.  The MP_JOIN handshake (Section 3.2.2) is designed to ensure
@@ -2394,13 +2401,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    implementations should consider heuristics at both the sender and
    receiver to reduce the impact of this.
 
-   As described in Section 3.9, a Maximum Packet Size (MPS) is
-   maintained for a MP-DCCP connection.  If MP-DCCP exposes a minimum
-   MPS across all paths, any change to one path impacts the sender for
-   all paths.  To mitigate attacks that seek to force a low MPS, MP-DCCP
-   could detect an attempt to reduce the MPS less than a minimum MPS,
-   and then stop using these paths.
-
 
 
 
@@ -2409,6 +2409,13 @@ Amend, et al.             Expires 21 July 2025                 [Page 43]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   As described in Section 3.9, a Maximum Packet Size (MPS) is
+   maintained for a MP-DCCP connection.  If MP-DCCP exposes a minimum
+   MPS across all paths, any change to one path impacts the sender for
+   all paths.  To mitigate attacks that seek to force a low MPS, MP-DCCP
+   could detect an attempt to reduce the MPS less than a minimum MPS,
+   and then stop using these paths.
 
 5.  Interactions with Middleboxes
 
@@ -2450,6 +2457,15 @@ Internet-Draft               Multipath DCCP                 January 2025
    Mohamed Boucadair, Simone Ferlin, Olivier Bonaventure, Gorry
    Fairhurst and Behcet Sarikaya.
 
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 44]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
 8.  IANA Considerations
 
    This section provides guidance to the Internet Assigned Numbers
@@ -2458,13 +2474,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    document defines one new value which is requested to be allocated in
    the IANA DCCP Feature Numbers registry and three new registries to be
    allocated in the DCCP registry group.
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 44]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    This document requests IANA to assign a new DCCP feature parameter
    for negotiating the support of multipath capability for DCCP sessions
@@ -2506,6 +2515,13 @@ Internet-Draft               Multipath DCCP                 January 2025
    Future MP-DCCP versions 1 to 15 are assigned from this registry using
    the Specification Required policy (Section 4.6 of [RFC8126]).
 
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 45]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    This document requests IANA to assign value 46 in the DCCP "Option
    Types" registry to "Multipath Options", as described in Section 3.2.
 
@@ -2513,14 +2529,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    the DCCP registry group.  The following entries in Table 8 should be
    added to the new 'Multipath Options' registry.  The registry in
    Table 8 has an upper boundary of 255 in the numeric value field.
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 45]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
       +===========+===============+=====================+===========+
       | Multipath |      Name     |     Description     | Reference |
@@ -2562,14 +2570,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       |  MP_OPT=9 |    MP_PRIO    |    Change subflow   |  Section  |
       |           |               |       priority      |   3.2.10  |
       +-----------+---------------+---------------------+-----------+
-      | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
-      |           |               |       subflow       |   3.2.11  |
-      +-----------+---------------+---------------------+-----------+
-      | MP_OPT=11 |     MP_EXP    |     Experimental    |  Section  |
-      |           |               |    suboption for    |   3.2.12  |
-      |           |               |     private use     |           |
-      +-----------+---------------+---------------------+-----------+
-      | MP_OPT>11 |   Unassigned  | Reserved for future |           |
 
 
 
@@ -2578,6 +2578,14 @@ Amend, et al.             Expires 21 July 2025                 [Page 46]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+      | MP_OPT=10 |    MP_CLOSE   |    Close MP-DCCP    |  Section  |
+      |           |               |       subflow       |   3.2.11  |
+      +-----------+---------------+---------------------+-----------+
+      | MP_OPT=11 |     MP_EXP    |     Experimental    |  Section  |
+      |           |               |    suboption for    |   3.2.12  |
+      |           |               |     private use     |           |
+      +-----------+---------------+---------------------+-----------+
+      | MP_OPT>11 |   Unassigned  | Reserved for future |           |
       |           |               |  Multipath Options  |           |
       +-----------+---------------+---------------------+-----------+
 
@@ -2619,20 +2627,16 @@ Internet-Draft               Multipath DCCP                 January 2025
        Table 9: Multipath Key Type registry with the MP_KEY Key Types
                   for key data exchange on different paths
 
-9.  References
-
-9.1.  Normative References
-
-
-
-
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 47]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+9.  References
+
+9.1.  Normative References
 
    [DCCP.Parameter]
               "IANA Datagram Congestion Control Protocol (DCCP)
@@ -2676,10 +2680,6 @@ Internet-Draft               Multipath DCCP                 January 2025
               amend-iccrg-multipath-reordering-03, 25 October 2021,
               <https://datatracker.ietf.org/doc/html/draft-amend-iccrg-
               multipath-reordering-03>.
-
-
-
-
 
 
 
