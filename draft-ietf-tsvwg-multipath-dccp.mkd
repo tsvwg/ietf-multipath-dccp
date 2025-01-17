@@ -645,7 +645,7 @@ receiver no longer have them in use.
 
 The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
 Together with the derived key from the both hosts Connection Identifier described in {{MP_KEY}}, the Nonce value builds the basis to calculate the
-HMAC used in the handshaking process as described in {{handshaking}}.
+HMAC used in the handshaking process as described in {{handshaking}} to avoid replay attacks.
 
 If the CI cannot be verified by the receiving host during a handshake negotiation, 
 the new subflow MUST be closed, as specified in {{fallback}}.
