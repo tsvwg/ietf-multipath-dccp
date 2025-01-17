@@ -2416,8 +2416,8 @@ subsequent subflow in <a href="#handshaking" class="auto internal xref">Section 
 the HMAC code is generated according to <span>[<a href="#RFC2104" class="cite xref">RFC2104</a>]</span> in combination
 with the SHA256 hash algorithm described in <span>[<a href="#RFC6234" class="cite xref">RFC6234</a>]</span>, with the
 output truncated to the leftmost 160 bits (20 bytes).<a href="#section-3.2.6-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.6-3">The "Key" used for the HMAC computation is the derived key (d-key)
-described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR is a concatenation of:<a href="#section-3.2.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-3">The "Key" used for the HMAC computation is the derived key (d-keyA for Host A or d-KeyB for Host B)
+described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR must be calculated in both hosts in order to protect on the one hand and validate on the other, and is a concatenation of:<a href="#section-3.2.6-3" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.6-4.1">
               <p id="section-3.2.6-4.1.1">for MP_JOIN: The nonces of the MP_JOIN messages for which authentication
