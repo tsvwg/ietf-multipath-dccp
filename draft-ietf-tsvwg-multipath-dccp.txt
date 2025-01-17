@@ -85,8 +85,8 @@ Table of Contents
      1.1.  Multipath DCCP in the Networking Stack  . . . . . . . . .   4
      1.2.  Terminology . . . . . . . . . . . . . . . . . . . . . . .   5
      1.3.  Requirements Language . . . . . . . . . . . . . . . . . .   5
-   2.  Operation Overview  . . . . . . . . . . . . . . . . . . . . .   5
-     2.1.  MP-DCCP Concept . . . . . . . . . . . . . . . . . . . . .   6
+   2.  Operation Overview  . . . . . . . . . . . . . . . . . . . . .   6
+     2.1.  MP-DCCP Concept . . . . . . . . . . . . . . . . . . . . .   7
    3.  MP-DCCP Protocol  . . . . . . . . . . . . . . . . . . . . . .   8
      3.1.  Multipath Capable Feature . . . . . . . . . . . . . . . .   9
      3.2.  Multipath Option  . . . . . . . . . . . . . . . . . . . .  11
@@ -233,8 +233,16 @@ Internet-Draft               Multipath DCCP                 January 2025
    [RFC8684], as follows:
 
    Path: A sequence of links between a sender and a receiver, defined in
-   this context by a 4-tuple of source and destination address/port
-   pairs.
+   this context by a 4-tuple of source and destination address and the
+   source and destination ports.  This is illustrated in the following
+   two examples for IPv6 and IPv4, which each show a pair of sender IP-
+   address:port and a pair of receiver IP-address:port, which together
+   form the 4-tuple:
+
+   *  IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234,
+      [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321
+
+   *  IPv4: 203.0.113.1:1234, 203.0.113.2:4321
 
    Subflow: A subflow refers to a DCCP flow transmitted using a specific
    path (4-tuple of source and destination address/port pairs) that
@@ -264,6 +272,16 @@ Internet-Draft               Multipath DCCP                 January 2025
    14 [RFC2119] [RFC8174] when, and only when, they appear in all
    capitals, as shown here.
 
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                  [Page 5]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
 2.  Operation Overview
 
    DCCP transmits congestion-controlled unreliable datagrams over a
@@ -273,14 +291,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    denoted by a Congestion Control IDentifier (CCID).  However, DCCP
    does not provide built-in support for managing multiple subflows
    within one DCCP connection.
-
-
-
-
-Amend, et al.             Expires 21 July 2025                  [Page 5]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    The extension of DCCP for Multipath-DCCP (MP-DCCP) is described in
    detail in Section 3.
@@ -320,16 +330,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
    The following sections define MP-DCCP behavior in detail.
 
-2.1.  MP-DCCP Concept
-
-   Figure 2 provides a general overview of the MP-DCCP working mode,
-   whose main characteristics are summarized in this section.
-
-
-
-
-
-
 
 
 
@@ -337,6 +337,11 @@ Amend, et al.             Expires 21 July 2025                  [Page 6]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+2.1.  MP-DCCP Concept
+
+   Figure 2 provides a general overview of the MP-DCCP working mode,
+   whose main characteristics are summarized in this section.
 
               Host A                               Host B
    ------------------------             ------------------------
@@ -381,11 +386,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       addresses/ports at hosts.  Combinations of these multiple
       addresses/ports indicate the additional paths.  In the example,
       other potential paths that could be set up are A1<->B2 and
-      A2<->B2.  Although the additional subflow in the example is shown
-      as being initiated from A2, an additional subflow could
-      alternatively have been initiated from B1 or B2.
-
-
 
 
 
@@ -393,6 +393,10 @@ Amend, et al.             Expires 21 July 2025                  [Page 7]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+      A2<->B2.  Although the additional subflow in the example is shown
+      as being initiated from A2, an additional subflow could
+      alternatively have been initiated from B1 or B2.
 
    *  The discovery and setup of additional subflows is achieved through
       a path management method including the logic and details of the
@@ -438,10 +442,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
                          Table 1: Multipath feature
 
-   Rec'n Rule:  The reconciliation rule used for the feature.  SP
-      indicates the server-priority.
-
-   Initial Value:  The initial value for the feature.  Every feature has
 
 
 
@@ -450,6 +450,10 @@ Amend, et al.             Expires 21 July 2025                  [Page 8]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+   Rec'n Rule:  The reconciliation rule used for the feature.  SP
+      indicates the server-priority.
+
+   Initial Value:  The initial value for the feature.  Every feature has
       a known initial value.
 
    Req'd:  This column is "Y" if and only if every DCCP implementation
@@ -491,12 +495,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    and MUST be set to zero by the sender and MUST be ignored by the
    receiver.
 
-       0  1  2  3   4  5  6  7
-      +-----------+------------+
-      |  Version  | Unassigned |
-      +-----------+------------+
 
-       Figure 3: Format of the Multipath Capable feature value field
+
 
 
 
@@ -505,6 +505,13 @@ Amend, et al.             Expires 21 July 2025                  [Page 9]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+       0  1  2  3   4  5  6  7
+      +-----------+------------+
+      |  Version  | Unassigned |
+      +-----------+------------+
+
+       Figure 3: Format of the Multipath Capable feature value field
 
    The setting of the MP_CAPABLE feature MUST follow the server-priority
    reconciliation rule described in ([RFC4340], Section 6.3.1).  This
@@ -548,19 +555,19 @@ Internet-Draft               Multipath DCCP                 January 2025
    1.  The Client indicates support for both MP-DCCP versions 1 and 0,
        with a preference for version 1.
 
-   2.  Server agrees on using MP-DCCP version 1 indicated by the first
-       value, and supplies its own preference list with the following
-       values.
-
-   3.  MP-DCCP is then enabled between the Client and Server with
-       version 1.
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 10]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   2.  Server agrees on using MP-DCCP version 1 indicated by the first
+       value, and supplies its own preference list with the following
+       values.
+
+   3.  MP-DCCP is then enabled between the Client and Server with
+       version 1.
 
    Unlike the example in Figure 4, this document only allows the
    negotiation of MP-DCCP version 0.  Therefore, successful negotiation
@@ -590,13 +597,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
    The fields used by the multipath option are described in Table 3.
    MP_OPT refers to an Multipath option.
-
-
-
-
-
-
-
 
 
 

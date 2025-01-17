@@ -1563,18 +1563,26 @@ changes to the application itself.<a href="#section-1.1-1" class="pilcrow">¶</a
 for multipath transport or are defined in the context of MP-DCCP,
 similar to <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>, as follows:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Path: A sequence of links between a sender and a receiver, defined in
-this context by a 4-tuple of source and destination address/port pairs.<a href="#section-1.2-2" class="pilcrow">¶</a></p>
-<p id="section-1.2-3">Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
-pairs) that forms one of the multipath flows used by a single connection.<a href="#section-1.2-3" class="pilcrow">¶</a></p>
-<p id="section-1.2-4">(MP-DCCP) Connection: A set of one or more subflows, over which an
+this context by a 4-tuple of source and destination address and the source and destination ports. This is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+<ul class="normal">
+<li class="normal" id="section-1.2-3.1">
+            <p id="section-1.2-3.1.1">IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234, [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321<a href="#section-1.2-3.1.1" class="pilcrow">¶</a></p>
+</li>
+          <li class="normal" id="section-1.2-3.2">
+            <p id="section-1.2-3.2.1">IPv4: 203.0.113.1:1234, 203.0.113.2:4321<a href="#section-1.2-3.2.1" class="pilcrow">¶</a></p>
+</li>
+        </ul>
+<p id="section-1.2-4">Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
+pairs) that forms one of the multipath flows used by a single connection.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
+<p id="section-1.2-5">(MP-DCCP) Connection: A set of one or more subflows, over which an
 application can communicate between two hosts. The MP-DCCP connection is
-exposed as single DCCP socket to the application.<a href="#section-1.2-4" class="pilcrow">¶</a></p>
-<p id="section-1.2-5">Connection Identifier (CI): A unique identifier that is assigned to a multipath connection by the host to distinguish several multipath connections locally. The CIs must therefore be locally unique per host and do not have to be the same across the peers.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
-<p id="section-1.2-6">Host: An end host operating an MP-DCCP implementation, and either
-initiating or accepting an MP-DCCP connection.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
-<p id="section-1.2-7">In addition to these
+exposed as single DCCP socket to the application.<a href="#section-1.2-5" class="pilcrow">¶</a></p>
+<p id="section-1.2-6">Connection Identifier (CI): A unique identifier that is assigned to a multipath connection by the host to distinguish several multipath connections locally. The CIs must therefore be locally unique per host and do not have to be the same across the peers.<a href="#section-1.2-6" class="pilcrow">¶</a></p>
+<p id="section-1.2-7">Host: An end host operating an MP-DCCP implementation, and either
+initiating or accepting an MP-DCCP connection.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+<p id="section-1.2-8">In addition to these
 terms, within the framework of MP-DCCP, the interpretation of, and effect on,
-regular single-path DCCP semantics is discussed in <a href="#protocol" class="auto internal xref">Section 3</a>.<a href="#section-1.2-7" class="pilcrow">¶</a></p>
+regular single-path DCCP semantics is discussed in <a href="#protocol" class="auto internal xref">Section 3</a>.<a href="#section-1.2-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="requirements-language">
