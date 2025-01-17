@@ -1064,6 +1064,11 @@ added address with an Address ID from a connection
 using the Remove Address (MP_REMOVEADDR) suboption. This
 will terminate any subflows currently using that address.
 
+MP_REMOVEADDR is only used to close already established subflows that
+have an invalid address. Functional flows with a valid address MUST be
+closed with a DCCP Close exchange (as with regular DCCP) instead of
+using MP_REMOVEADDR. For more information see {{closing}}.
+
 Along with the MP_REMOVEADDR suboption a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
@@ -1082,7 +1087,7 @@ intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it MUST silently ignore the option.
 
 A receiver MUST include a MP_SEQ {{MP_SEQ}} in a DCCP datagram that sends
-an  MP_REMOVEADDR. Further details are given in {{MP_CONFIRM}}.
+an MP_REMOVEADDR. Further details are given in {{MP_CONFIRM}}.
 
 The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 ({{MP_CONFIRM}}). This ensures reliable exchange of address
@@ -1109,10 +1114,6 @@ at the requested Address ID, the receiver will silently ignore the request.
 -> followed by MP_HMAC option
 ~~~~
 {: #refMP_REMOVEADDR title='Format of the MP_REMOVEADDR suboption'}
- 
-A subflow that is still functioning MUST be closed with a DCCP-Close
-exchange as in regular DCCP, rather than using this option. For more
-information, see {{closing}}.
 
 
 ### MP_PRIO {#MP_PRIO}
