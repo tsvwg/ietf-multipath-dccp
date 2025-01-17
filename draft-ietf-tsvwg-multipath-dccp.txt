@@ -1385,15 +1385,15 @@ Internet-Draft               Multipath DCCP               September 2024
    the Remove Address (MP_REMOVEADDR) suboption.  This will terminate
    any subflows currently using that address.
 
+   MP_REMOVEADDR is only used to close already established subflows that
+   have an invalid address.  Functional flows with a valid address MUST
+   be closed with a DCCP Close exchange (as with regular DCCP) instead
+   of using MP_REMOVEADDR.  For more information see Section 3.5.
+
    Along with the MP_REMOVEADDR suboption a MP_HMAC option MUST be sent
    for authentication.  The truncated HMAC parameter present in this
    MP_HMAC option is the leftmost 20 bytes of an HMAC, negotiated and
    calculated as described in Section 3.2.6.  In the same way as for
-   MP_JOIN, the key for the HMAC algorithm, in the case of the message
-   transmitted by Host A, will be Key-A followed by Key-B, and in the
-   case of Host B, Key-B followed by Key-A.  These are the keys that
-   were exchanged and selected in the original MP_KEY handshake.  The
-   message for the HMAC is the Address ID.
 
 
 
@@ -1401,6 +1401,12 @@ Amend, et al.             Expires 29 March 2025                [Page 25]
 
 Internet-Draft               Multipath DCCP               September 2024
 
+
+   MP_JOIN, the key for the HMAC algorithm, in the case of the message
+   transmitted by Host A, will be Key-A followed by Key-B, and in the
+   case of Host B, Key-B followed by Key-A.  These are the keys that
+   were exchanged and selected in the original MP_KEY handshake.  The
+   message for the HMAC is the Address ID.
 
    The rationale for using a HMAC is to prevent unauthorized entities
    from injecting MP_REMOVEADDR signals in an attempt to hijack a
@@ -1439,12 +1445,6 @@ Internet-Draft               Multipath DCCP               September 2024
    -> followed by MP_HMAC option
 
               Figure 17: Format of the MP_REMOVEADDR suboption
-
-   A subflow that is still functioning MUST be closed with a DCCP-Close
-   exchange as in regular DCCP, rather than using this option.  For more
-   information, see Section 3.5.
-
-
 
 
 
