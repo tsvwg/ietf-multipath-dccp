@@ -2256,8 +2256,8 @@ Host B MUST then tear down all subflows and terminate the MP-DCCP connection.<a 
 <p id="section-3.2.4-2">The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key material between
 hosts (host A, host B) for a given connection.
 The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
-According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 Bytes for a single-key message, and up to
-115 Bytes when all specified Key Types 0-2 are provided. The Key Type field 
+According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 bytes for a single-key message, and up to
+115 bytes when all specified Key Types 0-2 are provided. The Key Type field 
 specifies the type of the following key data. 
 The set of key types are shown in <a href="#ref-key-type-list" class="auto internal xref">Table 5</a>.<a href="#section-3.2.4-2" class="pilcrow">¶</a></p>
 <span id="name-mp_key-key-types"></span><div id="ref-key-type-list">
@@ -2269,7 +2269,7 @@ The set of key types are shown in <a href="#ref-key-type-list" class="auto inter
 <thead>
               <tr>
                 <th class="text-left" rowspan="1" colspan="1">Key  Type</th>
-                <th class="text-left" rowspan="1" colspan="1">Key Length (Bytes)</th>
+                <th class="text-left" rowspan="1" colspan="1">Key Length (bytes)</th>
                 <th class="text-left" rowspan="1" colspan="1">Meaning</th>
               </tr>
             </thead>
@@ -2439,7 +2439,7 @@ described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, whi
 <ul class="normal">
 <li class="normal" id="section-3.2.6-6.1">
               <p id="section-3.2.6-6.1.1">for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
-   otherwise two octets of value 0. IP address and port MUST be used in network byte
+   otherwise two bytes of value 0. IP address and port MUST be used in network byte
    order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:<a href="#section-3.2.6-6.1.1" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -2597,7 +2597,7 @@ used. This field is in range between 12 and 26 bytes.<a href="#section-3.2.8-2" 
 <p id="section-3.2.8-3">The Nonce is a 32-bit random value that is generated locally for
 each MP_ADDADDR option and is used in the HMAC calculation process
 to prevent replay attacks.<a href="#section-3.2.8-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-4">The final 2 octets, optionally specify the DCCP port number to
+<p id="section-3.2.8-4">The final 2 bytes, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
@@ -2617,7 +2617,7 @@ d-KeyB.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
 the Address ID, Nonce, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
-the HMAC message will include 2 octets of value zero.
+the HMAC message will include 2 bytes of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
 injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
@@ -2945,7 +2945,7 @@ feature number 11 is specified with an exemplary description as below:<a href="#
 <a href="#name-format-of-the-mp_exp-subopt" class="selfRef">Format of the MP_EXP suboption</a>
             </figcaption></figure>
 </div>
-<p id="section-3.2.12-3">The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 Bytes.<a href="#section-3.2.12-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.12-3">The Data field can carry any data according to the foreseen use by the experimenters with a maximum length of 252 bytes.<a href="#section-3.2.12-3" class="pilcrow">¶</a></p>
 </section>
 </div>
 </section>
@@ -3071,7 +3071,7 @@ shown in the example in <a href="#ref-mp-dccp-add-address" class="auto internal 
               <p id="section-3.4.1-2.3.1">the IP address of the new path (A2_IP)<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.4.1-2.4">
-              <p id="section-3.4.1-2.4.1">A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
+              <p id="section-3.4.1-2.4.1">A pair of bytes specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
 as that used for the initial subflow address A1_IP<a href="#section-3.4.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
@@ -3577,7 +3577,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
           <p id="section-8-4.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-8-5">Sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-Byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-5" class="pilcrow">¶</a></p>
+<p id="section-8-5">Sect. <a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-5" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-versions-registry"></span><div id="ref-add-version-list">
 <table class="center" id="table-7">
         <caption>
