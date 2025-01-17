@@ -92,7 +92,7 @@ Table of Contents
      3.2.  Multipath Option  . . . . . . . . . . . . . . . . . . . .  11
        3.2.1.  MP_CONFIRM  . . . . . . . . . . . . . . . . . . . . .  12
        3.2.2.  MP_JOIN . . . . . . . . . . . . . . . . . . . . . . .  15
-       3.2.3.  MP_FAST_CLOSE . . . . . . . . . . . . . . . . . . . .  16
+       3.2.3.  MP_FAST_CLOSE . . . . . . . . . . . . . . . . . . . .  17
        3.2.4.  MP_KEY  . . . . . . . . . . . . . . . . . . . . . . .  17
        3.2.5.  MP_SEQ  . . . . . . . . . . . . . . . . . . . . . . .  19
        3.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  20
@@ -873,14 +873,30 @@ Internet-Draft               Multipath DCCP                 January 2025
    can only be re-assigned if sender and receiver no longer have them in
    use.
 
-   The Nonce is a 32-bit random value that is generated locally each
-   time a MP_JOIN request is created.  Together with the CI, the Nonce
-   value builds the basis to calculate the HMAC used in the handshaking
+   The Nonce is a 32-bit random value locally generated for every
+   MP_JOIN option.  Together with the derived key from the both hosts
+   Connection Identifier described in Section 3.2.4, the Nonce value
+   builds the basis to calculate the HMAC used in the handshaking
    process as described in Section 3.3 to avoid replay attacks.
 
    If the CI cannot be verified by the receiving host during a handshake
    negotiation, the new subflow MUST be closed, as specified in
    Section 3.6.
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 16]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
 
 3.2.3.  MP_FAST_CLOSE
 
@@ -890,13 +906,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    close the subflow and does not affect other remaining subflows or the
    MP-DCCP connection (unless it is the last subflow).  This permits
    break-before-make handover between subflows.
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 16]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    In order to provide an MP-DCCP-level "reset" and thus allow the
    abrupt closure of the MP-DCCP connection, the MP_FAST_CLOSE suboption
@@ -933,6 +942,18 @@ Internet-Draft               Multipath DCCP                 January 2025
 
 3.2.4.  MP_KEY
 
+
+
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 17]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
                           1                   2                   3
       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
      +---------------+---------------+---------------+---------------+
@@ -945,14 +966,6 @@ Internet-Draft               Multipath DCCP                 January 2025
      |  Key Type (3) | ...
      +---------------+---------------+
          Type=46          Length         MP_OPT=3
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 17]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
                  Figure 11: Format of the MP_KEY suboption
 
@@ -986,6 +999,17 @@ Internet-Draft               Multipath DCCP                 January 2025
                          Table 5: MP_KEY key types
 
    Plain Text
+
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 18]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
       Key Material is exchanged in plain text between hosts, and the key
       parts (key-a, key-b) are used by each host to generate the derived
       key (d-key) by concatenating the two parts with the local key in
@@ -1002,14 +1026,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       issued by a certificate authority.
 
    ECDHE-SHA512-C25519
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 18]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
-
       Public Key Material is exchanged via ECDHE key exchange with
       SHA512 and Curve 25519 to generate the derived key (d-key) from
       the shared secret.
@@ -1043,28 +1059,16 @@ Internet-Draft               Multipath DCCP                 January 2025
    zero, but at a random value to make blind session hijacking more
    difficult, see also section 7.2 in [RFC4340].
 
-   The MP_SEQ number space is independent from the path individual
-   sequence number space and MUST be sent with all DCCP-Data and DCCP-
-   DataACK packets.
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 19]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   The MP_SEQ number space is independent from the path individual
+   sequence number space and MUST be sent with all DCCP-Data and DCCP-
+   DataACK packets.
 
    When the sequence number space is exhausted, the sequence number MUST
    be wrapped.  [RFC7323] provides guidance on selecting an
@@ -1110,10 +1114,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=RB+RA) An usage example
       is shown in Figure 21.
 
-   *  for MP_ADDADDR: The Address ID with associated IP address and if
-      defined port, otherwise two octets of value 0.  IP address and
-      port MUST be used in network byte order (NBO).  Depending on
-      whether Host A or Host B performs the HMAC-SHA256 calculation, it
 
 
 
@@ -1122,6 +1122,10 @@ Amend, et al.             Expires 21 July 2025                 [Page 20]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+   *  for MP_ADDADDR: The Address ID with associated IP address and if
+      defined port, otherwise two octets of value 0.  IP address and
+      port MUST be used in network byte order (NBO).  Depending on
+      whether Host A or Host B performs the HMAC-SHA256 calculation, it
       is carried out as follows: MP_HMAC(A) = HMAC-SHA256(Key=d-key(A),
       Msg=Address ID+NBO(IP)+NBO(Port)) MP_HMAC(B) = HMAC-
       SHA256(Key=d-key(B), Msg=Address ID+NBO(IP)+NBO(Port))
@@ -1167,16 +1171,14 @@ Internet-Draft               Multipath DCCP                 January 2025
      +--------+--------+--------+--------+--------+
       Type=46  Length=12 MP_OPT=6
 
-                 Figure 14: Format of the MP_RTT suboption
-
-
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 21]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+                 Figure 14: Format of the MP_RTT suboption
 
    The MP_RTT suboption is used to transmit RTT values and age
    (represented in milliseconds) that belong to the path over which this
@@ -1224,8 +1226,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    directions and there is no jitter, packets with missing sequence
    number MP_SEQ, e.g., in a reordering process, can be assumed lost
    after path_delta/2.
-
-
 
 
 
