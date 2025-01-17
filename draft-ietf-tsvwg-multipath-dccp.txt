@@ -98,7 +98,7 @@ Table of Contents
        3.2.6.  MP_HMAC . . . . . . . . . . . . . . . . . . . . . . .  20
        3.2.7.  MP_RTT  . . . . . . . . . . . . . . . . . . . . . . .  22
        3.2.8.  MP_ADDADDR  . . . . . . . . . . . . . . . . . . . . .  23
-       3.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  26
+       3.2.9.  MP_REMOVEADDR . . . . . . . . . . . . . . . . . . . .  27
        3.2.10. MP_PRIO . . . . . . . . . . . . . . . . . . . . . . .  28
        3.2.11. MP_CLOSE  . . . . . . . . . . . . . . . . . . . . . .  30
        3.2.12. Experimental Multipath option MP_EXP for private
@@ -1377,19 +1377,19 @@ Internet-Draft               Multipath DCCP                 January 2025
    pair).  In this way, there is a stored mapping between the Address
    ID, the observed source address, and the CI pair for future
    processing of control information for a connection.  Note that an
-   implementation MAY discard incoming address advertisements - for
-   example, to avoid the required mapping state, or because advertised
-   addresses are of no use to it (for example, IPv6 addresses when it
-   has IPv4 only).  Therefore, a host MUST treat address advertisements
-   as soft state, and the sender MAY choose to refresh advertisements
-   periodically.
+   implementation MAY discard incoming address advertisements.  Reasons
+   for this are for example:
 
-   A host MAY advertise private addresses, e.g., because there is a NAT
-   on the path.  It is desirable to allow this, since there could be
-   cases where both hosts have additional interfaces on the same private
-   network.  The advertisement of broadcast or multicast IP addresses
-   MUST be ignored by the recipient of this option, as it is not
-   permitted according to the unicast principle of the basic DCCP.
+   *  to avoid the required mapping state, or
+
+   *  because advertised addresses are of no use to it.
+
+   Possible scenarios in which this applies are the lack of resources to
+   store a mapping or when IPv6 addresses are advertised even though the
+   host only supports IPv4.  Therefore, a host MUST treat address
+   announcements as soft state.  However, a sender MAY choose to update
+   the announcements periodically to overcome temporary limitations.
+
 
 
 
@@ -1401,6 +1401,13 @@ Amend, et al.             Expires 21 July 2025                 [Page 25]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   A host MAY advertise private addresses, e.g., because there is a NAT
+   on the path.  It is desirable to allow this, since there could be
+   cases where both hosts have additional interfaces on the same private
+   network.  The advertisement of broadcast or multicast IP addresses
+   MUST be ignored by the recipient of this option, as it is not
+   permitted according to the unicast principle of the basic DCCP.
 
    The MP_JOIN handshake to create a new subflow (Section 3.2.2)
    provides mechanisms to minimize security risks.  The MP_JOIN message
@@ -1438,14 +1445,7 @@ Internet-Draft               Multipath DCCP                 January 2025
    assigned to this Address ID.  A host wishing to replace an existing
    Address ID MUST first remove the existing one (Section 3.2.9).
 
-3.2.9.  MP_REMOVEADDR
 
-   If, during the lifetime of an MP-DCCP connection, a previously
-   announced address becomes invalid (e.g., if an interface disappears),
-   the affected host SHOULD announce this.  The peer can remove a
-   previously added address with an Address ID from a connection using
-   the Remove Address (MP_REMOVEADDR) suboption.  This will terminate
-   any subflows currently using that address.
 
 
 
@@ -1457,6 +1457,15 @@ Amend, et al.             Expires 21 July 2025                 [Page 26]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+3.2.9.  MP_REMOVEADDR
+
+   If, during the lifetime of an MP-DCCP connection, a previously
+   announced address becomes invalid (e.g., if an interface disappears),
+   the affected host SHOULD announce this.  The peer can remove a
+   previously added address with an Address ID from a connection using
+   the Remove Address (MP_REMOVEADDR) suboption.  This will terminate
+   any subflows currently using that address.
 
    MP_REMOVEADDR is only used to close already established subflows that
    have an invalid address.  Functional flows with a valid address MUST
@@ -1494,15 +1503,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    address information.  To avoid inconsistent states, the sender
    releases the address ID only after MP_REMOVEADDR has been confirmed.
 
-   The sending and receiving of this message SHOULD trigger the closing
-   procedure described in [RFC4340] between the client and the server,
-   respectively on the affected subflow(s) (if possible).  This helps
-   remove middlebox state, before removing any local state.
-
-   Address removal is done by Address ID to allow the use of NATs and
-   other middleboxes that rewrite source addresses.  If there is no
-   address at the requested Address ID, the receiver will silently
-   ignore the request.
 
 
 
@@ -1513,6 +1513,16 @@ Amend, et al.             Expires 21 July 2025                 [Page 27]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   The sending and receiving of this message SHOULD trigger the closing
+   procedure described in [RFC4340] between the client and the server,
+   respectively on the affected subflow(s) (if possible).  This helps
+   remove middlebox state, before removing any local state.
+
+   Address removal is done by Address ID to allow the use of NATs and
+   other middleboxes that rewrite source addresses.  If there is no
+   address at the requested Address ID, the receiver will silently
+   ignore the request.
 
                         1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
@@ -1553,6 +1563,13 @@ Internet-Draft               Multipath DCCP                 January 2025
 
                  Figure 18: Format of the MP_PRIO suboption
 
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 28]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    The following values are available for the Prio field:
 
    *  0: Do not use.  The path is not available.
@@ -1561,14 +1578,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       another path (secondary or primary) is available.  The path will
       only be used if other secondary or primary paths are not
       established.
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 28]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    *  2: Secondary: do not use this path for traffic scheduling, if the
       other paths are good enough.  The path will be used occasionally
@@ -1599,17 +1608,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    Primary.  In this case, both paths can be used when making packet
    scheduling decisions.
 
-   If not specified, the default behavior is to always use a path for
-   packet scheduling decisions (MP_PRIO=3), when the path has been
-   established and added to an existing MP-DCCP connection.  At least
-   one path ought to have a MP_PRIO value greater or equal to one for it
-   to be allowed to send on the connection.  It is RECOMMENDED to update
-   at least one path to a non-zero MP_PRIO value when an MP-DCCP
-   connection enters a state where all paths remain with an MP_PRIO
-   value of zero.  This helps an MP-DCCP connection to schedule when the
-   multipath scheduler strictly respects MP_PRIO value 0.  MP_PRIO MUST
-   be acknowledged via MP_CONFIRM (see Table 4) to ensure reliable
-   transmission.
+
+
 
 
 
@@ -1625,6 +1625,18 @@ Amend, et al.             Expires 21 July 2025                 [Page 29]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   If not specified, the default behavior is to always use a path for
+   packet scheduling decisions (MP_PRIO=3), when the path has been
+   established and added to an existing MP-DCCP connection.  At least
+   one path ought to have a MP_PRIO value greater or equal to one for it
+   to be allowed to send on the connection.  It is RECOMMENDED to update
+   at least one path to a non-zero MP_PRIO value when an MP-DCCP
+   connection enters a state where all paths remain with an MP_PRIO
+   value of zero.  This helps an MP-DCCP connection to schedule when the
+   multipath scheduler strictly respects MP_PRIO value 0.  MP_PRIO MUST
+   be acknowledged via MP_CONFIRM (see Table 4) to ensure reliable
+   transmission.
 
    The relative ratio of the primary path values 3-15 depends on the
    path usage strategy, which is described in more detail in
@@ -1663,6 +1675,13 @@ Internet-Draft               Multipath DCCP                 January 2025
    host.  Note, the Key Data is different between MP_CLOSE option
    carried by DCCP-CloseReq or DCCP-Close.
 
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 30]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    On reception of the first DCCP-CloseReq carrying a MP_CLOSE with
    valid Key Data, or due to a local decision, all subflows transition
    to the CLOSING state before transmitting a DCCP-Close carrying
@@ -1670,17 +1689,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    DCCP-Close reflects the state of the initial subflow during handshake
    with MP_KEY option.  If the initial subflow no longer exists, the
    state moves immediately to CLOSED.
-
-
-
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 30]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid
    Key Data at the peer host, all subflows, as well as the MP-DCCP
@@ -1721,14 +1729,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
    An example to illustrate the MP-DCCP handshake procedure is shown in
    Figure 21.
-
-
-
-
-
-
-
-
 
 
 
