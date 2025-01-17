@@ -1026,7 +1026,8 @@ Internet-Draft               Multipath DCCP                 January 2025
       when it is combined with peer authentication technologies to
       protect against men-in-the-middle attacks.  This can be achieved,
       for example, with separate use and verification of certificates
-      issued by a certificate authority.
+      issued by a certification authority (CA) as described in
+      [RFC5280].
 
    ECDHE-SHA512-C25519
       Public Key Material is exchanged via ECDHE key exchange with
@@ -1055,7 +1056,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       Type=46  Length=9 MP_OPT=4
 
                  Figure 12: Format of the MP_SEQ suboption
-
 
 
 
@@ -2751,6 +2751,12 @@ Internet-Draft               Multipath DCCP                 January 2025
               RFC 5238, DOI 10.17487/RFC5238, May 2008,
               <https://www.rfc-editor.org/rfc/rfc5238>.
 
+   [RFC5280]  Cooper, D., Santesson, S., Farrell, S., Boeyen, S.,
+              Housley, R., and W. Polk, "Internet X.509 Public Key
+              Infrastructure Certificate and Certificate Revocation List
+              (CRL) Profile", RFC 5280, DOI 10.17487/RFC5280, May 2008,
+              <https://www.rfc-editor.org/rfc/rfc5280>.
+
    [RFC5596]  Fairhurst, G., "Datagram Congestion Control Protocol
               (DCCP) Simultaneous-Open Technique to Facilitate NAT/
               Middlebox Traversal", RFC 5596, DOI 10.17487/RFC5596,
@@ -2788,12 +2794,6 @@ Internet-Draft               Multipath DCCP                 January 2025
               RFC 7323, DOI 10.17487/RFC7323, September 2014,
               <https://www.rfc-editor.org/rfc/rfc7323>.
 
-   [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
-              Operational Experience with Multipath TCP", RFC 8041,
-              DOI 10.17487/RFC8041, January 2017,
-              <https://www.rfc-editor.org/rfc/rfc8041>.
-
-
 
 
 
@@ -2801,6 +2801,11 @@ Amend, et al.             Expires 21 July 2025                 [Page 50]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
+              Operational Experience with Multipath TCP", RFC 8041,
+              DOI 10.17487/RFC8041, January 2017,
+              <https://www.rfc-editor.org/rfc/rfc8041>.
 
    [RFC8684]  Ford, A., Raiciu, C., Handley, M., Bonaventure, O., and C.
               Paasch, "TCP Extensions for Multipath Operation with
@@ -2837,11 +2842,6 @@ Appendix A.  Differences from Multipath TCP
    be identified.  Both transport protocols share the 3-way initiation
    of a communication and both employ congestion control to adapt the
    sending rate to the path characteristics.
-
-
-
-
-
 
 
 
