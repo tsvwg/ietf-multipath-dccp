@@ -1037,10 +1037,11 @@ Internet-Draft               Multipath DCCP                 January 2025
    handshake procedure for the first subflow.  This allows the hosts to
    agree on a single key type to be used, as described in Section 3.3
 
-   It is possible that not all hosts will support all key types.  If the
-   key type cannot be agreed in the handshake procedure, the MP-DCCP
-   connection MUST fall back to not using MP-DCCP, as indicated in
-   Section 3.6.
+   It is possible that not all hosts will support all key types and this
+   specification does not recommend or enforce the use of any particular
+   Key Type as this could have security implications.  If the key type
+   cannot be agreed in the handshake procedure, the MP-DCCP connection
+   MUST fall back to not using MP-DCCP, as indicated in Section 3.6.
 
 3.2.5.  MP_SEQ
 
@@ -1055,9 +1056,8 @@ Internet-Draft               Multipath DCCP                 January 2025
 
                  Figure 12: Format of the MP_SEQ suboption
 
-   The MP_SEQ suboption is used for end-to-end 48-bit datagram-based
-   sequence numbers of an MP-DCCP connection.  The initial data sequence
-   number (IDSN) SHOULD be set randomly [RFC4086].  As with the standard
+
+
 
 
 
@@ -1066,6 +1066,9 @@ Amend, et al.             Expires 21 July 2025                 [Page 19]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+   The MP_SEQ suboption is used for end-to-end 48-bit datagram-based
+   sequence numbers of an MP-DCCP connection.  The initial data sequence
+   number (IDSN) SHOULD be set randomly [RFC4086].  As with the standard
    DCCP sequence number, the data sequence number should not start at
    zero, but at a random value to make blind session hijacking more
    difficult, see also section 7.2 in [RFC4340].
@@ -1110,9 +1113,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    The "Key" used for the HMAC computation is the derived key (d-key)
    described in Section 3.2.4, while the HMAC "Message" for MP_JOIN,
    MP_ADDADDR and MP_REMOVEADDR is a concatenation of:
-
-
-
 
 
 
