@@ -1950,7 +1950,7 @@ for version 1.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
-              <td class="text-left" rowspan="1" colspan="1">4</td>
+              <td class="text-left" rowspan="1" colspan="1">8</td>
               <td class="text-left" rowspan="1" colspan="1">8 =MP_REMOVEADDR</td>
               <td class="text-left" rowspan="1" colspan="1">Remove Address</td>
             </tr>
@@ -2417,19 +2417,19 @@ described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, whi
    An usage example is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 21</a>.<a href="#section-3.2.6-4.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.6-4.2">
-              <p id="section-3.2.6-4.2.1">for MP_ADDADDR: The Address ID with associated IP address and if defined port,
+              <p id="section-3.2.6-4.2.1">for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
    otherwise two octets of value 0. IP address and port MUST be used in network byte
    order (NBO). Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+NBO(IP)+NBO(Port))
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+NBO(IP)+NBO(Port))<a href="#section-3.2.6-4.2.1" class="pilcrow">¶</a></p>
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce+NBO(IP)+NBO(Port))<a href="#section-3.2.6-4.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.2.6-4.3">
               <p id="section-3.2.6-4.3.1">for MP_REMOVEADDR: Solely the Address ID.
    Depending on whether Host A or Host B performs the HMAC-SHA256 calculation,
    it is carried out as follows:
-   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID)
-   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID)<a href="#section-3.2.6-4.3.1" class="pilcrow">¶</a></p>
+   MP_HMAC(A) = HMAC-SHA256(Key=d-key(A), Msg=Address ID+Nonce)
+   MP_HMAC(B) = HMAC-SHA256(Key=d-key(B), Msg=Address ID+Nonce)<a href="#section-3.2.6-4.3.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.2.6-5">MP_JOIN, MP_ADDADDR and MP_REMOVEADDR can co-exist or be used multiple times
@@ -2560,8 +2560,11 @@ enable multiple paths and/or when additional paths become available.
 Multiple instances of this suboption within a packet 
 can simultaneously advertise new addresses.<a href="#section-3.2.8-1" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-2">The Length is variable depending on the address family (IPv4 or IPv6) and whether a port number is
-used. This field is in range between 8 and 22 bytes.<a href="#section-3.2.8-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-3">The final 2 octets, optionally specify the DCCP port number to
+used. This field is in range between 12 and 26 bytes.<a href="#section-3.2.8-2" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-3">The Nonce is a 32-bit random value that is generated locally for
+each MP_ADDADDR option and is used in the HMAC calculation process
+to prevent replay attacks.<a href="#section-3.2.8-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-4">The final 2 octets, optionally specify the DCCP port number to
 use, and their presence can be inferred from the length of the option.
 Although it is expected that the majority of use cases will use the
 same port pairs as used for the initial subflow (e.g., port 80
@@ -2570,8 +2573,8 @@ client), there could be cases (such as port-based load balancing) where
 the explicit specification of a different port is required.  If no
 port is specified, the receiving host MUST assume that any attempt to
 connect to the specified address uses the port already used by the
-subflow on which the MP_ADDADDR signal was sent.<a href="#section-3.2.8-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-4">Along with the MP_ADDADDR option an MP_HMAC option MUST be sent for
+subflow on which the MP_ADDADDR signal was sent.<a href="#section-3.2.8-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-5">Along with the MP_ADDADDR option an MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>. In the same way as for MP_JOIN,
@@ -2579,7 +2582,7 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID, IP address, and port number that precede the HMAC in the
+the Address ID, Nonce, IP address, and port number that precede the HMAC in the
 MP_ADDADDR option.  If the port number is not present in the MP_ADDADDR option,
 the HMAC message will include 2 octets of value zero.
 The rationale for the HMAC is to prevent unauthorized entities from
@@ -2587,18 +2590,20 @@ injecting MP_ADDADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
 address from being changed in flight unless the key is known by an
 intermediary.  If a host receives an MP_ADDADDR option for which it
-cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.8-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-5">The presence of an MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
-in which MP_ADDADDR is sent, as described in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.8-5" class="pilcrow">¶</a></p>
+cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.8-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-6">The presence of an MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> MUST be ensured in a DCCP datagram
+in which MP_ADDADDR is sent, as described in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.8-6" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_addaddr-su"></span><div id="ref-MP_ADDADDR">
 <figure id="figure-16">
-            <div class="alignLeft art-text artwork" id="section-3.2.8-6.1">
+            <div class="alignLeft art-text artwork" id="section-3.2.8-7.1">
 <pre>
                       1                   2                   3
   0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
   +---------------+---------------+-------+-------+---------------+
   |0 0 1 0 1 1 1 0|      var      |0 0 0 0 0 1 1 1|  Address ID   |
   +---------------+---------------+-------+-------+---------------+
+  |                             Nonce                             |
+  +-------------------------------+-------------------------------+
   |          Address (IPv4 - 4 bytes / IPv6 - 16 bytes)           |
   +-------------------------------+-------------------------------+
   |   Port (2 bytes, optional)    | + MP_HMAC option
@@ -2610,15 +2615,15 @@ in which MP_ADDADDR is sent, as described in <a href="#MP_CONFIRM" class="auto i
 <a href="#name-format-of-the-mp_addaddr-su" class="selfRef">Format of the MP_ADDADDR suboption</a>
             </figcaption></figure>
 </div>
-<p id="section-3.2.8-7">Each address has an Address ID that could be used for uniquely
+<p id="section-3.2.8-8">Each address has an Address ID that could be used for uniquely
 identifying the address within a connection for address removal.
 Each host maintains a list of unique Address IDs and it manages these as it wishes. The
 Address ID is also used to identify MP_JOIN options (see <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>)
 relating to the same address, even when address translators are in use.
 The Address ID MUST uniquely identify the address for the sender of the
 option (within the scope of the connection); the mechanism for
-allocating such IDs is implementation specific.<a href="#section-3.2.8-7" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-8">All Address IDs learned via either MP_JOIN or MP_ADDADDR can be stored
+allocating such IDs is implementation specific.<a href="#section-3.2.8-8" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-9">All Address IDs learned via either MP_JOIN or MP_ADDADDR can be stored
 by the receiver in a data structure that gathers all the
 Address-ID-to-address mappings for a connection (identified by a CI
 pair). In this way, there is a stored mapping between the Address ID,
@@ -2628,21 +2633,21 @@ MAY discard incoming address advertisements - for example, to
 avoid the required mapping state, or because advertised addresses
 are of no use to it (for example, IPv6 addresses when it has IPv4
 only).  Therefore, a host MUST treat address advertisements as soft
-state, and the sender MAY choose to refresh advertisements periodically.<a href="#section-3.2.8-8" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-9">A host
+state, and the sender MAY choose to refresh advertisements periodically.<a href="#section-3.2.8-9" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-10">A host
 MAY advertise private addresses, e.g., because there is a 
 NAT on the path.  It is
 desirable to allow this, since there could be cases where both hosts
 have additional interfaces on the same private network. The advertisement
 of broadcast or multicast IP addresses MUST be ignored by the recipient of
 this option, as it is not permitted according to the unicast principle of the
-basic DCCP.<a href="#section-3.2.8-9" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-10">The MP_JOIN handshake to
+basic DCCP.<a href="#section-3.2.8-10" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-11">The MP_JOIN handshake to
 create a new subflow (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) provides mechanisms to minimize
 security risks.  The MP_JOIN message contains a 32-bit CI that
 uniquely identifies a connection to the receiving host. If the
-CI is unknown, the host MUST send a DCCP-Reset.<a href="#section-3.2.8-10" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-11">Further security considerations around the issue of
+CI is unknown, the host MUST send a DCCP-Reset.<a href="#section-3.2.8-11" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-12">Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
 new MP_JOIN attempts are discussed in <a href="#security" class="auto internal xref">Section 4</a>.
 If a sending host of an MP_ADDADDR knows that no incoming subflows can
@@ -2651,23 +2656,23 @@ announce that address unless the sending host has new knowledge about
 the possibility to do so. This information can be obtained from local
 firewall or routing settings, knowledge about availability of external
 NAT or firewall, or from connectivity checks performed by the
-host/application.<a href="#section-3.2.8-11" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-12">The reception of an MP_ADDADDR message is acknowledged using MP_CONFIRM
+host/application.<a href="#section-3.2.8-12" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-13">The reception of an MP_ADDADDR message is acknowledged using MP_CONFIRM
 (<a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>). This ensures reliable exchange of address
-information.<a href="#section-3.2.8-12" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-13">A host that receives an MP_ADDADDR, but finds at connection set up
+information.<a href="#section-3.2.8-13" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-14">A host that receives an MP_ADDADDR, but finds at connection set up
 that the IP address and port number is unsuccessful, SHOULD NOT perform
 further connection attempts to this address/port combination for this
 connection. If a sender, however, wishes to trigger a new incoming
 connection attempt on a previously advertised address/port combination
-can therefore refresh the MP_ADDADDR information by sending the option again.<a href="#section-3.2.8-13" class="pilcrow">¶</a></p>
-<p id="section-3.2.8-14">A host MAY send an MP_ADDADDR message with an already assigned Address
+can therefore refresh the MP_ADDADDR information by sending the option again.<a href="#section-3.2.8-14" class="pilcrow">¶</a></p>
+<p id="section-3.2.8-15">A host MAY send an MP_ADDADDR message with an already assigned Address
 ID using the IP Address previously assigned to this Address ID. The new
 MP_ADDADDR could have the same port number or a different port number. The
 receiver MUST silently ignore the MP_ADDADDR if the IP Address is not the
 same as that previously assigned to this Address ID. A host wishing to
 replace an existing Address ID MUST first remove the existing one
-(<a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>).<a href="#section-3.2.8-14" class="pilcrow">¶</a></p>
+(<a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>).<a href="#section-3.2.8-15" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_REMOVEADDR">
@@ -2685,7 +2690,10 @@ will terminate any subflows currently using that address.<a href="#section-3.2.9
 have an invalid address. Functional flows with a valid address MUST be
 closed with a DCCP Close exchange (as with regular DCCP) instead of
 using MP_REMOVEADDR. For more information see <a href="#closing" class="auto internal xref">Section 3.5</a>.<a href="#section-3.2.9-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-3">Along with the MP_REMOVEADDR suboption a MP_HMAC option MUST be sent for
+<p id="section-3.2.9-3">The Nonce is a 32-bit random value that is generated locally for
+each MP_REMOVEADDR option and is used in the HMAC calculation process
+to prevent replay attacks.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-4">Along with the MP_REMOVEADDR suboption a MP_HMAC option MUST be sent for
 authentication. The truncated HMAC parameter present in this MP_HMAC
 option is the leftmost 20 bytes of an HMAC, negotiated and calculated
 as described in <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>. In the same way as for MP_JOIN,
@@ -2693,36 +2701,38 @@ the key for the HMAC algorithm, in the case of the message transmitted
 by Host A, will be Key-A followed by Key-B, and in the case of Host B,
 Key-B followed by Key-A.  These are the keys that were exchanged and
 selected in the original MP_KEY handshake. The message for the HMAC is
-the Address ID.<a href="#section-3.2.9-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-4">The rationale for using a HMAC is to prevent unauthorized entities from
+the Address ID.<a href="#section-3.2.9-4" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-5">The rationale for using a HMAC is to prevent unauthorized entities from
 injecting MP_REMOVEADDR signals in an attempt to hijack a connection.
 Note that, additionally, the presence of this HMAC prevents the
 address from being modified in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
-cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.9-4" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-5">A receiver MUST include a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> in a DCCP datagram that sends
-an MP_REMOVEADDR. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.9-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-6">The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
+cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.9-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-6">A receiver MUST include a MP_SEQ <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a> in a DCCP datagram that sends
+an MP_REMOVEADDR. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-7">The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 (<a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>). This ensures reliable exchange of address
 information. To avoid inconsistent states, the sender releases 
-the address ID only after MP_REMOVEADDR has been confirmed.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-7">The sending and receiving of this message SHOULD trigger the closing procedure
+the address ID only after MP_REMOVEADDR has been confirmed.<a href="#section-3.2.9-7" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-8">The sending and receiving of this message SHOULD trigger the closing procedure
 described in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> between the client and the server, respectively on the affected
 subflow(s) (if possible). This helps remove middlebox state, before
-removing any local state.<a href="#section-3.2.9-7" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-8">Address removal is done by Address ID to allow the use of NATs and other
+removing any local state.<a href="#section-3.2.9-8" class="pilcrow">¶</a></p>
+<p id="section-3.2.9-9">Address removal is done by Address ID to allow the use of NATs and other
 middleboxes that rewrite source addresses.  If there is no address
-at the requested Address ID, the receiver will silently ignore the request.<a href="#section-3.2.9-8" class="pilcrow">¶</a></p>
+at the requested Address ID, the receiver will silently ignore the request.<a href="#section-3.2.9-9" class="pilcrow">¶</a></p>
 <span id="name-format-of-the-mp_removeaddr"></span><div id="refMP_REMOVEADDR">
 <figure id="figure-17">
-            <div class="alignLeft art-text artwork" id="section-3.2.9-9.1">
+            <div class="alignLeft art-text artwork" id="section-3.2.9-10.1">
 <pre>
                      1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+---------------+---------------+
 |0 0 1 0 1 1 1 0|0 0 0 0 0 1 0 0|0 0 0 0 1 0 0 0|   Address ID  |
 +---------------+---------------+---------------+---------------+
-     Type=46        Length=4         MP_OPT=8
+|                             Nonce                             |
++-------------------------------+-------------------------------+
+     Type=46        Length=8         MP_OPT=8
 
 -&gt; followed by MP_HMAC option
 </pre>
@@ -3013,11 +3023,14 @@ shown in the example in <a href="#ref-mp-dccp-add-address" class="auto internal 
               <p id="section-3.4.1-2.1.1">an identifier (id 2) for the new IP address which is used as a reference in subsequent control exchanges.<a href="#section-3.4.1-2.1.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.4.1-2.2">
-              <p id="section-3.4.1-2.2.1">the IP address of the new path (A2_IP)<a href="#section-3.4.1-2.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.4.1-2.2.1">a Nonce value to prevent replay attacks<a href="#section-3.4.1-2.2.1" class="pilcrow">¶</a></p>
 </li>
             <li class="normal" id="section-3.4.1-2.3">
-              <p id="section-3.4.1-2.3.1">A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
-as that used for the initial subflow address A1_IP<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
+              <p id="section-3.4.1-2.3.1">the IP address of the new path (A2_IP)<a href="#section-3.4.1-2.3.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.1-2.4">
+              <p id="section-3.4.1-2.4.1">A pair of octets specifying the port number associated with this IP address. The value of 00 here indicates that the port number is the same
+as that used for the initial subflow address A1_IP<a href="#section-3.4.1-2.4.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.4.1-3">According to <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>, the following options are required in a packet carrying MP_ADDADDR:<a href="#section-3.4.1-3" class="pilcrow">¶</a></p>
@@ -3048,7 +3061,7 @@ response are as follows:<a href="#section-3.4.1-5" class="pilcrow">¶</a></p>
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_ADDADDR(id 2, A2_IP, 00) +        |
+     |   DCCP-Data +  MP_ADDADDR(id 2, Nonce, A2_IP, 00) + |
      |------- MP_HMAC(A) + MP_SEQ(seqno 12) --------------&gt;|
      |             |                                       |
      |   DCCP-Ack + MP_HMAC(B) +                           |
@@ -3071,6 +3084,9 @@ shown in the example in <a href="#ref-mp-dccp-remove-address" class="auto intern
 <ul class="normal">
 <li class="normal" id="section-3.4.2-2.1">
               <p id="section-3.4.2-2.1.1">an identifier (id 2) for the IP address to remove (A2_IP) and which was specified in a previous MP_ADDADDR message.<a href="#section-3.4.2-2.1.1" class="pilcrow">¶</a></p>
+</li>
+            <li class="normal" id="section-3.4.2-2.2">
+              <p id="section-3.4.2-2.2.1">a Nonce value to prevent replay attacks<a href="#section-3.4.2-2.2.1" class="pilcrow">¶</a></p>
 </li>
           </ul>
 <p id="section-3.4.2-3">According to <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>, the following options are required in a packet carrying MP_REMOVEADDR:<a href="#section-3.4.2-3" class="pilcrow">¶</a></p>
@@ -3101,7 +3117,7 @@ response are as follows:<a href="#section-3.4.2-5" class="pilcrow">¶</a></p>
 Address A1    Address A2                               Address B1
 ----------    ----------                              -----------
      |             |                                       |
-     |   DCCP-Data +  MP_REMOVEADDR(id 2) +                |
+     |   DCCP-Data +  MP_REMOVEADDR(id 2, Nonce) +         |
      |------- MP_HMAC(A) + MP_SEQ(seqno 33) --------------&gt;|
      |             |                                       |
      |   DCCP-Ack + MP_HMAC(B) +                           |
