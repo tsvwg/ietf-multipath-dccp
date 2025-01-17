@@ -1221,13 +1221,13 @@ connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
 MP_PRIO value of zero. This helps an MP-DCCP connection to 
 schedule when the multipath scheduler strictly respects MP_PRIO value 0.
-MP_PRIO MUST be acknowledged via MP_CONFIRM 
-(see {{ref-mp-option-confirm}}) to ensure reliable transmission.
+To ensure reliable transmission, the MP_PRIO suboption MUST be acknowledged via an MP_CONFIRM 
+(see {{ref-mp-option-confirm}}).
 
 The relative ratio of the primary path values 3-15 depend on the path usage strategy, which is described in more detail in {{path_usage_strategy}}. In the case of path mobility ({{path_mobility}}), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage ({{concurrent_usage}}), the definition is up to the multipath scheduler logic.
 
 A MP_SEQ ({{MP_SEQ}}) MUST be present in a DCCP datagram
-in which MP_PRIO is sent. Further details are given in {{MP_CONFIRM}}.
+in which the MP_PRIO suboption is sent. Further details are given in {{MP_CONFIRM}}.
 
 ### MP_CLOSE {#MP_CLOSE}
 
@@ -1620,7 +1620,7 @@ Selecting an appropriate method can allow MP-DCCP to realize different path util
 
 The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
 Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
-When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by MP_PRIO or if not available pick the most divergent source-destination pair from the original used source-destination pair.
+When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by the MP_PRIO suboption or if not available pick the most divergent source-destination pair from the original used source-destination pair.
 
 > Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
 Path mobility is supported in the current Linux reference implementation {{multipath-dccp.org}}.
