@@ -2372,7 +2372,9 @@ space going through within the segment lifetime. For DCCP, the Maximum
 Segment Lifetime is the same as that of TCP as specified in <span><a href="https://rfc-editor.org/rfc/rfc4340#section-3.4" class="relref">Section 3.4</a> of [<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.
 Compared to TCP, the sequence number for DCCP is incremented
 per packet rather than per byte transmitted. For this reason, the 48 bits
-chosen in MP_SEQ are considered sufficiently large.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
+chosen in MP_SEQ are considered sufficiently large considering the current
+globally routable maximum packet size of 1500 bytes, which corresponds to
+roughly 375 PiB of data within the sequence number space.<a href="#section-3.2.5-4" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_HMAC">
