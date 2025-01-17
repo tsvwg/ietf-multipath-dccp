@@ -1118,8 +1118,8 @@ at the requested Address ID, the receiver will silently ignore the request.
 
 ### MP_PRIO {#MP_PRIO}
 
-The path priority SHOULD be considered as hints 
-for the packet scheduler when making decisions which path to use for 
+The path priority signaled with the MP_PRIO option provides hints 
+for the packet scheduler when making decisions about which path to use for 
 payload traffic.
 When a single specific path from the set of available
 paths is treated with higher priority compared to the others
