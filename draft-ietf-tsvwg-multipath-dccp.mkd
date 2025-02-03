@@ -1674,7 +1674,7 @@ DCCP {{RFC4340}} provides protection against hijacking
 and limits the potential impact of some denial-of-service attacks, but
 DCCP provides no inherent protection against an on-path attacker snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
-introduced compared to regular DCCP. The security objectivs for MP-DCCP are:
+introduced compared to regular DCCP. The security objectives for MP-DCCP are:
  
 * Provide assurance that the parties involved in an
   MP-DCCP handshake procedure are identical to those in the original DCCP connection.
