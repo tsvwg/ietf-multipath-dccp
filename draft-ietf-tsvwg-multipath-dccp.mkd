@@ -1658,7 +1658,7 @@ Internet are outside the scope of this document. If, and when, the IETF
 specifies a method for concurrent usage of multiple paths for the
 general Internet, the framework specified in this document could be used to 
 provide an IETF recommended method for MP-DCCP.
-&nbsp;
+&nbsp;  
 
 # Security Considerations {#security}
 
