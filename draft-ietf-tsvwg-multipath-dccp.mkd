@@ -240,7 +240,7 @@ for multipath transport or are defined in the context of MP-DCCP,
 similar to {{RFC8684}}, as follows:
  
 Path: A sequence of links between a sender and a receiver, defined in
-this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows [[RFC8684]] and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:
+this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows {{RFC8684}} and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:
 
  * IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234, [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321
  * IPv4: 203.0.113.1:1234, 203.0.113.2:4321
