@@ -3456,20 +3456,21 @@ be provided.<a href="#section-4-1" class="pilcrow">¶</a></p>
 and limits the potential impact of some denial-of-service attacks, but
 DCCP provides no inherent protection against an on-path attacker snooping on data
 packets. Regarding the security of MP-DCCP no additional risks should be
-introduced compared to regular DCCP. Thereof derived are the
-following key security requirements to be fulfilled by MP-DCCP:<a href="#section-4-2" class="pilcrow">¶</a></p>
+introduced compared to regular DCCP. The security objectives for MP-DCCP are:<a href="#section-4-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-4-3.1">
-          <p id="section-4-3.1.1">Provide a mechanism to confirm that parties involved in a subflow
-handshake are identical to those in the original connection setup.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
+          <p id="section-4-3.1.1">Provide assurance that the parties involved in an
+MP-DCCP handshake procedure are identical to those in the original DCCP connection.<a href="#section-4-3.1.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-4-3.2">
-          <p id="section-4-3.2.1">Provide verification that the new address to be included in a MP
-connection is valid for a peer to receive traffic at before using it.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-4-3.2.1">Before a path is used, verify that the new advertised path is valid for receiving traffic.<a href="#section-4-3.2.1" class="pilcrow">¶</a></p>
 </li>
         <li class="normal" id="section-4-3.3">
           <p id="section-4-3.3.1">Provide replay protection, i.e., ensure that a request to add/remove a
 subflow is 'fresh'.<a href="#section-4-3.3.1" class="pilcrow">¶</a></p>
+</li>
+        <li class="normal" id="section-4-3.4">
+          <p id="section-4-3.4.1">Allow a party to limit the number of subflows that it allows.<a href="#section-4-3.4.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <p id="section-4-4">To achieve these goals, MP-DCCP includes a hash-based handshake
@@ -3482,11 +3483,11 @@ CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
 Authentication Codes (HMACs) used on subflow setup, in order to verify
 that the parties in the handshake of subsequent subflows are the same as in the original
-connection setup. It also provides verification that the peer can
+connection setup. This also provides verification that the peer can
 receive traffic at this new address. Replay attacks would still be
 possible when only keys are used;
-therefore, the handshakes use single-use random numbers (nonces) at both
-ends -- this ensures that the HMAC will never be the same on two handshakes.
+therefore, the handshakes use single-use random numbers (nonces) for both
+parties -- this ensures that the HMAC will never be the same on two handshakes.
 Guidance on generating random numbers suitable for use as keys is given
 in <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>. During normal operation, regular DCCP protection
 mechanisms (such as header checksum to protect DCCP headers against

@@ -2338,12 +2338,12 @@ Internet-Draft               Multipath DCCP                 January 2025
    potential impact of some denial-of-service attacks, but DCCP provides
    no inherent protection against an on-path attacker snooping on data
    packets.  Regarding the security of MP-DCCP no additional risks
-   should be introduced compared to regular DCCP.  Thereof derived are
-   the following key security requirements to be fulfilled by MP-DCCP:
+   should be introduced compared to regular DCCP.  The security
+   objectives for MP-DCCP are:
 
-   *  Provide a mechanism to confirm that parties involved in a subflow
-      handshake are identical to those in the original connection setup.
-
+   *  Provide assurance that the parties involved in an MP-DCCP
+      handshake procedure are identical to those in the original DCCP
+      connection.
 
 
 
@@ -2354,12 +2354,13 @@ Amend, et al.             Expires 21 July 2025                 [Page 42]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
-   *  Provide verification that the new address to be included in a MP
-      connection is valid for a peer to receive traffic at before using
-      it.
+   *  Before a path is used, verify that the new advertised path is
+      valid for receiving traffic.
 
    *  Provide replay protection, i.e., ensure that a request to add/
       remove a subflow is 'fresh'.
+
+   *  Allow a party to limit the number of subflows that it allows.
 
    To achieve these goals, MP-DCCP includes a hash-based handshake
    algorithm documented in Sections Section 3.2.4, Section 3.2.6 and
@@ -2371,12 +2372,12 @@ Internet-Draft               Multipath DCCP                 January 2025
    the beginning are concatenated and used as keys for creating Hash-
    based Message Authentication Codes (HMACs) used on subflow setup, in
    order to verify that the parties in the handshake of subsequent
-   subflows are the same as in the original connection setup.  It also
+   subflows are the same as in the original connection setup.  This also
    provides verification that the peer can receive traffic at this new
    address.  Replay attacks would still be possible when only keys are
    used; therefore, the handshakes use single-use random numbers
-   (nonces) at both ends -- this ensures that the HMAC will never be the
-   same on two handshakes.  Guidance on generating random numbers
+   (nonces) for both parties -- this ensures that the HMAC will never be
+   the same on two handshakes.  Guidance on generating random numbers
    suitable for use as keys is given in [RFC4086].  During normal
    operation, regular DCCP protection mechanisms (such as header
    checksum to protect DCCP headers against corruption) is designed to
@@ -2400,7 +2401,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    recipient to target other hosts in the network.  Therefore,
    implementations should consider heuristics at both the sender and
    receiver to reduce the impact of this.
-
 
 
 
