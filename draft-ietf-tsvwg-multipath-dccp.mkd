@@ -761,10 +761,10 @@ of the handshake procedure for the first subflow. This allows the hosts to agree
 on a single key type to be used, as described in {{handshaking}}
 
 It is possible that not all hosts will support all key types and this specification does not
-recommend or enforce the use of any particular Key Type as this could have security
-implications. If the key type cannot be agreed in the 
-handshake procedure, the MP-DCCP connection MUST fall back to not using MP-DCCP, as 
-indicated in {{fallback}}.
+recommend or enforce the announcement of any particular Key Type within MP_KEY option as this could have security
+implications. However, at least Key Type 0 (Plain Text) MUST be supported for interoperability tests
+in implementations of MP-DCCP. If the key type cannot be agreed in the handshake procedure, the MP-DCCP connection
+MUST fall back to not using MP-DCCP, as indicated in {{fallback}}.
 
 ### MP_SEQ {#MP_SEQ}
 
