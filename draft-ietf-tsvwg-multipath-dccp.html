@@ -26,11 +26,11 @@ the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.25.0" name="generator">
+<meta content="xml2rfc 3.26.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-20" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.25.0
+  xml2rfc 3.26.0
     Python 3.10.16
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
@@ -419,7 +419,7 @@ hr {
 /* Fix PDF info block run off issue */
 @media print {
   #identifiers dd {
-    float: none;
+    max-width: 100%;
   }
 }
 #identifiers .authors .author {
@@ -1563,7 +1563,7 @@ changes to the application itself.<a href="#section-1.1-1" class="pilcrow">¶</a
 for multipath transport or are defined in the context of MP-DCCP,
 similar to <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>, as follows:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Path: A sequence of links between a sender and a receiver, defined in
-this context by a 4-tuple of source and destination address and the source and destination ports. This is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:<a href="#section-1.2-2" class="pilcrow">¶</a></p>
+this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows [<span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>] and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-1.2-3.1">
             <p id="section-1.2-3.1.1">IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234, [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321<a href="#section-1.2-3.1.1" class="pilcrow">¶</a></p>
