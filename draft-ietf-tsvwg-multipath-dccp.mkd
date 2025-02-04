@@ -761,10 +761,10 @@ of the handshake procedure for the first subflow. This allows the hosts to agree
 on a single key type to be used, as described in {{handshaking}}
 
 It is possible that not all hosts will support all key types and this specification does not
-recommend or enforce the use of any particular Key Type as this could have security
-implications. If the key type cannot be agreed in the 
-handshake procedure, the MP-DCCP connection MUST fall back to not using MP-DCCP, as 
-indicated in {{fallback}}.
+recommend or enforce the announcement of any particular Key Type within MP_KEY option as this could have security
+implications. However, at least Key Type 0 (Plain Text) MUST be supported for interoperability tests
+in implementations of MP-DCCP. If the key type cannot be agreed in the handshake procedure, the MP-DCCP connection
+MUST fall back to not using MP-DCCP, as indicated in {{fallback}}.
 
 ### MP_SEQ {#MP_SEQ}
 
@@ -1688,7 +1688,12 @@ To achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}}, {{MP_HMAC}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
-over the network. To ease demultiplexing while not revealing
+over the network. Depending on the security requirements, different Key Types can
+be negotiated in the handshake procedure or must follow the fallback scenario
+described in {{security}}. If there are security requirements that go beyond the
+capabilities of Key Type 0, then it is RECOMMENDED that Key Type 0 is not enabled
+to avoid downgrade attacks that result in the key being exchanged as plain text.
+To ease demultiplexing while not revealing
 cryptographic material, subsequent subflows use the initially exchanged
 CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
