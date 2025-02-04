@@ -1688,7 +1688,9 @@ To achieve these goals, MP-DCCP includes a hash-based handshake
 algorithm documented in Sections {{MP_KEY}}, {{MP_HMAC}} and {{handshaking}}. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
-over the network. To ease demultiplexing while not revealing
+over the network. Depending on the security requirements, different Key Types can
+be negotiated in the handshake procedure or must follow the fallback scenario
+described in {{security}}. To ease demultiplexing while not revealing
 cryptographic material, subsequent subflows use the initially exchanged
 CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
