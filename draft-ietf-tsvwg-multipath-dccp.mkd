@@ -1692,7 +1692,7 @@ over the network. Depending on the security requirements, different Key Types ca
 be negotiated in the handshake procedure or must follow the fallback scenario
 described in {{security}}. If there are security requirements that go beyond the
 capabilities of Key Type 0, then it is RECOMMENDED that Key Type 0 is not enabled
-by default to avoid downgrade attacks that result in the key being exchanged as plain text.
+to avoid downgrade attacks that result in the key being exchanged as plain text.
 To ease demultiplexing while not revealing
 cryptographic material, subsequent subflows use the initially exchanged
 CI information. The keys exchanged once at the beginning are
