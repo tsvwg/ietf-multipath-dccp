@@ -129,7 +129,7 @@ informative:
     date: '2019-10-14'
     seriesinfo:
       DOI: 10.1109/LCN44214.2019.8990746
-  IETF115.Slides:
+  IETF105.Slides:
     title: MP-DCCP for enabling transfer of UDP/IP traffic over multiple data paths in multi-connectivity networks
     author:
       -
@@ -202,8 +202,8 @@ which is important for low-latency applications that do not require
 guaranteed delivery services, such as Audio/Video streaming.
 
 In addition to the integration into DCCP services, implementers or future specification could choose MP-DCCP for other use cases like
-3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks that either combine a 3GPP and a non-3GPP access or a fixed and cellular access between user user-equipment/residential gateway and operator network. MP-DCCP can be used in these scenarios for load balancing, seamless session handover and bandwidth aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated into MP-DCCP.
-More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF115.Slides}}, and {{MP-DCCP.Paper}}.
+3GPP 5G multi-access solutions (e.g., Access Traffic Steering, Switching, and Splitting (ATSSS) specified in {{TS23.501}}) or hybrid access networks that either combine a 3GPP and a non-3GPP access or a fixed and cellular access between user-equipment/residential gateway and operator network. MP-DCCP can be used in these scenarios for load balancing, seamless session handover and bandwidth aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated into MP-DCCP.
+More details on potential use cases for MP-DCCP are provided in {{multipath-dccp.org}}, {{IETF105.Slides}}, and {{MP-DCCP.Paper}}.
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
