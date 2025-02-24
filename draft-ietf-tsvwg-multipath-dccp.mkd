@@ -388,7 +388,7 @@ shown in {{ref-option-list}}.
 |  46   |    variable   | Multipath             |     Y      |
 {: #ref-option-list title='Multipath option set'}
 
-> Note to the RFC Editor: Please update the Feature Number and Option Type temporarily assigned here by IANA for multipath operations with the final values.
+> Note to the RFC Editor: The Feature Number and Option Type reflect the temporary assignment by IANA and must be verified once again.
 
 ## Multipath Capable Feature {#mp_capable}
 
