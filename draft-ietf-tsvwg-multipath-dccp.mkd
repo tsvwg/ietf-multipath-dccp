@@ -207,7 +207,7 @@ More details on potential use cases for MP-DCCP are provided in {{multipath-dccp
 All these use cases profit from an Open Source Linux reference implementation provided under {{multipath-dccp.org}}.
 
 The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to enable the above-mentioned use cases is not considered in this specification.
-Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
+Also out of scope is the encapsulation of DCCP traffic in UDP to pass middleboxes (e.g., NATs, firewalls, proxies, intrusion detection systems (IDSs), etc)  that do not support DCCP. A possible method is defined in {{RFC6773}} or is considered in {{I-D.amend-tsvwg-dccp-udp-header-conversion}} to achieve the same with less overhead.
 
 MP-DCCP is based exclusively on the lean concept of DCCP. For traffic that is already encrypted or does not need encryption, MP-DCCP is an efficient choice as it does not apply its own encryption mechanisms. Also, the procedures defined by MP-DCCP, which allow subsequent reordering of traffic and efficient traffic scheduling, improve performance, as shown in {{MP-DCCP.Paper}}, and take into account the interaction of the protocol with the further elements required for multi-path transport.
 
@@ -242,7 +242,7 @@ similar to {{RFC8684}}, as follows:
 Path: A sequence of links between a sender and a receiver, defined in
 this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows {{RFC8684}} and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:
 
- * IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234, [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321
+ * IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234, [2001:db8:3333:4444:cccc:dddd:eeee:ffff]:4321
  * IPv4: 203.0.113.1:1234, 203.0.113.2:4321
 
 Subflow: A subflow refers to a DCCP flow transmitted using a specific path (4-tuple of source and destination address/port
@@ -501,7 +501,7 @@ The fields used by the multipath option are described in {{ref-mp-option-list}}.
 
 Future MP options could be defined in a later version or extension to this specification.
 
-These operations are largely inspired by the signals defined in {{RFC8684}}. 
+These operations are largely inspired by the signals defined in {{RFC8684}}. The procedures for handling faulty or unknown MP options are described in {{fallback}}.
 
 
 ### MP_CONFIRM {#MP_CONFIRM}
@@ -825,7 +825,8 @@ as described in the second and third step of the handshake of a
 subsequent subflow in {{handshaking}}. For this specification of MP-DCCP,
 the HMAC code is generated according to {{RFC2104}} in combination
 with the SHA256 hash algorithm described in {{RFC6234}}, with the
-output truncated to the leftmost 160 bits (20 bytes).
+output truncated to the leftmost 160 bits (20 bytes). It is possible
+that other versions of MP-DCCP will define other hash algorithms in the future.
 
 The "Key" used for the HMAC computation is the derived key (d-keyA for Host A or d-KeyB for Host B)
 described in {{MP_KEY}}, while the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR must be calculated in both hosts in order to protect on the one hand and validate on the other, and is a concatenation of:
@@ -865,7 +866,7 @@ MP_ADDADDR suboption.
 
 On the receiver side, the HMAC validation of the suboptions MUST be carried out according to
 the sending sequence in which the associated MP_HMAC follows a suboption. If the suboption
-cannot be validated by a receiving host because the HMAC validation fails, the subsequent handling depends
+cannot be validated by a receiving host because the HMAC validation fails (HMAC wrong or missing), the subsequent handling depends
 on which suboption was being verified. If the suboption to be authenticated was either
 MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore it (see {{MP_ADDADDR}} and {{MP_REMOVEADDR}}). 
 If the suboption to be authenticated was MP_JOIN, the subflow MUST be closed (see {{fallback}}).
@@ -1526,7 +1527,7 @@ failed the checksum onwards cannot be considered trustworthy. DCCP defines that 
 the checksum fails, the receiving endpoint MUST drop the application data and report 
 that data as dropped due to corruption using a Data Dropped option (Drop Code 3, 
 Corrupt). If data is dropped due to corruption for an MP-DCCP connection, the affected
-subflow MAY be closed.
+subflow MAY be closed. The same procedure applies if the MP option is unknown.
 
 
 ## State Diagram {#state-diagram}
