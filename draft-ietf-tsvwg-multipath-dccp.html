@@ -2162,7 +2162,7 @@ removed from a local or remote host. An Address ID always MUST be unique
 over the lifetime of a subflow and can only be re-assigned if sender and
 receiver no longer have them in use.<a href="#section-3.2.2-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-5">The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
-Together with the derived key from the both hosts Connection Identifier described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, the Nonce value builds the basis to calculate the
+Together with the derived key from the both hosts Key Data described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a> to avoid replay attacks.<a href="#section-3.2.2-5" class="pilcrow">¶</a></p>
 <p id="section-3.2.2-6">If the CI cannot be verified by the receiving host during a handshake negotiation, 
 the new subflow MUST be closed, as specified in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.2-6" class="pilcrow">¶</a></p>
@@ -2242,7 +2242,7 @@ Host B MUST then tear down all subflows and terminate the MP-DCCP connection.<a 
 hosts (host A, host B) for a given connection.
 The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
 According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 bytes for a single-key message, and up to
-115 bytes when all specified Key Types 0-2 are provided. The Key Type field 
+82 bytes when all specified Key Types 0 and 255 are provided. The Key Type field 
 specifies the type of the following key data. 
 The set of key types are shown in <a href="#ref-key-type-list" class="auto internal xref">Table 5</a>.<a href="#section-3.2.4-2" class="pilcrow">¶</a></p>
 <span id="name-mp_key-key-types"></span><div id="ref-key-type-list">
@@ -2265,19 +2265,14 @@ The set of key types are shown in <a href="#ref-key-type-list" class="auto inter
                 <td class="text-left" rowspan="1" colspan="1">Plain Text Key</td>
               </tr>
               <tr>
-                <td class="text-left" rowspan="1" colspan="1">1 =ECDHE-C25519-SHA256</td>
-                <td class="text-left" rowspan="1" colspan="1">32</td>
-                <td class="text-left" rowspan="1" colspan="1">ECDHE with SHA256 and Curve25519</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">2 =ECDHE-C25519-SHA512</td>
-                <td class="text-left" rowspan="1" colspan="1">64</td>
-                <td class="text-left" rowspan="1" colspan="1">ECDHE with SHA512 and Curve25519</td>
-              </tr>
-              <tr>
-                <td class="text-left" rowspan="1" colspan="1">3-255</td>
+                <td class="text-left" rowspan="1" colspan="1">1-254</td>
                 <td class="text-left" rowspan="1" colspan="1"> </td>
-                <td class="text-left" rowspan="1" colspan="1">Unassigned</td>
+                <td class="text-left" rowspan="1" colspan="1">Reserved for future Key Types</td>
+              </tr>
+              <tr>
+                <td class="text-left" rowspan="1" colspan="1">255 =Experimental</td>
+                <td class="text-left" rowspan="1" colspan="1">64</td>
+                <td class="text-left" rowspan="1" colspan="1">For private use only</td>
               </tr>
             </tbody>
           </table>
@@ -2285,7 +2280,7 @@ The set of key types are shown in <a href="#ref-key-type-list" class="auto inter
 <span class="break"></span><dl class="dlNewline" id="section-3.2.4-4">
             <dt id="section-3.2.4-4.1">Plain Text</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.4-4.2">
-              <p id="section-3.2.4-4.2.1">Key Material is exchanged in plain text between hosts (Host A, Host B), and the respective key
+              <p id="section-3.2.4-4.2.1">Key Data is exchanged in plain text between hosts (Host A, Host B), and the respective key
 parts (KeyA, KeyB) are used by each host to generate the derived
 key (d-key) by concatenating the two parts with the local key
 in front. That is,<a href="#section-3.2.4-4.2.1" class="pilcrow">¶</a></p>
@@ -2301,33 +2296,20 @@ in front. That is,<a href="#section-3.2.4-4.2.1" class="pilcrow">¶</a></p>
           <dd class="break"></dd>
 </dl>
 <span class="break"></span><dl class="dlNewline" id="section-3.2.4-5">
-            <dt id="section-3.2.4-5.1">ECDHE-SHA256-C25519</dt>
+            <dt id="section-3.2.4-5.1">Experimental</dt>
             <dd style="margin-left: 1.5em" id="section-3.2.4-5.2">
-              <p id="section-3.2.4-5.2.1">Public Key Material is exchanged via ECDHE key exchange with SHA256 and
-Curve 25519 to generate the derived key (d-key) from the shared secret.
-The full potential of ECDHE use is realized when it is combined with peer
-authentication technologies to protect against men-in-the-middle attacks. This can
-be achieved, for example, with separate use and verification of certificates
-issued by a certification authority (CA) as described in <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span>.<a href="#section-3.2.4-5.2.1" class="pilcrow">¶</a></p>
+              <p id="section-3.2.4-5.2.1">This Key Type allows to use other Key Data. It could be used to verify other key exchange mechanisms, e.g. ECDHE in combination with separate certificate validation <span>[<a href="#RFC5280" class="cite xref">RFC5280</a>]</span> to achieve protection against man-in-the-middle attacks.<a href="#section-3.2.4-5.2.1" class="pilcrow">¶</a></p>
 </dd>
           <dd class="break"></dd>
 </dl>
-<span class="break"></span><dl class="dlNewline" id="section-3.2.4-6">
-            <dt id="section-3.2.4-6.1">ECDHE-SHA512-C25519</dt>
-            <dd style="margin-left: 1.5em" id="section-3.2.4-6.2">
-              <p id="section-3.2.4-6.2.1">Public Key Material is exchanged via ECDHE key exchange with SHA512 and
-Curve 25519 to generate the derived key (d-key) from the shared secret.<a href="#section-3.2.4-6.2.1" class="pilcrow">¶</a></p>
-</dd>
-          <dd class="break"></dd>
-</dl>
-<p id="section-3.2.4-7">Multiple keys are only permitted in the DCCP-Request message
+<p id="section-3.2.4-6">Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
-on a single key type to be used, as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.2.4-7" class="pilcrow">¶</a></p>
-<p id="section-3.2.4-8">It is possible that not all hosts will support all key types and this specification does not
+on a single key type to be used, as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.2.4-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.4-7">It is possible that not all hosts will support all key types and this specification does not
 recommend or enforce the announcement of any particular Key Type within MP_KEY option as this could have security
 implications. However, at least Key Type 0 (Plain Text) MUST be supported for interoperability tests
 in implementations of MP-DCCP. If the key type cannot be agreed in the handshake procedure, the MP-DCCP connection
-MUST fall back to not using MP-DCCP, as indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.4-8" class="pilcrow">¶</a></p>
+MUST fall back to not using MP-DCCP, as indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.4-7" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_SEQ">
@@ -3477,12 +3459,7 @@ in <span>[<a href="#RFC4086" class="cite xref">RFC4086</a>]</span>. During norma
 mechanisms (such as header checksum to protect DCCP headers against
 corruption) is designed to provide the same level of protection against attacks on
 individual DCCP subflows as exists for regular DCCP.<a href="#section-4-4" class="pilcrow">¶</a></p>
-<p id="section-4-5">The selection of the Key Type described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> for the exchange of the initial
-key pair determines whether authentication between hosts is possible. The use of
-ECDHE-based key types can provide this functionality if, for example, it is combined
-with a separate certificate validation by a certification authority. The plaintext
-Key Type does not offer this mechanism.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">As discussed in <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>, a host may advertise its private
+<p id="section-4-5">As discussed in <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>, a host may advertise its private
 addresses, but these might point to different hosts in the receiver's
 network.  The MP_JOIN handshake (<a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>) is designed to ensure that this
 does not set up a subflow to the incorrect host.
@@ -3491,13 +3468,13 @@ feature of MP-DCCP could be a target for denial-of-service exploits,
 with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
-sender and receiver to reduce the impact of this.<a href="#section-4-6" class="pilcrow">¶</a></p>
-<p id="section-4-7">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+sender and receiver to reduce the impact of this.<a href="#section-4-5" class="pilcrow">¶</a></p>
+<p id="section-4-6">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
 If MP-DCCP exposes a minimum MPS across all paths,
 any change to one path impacts the sender for all paths.
 To mitigate attacks that seek to force a low MPS, MP-DCCP
 could detect an attempt to reduce the MPS less than a minimum MPS, and then
-stop using these paths.<a href="#section-4-7" class="pilcrow">¶</a></p>
+stop using these paths.<a href="#section-4-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="middlebox">
@@ -3611,7 +3588,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
           <p id="section-8-7.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-7.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
-<p id="section-8-8">Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-8" class="pilcrow">¶</a></p>
+<p id="section-8-8">Future MP-DCCP versions 1 to 15 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-8" class="pilcrow">¶</a></p>
 <p id="section-8-9">This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>.<a href="#section-8-9" class="pilcrow">¶</a></p>
 <p id="section-8-10">IANA is requested to create a new 'Multipath Options' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Options' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-10" class="pilcrow">¶</a></p>
 <span id="name-multipath-options-registry"></span><div id="ref-add-proto-opt-list">
@@ -3734,9 +3711,9 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
         </tbody>
       </table>
 </div>
-<p id="section-8-12">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the Specification Required policy (Section 4.6 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-12" class="pilcrow">¶</a></p>
+<p id="section-8-12">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-12" class="pilcrow">¶</a></p>
 <p id="section-8-13">In addition IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-13" class="pilcrow">¶</a></p>
-<p id="section-8-14">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+<p id="section-8-14">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" class="pilcrow">¶</a></p>
 <span id="name-multipath-key-type-registry"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
@@ -3762,25 +3739,17 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" cla
 </td>
           </tr>
           <tr>
-            <td class="text-center" rowspan="1" colspan="1">1</td>
-            <td class="text-center" rowspan="1" colspan="1">ECDHE-C25519-SHA256</td>
-            <td class="text-center" rowspan="1" colspan="1">ECDHE with SHA256 and Curve25519</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
-</td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">2</td>
-            <td class="text-center" rowspan="1" colspan="1">ECDHE-C25519-SHA512</td>
-            <td class="text-center" rowspan="1" colspan="1">ECDHE with SHA512 and Curve25519</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
-</td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">3-255</td>
+            <td class="text-center" rowspan="1" colspan="1">3-254</td>
             <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
             <td class="text-center" rowspan="1" colspan="1">Reserved for future use</td>
+            <td class="text-left" rowspan="1" colspan="1">
+              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
+</td>
+          </tr>
+          <tr>
+            <td class="text-center" rowspan="1" colspan="1">255</td>
+            <td class="text-center" rowspan="1" colspan="1">Experimental</td>
+            <td class="text-center" rowspan="1" colspan="1">For private use only</td>
             <td class="text-left" rowspan="1" colspan="1">
               <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
 </td>
