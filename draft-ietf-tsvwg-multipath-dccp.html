@@ -1675,7 +1675,7 @@ alternatively have been initiated from B1 or B2.<a href="#section-2.1-3.3.1" cla
             <p id="section-2.1-3.4.1">The discovery and setup of additional subflows is achieved
 through a path management method including the logic and details of the procedures for adding/removing subflows.
 This document describes the procedures that enable a host to initiate new subflows or to signal available IP addresses between peers. However, the definition of a path management method, in which sequence and when subflows are created, is outside the scope of this document. This method is subject to a 
-corresponding policy and the specifics of the implementation. If a MP-DCCP peer host wishes to limit the maximum number of paths that can be maintained (e.g. similar to that discussed in section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>), the creation of new subflows from that peer host is omitted when the threshold of maximum paths is exceeded and incoming subflow requests MUST be rejected.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
+corresponding policy and the specifics of the implementation. If an MP-DCCP peer host wishes to limit the maximum number of paths that can be maintained (e.g. similar to that discussed in section 3.4 of <span>[<a href="#RFC8041" class="cite xref">RFC8041</a>]</span>), the creation of new subflows from that peer host is omitted when the threshold of maximum paths is exceeded and incoming subflow requests MUST be rejected.<a href="#section-2.1-3.4.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-2.1-3.5">
             <p id="section-2.1-3.5.1">Through the use of multipath options, MP-DCCP adds connection-level sequence numbers and exchange of
@@ -1847,7 +1847,7 @@ for version 1.<a href="#section-3.1-11.1.1" class="pilcrow">¶</a></p>
 negotiation of MP-DCCP version 0.  Therefore, successful
 negotiation of MP-DCCP as defined in this document, the client
 and the server MUST both support MP-DCCP version 0.<a href="#section-3.1-12" class="pilcrow">¶</a></p>
-<p id="section-3.1-13">If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection MUST either fallback to regular DCCP or MUST close the connection. Further details are specified in <a href="#fallback" class="auto internal xref">Section 3.6</a><a href="#section-3.1-13" class="pilcrow">¶</a></p>
+<p id="section-3.1-13">If the version negotiation fails or the MP_CAPABLE feature is not present in the DCCP-Request or DCCP-Response packets of the initial handshake procedure, the MP-DCCP connection MUST either fall back to regular DCCP or MUST close the connection. Further details are specified in <a href="#fallback" class="auto internal xref">Section 3.6</a><a href="#section-3.1-13" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_OPT">
@@ -1872,7 +1872,7 @@ and the server MUST both support MP-DCCP version 0.<a href="#section-3.1-12" cla
 <a href="#name-multipath-option-format" class="selfRef">Multipath option format</a>
           </figcaption></figure>
 </div>
-<p id="section-3.2-3">The fields used by the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to an Multipath option.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
+<p id="section-3.2-3">The fields used by the multipath option are described in <a href="#ref-mp-option-list" class="auto internal xref">Table 3</a>. MP_OPT refers to a Multipath option.<a href="#section-3.2-3" class="pilcrow">¶</a></p>
 <span id="name-mp_opt-option-types"></span><div id="ref-mp-option-list">
 <table class="center" id="table-3">
           <caption>
@@ -2003,7 +2003,7 @@ MUST be sent in a DCCP datagram with MP_SEQ; see <a href="#MP_SEQ" class="auto i
 multipath options are associated with obsolete datasets (information carried in the option header) that would otherwise conflict with newer datasets. In the case of MP_ADDADDR or MP_REMOVEADDR the same dataset is identified based on AddressID, whereas the same dataset for MP_PRIO is identified by the subflow in use. An outdated
 multipath option is detected at the receiver if a previous multipath option referring to the same dataset contained a higher sequence number
 in the MP_SEQ. An MP_CONFIRM MAY be generated for multipath options that are identified as outdated.<a href="#section-3.2.1-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.1-4">Similarly an MP_CONFIRM could arrive out of order. The associated
+<p id="section-3.2.1-4">Similarly, an MP_CONFIRM could arrive out of order. The associated
 MP_SEQ received MUST be echoed to ensure that the most recent multipath option is confirmed. This protects from inconsistencies that could occur, e.g. if three MP_PRIO options are sent one after
 the other on one path in order to first set the path priority to 0, then to 1 and finally to 0 again. Without an associated
 MP_SEQ, a loss of the third MP_PRIO option and a loss of the MP_CONFIRM of the second update and the third update would
@@ -2200,7 +2200,7 @@ subflows.<a href="#section-3.2.3-1" class="pilcrow">¶</a></p>
             </figcaption></figure>
 </div>
 <p id="section-3.2.3-4">When Host A wants to abruptly close an MP-DCCP connection with Host B, it will send out the MP_FAST_CLOSE. The MP_FAST_CLOSE suboption MUST be sent from Host A on all subflows 
-using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that Host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of a MP-DCCP connection, 
+using a DCCP-Reset packet with Reset Code 13. The requirement to send the MP_FAST_CLOSE on all subflows increases the probability that Host B will receive the MP_FAST_CLOSE to take the same action. To protect from unauthorized shutdown of an MP-DCCP connection, 
 the selected Key Data of the peer host during the handshaking procedure 
 is carried by the MP_FAST_CLOSE option.<a href="#section-3.2.3-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.3-5">After sending the MP_FAST_CLOSE on all subflows, Host A MUST tear down all subflows 
@@ -2342,7 +2342,7 @@ sequence number, the data sequence number should not start at zero, but at
 a random value to make blind session hijacking more difficult, see also
 section 7.2 in <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.<a href="#section-3.2.5-2" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-3">The MP_SEQ number space is
-independent from the path individual sequence number space and MUST be
+independent of the path individual sequence number space and MUST be
 sent with all DCCP-Data and DCCP-DataACK packets.<a href="#section-3.2.5-3" class="pilcrow">¶</a></p>
 <p id="section-3.2.5-4">When the sequence number space is exhausted, the sequence number MUST
 be wrapped. <span>[<a href="#RFC7323" class="cite xref">RFC7323</a>]</span> provides guidance on selecting an appropriately
@@ -2403,7 +2403,7 @@ described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, whi
               </ul>
 </li>
           </ul>
-<p id="section-3.2.6-5">An usage example is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 21</a>.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
+<p id="section-3.2.6-5">A usage example is shown in <a href="#ref-mp-dccp-handshaking" class="auto internal xref">Figure 21</a>.<a href="#section-3.2.6-5" class="pilcrow">¶</a></p>
 <ul class="normal">
 <li class="normal" id="section-3.2.6-6.1">
               <p id="section-3.2.6-6.1.1">for MP_ADDADDR: The Address ID and Nonce with associated IP address and if defined port,
@@ -2437,8 +2437,8 @@ described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, whi
 within a single DCCP packet. All these multipath options require an individual
 MP_HMAC option. This ensures that the MP_HMAC is correctly associated.
 Otherwise, the receiver cannot validate multiple MP_JOIN, MP_ADDADDR or
-MP_REMOVEADDR. Therefore, a MP_HMAC MUST directly follow its associated multipath
-option. In the likely case of sending a MP_JOIN together with a MP_ADDADDR, this
+MP_REMOVEADDR. Therefore, an MP_HMAC MUST directly follow its associated multipath
+option. In the likely case of sending a MP_JOIN together with an MP_ADDADDR, this
 results in concatenating MP_JOIN + MP_HMAC_1 + MP_ADDADDR + MP_HMAC_2, whereas the
 first MP_HMAC_1 is associated with the MP_JOIN and the second MP_HMAC_2 is associated with the
 MP_ADDADDR suboption.<a href="#section-3.2.6-7" class="pilcrow">¶</a></p>
@@ -2718,7 +2718,7 @@ Note that, additionally, the presence of this HMAC prevents the
 address from being modified in flight unless the key is known by an
 intermediary.  If a host receives an MP_REMOVEADDR option for which it
 cannot validate the HMAC, it MUST silently ignore the option.<a href="#section-3.2.9-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.9-6">A receiver MUST include a MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) in a DCCP datagram that sends
+<p id="section-3.2.9-6">A receiver MUST include an MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) in a DCCP datagram that sends
 an MP_REMOVEADDR. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.9-6" class="pilcrow">¶</a></p>
 <p id="section-3.2.9-7">The reception of an MP_REMOVEADDR message is acknowledged using MP_CONFIRM
 (<a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>). This ensures reliable exchange of address
@@ -2766,7 +2766,7 @@ paths is treated with higher priority compared to the others
 when making scheduling decisions for payload traffic, a host can 
 signal such change in priority to the peer.
 This could be used when there are different costs for
-using different paths (e.g., WiFi is free while cellular has limit on
+using different paths (e.g., Wi-Fi is free while cellular has limit on
 volume, 5G has higher energy consumption). The priority of a path
 could also change, for example, when a mobile host runs out
 of battery, the usage of only a single path may be the preferred choice
@@ -2822,7 +2822,7 @@ for the subflow over which the suboption is received.<a href="#section-3.2.10-2"
               <p id="section-3.2.10-7.1.1">Setting Wi-Fi path to Primary and Cellular paths to Secondary. In this case
    Wi-Fi will be used and Cellular will be used only if the Wi-Fi path is congested or not
    available. Such setting results in using the Cellular path only temporally, 
-   if more capacity is needed than the WiFi path can provide, indicating a 
+   if more capacity is needed than the Wi-Fi path can provide, indicating a 
    clear priority of the Wi-Fi path over the Cellular due to, e.g., cost reasons.<a href="#section-3.2.10-7.1.1" class="pilcrow">¶</a></p>
 </li>
             <li id="section-3.2.10-7.2">
@@ -2836,7 +2836,7 @@ for the subflow over which the suboption is received.<a href="#section-3.2.10-2"
           </ol>
 <p id="section-3.2.10-8">If not specified, the default behavior is to always use a path for 
 packet scheduling decisions (MP_PRIO=3), when the path has been established and 
-added to an existing MP-DCCP connection. At least one path ought to have a 
+added to an existing MP-DCCP connection. At least one path ought to have an 
 MP_PRIO value greater or equal to one for it to be allowed to send on the 
 connection. It is RECOMMENDED to update at least one path to a non-zero MP_PRIO
 value when an MP-DCCP connection enters a state where all paths remain with an
@@ -2845,7 +2845,7 @@ schedule when the multipath scheduler strictly respects MP_PRIO value 0.
 To ensure reliable transmission, the MP_PRIO suboption MUST be acknowledged via an MP_CONFIRM 
 (see <a href="#ref-mp-option-confirm" class="auto internal xref">Table 4</a>).<a href="#section-3.2.10-8" class="pilcrow">¶</a></p>
 <p id="section-3.2.10-9">The relative ratio of the primary path values 3-15 depend on the path usage strategy, which is described in more detail in <a href="#path_usage_strategy" class="auto internal xref">Section 3.11</a>. In the case of path mobility (<a href="#path_mobility" class="auto internal xref">Section 3.11.1</a>), only one path can be used at a time and MUST be the appropriate one that has the highest available priority value including also the prio numbers 1 and 2. In the other case of concurrent path usage (<a href="#concurrent_usage" class="auto internal xref">Section 3.11.2</a>), the definition is up to the multipath scheduler logic.<a href="#section-3.2.10-9" class="pilcrow">¶</a></p>
-<p id="section-3.2.10-10">A MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
+<p id="section-3.2.10-10">An MP_SEQ (<a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>) MUST be present in a DCCP datagram
 in which the MP_PRIO suboption is sent. Further details are given in <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>.<a href="#section-3.2.10-10" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -2881,18 +2881,18 @@ To protect from unauthorized shutdown of a multi-path connection, the selected K
 the peer host during the handshaking procedure MUST be included in by the MP_CLOSE option 
 and must be validated by the peer host. 
 Note, the Key Data is different between MP_CLOSE option carried by DCCP-CloseReq or DCCP-Close.<a href="#section-3.2.11-2" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-3">On reception of the first DCCP-CloseReq carrying a MP_CLOSE with valid Key Data, 
+<p id="section-3.2.11-3">On reception of the first DCCP-CloseReq carrying an MP_CLOSE with valid Key Data, 
 or due to a local decision, all subflows transition to the CLOSING state 
 before transmitting a DCCP-Close carrying MP_CLOSE. 
 The MP-DCCP connection socket on the host sending the DCCP-Close reflects the state of 
 the initial subflow during handshake with MP_KEY option. 
 If the initial subflow no longer exists, the state moves immediately to CLOSED.<a href="#section-3.2.11-3" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-4">Upon reception of the first DCCP-Close carrying a MP_CLOSE with valid Key Data 
+<p id="section-3.2.11-4">Upon reception of the first DCCP-Close carrying an MP_CLOSE with valid Key Data 
 at the peer host, all subflows, as well as the MP-DCCP connection socket, 
 move to the CLOSED state. After this, a DCCP-Reset with Reset Code 1 
 MUST be sent on any subflow in response to a received DCCP-Close containing a valid MP_CLOSE option.<a href="#section-3.2.11-4" class="pilcrow">¶</a></p>
 <p id="section-3.2.11-5">When the MP-DCCP connection socket is in CLOSEREQ or CLOSE state, new subflow requests using MP_JOIN MUST be ignored.<a href="#section-3.2.11-5" class="pilcrow">¶</a></p>
-<p id="section-3.2.11-6">Contrary to a MP_FAST_CLOSE (<a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>), no single-sided abrupt termination is applied.<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
+<p id="section-3.2.11-6">Contrary to an MP_FAST_CLOSE (<a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>), no single-sided abrupt termination is applied.<a href="#section-3.2.11-6" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_EXP">
@@ -2972,7 +2972,7 @@ Address A1    Address A2                              Address B1
             <p id="section-3.3-4.1.1">Host A sends a DCCP-Request with the MP-Capable feature Change
 request and the MP_KEY option with a Host-specific CI-A and a KeyA for
 each of the supported key types as described in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>. CI-A is a unique identifier during the
-lifetime of a MP-DCCP connection.<a href="#section-3.3-4.1.1" class="pilcrow">¶</a></p>
+lifetime of an MP-DCCP connection.<a href="#section-3.3-4.1.1" class="pilcrow">¶</a></p>
 </li>
           <li class="normal" id="section-3.3-4.2">
             <p id="section-3.3-4.2.1">Host B sends a DCCP-Response with Confirm feature for
@@ -3200,7 +3200,7 @@ subflows, each carrying the MP_FAST_CLOSE option.<a href="#section-3.5-4" class=
 <a href="#section-3.6" class="section-number selfRef">3.6. </a><a href="#name-fallback" class="section-name selfRef">Fallback</a>
         </h3>
 <p id="section-3.6-1">When a subflow fails to operate following MP-DCCP intended behavior, it is 
-necessary to proceed with a fallback. This may be either falling back 
+necessary to proceed with a fall back. This may be either falling back 
 to regular DCCP <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span> or removing a problematic subflow. The main reasons for 
 subflow failing include: no MP support at peer host, failure to negotiate protocol
 version, loss of Multipath options, faulty/non-supported MP-DCCP options or modification
@@ -3209,15 +3209,15 @@ of payload data.<a href="#section-3.6-1" class="pilcrow">¶</a></p>
 options and thus ensures that the path is fully MP-DCCP capable. If during the
 handshake procedure it appears that DCCP-Request or DCCP-Response
 messages do not carry the MP_CAPABLE feature, the MP-DCCP connection will not be 
-established and the handshake SHOULD fallback to regular DCCP. If this is not 
+established and the handshake SHOULD fall back to regular DCCP. If this is not 
 possible the connection MUST be closed.<a href="#section-3.6-2" class="pilcrow">¶</a></p>
 <p id="section-3.6-3">If the endpoints fail to agree on the protocol version to use during the Multipath
-Capable feature negotiation, the connection MUST either be closed or fallback
+Capable feature negotiation, the connection MUST either be closed or fall back
 to regular DCCP. This is described in <a href="#mp_capable" class="auto internal xref">Section 3.1</a>. The protocol version negotiation
 distinguishes between negotiation for the initial connection establishment, and
 addition of subsequent subflows. If protocol version negotiation is not successful
-during the initial connection establishment, MP-DCCP connection will fallback to regular DCCP.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
-<p id="section-3.6-4">The fallback procedure to regular DCCP MUST be also applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
+during the initial connection establishment, MP-DCCP connection will fall back to regular DCCP.<a href="#section-3.6-3" class="pilcrow">¶</a></p>
+<p id="section-3.6-4">The fall back procedure to regular DCCP MUST be also applied if the MP_KEY <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> Key Type cannot be negotiated.<a href="#section-3.6-4" class="pilcrow">¶</a></p>
 <p id="section-3.6-5">If a subflow attempts to join an existing MP-DCCP connection, but MP-DCCP options or MP_CAPABLE
 feature are not present or are faulty in the handshake procedure, that subflow MUST be closed.
 This is especially the case if a different MP_CAPABLE version than the originally negotiated
@@ -3300,7 +3300,7 @@ directly to TIMEWAIT and CLOSED, respectively.<a href="#section-3.7-2" class="pi
 </pre>
 </div>
 <figcaption><a href="#figure-24" class="selfRef">Figure 24</a>:
-<a href="#name-most-common-state-transitio" class="selfRef">Most common state transitions of a MP-DCCP subflow</a>
+<a href="#name-most-common-state-transitio" class="selfRef">Most common state transitions of an MP-DCCP subflow</a>
           </figcaption></figure>
 </div>
 </section>
@@ -3342,7 +3342,7 @@ or use cases that do not benefit from additional subflows.<a href="#section-3.10
         <h3 id="name-path-usage-strategies">
 <a href="#section-3.11" class="section-number selfRef">3.11. </a><a href="#name-path-usage-strategies" class="section-name selfRef">Path usage strategies</a>
         </h3>
-<p id="section-3.11-1">MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
+<p id="section-3.11-1">MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within an MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
 Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.<a href="#section-3.11-1" class="pilcrow">¶</a></p>
 <div id="path_mobility">
 <section id="section-3.11.1">
@@ -3350,7 +3350,7 @@ Selecting an appropriate method can allow MP-DCCP to realize different path util
 <a href="#section-3.11.1" class="section-number selfRef">3.11.1. </a><a href="#name-path-mobility" class="section-name selfRef">Path mobility</a>
           </h4>
 <p id="section-3.11.1-1">The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
-Some of the DCCP subflows of a MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
+Some of the DCCP subflows of an MP-DCCP connection might become inactive due to either the occurrence of certain error conditions (e.g., DCCP timeout, packet loss threshold, RTT threshold, closed/removed) or adjustments from the MP-DCCP user.
 When there is outbound data to send and the primary path becomes inactive (e.g., due to failures) or de-prioritized, the MP-DCCP endpoint SHOULD try to send the data through an alternate path with a different source or destination address (depending on the point of failure), if one exists. This process SHOULD respect the path priority configured by the MP_PRIO suboption or if not available pick the most divergent source-destination pair from the original used source-destination pair.<a href="#section-3.11.1-1" class="pilcrow">¶</a></p>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-3.11.1-2.1">
@@ -3469,7 +3469,7 @@ with malicious participants in MP-DCCP connections encouraging the
 recipient to target other hosts in the network.  Therefore,
 implementations should consider heuristics at both the
 sender and receiver to reduce the impact of this.<a href="#section-4-5" class="pilcrow">¶</a></p>
-<p id="section-4-6">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for a MP-DCCP connection.
+<p id="section-4-6">As described in <a href="#mps" class="auto internal xref">Section 3.9</a>, a Maximum Packet Size (MPS) is maintained for an MP-DCCP connection.
 If MP-DCCP exposes a minimum MPS across all paths,
 any change to one path impacts the sender for all paths.
 To mitigate attacks that seek to force a low MPS, MP-DCCP
@@ -3503,7 +3503,7 @@ specifications by the IETF could specify other methods for DCCP encapsulation.<a
       <h2 id="name-implementation">
 <a href="#section-6" class="section-number selfRef">6. </a><a href="#name-implementation" class="section-name selfRef">Implementation</a>
       </h2>
-<p id="section-6-1">The approach described above has been implemented in open source across different testbeds and a new scheduling algorithm has been extensively tested. Also 
+<p id="section-6-1">The approach described above has been implemented in open source across different testbeds and a new scheduling algorithm has been extensively tested. Also, 
 demonstrations of a laboratory setup have been executed and have been published at <span>[<a href="#multipath-dccp.org" class="cite xref">multipath-dccp.org</a>]</span>.<a href="#section-6-1" class="pilcrow">¶</a></p>
 </section>
 </div>
@@ -3712,7 +3712,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
       </table>
 </div>
 <p id="section-8-12">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-12" class="pilcrow">¶</a></p>
-<p id="section-8-13">In addition IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-13" class="pilcrow">¶</a></p>
+<p id="section-8-13">In addition, IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-13" class="pilcrow">¶</a></p>
 <p id="section-8-14">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
 in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" class="pilcrow">¶</a></p>
 <span id="name-multipath-key-type-registry"></span><div id="ref-mp_key-sub-opt-list">
@@ -3917,7 +3917,7 @@ different.<a href="#appendix-A-2" class="pilcrow">¶</a></p>
 and DCCP, which are by nature inherited by their respective multipath
 extensions.  A major difference lies in the delivery of payload, which
 is for TCP an exact copy of the generated byte-stream. DCCP behaves
-in a different way and does not guarantee to deliver any payload nor the
+differently and does not guarantee to deliver any payload nor the
 order of delivery.
 Since this is mainly affecting the receiving endpoint of a TCP or
 DCCP communication, many similarities on the sender side can be identified.
