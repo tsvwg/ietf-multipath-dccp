@@ -11,20 +11,9 @@
 <meta content="Veselin Rakocevic" name="author">
 <meta content="Stephen Johnson" name="author">
 <meta content="
-       DCCP communications as defined in RFC 4340 are restricted to a single path per
-connection, yet multiple paths often exist between peers.  The
-simultaneous use of available multiple paths for a DCCP session could
-improve resource usage within the network and, thus, improve user
-experience through higher throughput and improved resilience to
-network failures.
-Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
-a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery. 
-       This document specifies a set of extensions to
-DCCP to support multipath operations. The protocol offers
-the same type of service to applications as DCCP and provides the
-components necessary to establish and use multiple DCCP flows across
-different paths simultaneously. 
+       Datagram Congestion Control Protocol (DCCP) communications, as defined in RFC 4340, are inherently restricted to a single path per connection, despite the availability of multiple network paths between peers. The ability to utilize multiple paths simultaneously for a DCCP session can enhance network resource utilization, improve throughput, and increase resilience to network failures, ultimately enhancing the user experience. 
+       Use cases for Multipath DCCP (MP-DCCP) include mobile devices (e.g., handsets, vehicles) and residential home gateways that maintain simultaneous connections to distinct network types, such as cellular and Wireless Local Area Networks (WLANs) or cellular and fixed access networks. Compared to existing multipath transport protocols, such as Multipath TCP (MPTCP), MP-DCCP is particularly suited for latency-sensitive applications with varying requirements for reliability and in-order delivery. 
+       This document specifies a set of protocol extensions to DCCP that enable multipath operations. These extensions maintain the same service model as DCCP while introducing mechanisms to establish and utilize multiple concurrent DCCP flows across different network paths. 
     " name="description">
 <meta content="xml2rfc 3.28.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
@@ -1279,20 +1268,9 @@ li > p:last-of-type:only-child {
 <h1 id="title">DCCP Extensions for Multipath Operation with Multiple Addresses</h1>
 <section id="section-abstract">
       <h2 id="abstract"><a href="#abstract" class="selfRef">Abstract</a></h2>
-<p id="section-abstract-1">DCCP communications as defined in RFC 4340 are restricted to a single path per
-connection, yet multiple paths often exist between peers.  The
-simultaneous use of available multiple paths for a DCCP session could
-improve resource usage within the network and, thus, improve user
-experience through higher throughput and improved resilience to
-network failures.
-Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
-a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
-<p id="section-abstract-2">This document specifies a set of extensions to
-DCCP to support multipath operations. The protocol offers
-the same type of service to applications as DCCP and provides the
-components necessary to establish and use multiple DCCP flows across
-different paths simultaneously.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-1">Datagram Congestion Control Protocol (DCCP) communications, as defined in RFC 4340, are inherently restricted to a single path per connection, despite the availability of multiple network paths between peers. The ability to utilize multiple paths simultaneously for a DCCP session can enhance network resource utilization, improve throughput, and increase resilience to network failures, ultimately enhancing the user experience.<a href="#section-abstract-1" class="pilcrow">¶</a></p>
+<p id="section-abstract-2">Use cases for Multipath DCCP (MP-DCCP) include mobile devices (e.g., handsets, vehicles) and residential home gateways that maintain simultaneous connections to distinct network types, such as cellular and Wireless Local Area Networks (WLANs) or cellular and fixed access networks. Compared to existing multipath transport protocols, such as Multipath TCP (MPTCP), MP-DCCP is particularly suited for latency-sensitive applications with varying requirements for reliability and in-order delivery.<a href="#section-abstract-2" class="pilcrow">¶</a></p>
+<p id="section-abstract-3">This document specifies a set of protocol extensions to DCCP that enable multipath operations. These extensions maintain the same service model as DCCP while introducing mechanisms to establish and utilize multiple concurrent DCCP flows across different network paths.<a href="#section-abstract-3" class="pilcrow">¶</a></p>
 </section>
 <div id="status-of-memo">
 <section id="section-boilerplate.1">
@@ -1560,8 +1538,7 @@ changes to the application itself.<a href="#section-1.1-1" class="pilcrow">¶</a
 <a href="#section-1.2" class="section-number selfRef">1.2. </a><a href="#name-terminology" class="section-name selfRef">Terminology</a>
         </h3>
 <p id="section-1.2-1">This document uses terms that are either specific
-for multipath transport or are defined in the context of MP-DCCP,
-similar to <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span>, as follows:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
+for multipath transport as defined in <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span> or are defined in the context of MP-DCCP, as follows:<a href="#section-1.2-1" class="pilcrow">¶</a></p>
 <p id="section-1.2-2">Path: A sequence of links between a sender and a receiver, defined in
 this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows <span>[<a href="#RFC8684" class="cite xref">RFC8684</a>]</span> and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:<a href="#section-1.2-2" class="pilcrow">¶</a></p>
 <ul class="normal">
@@ -1750,7 +1727,7 @@ shown in <a href="#ref-feature-list" class="auto internal xref">Table 1</a>.<a h
 <span class="break"></span><dl class="dlParallel" id="section-3-3">
         <dt id="section-3-3.1">Rec'n Rule:</dt>
         <dd style="margin-left: 1.5em" id="section-3-3.2">
-          <p id="section-3-3.2.1">The reconciliation rule used for the feature. SP indicates the server-priority.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
+          <p id="section-3-3.2.1">The reconciliation rule used for the feature. SP indicates the server-priority as defined in section 6.3 of <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>.<a href="#section-3-3.2.1" class="pilcrow">¶</a></p>
 </dd>
         <dd class="break"></dd>
 <dt id="section-3-3.3">Initial Value:</dt>
@@ -1795,7 +1772,7 @@ shown in <a href="#ref-option-list" class="auto internal xref">Table 2</a>.<a hr
 </div>
 <ul class="normal ulEmpty">
 <li class="normal ulEmpty" id="section-3-6.1">
-          <p id="section-3-6.1.1">Note to the RFC Editor: Please update the Number and Type with the value assigned by IANA.<a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
+          <p id="section-3-6.1.1">Note to the RFC Editor: The Feature Number and Option Type reflect the temporary assignment by IANA and must be verified once again.<a href="#section-3-6.1.1" class="pilcrow">¶</a></p>
 </li>
       </ul>
 <div id="mp_capable">
