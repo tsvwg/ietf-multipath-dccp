@@ -175,14 +175,14 @@ Internet-Draft               Multipath DCCP                 January 2025
    3GPP 5G multi-access solutions (e.g., Access Traffic Steering,
    Switching, and Splitting (ATSSS) specified in [TS23.501]) or hybrid
    access networks that either combine a 3GPP and a non-3GPP access or a
-   fixed and cellular access between user user-equipment/residential
-   gateway and operator network.  MP-DCCP can be used in these scenarios
-   for load balancing, seamless session handover and bandwidth
-   aggregation when non-DCCP traffic like IP, UDP or TCP is encapsulated
-   into MP-DCCP.  More details on potential use cases for MP-DCCP are
-   provided in [multipath-dccp.org], [IETF115.Slides], and
-   [MP-DCCP.Paper].  All these use cases profit from an Open Source
-   Linux reference implementation provided under [multipath-dccp.org].
+   fixed and cellular access between user-equipment/residential gateway
+   and operator network.  MP-DCCP can be used in these scenarios for
+   load balancing, seamless session handover and bandwidth aggregation
+   when non-DCCP traffic like IP, UDP or TCP is encapsulated into MP-
+   DCCP.  More details on potential use cases for MP-DCCP are provided
+   in [multipath-dccp.org], [IETF105.Slides], and [MP-DCCP.Paper].  All
+   these use cases profit from an Open Source Linux reference
+   implementation provided under [multipath-dccp.org].
 
    The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to
    enable the above-mentioned use cases is not considered in this
@@ -2716,7 +2716,7 @@ Internet-Draft               Multipath DCCP                 January 2025
               <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
               dccp-udp-header-conversion-01>.
 
-   [IETF115.Slides]
+   [IETF105.Slides]
               Amend, M., "MP-DCCP for enabling transfer of UDP/IP
               traffic over multiple data paths in multi-connectivity
               networks", IETF105 , n.d.,
