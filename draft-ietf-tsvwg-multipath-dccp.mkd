@@ -159,21 +159,11 @@ Emerging networking experiments and technologies, ACM"
 --- abstract
 
 
-DCCP communications as defined in RFC 4340 are restricted to a single path per
-connection, yet multiple paths often exist between peers.  The
-simultaneous use of available multiple paths for a DCCP session could
-improve resource usage within the network and, thus, improve user
-experience through higher throughput and improved resilience to
-network failures.
-Use cases for Multipath DCCP (MP-DCCP) are mobile devices (e.g., handsets, vehicles) and residential home gateways simultaneously connected to distinct networks as, e.g., 
-a cellular and a Wireless Local Area (WLAN) network
-or a cellular and a fixed access network. Compared to existing multipath protocols such as MPTCP, MP-DCCP offers special support for latency-sensitive services with different requirements for reliability and in-order delivery.  
+Datagram Congestion Control Protocol (DCCP) communications, as defined in RFC 4340, are inherently restricted to a single path per connection, despite the availability of multiple network paths between peers. The ability to utilize multiple paths simultaneously for a DCCP session can enhance network resource utilization, improve throughput, and increase resilience to network failures, ultimately enhancing the user experience.
 
-This document specifies a set of extensions to
-DCCP to support multipath operations. The protocol offers
-the same type of service to applications as DCCP and provides the
-components necessary to establish and use multiple DCCP flows across
-different paths simultaneously.
+Use cases for Multipath DCCP (MP-DCCP) include mobile devices (e.g., handsets, vehicles) and residential home gateways that maintain simultaneous connections to distinct network types, such as cellular and Wireless Local Area Networks (WLANs) or cellular and fixed access networks. Compared to existing multipath transport protocols, such as Multipath TCP (MPTCP), MP-DCCP is particularly suited for latency-sensitive applications with varying requirements for reliability and in-order delivery.
+
+This document specifies a set of protocol extensions to DCCP that enable multipath operations. These extensions maintain the same service model as DCCP while introducing mechanisms to establish and utilize multiple concurrent DCCP flows across different network paths.
 
 --- middle
 
@@ -236,8 +226,7 @@ changes to the application itself.
 ## Terminology {#terminology}
 
 This document uses terms that are either specific
-for multipath transport or are defined in the context of MP-DCCP,
-similar to {{RFC8684}}, as follows:
+for multipath transport as defined in {{RFC8684}} or are defined in the context of MP-DCCP, as follows:
  
 Path: A sequence of links between a sender and a receiver, defined in
 this context by a 4-tuple of source and destination address and the source and destination ports. This definition follows {{RFC8684}} and is illustrated in the following two examples for IPv6 and IPv4, which each show a pair of sender IP-address:port and a pair of receiver IP-address:port, which together form the 4-tuple:
@@ -380,7 +369,7 @@ shown in {{ref-feature-list}}.
 {: #ref-feature-list title='Multipath feature'}
 
 Rec'n Rule:
-: The reconciliation rule used for the feature. SP indicates the server-priority.
+: The reconciliation rule used for the feature. SP indicates the server-priority as defined in section 6.3 of {{RFC4340}}.
 
 Initial Value:
 : The initial value for the feature. Every feature has a known initial value.
@@ -399,7 +388,7 @@ shown in {{ref-option-list}}.
 |  46   |    variable   | Multipath             |     Y      |
 {: #ref-option-list title='Multipath option set'}
 
-> Note to the RFC Editor: Please update the Number and Type with the value assigned by IANA.
+> Note to the RFC Editor: The Feature Number and Option Type reflect the temporary assignment by IANA and must be verified once again.
 
 ## Multipath Capable Feature {#mp_capable}
 
