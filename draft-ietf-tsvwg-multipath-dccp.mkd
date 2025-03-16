@@ -730,7 +730,7 @@ Plain Text
 
 
 Experimental
-: This Key Type allows to use other Key Data. It could be used to verify other key exchange mechanisms, e.g. ECDH in combination with separate certificate validation {{RFC5280}} to achieve protection against man-in-the-middle attacks.
+: This Key Type allows to use other Key Data. It could be used to verify other key exchange mechanisms, e.g. ECDHE in combination with separate certificate validation {{RFC5280}} to achieve protection against man-in-the-middle attacks.
 {: vspace='0'}
 
 
