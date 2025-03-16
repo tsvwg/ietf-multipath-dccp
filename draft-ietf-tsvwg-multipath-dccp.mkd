@@ -639,7 +639,7 @@ over the lifetime of a subflow and can only be re-assigned if sender and
 receiver no longer have them in use.
 
 The Nonce is a 32-bit random value locally generated for every MP_JOIN option.
-Together with the derived key from the both hosts Connection Identifier described in {{MP_KEY}}, the Nonce value builds the basis to calculate the
+Together with the derived key from the both hosts Key Data described in {{MP_KEY}}, the Nonce value builds the basis to calculate the
 HMAC used in the handshaking process as described in {{handshaking}} to avoid replay attacks.
 
 If the CI cannot be verified by the receiving host during a handshake negotiation, 
@@ -706,21 +706,20 @@ The MP_KEY suboption is used to exchange a Connection Identifier (CI) and key ma
 hosts (host A, host B) for a given connection.
 The CI is a unique number in the host for each multipath connection and is generated for inclusion in the first exchange of a connection with MP_KEY.  With the CI it is possible to connect other DCCP subflows to an MP-DCCP connection with MP_JOIN ({{MP_JOIN}}). Its size of 32-bits also defines the maximum number of simultaneous MP-DCCP connections in a host to 2^32.
 According to the Key related elements of the MP_KEY suboption, the Length varies between 17 and 73 bytes for a single-key message, and up to
-115 bytes when all specified Key Types 0-2 are provided. The Key Type field 
+82 bytes when all specified Key Types 0 and 255 are provided. The Key Type field 
 specifies the type of the following key data. 
 The set of key types are shown in {{ref-key-type-list}}.
 
 | Key  Type              | Key Length (bytes) | Meaning                          |
 |------------------------|--------------------|----------------------------------|
 | 0 =Plain Text          |                  8 | Plain Text Key                   |
-| 1 =ECDHE-C25519-SHA256 |                 32 | ECDHE with SHA256 and Curve25519 |
-| 2 =ECDHE-C25519-SHA512 |                 64 | ECDHE with SHA512 and Curve25519 |
-| 3-255                  |                    | Unassigned                       |
+| 1-254                  |                    | Reserved for future Key Types    |
+| 255 =Experimental      |                 64 | For private use only             |
 {: #ref-key-type-list title='MP_KEY key types'}
 
 
 Plain Text
-: Key Material is exchanged in plain text between hosts (Host A, Host B), and the respective key
+: Key Data is exchanged in plain text between hosts (Host A, Host B), and the respective key
   parts (KeyA, KeyB) are used by each host to generate the derived
   key (d-key) by concatenating the two parts with the local key
   in front. That is,
@@ -730,20 +729,10 @@ Plain Text
 {: vspace='0'}
 
 
-ECDHE-SHA256-C25519
-: Public Key Material is exchanged via ECDHE key exchange with SHA256 and
-  Curve 25519 to generate the derived key (d-key) from the shared secret.
-  The full potential of ECDHE use is realized when it is combined with peer
-  authentication technologies to protect against men-in-the-middle attacks. This can
-  be achieved, for example, with separate use and verification of certificates
-  issued by a certification authority (CA) as described in {{RFC5280}}.
+Experimental
+: This Key Type allows to use other Key Data. It could be used to verify other key exchange mechanisms, e.g. ECDH in combination with separate certificate validation {{RFC5280}} to achieve protection against man-in-the-middle attacks.
 {: vspace='0'}
 
-
-ECDHE-SHA512-C25519
-: Public Key Material is exchanged via ECDHE key exchange with SHA512 and
-  Curve 25519 to generate the derived key (d-key) from the shared secret.
-{: vspace='0'}
 
 Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
@@ -1705,11 +1694,6 @@ mechanisms (such as header checksum to protect DCCP headers against
 corruption) is designed to provide the same level of protection against attacks on
 individual DCCP subflows as exists for regular DCCP.
 
-The selection of the Key Type described in {{MP_KEY}} for the exchange of the initial
-key pair determines whether authentication between hosts is possible. The use of
-ECDHE-based key types can provide this functionality if, for example, it is combined
-with a separate certificate validation by a certification authority. The plaintext
-Key Type does not offer this mechanism.
 
 As discussed in {{MP_ADDADDR}}, a host may advertise its private
 addresses, but these might point to different hosts in the receiver's
@@ -1791,7 +1775,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
 
-Future MP-DCCP versions 1 to 15 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future MP-DCCP versions 1 to 15 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
 
 This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in {{MP_OPT}}.
 
@@ -1814,19 +1798,18 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
 | MP_OPT>11           | Unassigned      | Reserved for future Multipath Options           |                   |
 {:#ref-add-proto-opt-list title='Multipath Options registry'}
  
-Future Multipath options with MP_OPT>11 are assigned from this registry using the Specification Required policy (Section 4.6 of {{RFC8126}}).
+Future Multipath options with MP_OPT>11 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
 
 In addition IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing three different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-255 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via Specification Required {{RFC8126}}
+In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Type  | Name                 | Meaning                          | Reference  |
 |:-----:|:--------------------:|:--------------------------------:|:-----------|
 |   0   | Plain Text           | Plain text key                   | {{MP_KEY}} |
-|   1   | ECDHE-C25519-SHA256  | ECDHE with SHA256 and Curve25519 | {{MP_KEY}} |
-|   2   | ECDHE-C25519-SHA512  | ECDHE with SHA512 and Curve25519 | {{MP_KEY}} |
-| 3-255 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
+| 3-254 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
+|  255  | Experimental         | For private use only             | {{MP_KEY}} |
 {:#ref-mp_key-sub-opt-list title='Multipath Key Type registry with the MP_KEY Key Types for key data exchange on different paths'}
 
 --- back
