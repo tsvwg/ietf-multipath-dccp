@@ -26,17 +26,17 @@ the same type of service to applications as DCCP and provides the
 components necessary to establish and use multiple DCCP flows across
 different paths simultaneously. 
     " name="description">
-<meta content="xml2rfc 3.26.0" name="generator">
+<meta content="xml2rfc 3.28.0" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-20" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.26.0
+  xml2rfc 3.28.0
     Python 3.10.16
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
-    Jinja2 3.1.5
-    lxml 5.3.0
+    Jinja2 3.1.6
+    lxml 5.3.1
     platformdirs 4.3.6
     pycountry 24.6.1
     PyYAML 6.0.2
@@ -2347,10 +2347,10 @@ Curve 25519 to generate the derived key (d-key) from the shared secret.<a href="
 of the handshake procedure for the first subflow. This allows the hosts to agree
 on a single key type to be used, as described in <a href="#handshaking" class="auto internal xref">Section 3.3</a><a href="#section-3.2.4-7" class="pilcrow">¶</a></p>
 <p id="section-3.2.4-8">It is possible that not all hosts will support all key types and this specification does not
-recommend or enforce the use of any particular Key Type as this could have security
-implications. If the key type cannot be agreed in the 
-handshake procedure, the MP-DCCP connection MUST fall back to not using MP-DCCP, as 
-indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.4-8" class="pilcrow">¶</a></p>
+recommend or enforce the announcement of any particular Key Type within MP_KEY option as this could have security
+implications. However, at least Key Type 0 (Plain Text) MUST be supported for interoperability tests
+in implementations of MP-DCCP. If the key type cannot be agreed in the handshake procedure, the MP-DCCP connection
+MUST fall back to not using MP-DCCP, as indicated in <a href="#fallback" class="auto internal xref">Section 3.6</a>.<a href="#section-3.2.4-8" class="pilcrow">¶</a></p>
 </section>
 </div>
 <div id="MP_SEQ">
@@ -3477,7 +3477,12 @@ subflow is 'fresh'.<a href="#section-4-3.3.1" class="pilcrow">¶</a></p>
 algorithm documented in Sections <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>, <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a> and <a href="#handshaking" class="auto internal xref">Section 3.3</a>. The
 security of the MP-DCCP connection depends on the use of keys that are
 shared once at the start of the first subflow and are never sent again
-over the network. To ease demultiplexing while not revealing
+over the network. Depending on the security requirements, different Key Types can
+be negotiated in the handshake procedure or must follow the fallback scenario
+described in <a href="#security" class="auto internal xref">Section 4</a>. If there are security requirements that go beyond the
+capabilities of Key Type 0, then it is RECOMMENDED that Key Type 0 is not enabled
+to avoid downgrade attacks that result in the key being exchanged as plain text.
+To ease demultiplexing while not revealing
 cryptographic material, subsequent subflows use the initially exchanged
 CI information. The keys exchanged once at the beginning are
 concatenated and used as keys for creating Hash-based Message
