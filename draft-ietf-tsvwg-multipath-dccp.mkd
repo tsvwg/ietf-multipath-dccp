@@ -1616,6 +1616,7 @@ While in the socket buffer based approach the number of initial subflows can be 
 MP-DCCP can be configured to realize one of several strategies for path usage, via selecting one DCCP subflow of the multiple DCCP subflows within a MP-DCCP connection for data transmission. This can be a dynamic process further facilitated by the means of DCCP and MP-DCCP defined options such as path preference using MP-PRIO, adding or removing DCCP subflows using MP_REMOVEADDR, MP_ADDADDR or DCCP-Close/DCCP-Reset and also path metrics such as packet-loss-rate, CWND or RTT provided by the Congestion Control Algorithm.
 Selecting an appropriate method can allow MP-DCCP to realize different path utilization strategies that make MP-DCCP suitable for end-to-end implementation over the Internet or in controlled environments such as Hybrid Access or 5G ATSSS.
 
+
 ### Path mobility {#path_mobility}
 
 The path mobility strategy provides the use of a single path with a seamless handover function to continue the connection when the currently used path is deemed unsuitable for service delivery.
@@ -1624,6 +1625,7 @@ When there is outbound data to send and the primary path becomes inactive (e.g.,
 
 > Note: Rules for picking the most appropriate source-destination pair are an implementation decision and are not specified within this document.
 Path mobility is supported in the current Linux reference implementation {{multipath-dccp.org}}.
+
 
 ### Concurrent path usage {#concurrent_usage}
 
@@ -1656,6 +1658,9 @@ Internet are outside the scope of this document. If, and when, the IETF
 specifies a method for concurrent usage of multiple paths for the
 general Internet, the framework specified in this document could be used to 
 provide an IETF recommended method for MP-DCCP.
+&nbsp;  
+
+&nbsp;  
 
 
 # Security Considerations {#security}
@@ -1785,7 +1790,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
 
-Sect. {{mp_capable}} specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
+{{mp_capable}} specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
 
    |  Version  | Value           | Specification  |
