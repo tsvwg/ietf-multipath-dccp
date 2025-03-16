@@ -2321,7 +2321,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    when, the IETF specifies a method for concurrent usage of multiple
    paths for the general Internet, the framework specified in this
    document could be used to provide an IETF recommended method for MP-
-   DCCP.
+   DCCP.  
+
 
 4.  Security Considerations
 
@@ -2344,7 +2345,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    *  Provide assurance that the parties involved in an MP-DCCP
       handshake procedure are identical to those in the original DCCP
       connection.
-
 
 
 
@@ -2498,11 +2498,11 @@ Internet-Draft               Multipath DCCP                 January 2025
       Note to RFC Editor: Please replace [ThisDocument] with a reference
       to the final RFC
 
-   Sect.  Section 3.1 specifies the new 1-byte entry above includes a
-   4-bit part to specify the version of the used MP-DCCP implementation.
-   This document requests IANA to create a new 'MP-DCCP Versions'
-   registry within the DCCP registry group to track the MP-DCCP version.
-   The initial content of this registry is as follows:
+   Section 3.1 specifies the new 1-byte entry above includes a 4-bit
+   part to specify the version of the used MP-DCCP implementation.  This
+   document requests IANA to create a new 'MP-DCCP Versions' registry
+   within the DCCP registry group to track the MP-DCCP version.  The
+   initial content of this registry is as follows:
 
              +============+================+================+
              |  Version   |     Value      | Specification  |
