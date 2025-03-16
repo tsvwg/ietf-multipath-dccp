@@ -272,7 +272,7 @@ Internet-Draft               Multipath DCCP                 January 2025
    Host: An end host operating an MP-DCCP implementation, and either
    initiating or accepting an MP-DCCP connection.
 
-
+   '+': The plus symbol means concatenation of values.
 
 
 
@@ -1097,15 +1097,16 @@ Internet-Draft               Multipath DCCP                 January 2025
    subsequent subflow in Section 3.3.  For this specification of MP-
    DCCP, the HMAC code is generated according to [RFC2104] in
    combination with the SHA256 hash algorithm described in [RFC6234],
-   with the output truncated to the leftmost 160 bits (20 bytes).  It is
-   possible that other versions of MP-DCCP will define other hash
-   algorithms in the future.
+   with the output in big-endian format truncated to the leftmost 160
+   bits (20 bytes).  It is possible that other versions of MP-DCCP will
+   define other hash algorithms in the future.
 
    The "Key" used for the HMAC computation is the derived key (d-keyA
    for Host A or d-KeyB for Host B) described in Section 3.2.4, while
    the HMAC "Message" for MP_JOIN, MP_ADDADDR and MP_REMOVEADDR must be
-   calculated in both hosts in order to protect on the one hand and
-   validate on the other, and is a concatenation of:
+   calculated in both hosts in order to protect the multipath option
+   when sending and to validate the multipath option when receiving, and
+   is a concatenation of:
 
    *  for MP_JOIN: The nonces of the MP_JOIN messages for which
       authentication shall be performed.  Depending on whether Host A or
@@ -1113,7 +1114,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       follows:
 
       -  MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)
-
 
 
 
@@ -1773,18 +1773,18 @@ Internet-Draft               Multipath DCCP                 January 2025
    *  Host B computes the HMAC of the DCCP-Request and sends a DCCP-
       Response with Confirm feature option for MP-Capable and the
       MP_JOIN option with the CI-A and a random nonce RB together with
-      the computed MP_HMAC.  The HMAC is calculated by taking the
-      leftmost 20 bytes from the SHA256 hash of a HMAC code created by
-      using the nonce received with MP_JOIN(A) and the local nonce RB as
-      message and the derived key described in Section 3.2.4 as key:
+      the computed MP_HMAC.  As specified in Section 3.2.6, the HMAC is
+      calculated by taking the leftmost 20 bytes from the SHA256 hash of
+      a HMAC code created by using the nonce received with MP_JOIN(A)
+      and the local nonce RB as message and the derived key described in
+      Section 3.2.4 as key:
 
       MP_HMAC(B) = HMAC-SHA256(Key=d-keyB, Msg=RB+RA)
 
-   *  Host A sends a DCCP-Ack with the HMAC computed for the DCCP-
-      Response.  The HMAC is calculated by taking the leftmost 20 bytes
-      from the SHA256 hash of a HMAC code created by using the local
-      nonce RA and the nonce received with MP_JOIN(B) as message and the
-      derived key described in Section 3.2.4 as key:
+
+
+
+
 
 
 
@@ -1793,6 +1793,13 @@ Amend, et al.             Expires 21 July 2025                 [Page 32]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   *  Host A sends a DCCP-Ack with the HMAC computed for the DCCP-
+      Response.  As specified in Section 3.2.6, the HMAC is calculated
+      by taking the leftmost 20 bytes from the SHA256 hash of a HMAC
+      code created by using the local nonce RA and the nonce received
+      with MP_JOIN(B) as message and the derived key described in
+      Section 3.2.4 as key:
 
       MP_HMAC(A) = HMAC-SHA256(Key=d-keyA, Msg=RA+RB)
 
@@ -1836,19 +1843,15 @@ Internet-Draft               Multipath DCCP                 January 2025
       packet carrying the option that we are confirming together with
       the MP_ADDADDR option
 
-   *  the leftmost 20 bytes of the HMAC(B) generated during the initial
-      handshaking procedure Section 3.3
-
-
-
-
-
 
 
 Amend, et al.             Expires 21 July 2025                 [Page 33]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+   *  the leftmost 20 bytes of the HMAC(B) generated during the initial
+      handshaking procedure Section 3.3
 
              Host A                                         Host B
    ------------------------                              -----------
@@ -1894,9 +1897,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
    *  the leftmost 20 bytes of the HMAC(B) generated during the initial
       handshaking procedure Section 3.3
-
-
-
 
 
 
