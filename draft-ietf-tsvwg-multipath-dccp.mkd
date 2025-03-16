@@ -1437,7 +1437,7 @@ as described in Section 5.6 of {{RFC4340}}, i.e., it sends a DCCP-Close/DCCP-Res
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
 e.g., during subflow establishment, it MUST use an appropriate DCCP-Reset code as specified in IANA {{DCCP.Parameter}} for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
-is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
+is reached. Note that receiving a reset code 9 for secondary subflows MUST NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
 this section. 
 
@@ -1754,6 +1754,8 @@ The authors gratefully acknowledge significant input into this document from Dir
 This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
 in accordance with the RFC Required policy of {{RFC8126}}, Section 4.7.  This document defines one new value which is requested to be allocated in the IANA DCCP Feature Numbers registry and three new registries to be allocated in the DCCP registry group. 
 
+## New Multipath Capable DCCP feature
+
 This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
 as described in {{protocol}}. The following entry in {{ref-add-feature-list}} should be
@@ -1765,6 +1767,8 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 {:#ref-add-feature-list title='Addition to DCCP Feature Numbers registry'}
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
+
+## New MP-DCCP version registry
 
 {{mp_capable}} specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows: 
 
@@ -1778,6 +1782,8 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
 
 Future MP-DCCP versions 1 to 15 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
+
+## New Multipath option and registry
 
 This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in {{MP_OPT}}.
 
@@ -1802,9 +1808,13 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
  
 Future Multipath options with MP_OPT>11 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
 
-In addition, IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+## New DCCP Reset Code
 
-In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required {{RFC8126}}
+IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section {{MP_FAST_CLOSE}}.
+
+## New Multipath Key Type registry
+
+IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in {{MP_KEY}} according to the entries in {{ref-mp_key-sub-opt-list}} below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required {{RFC8126}}
 in potential future versions of the MP-DCCP protocol.
 
 | Type  | Name                 | Meaning                          | Reference  |
