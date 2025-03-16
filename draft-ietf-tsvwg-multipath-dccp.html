@@ -1448,6 +1448,23 @@ li > p:last-of-type:only-child {
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8">
             <p id="section-toc.1-1.8.1"><a href="#section-8" class="auto internal xref">8</a>.  <a href="#name-iana-considerations" class="internal xref">IANA Considerations</a></p>
+<ul class="compact toc ulBare ulEmpty">
+<li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.1">
+                <p id="section-toc.1-1.8.2.1.1"><a href="#section-8.1" class="auto internal xref">8.1</a>.  <a href="#name-new-multipath-capable-dccp-" class="internal xref">New Multipath Capable DCCP feature</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.2">
+                <p id="section-toc.1-1.8.2.2.1"><a href="#section-8.2" class="auto internal xref">8.2</a>.  <a href="#name-new-mp-dccp-version-registr" class="internal xref">New MP-DCCP version registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.3">
+                <p id="section-toc.1-1.8.2.3.1"><a href="#section-8.3" class="auto internal xref">8.3</a>.  <a href="#name-new-multipath-option-and-re" class="internal xref">New Multipath option and registry</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.4">
+                <p id="section-toc.1-1.8.2.4.1"><a href="#section-8.4" class="auto internal xref">8.4</a>.  <a href="#name-new-dccp-reset-code" class="internal xref">New DCCP Reset Code</a></p>
+</li>
+              <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.8.2.5">
+                <p id="section-toc.1-1.8.2.5.1"><a href="#section-8.5" class="auto internal xref">8.5</a>.  <a href="#name-new-multipath-key-type-regi" class="internal xref">New Multipath Key Type registry</a></p>
+</li>
+            </ul>
 </li>
           <li class="compact toc ulBare ulEmpty" id="section-toc.1-1.9">
             <p id="section-toc.1-1.9.1"><a href="#section-9" class="auto internal xref">9</a>.  <a href="#name-references" class="internal xref">References</a></p>
@@ -3162,7 +3179,7 @@ as described in Section 5.6 of <span>[<a href="#RFC4340" class="cite xref">RFC43
 may be preceded by a DCCP-CloseReq. In the event of an irregular termination of a subflow,
 e.g., during subflow establishment, it MUST use an appropriate DCCP-Reset code as specified in IANA <span>[<a href="#DCCP.Parameter" class="cite xref">DCCP.Parameter</a>]</span> for DCCP operations. This could be, for example, sending reset code 5 (Option Error) when an MP-DCCP
 option provides invalid data or reset code 9 (Too Busy) when the maximum number of maintainable paths
-is reached. Note that receiving a reset code 9 for secondary subflows SHOULD NOT impact already existing active
+is reached. Note that receiving a reset code 9 for secondary subflows MUST NOT impact already existing active
 subflows. If necessary, these subflows are terminated in a subsequent step using the procedures described in
 this section.<a href="#section-3.5-1" class="pilcrow">¶</a></p>
 <p id="section-3.5-2">A host terminates an MP-DCCP connection using the DCCP connection termination specified in section 5.5 of
@@ -3525,238 +3542,273 @@ inputs for this specification.<a href="#section-7-1" class="pilcrow">¶</a></p>
       </h2>
 <p id="section-8-1">This section provides guidance to the Internet Assigned Numbers Authority (IANA) regarding registration of values related to the MP extension of the DCCP protocol 
 in accordance with the RFC Required policy of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>, Section 4.7.  This document defines one new value which is requested to be allocated in the IANA DCCP Feature Numbers registry and three new registries to be allocated in the DCCP registry group.<a href="#section-8-1" class="pilcrow">¶</a></p>
-<p id="section-8-2">This document requests IANA to assign a new DCCP feature parameter for negotiating
+<div id="new-multipath-capable-dccp-feature">
+<section id="section-8.1">
+        <h3 id="name-new-multipath-capable-dccp-">
+<a href="#section-8.1" class="section-number selfRef">8.1. </a><a href="#name-new-multipath-capable-dccp-" class="section-name selfRef">New Multipath Capable DCCP feature</a>
+        </h3>
+<p id="section-8.1-1">This document requests IANA to assign a new DCCP feature parameter for negotiating
 the support of multipath capability for DCCP sessions between hosts
 as described in <a href="#protocol" class="auto internal xref">Section 3</a>. The following entry in <a href="#ref-add-feature-list" class="auto internal xref">Table 6</a> should be
-added to the Feature Numbers registry in the DCCP registry group according to <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 19.4. under the "DCCP Protocol" heading.<a href="#section-8-2" class="pilcrow">¶</a></p>
+added to the Feature Numbers registry in the DCCP registry group according to <span>[<a href="#RFC4340" class="cite xref">RFC4340</a>]</span>, Section 19.4. under the "DCCP Protocol" heading.<a href="#section-8.1-1" class="pilcrow">¶</a></p>
 <span id="name-addition-to-dccp-feature-nu"></span><div id="ref-add-feature-list">
 <table class="center" id="table-6">
-        <caption>
+          <caption>
 <a href="#table-6" class="selfRef">Table 6</a>:
 <a href="#name-addition-to-dccp-feature-nu" class="selfRef">Addition to DCCP Feature Numbers registry</a>
-        </caption>
+          </caption>
 <thead>
-          <tr>
-            <th class="text-center" rowspan="1" colspan="1">Value</th>
-            <th class="text-center" rowspan="1" colspan="1">Feature Name</th>
-            <th class="text-center" rowspan="1" colspan="1">Specification</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">10 suggested</td>
-            <td class="text-center" rowspan="1" colspan="1">Multipath Capable</td>
-            <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <th class="text-center" rowspan="1" colspan="1">Value</th>
+              <th class="text-center" rowspan="1" colspan="1">Feature Name</th>
+              <th class="text-center" rowspan="1" colspan="1">Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">10 suggested</td>
+              <td class="text-center" rowspan="1" colspan="1">Multipath Capable</td>
+              <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
+            </tr>
+          </tbody>
+        </table>
 </div>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8-4.1">
-          <p id="section-8-4.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-4.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.1-3.1">
+            <p id="section-8.1-3.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8.1-3.1.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-8-5"><a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8-5" class="pilcrow">¶</a></p>
+        </ul>
+</section>
+</div>
+<div id="new-mp-dccp-version-registry">
+<section id="section-8.2">
+        <h3 id="name-new-mp-dccp-version-registr">
+<a href="#section-8.2" class="section-number selfRef">8.2. </a><a href="#name-new-mp-dccp-version-registr" class="section-name selfRef">New MP-DCCP version registry</a>
+        </h3>
+<p id="section-8.2-1"><a href="#mp_capable" class="auto internal xref">Section 3.1</a> specifies the new 1-byte entry above includes a 4-bit part to specify the version of the used MP-DCCP implementation. This document requests IANA to create a new 'MP-DCCP Versions' registry within the DCCP registry group to track the MP-DCCP version. The initial content of this registry is as follows:<a href="#section-8.2-1" class="pilcrow">¶</a></p>
 <span id="name-mp-dccp-versions-registry"></span><div id="ref-add-version-list">
 <table class="center" id="table-7">
-        <caption>
+          <caption>
 <a href="#table-7" class="selfRef">Table 7</a>:
 <a href="#name-mp-dccp-versions-registry" class="selfRef">MP-DCCP Versions Registry</a>
-        </caption>
+          </caption>
 <thead>
-          <tr>
-            <th class="text-center" rowspan="1" colspan="1">Version</th>
-            <th class="text-center" rowspan="1" colspan="1">Value</th>
-            <th class="text-center" rowspan="1" colspan="1">Specification</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">0</td>
-            <td class="text-center" rowspan="1" colspan="1">0000 suggested</td>
-            <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-            <td class="text-center" rowspan="1" colspan="1">0001 - 1111</td>
-            <td class="text-center" rowspan="1" colspan="1"> </td>
-          </tr>
-        </tbody>
-      </table>
+            <tr>
+              <th class="text-center" rowspan="1" colspan="1">Version</th>
+              <th class="text-center" rowspan="1" colspan="1">Value</th>
+              <th class="text-center" rowspan="1" colspan="1">Specification</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">0</td>
+              <td class="text-center" rowspan="1" colspan="1">0000 suggested</td>
+              <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
+              <td class="text-center" rowspan="1" colspan="1">0001 - 1111</td>
+              <td class="text-center" rowspan="1" colspan="1"> </td>
+            </tr>
+          </tbody>
+        </table>
 </div>
 <ul class="normal ulEmpty">
-<li class="normal ulEmpty" id="section-8-7.1">
-          <p id="section-8-7.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8-7.1.1" class="pilcrow">¶</a></p>
+<li class="normal ulEmpty" id="section-8.2-3.1">
+            <p id="section-8.2-3.1.1">Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC<a href="#section-8.2-3.1.1" class="pilcrow">¶</a></p>
 </li>
-      </ul>
-<p id="section-8-8">Future MP-DCCP versions 1 to 15 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-8" class="pilcrow">¶</a></p>
-<p id="section-8-9">This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>.<a href="#section-8-9" class="pilcrow">¶</a></p>
-<p id="section-8-10">IANA is requested to create a new 'Multipath Options' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Options' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8-10" class="pilcrow">¶</a></p>
+        </ul>
+<p id="section-8.2-4">Future MP-DCCP versions 1 to 15 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8.2-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="new-multipath-option-and-registry">
+<section id="section-8.3">
+        <h3 id="name-new-multipath-option-and-re">
+<a href="#section-8.3" class="section-number selfRef">8.3. </a><a href="#name-new-multipath-option-and-re" class="section-name selfRef">New Multipath option and registry</a>
+        </h3>
+<p id="section-8.3-1">This document requests IANA to assign value 46 in the DCCP "Option Types" registry to "Multipath Options", as described in <a href="#MP_OPT" class="auto internal xref">Section 3.2</a>.<a href="#section-8.3-1" class="pilcrow">¶</a></p>
+<p id="section-8.3-2">IANA is requested to create a new 'Multipath Options' registry within the DCCP registry group. The following entries in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> should be added to the new 'Multipath Options' registry. The registry in <a href="#ref-add-proto-opt-list" class="auto internal xref">Table 8</a> has an upper boundary of 255 in the numeric value field.<a href="#section-8.3-2" class="pilcrow">¶</a></p>
 <span id="name-multipath-options-registry"></span><div id="ref-add-proto-opt-list">
 <table class="center" id="table-8">
-        <caption>
+          <caption>
 <a href="#table-8" class="selfRef">Table 8</a>:
 <a href="#name-multipath-options-registry" class="selfRef">Multipath Options registry</a>
-        </caption>
+          </caption>
 <thead>
-          <tr>
-            <th class="text-center" rowspan="1" colspan="1">Multipath Option</th>
-            <th class="text-center" rowspan="1" colspan="1">Name</th>
-            <th class="text-center" rowspan="1" colspan="1">Description</th>
-            <th class="text-center" rowspan="1" colspan="1">Reference</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=0</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_CONFIRM</td>
-            <td class="text-center" rowspan="1" colspan="1">Confirm reception/processing of an MP_OPT option</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>
+            <tr>
+              <th class="text-center" rowspan="1" colspan="1">Multipath Option</th>
+              <th class="text-center" rowspan="1" colspan="1">Name</th>
+              <th class="text-center" rowspan="1" colspan="1">Description</th>
+              <th class="text-center" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=0</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_CONFIRM</td>
+              <td class="text-center" rowspan="1" colspan="1">Confirm reception/processing of an MP_OPT option</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_CONFIRM" class="auto internal xref">Section 3.2.1</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=1</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_JOIN</td>
-            <td class="text-center" rowspan="1" colspan="1">Join subflow to existing MP-DCCP connection</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=1</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_JOIN</td>
+              <td class="text-center" rowspan="1" colspan="1">Join subflow to existing MP-DCCP connection</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=2</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_FAST_CLOSE</td>
-            <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP connection</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=2</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_FAST_CLOSE</td>
+              <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP connection</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=3</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_KEY</td>
-            <td class="text-center" rowspan="1" colspan="1">Exchange key material for MP_HMAC</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=3</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_KEY</td>
+              <td class="text-center" rowspan="1" colspan="1">Exchange key material for MP_HMAC</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=4</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_SEQ</td>
-            <td class="text-center" rowspan="1" colspan="1">Multipath sequence number</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=4</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_SEQ</td>
+              <td class="text-center" rowspan="1" colspan="1">Multipath sequence number</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_SEQ" class="auto internal xref">Section 3.2.5</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=5</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_HMAC</td>
-            <td class="text-center" rowspan="1" colspan="1">Hash-based message auth. code for MP-DCCP</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=5</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_HMAC</td>
+              <td class="text-center" rowspan="1" colspan="1">Hash-based message auth. code for MP-DCCP</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_HMAC" class="auto internal xref">Section 3.2.6</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=6</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_RTT</td>
-            <td class="text-center" rowspan="1" colspan="1">Transmit RTT values and calculation parameters</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_RTT" class="auto internal xref">Section 3.2.7</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=6</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_RTT</td>
+              <td class="text-center" rowspan="1" colspan="1">Transmit RTT values and calculation parameters</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_RTT" class="auto internal xref">Section 3.2.7</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=7</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_ADDADDR</td>
-            <td class="text-center" rowspan="1" colspan="1">Advertise additional address(es)/port(s)</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=7</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_ADDADDR</td>
+              <td class="text-center" rowspan="1" colspan="1">Advertise additional address(es)/port(s)</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_ADDADDR" class="auto internal xref">Section 3.2.8</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=8</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_REMOVEADDR</td>
-            <td class="text-center" rowspan="1" colspan="1">Remove address(es)/ port(s)</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=8</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_REMOVEADDR</td>
+              <td class="text-center" rowspan="1" colspan="1">Remove address(es)/ port(s)</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_REMOVEADDR" class="auto internal xref">Section 3.2.9</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=9</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_PRIO</td>
-            <td class="text-center" rowspan="1" colspan="1">Change subflow priority</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_PRIO" class="auto internal xref">Section 3.2.10</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=9</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_PRIO</td>
+              <td class="text-center" rowspan="1" colspan="1">Change subflow priority</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_PRIO" class="auto internal xref">Section 3.2.10</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=10</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_CLOSE</td>
-            <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP subflow</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_CLOSE" class="auto internal xref">Section 3.2.11</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=10</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_CLOSE</td>
+              <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP subflow</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_CLOSE" class="auto internal xref">Section 3.2.11</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT=11</td>
-            <td class="text-center" rowspan="1" colspan="1">MP_EXP</td>
-            <td class="text-center" rowspan="1" colspan="1">Experimental suboption for private use</td>
-            <td class="text-center" rowspan="1" colspan="1">
-              <a href="#MP_EXP" class="auto internal xref">Section 3.2.12</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT=11</td>
+              <td class="text-center" rowspan="1" colspan="1">MP_EXP</td>
+              <td class="text-center" rowspan="1" colspan="1">Experimental suboption for private use</td>
+              <td class="text-center" rowspan="1" colspan="1">
+                <a href="#MP_EXP" class="auto internal xref">Section 3.2.12</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">MP_OPT&gt;11</td>
-            <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-            <td class="text-center" rowspan="1" colspan="1">Reserved for future Multipath Options</td>
-            <td class="text-center" rowspan="1" colspan="1"> </td>
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">MP_OPT&gt;11</td>
+              <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
+              <td class="text-center" rowspan="1" colspan="1">Reserved for future Multipath Options</td>
+              <td class="text-center" rowspan="1" colspan="1"> </td>
+            </tr>
+          </tbody>
+        </table>
 </div>
-<p id="section-8-12">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8-12" class="pilcrow">¶</a></p>
-<p id="section-8-13">In addition, IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8-13" class="pilcrow">¶</a></p>
-<p id="section-8-14">In addition IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
-in potential future versions of the MP-DCCP protocol.<a href="#section-8-14" class="pilcrow">¶</a></p>
+<p id="section-8.3-4">Future Multipath options with MP_OPT&gt;11 are assigned from this registry using the RFC Required policy (Section 4.7 of <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>).<a href="#section-8.3-4" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="new-dccp-reset-code">
+<section id="section-8.4">
+        <h3 id="name-new-dccp-reset-code">
+<a href="#section-8.4" class="section-number selfRef">8.4. </a><a href="#name-new-dccp-reset-code" class="section-name selfRef">New DCCP Reset Code</a>
+        </h3>
+<p id="section-8.4-1">IANA is requested to assign a new DCCP-Reset Code value 13 suggested in the DCCP-Reset Codes Registry, with the short description "Abrupt MP termination".  Use of this reset code is defined in section <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>.<a href="#section-8.4-1" class="pilcrow">¶</a></p>
+</section>
+</div>
+<div id="new-multipath-key-type-registry">
+<section id="section-8.5">
+        <h3 id="name-new-multipath-key-type-regi">
+<a href="#section-8.5" class="section-number selfRef">8.5. </a><a href="#name-new-multipath-key-type-regi" class="section-name selfRef">New Multipath Key Type registry</a>
+        </h3>
+<p id="section-8.5-1">IANA is requested to assign for this version of the MP-DCCP protocol a new 'Multipath Key Type' registry containing two different suboptions to the MP_KEY option to identify the MP_KEY Key types in terms of 8-bit values as specified in <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a> according to the entries in <a href="#ref-mp_key-sub-opt-list" class="auto internal xref">Table 9</a> below. Values in range 3-254 (decimal) inclusive remain unassigned in this here specified version 0 of the protocol and are assigned via RFC Required <span>[<a href="#RFC8126" class="cite xref">RFC8126</a>]</span>
+in potential future versions of the MP-DCCP protocol.<a href="#section-8.5-1" class="pilcrow">¶</a></p>
 <span id="name-multipath-key-type-registry"></span><div id="ref-mp_key-sub-opt-list">
 <table class="center" id="table-9">
-        <caption>
+          <caption>
 <a href="#table-9" class="selfRef">Table 9</a>:
 <a href="#name-multipath-key-type-registry" class="selfRef">Multipath Key Type registry with the MP_KEY Key Types for key data exchange on different paths</a>
-        </caption>
+          </caption>
 <thead>
-          <tr>
-            <th class="text-center" rowspan="1" colspan="1">Type</th>
-            <th class="text-center" rowspan="1" colspan="1">Name</th>
-            <th class="text-center" rowspan="1" colspan="1">Meaning</th>
-            <th class="text-left" rowspan="1" colspan="1">Reference</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">0</td>
-            <td class="text-center" rowspan="1" colspan="1">Plain Text</td>
-            <td class="text-center" rowspan="1" colspan="1">Plain text key</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
+            <tr>
+              <th class="text-center" rowspan="1" colspan="1">Type</th>
+              <th class="text-center" rowspan="1" colspan="1">Name</th>
+              <th class="text-center" rowspan="1" colspan="1">Meaning</th>
+              <th class="text-left" rowspan="1" colspan="1">Reference</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">0</td>
+              <td class="text-center" rowspan="1" colspan="1">Plain Text</td>
+              <td class="text-center" rowspan="1" colspan="1">Plain text key</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">3-254</td>
-            <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-            <td class="text-center" rowspan="1" colspan="1">Reserved for future use</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">3-254</td>
+              <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
+              <td class="text-center" rowspan="1" colspan="1">Reserved for future use</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
 </td>
-          </tr>
-          <tr>
-            <td class="text-center" rowspan="1" colspan="1">255</td>
-            <td class="text-center" rowspan="1" colspan="1">Experimental</td>
-            <td class="text-center" rowspan="1" colspan="1">For private use only</td>
-            <td class="text-left" rowspan="1" colspan="1">
-              <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
+            </tr>
+            <tr>
+              <td class="text-center" rowspan="1" colspan="1">255</td>
+              <td class="text-center" rowspan="1" colspan="1">Experimental</td>
+              <td class="text-center" rowspan="1" colspan="1">For private use only</td>
+              <td class="text-left" rowspan="1" colspan="1">
+                <a href="#MP_KEY" class="auto internal xref">Section 3.2.4</a>
 </td>
-          </tr>
-        </tbody>
-      </table>
+            </tr>
+          </tbody>
+        </table>
+</div>
+</section>
 </div>
 </section>
 </div>

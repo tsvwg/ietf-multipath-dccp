@@ -134,11 +134,16 @@ Internet-Draft               Multipath DCCP                 January 2025
    6.  Implementation  . . . . . . . . . . . . . . . . . . . . . . .  43
    7.  Acknowledgments . . . . . . . . . . . . . . . . . . . . . . .  43
    8.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .  44
-   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  46
+     8.1.  New Multipath Capable DCCP feature  . . . . . . . . . . .  44
+     8.2.  New MP-DCCP version registry  . . . . . . . . . . . . . .  44
+     8.3.  New Multipath option and registry . . . . . . . . . . . .  45
+     8.4.  New DCCP Reset Code . . . . . . . . . . . . . . . . . . .  46
+     8.5.  New Multipath Key Type registry . . . . . . . . . . . . .  46
+   9.  References  . . . . . . . . . . . . . . . . . . . . . . . . .  47
      9.1.  Normative References  . . . . . . . . . . . . . . . . . .  47
-     9.2.  Informative References  . . . . . . . . . . . . . . . . .  47
+     9.2.  Informative References  . . . . . . . . . . . . . . . . .  48
    Appendix A.  Differences from Multipath TCP . . . . . . . . . . .  50
-   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  52
+   Authors' Addresses  . . . . . . . . . . . . . . . . . . . . . . .  53
 
 1.  Introduction
 
@@ -156,11 +161,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    multipath support to DCCP; specifically, support for signaling and
    setting up multiple paths (a.k.a, "subflows"), managing these
    subflows, reordering of data, and termination of sessions.
-
-
-
-
-
 
 
 
@@ -1932,7 +1932,7 @@ Internet-Draft               Multipath DCCP                 January 2025
    sending reset code 5 (Option Error) when an MP-DCCP option provides
    invalid data or reset code 9 (Too Busy) when the maximum number of
    maintainable paths is reached.  Note that receiving a reset code 9
-   for secondary subflows SHOULD NOT impact already existing active
+   for secondary subflows MUST NOT impact already existing active
    subflows.  If necessary, these subflows are terminated in a
    subsequent step using the procedures described in this section.
 
@@ -2420,6 +2420,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    Numbers registry and three new registries to be allocated in the DCCP
    registry group.
 
+8.1.  New Multipath Capable DCCP feature
+
    This document requests IANA to assign a new DCCP feature parameter
    for negotiating the support of multipath capability for DCCP sessions
    between hosts as described in Section 3.  The following entry in
@@ -2438,6 +2440,8 @@ Internet-Draft               Multipath DCCP                 January 2025
       Note to RFC Editor: Please replace [ThisDocument] with a reference
       to the final RFC
 
+8.2.  New MP-DCCP version registry
+
    Section 3.1 specifies the new 1-byte entry above includes a 4-bit
    part to specify the version of the used MP-DCCP implementation.  This
    document requests IANA to create a new 'MP-DCCP Versions' registry
@@ -2454,10 +2458,6 @@ Internet-Draft               Multipath DCCP                 January 2025
 
                     Table 7: MP-DCCP Versions Registry
 
-      Note to RFC Editor: Please replace [ThisDocument] with a reference
-      to the final RFC
-
-
 
 
 
@@ -2466,8 +2466,13 @@ Amend, et al.             Expires 21 July 2025                 [Page 44]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+      Note to RFC Editor: Please replace [ThisDocument] with a reference
+      to the final RFC
+
    Future MP-DCCP versions 1 to 15 are assigned from this registry using
    the RFC Required policy (Section 4.7 of [RFC8126]).
+
+8.3.  New Multipath option and registry
 
    This document requests IANA to assign value 46 in the DCCP "Option
    Types" registry to "Multipath Options", as described in Section 3.2.
@@ -2509,11 +2514,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       +-----------+---------------+---------------------+-----------+
       |  MP_OPT=7 |   MP_ADDADDR  |      Advertise      |  Section  |
       |           |               |      additional     |   3.2.8   |
-      |           |               | address(es)/port(s) |           |
-      +-----------+---------------+---------------------+-----------+
-      |  MP_OPT=8 | MP_REMOVEADDR | Remove address(es)/ |  Section  |
-      |           |               |       port(s)       |   3.2.9   |
-      +-----------+---------------+---------------------+-----------+
 
 
 
@@ -2522,6 +2522,11 @@ Amend, et al.             Expires 21 July 2025                 [Page 45]
 Internet-Draft               Multipath DCCP                 January 2025
 
 
+      |           |               | address(es)/port(s) |           |
+      +-----------+---------------+---------------------+-----------+
+      |  MP_OPT=8 | MP_REMOVEADDR | Remove address(es)/ |  Section  |
+      |           |               |       port(s)       |   3.2.9   |
+      +-----------+---------------+---------------------+-----------+
       |  MP_OPT=9 |    MP_PRIO    |    Change subflow   |  Section  |
       |           |               |       priority      |   3.2.10  |
       +-----------+---------------+---------------------+-----------+
@@ -2541,19 +2546,37 @@ Internet-Draft               Multipath DCCP                 January 2025
    Future Multipath options with MP_OPT>11 are assigned from this
    registry using the RFC Required policy (Section 4.7 of [RFC8126]).
 
-   In addition, IANA is requested to assign a new DCCP-Reset Code value
-   13 suggested in the DCCP-Reset Codes Registry, with the short
-   description "Abrupt MP termination".  Use of this reset code is
-   defined in section Section 3.2.3.
+8.4.  New DCCP Reset Code
 
-   In addition IANA is requested to assign for this version of the MP-
-   DCCP protocol a new 'Multipath Key Type' registry containing two
-   different suboptions to the MP_KEY option to identify the MP_KEY Key
-   types in terms of 8-bit values as specified in Section 3.2.4
-   according to the entries in Table 9 below.  Values in range 3-254
-   (decimal) inclusive remain unassigned in this here specified version
-   0 of the protocol and are assigned via RFC Required [RFC8126] in
-   potential future versions of the MP-DCCP protocol.
+   IANA is requested to assign a new DCCP-Reset Code value 13 suggested
+   in the DCCP-Reset Codes Registry, with the short description "Abrupt
+   MP termination".  Use of this reset code is defined in section
+   Section 3.2.3.
+
+8.5.  New Multipath Key Type registry
+
+   IANA is requested to assign for this version of the MP-DCCP protocol
+   a new 'Multipath Key Type' registry containing two different
+   suboptions to the MP_KEY option to identify the MP_KEY Key types in
+   terms of 8-bit values as specified in Section 3.2.4 according to the
+   entries in Table 9 below.  Values in range 3-254 (decimal) inclusive
+   remain unassigned in this here specified version 0 of the protocol
+   and are assigned via RFC Required [RFC8126] in potential future
+   versions of the MP-DCCP protocol.
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 46]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
 
     +=======+==============+=========================+===============+
     |  Type |     Name     |         Meaning         | Reference     |
@@ -2569,14 +2592,6 @@ Internet-Draft               Multipath DCCP                 January 2025
                  for key data exchange on different paths
 
 9.  References
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 46]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
 9.1.  Normative References
 
@@ -2610,6 +2625,15 @@ Internet-Draft               Multipath DCCP                 January 2025
               RFC 8126, DOI 10.17487/RFC8126, June 2017,
               <https://www.rfc-editor.org/rfc/rfc8126>.
 
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 47]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    [RFC8174]  Leiba, B., "Ambiguity of Uppercase vs Lowercase in RFC
               2119 Key Words", BCP 14, RFC 8174, DOI 10.17487/RFC8174,
               May 2017, <https://www.rfc-editor.org/rfc/rfc8174>.
@@ -2626,14 +2650,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    [I-D.amend-tsvwg-dccp-udp-header-conversion]
               Amend, M., Brunstrom, A., Kassler, A., and V. Rakocevic,
               "Lossless and overhead free DCCP - UDP header conversion
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 47]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
-
               (U-DCCP)", Work in Progress, Internet-Draft, draft-amend-
               tsvwg-dccp-udp-header-conversion-01, 8 July 2019,
               <https://datatracker.ietf.org/doc/html/draft-amend-tsvwg-
@@ -2665,6 +2681,15 @@ Internet-Draft               Multipath DCCP                 January 2025
               international conference on Emerging networking
               experiments and technologies, ACM , 2012.
 
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 48]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    [RFC2104]  Krawczyk, H., Bellare, M., and R. Canetti, "HMAC: Keyed-
               Hashing for Message Authentication", RFC 2104,
               DOI 10.17487/RFC2104, February 1997,
@@ -2679,16 +2704,6 @@ Internet-Draft               Multipath DCCP                 January 2025
               Infrastructure Permanent Identifier", RFC 4043,
               DOI 10.17487/RFC4043, May 2005,
               <https://www.rfc-editor.org/rfc/rfc4043>.
-
-
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 48]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    [RFC5238]  Phelan, T., "Datagram Transport Layer Security (DTLS) over
               the Datagram Congestion Control Protocol (DCCP)",
@@ -2722,6 +2737,15 @@ Internet-Draft               Multipath DCCP                 January 2025
               NAT Traversal", RFC 6773, DOI 10.17487/RFC6773, November
               2012, <https://www.rfc-editor.org/rfc/rfc6773>.
 
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 49]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    [RFC6904]  Lennox, J., "Encryption of Header Extensions in the Secure
               Real-time Transport Protocol (SRTP)", RFC 6904,
               DOI 10.17487/RFC6904, April 2013,
@@ -2737,14 +2761,6 @@ Internet-Draft               Multipath DCCP                 January 2025
               Scheffenegger, Ed., "TCP Extensions for High Performance",
               RFC 7323, DOI 10.17487/RFC7323, September 2014,
               <https://www.rfc-editor.org/rfc/rfc7323>.
-
-
-
-
-Amend, et al.             Expires 21 July 2025                 [Page 49]
-
-Internet-Draft               Multipath DCCP                 January 2025
-
 
    [RFC8041]  Bonaventure, O., Paasch, C., and G. Detal, "Use Cases and
               Operational Experience with Multipath TCP", RFC 8041,
@@ -2776,6 +2792,16 @@ Appendix A.  Differences from Multipath TCP
    underlying TCP and DCCP protocols, the transport characteristics of
    MPTCP and MP-DCCP are different.
 
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 50]
+
+Internet-Draft               Multipath DCCP                 January 2025
+
+
    Table 10 compares the protocol characteristics of TCP and DCCP, which
    are by nature inherited by their respective multipath extensions.  A
    major difference lies in the delivery of payload, which is for TCP an
@@ -2797,7 +2823,37 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-Amend, et al.             Expires 21 July 2025                 [Page 50]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Amend, et al.             Expires 21 July 2025                 [Page 51]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
@@ -2853,7 +2909,7 @@ Internet-Draft               Multipath DCCP                 January 2025
 
 
 
-Amend, et al.             Expires 21 July 2025                 [Page 51]
+Amend, et al.             Expires 21 July 2025                 [Page 52]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
@@ -2909,7 +2965,7 @@ Authors' Addresses
 
 
 
-Amend, et al.             Expires 21 July 2025                 [Page 52]
+Amend, et al.             Expires 21 July 2025                 [Page 53]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
@@ -2965,4 +3021,4 @@ Internet-Draft               Multipath DCCP                 January 2025
 
 
 
-Amend, et al.             Expires 21 July 2025                 [Page 53]
+Amend, et al.             Expires 21 July 2025                 [Page 54]
