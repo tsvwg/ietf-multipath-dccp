@@ -195,7 +195,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    The encapsulation of non-DCCP traffic (e.g., UDP or IP) in MP-DCCP to
    enable the above-mentioned use cases is not considered in this
    specification.  Also out of scope is the encapsulation of DCCP
-   traffic in UDP to pass middleboxes that do not support DCCP.  A
+   traffic in UDP to pass middleboxes (e.g., NATs, firewalls, proxies,
+   intrusion detection systems (IDSs), etc) that do not support DCCP.  A
    possible method is defined in [RFC6773] or is considered in
    [I-D.amend-tsvwg-dccp-udp-header-conversion] to achieve the same with
    less overhead.
@@ -214,7 +215,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    MP-DCCP provides a set of features to DCCP; Figure 1 illustrates this
    layering.  MP-DCCP is designed to be used by applications in the same
    way as DCCP with no changes to the application itself.
-
 
 
 
@@ -252,7 +252,7 @@ Internet-Draft               Multipath DCCP                 January 2025
    address:port, which together form the 4-tuple:
 
    *  IPv6: [2001:db8:3333:4444:5555:6666:7777:8888]:1234,
-      [2001:db8:3333:4444:CCCC:DDDD:EEEE:FFFF]:4321
+      [2001:db8:3333:4444:cccc:dddd:eeee:ffff]:4321
 
    *  IPv4: 203.0.113.1:1234, 203.0.113.2:4321
 
@@ -664,8 +664,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    this specification.
 
    These operations are largely inspired by the signals defined in
-   [RFC8684].
-
+   [RFC8684].  The procedures for handling faulty or unknown MP options
+   are described in Section 3.6.
 
 
 
@@ -1110,9 +1110,9 @@ Internet-Draft               Multipath DCCP                 January 2025
    subsequent subflow in Section 3.3.  For this specification of MP-
    DCCP, the HMAC code is generated according to [RFC2104] in
    combination with the SHA256 hash algorithm described in [RFC6234],
-   with the output truncated to the leftmost 160 bits (20 bytes).
-
-
+   with the output truncated to the leftmost 160 bits (20 bytes).  It is
+   possible that other versions of MP-DCCP will define other hash
+   algorithms in the future.
 
 
 
@@ -1181,12 +1181,13 @@ Internet-Draft               Multipath DCCP                 January 2025
    On the receiver side, the HMAC validation of the suboptions MUST be
    carried out according to the sending sequence in which the associated
    MP_HMAC follows a suboption.  If the suboption cannot be validated by
-   a receiving host because the HMAC validation fails, the subsequent
-   handling depends on which suboption was being verified.  If the
-   suboption to be authenticated was either MP_ADDADDR or MP_REMOVEADDR,
-   the receiving host MUST silently ignore it (see Section 3.2.8 and
-   Section 3.2.9).  If the suboption to be authenticated was MP_JOIN,
-   the subflow MUST be closed (see Section 3.6).
+   a receiving host because the HMAC validation fails (HMAC wrong or
+   missing), the subsequent handling depends on which suboption was
+   being verified.  If the suboption to be authenticated was either
+   MP_ADDADDR or MP_REMOVEADDR, the receiving host MUST silently ignore
+   it (see Section 3.2.8 and Section 3.2.9).  If the suboption to be
+   authenticated was MP_JOIN, the subflow MUST be closed (see
+   Section 3.6).
 
    In the event that an MP_HMAC cannot be associated with a suboption
    this MP_HMAC MUST be ignored, unless it is a single MP_HMAC that was
@@ -1225,7 +1226,6 @@ Internet-Draft               Multipath DCCP                 January 2025
       Min RTT value over a given period
 
    Max RTT (=2)
-      Max RTT value over a given period
 
 
 
@@ -1233,6 +1233,8 @@ Amend, et al.             Expires 21 July 2025                 [Page 22]
 
 Internet-Draft               Multipath DCCP                 January 2025
 
+
+      Max RTT value over a given period
 
    Smooth RTT (=3)
       Averaged RTT value over a given period
@@ -1279,8 +1281,6 @@ Internet-Draft               Multipath DCCP                 January 2025
    sender wishes to enable multiple paths and/or when additional paths
    become available.  Multiple instances of this suboption within a
    packet can simultaneously advertise new addresses.
-
-
 
 
 
@@ -2060,8 +2060,8 @@ Internet-Draft               Multipath DCCP                 January 2025
    the application data and report that data as dropped due to
    corruption using a Data Dropped option (Drop Code 3, Corrupt).  If
    data is dropped due to corruption for an MP-DCCP connection, the
-   affected subflow MAY be closed.
-
+   affected subflow MAY be closed.  The same procedure applies if the MP
+   option is unknown.
 
 
 
