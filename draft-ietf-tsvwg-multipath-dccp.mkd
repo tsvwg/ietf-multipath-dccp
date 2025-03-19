@@ -222,6 +222,7 @@ changes to the application itself.
 ~~~~
 {: #ref-comparison-of-standard-dccp-and-mp-dccp-protocol-stacks title='Comparison of standard DCCP and MP-DCCP protocol stacks'}
 
+A CLI at the endpoint (or another method) could be used to configure and manage the DCCP Connections. This could be extended to also support MP-DCCP, but this curent specification does not define this.
 
 ## Terminology {#terminology}
 
