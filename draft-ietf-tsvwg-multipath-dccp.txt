@@ -5,17 +5,17 @@
 Transport Area Working Group                               M. Amend, Ed.
 Internet-Draft                                                        DT
 Intended status: Standards Track                            A. Brunstrom
-Expires: 17 September 2025                                    A. Kassler
+Expires: 23 September 2025                                    A. Kassler
                                                      Karlstad University
                                                             V. Rakocevic
                                               City, University of London
                                                               S. Johnson
                                                                       BT
-                                                           16 March 2025
+                                                           22 March 2025
 
 
     DCCP Extensions for Multipath Operation with Multiple Addresses
-                   draft-ietf-tsvwg-multipath-dccp-21
+                   draft-ietf-tsvwg-multipath-dccp-22
 
 Abstract
 
@@ -53,7 +53,7 @@ Status of This Memo
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 1]
+Amend, et al.           Expires 23 September 2025               [Page 1]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -68,7 +68,7 @@ Internet-Draft               Multipath DCCP                   March 2025
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on 17 September 2025.
+   This Internet-Draft will expire on 23 September 2025.
 
 Copyright Notice
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 2]
+Amend, et al.           Expires 23 September 2025               [Page 2]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -165,7 +165,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 3]
+Amend, et al.           Expires 23 September 2025               [Page 3]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -221,7 +221,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 4]
+Amend, et al.           Expires 23 September 2025               [Page 4]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -277,7 +277,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 5]
+Amend, et al.           Expires 23 September 2025               [Page 5]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -333,7 +333,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 6]
+Amend, et al.           Expires 23 September 2025               [Page 6]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -389,7 +389,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 7]
+Amend, et al.           Expires 23 September 2025               [Page 7]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -445,7 +445,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 8]
+Amend, et al.           Expires 23 September 2025               [Page 8]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -501,7 +501,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025               [Page 9]
+Amend, et al.           Expires 23 September 2025               [Page 9]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -557,7 +557,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 10]
+Amend, et al.           Expires 23 September 2025              [Page 10]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -613,7 +613,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 11]
+Amend, et al.           Expires 23 September 2025              [Page 11]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -669,7 +669,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 12]
+Amend, et al.           Expires 23 September 2025              [Page 12]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -725,7 +725,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 13]
+Amend, et al.           Expires 23 September 2025              [Page 13]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -781,7 +781,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 14]
+Amend, et al.           Expires 23 September 2025              [Page 14]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -837,7 +837,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 15]
+Amend, et al.           Expires 23 September 2025              [Page 15]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -893,7 +893,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 16]
+Amend, et al.           Expires 23 September 2025              [Page 16]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -949,7 +949,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 17]
+Amend, et al.           Expires 23 September 2025              [Page 17]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1005,7 +1005,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 18]
+Amend, et al.           Expires 23 September 2025              [Page 18]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1061,7 +1061,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 19]
+Amend, et al.           Expires 23 September 2025              [Page 19]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1117,7 +1117,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 20]
+Amend, et al.           Expires 23 September 2025              [Page 20]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1173,7 +1173,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 21]
+Amend, et al.           Expires 23 September 2025              [Page 21]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1229,7 +1229,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 22]
+Amend, et al.           Expires 23 September 2025              [Page 22]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1285,7 +1285,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 23]
+Amend, et al.           Expires 23 September 2025              [Page 23]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1341,7 +1341,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 24]
+Amend, et al.           Expires 23 September 2025              [Page 24]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1397,7 +1397,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 25]
+Amend, et al.           Expires 23 September 2025              [Page 25]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1453,7 +1453,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 26]
+Amend, et al.           Expires 23 September 2025              [Page 26]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1509,7 +1509,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 27]
+Amend, et al.           Expires 23 September 2025              [Page 27]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1565,7 +1565,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 28]
+Amend, et al.           Expires 23 September 2025              [Page 28]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1621,7 +1621,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 29]
+Amend, et al.           Expires 23 September 2025              [Page 29]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1677,7 +1677,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 30]
+Amend, et al.           Expires 23 September 2025              [Page 30]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1733,7 +1733,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 31]
+Amend, et al.           Expires 23 September 2025              [Page 31]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1789,7 +1789,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 32]
+Amend, et al.           Expires 23 September 2025              [Page 32]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1845,7 +1845,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 33]
+Amend, et al.           Expires 23 September 2025              [Page 33]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1901,7 +1901,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 34]
+Amend, et al.           Expires 23 September 2025              [Page 34]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -1957,7 +1957,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 35]
+Amend, et al.           Expires 23 September 2025              [Page 35]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2013,7 +2013,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 36]
+Amend, et al.           Expires 23 September 2025              [Page 36]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2069,7 +2069,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 37]
+Amend, et al.           Expires 23 September 2025              [Page 37]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2125,7 +2125,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 38]
+Amend, et al.           Expires 23 September 2025              [Page 38]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2181,7 +2181,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 39]
+Amend, et al.           Expires 23 September 2025              [Page 39]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2237,7 +2237,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 40]
+Amend, et al.           Expires 23 September 2025              [Page 40]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2293,7 +2293,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 41]
+Amend, et al.           Expires 23 September 2025              [Page 41]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2349,7 +2349,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 42]
+Amend, et al.           Expires 23 September 2025              [Page 42]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2405,7 +2405,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 43]
+Amend, et al.           Expires 23 September 2025              [Page 43]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2461,7 +2461,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 44]
+Amend, et al.           Expires 23 September 2025              [Page 44]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2517,7 +2517,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 45]
+Amend, et al.           Expires 23 September 2025              [Page 45]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2573,7 +2573,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 46]
+Amend, et al.           Expires 23 September 2025              [Page 46]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2629,7 +2629,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 47]
+Amend, et al.           Expires 23 September 2025              [Page 47]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2685,7 +2685,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 48]
+Amend, et al.           Expires 23 September 2025              [Page 48]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2741,7 +2741,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 49]
+Amend, et al.           Expires 23 September 2025              [Page 49]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2797,7 +2797,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 50]
+Amend, et al.           Expires 23 September 2025              [Page 50]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2853,7 +2853,7 @@ Appendix A.  Differences from Multipath TCP
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 51]
+Amend, et al.           Expires 23 September 2025              [Page 51]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2909,7 +2909,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 52]
+Amend, et al.           Expires 23 September 2025              [Page 52]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -2965,7 +2965,7 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 53]
+Amend, et al.           Expires 23 September 2025              [Page 53]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -3021,7 +3021,7 @@ Authors' Addresses
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 54]
+Amend, et al.           Expires 23 September 2025              [Page 54]
 
 Internet-Draft               Multipath DCCP                   March 2025
 
@@ -3077,4 +3077,4 @@ Internet-Draft               Multipath DCCP                   March 2025
 
 
 
-Amend, et al.           Expires 17 September 2025              [Page 55]
+Amend, et al.           Expires 23 September 2025              [Page 55]
