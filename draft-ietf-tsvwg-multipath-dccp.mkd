@@ -733,7 +733,9 @@ Plain Text
 
 
 Experimental
-: This Key Type allows to use other Key Data and can be used to validate other key exchange mechanisms for a possible future specification.
+: This Key Type allows to use other Key Data and can be used to validate other key exchange
+  mechanisms for a possible future specification.
+{: vspace='0'}
 
 Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
