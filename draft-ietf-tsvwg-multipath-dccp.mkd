@@ -733,9 +733,7 @@ Plain Text
 
 
 Experimental
-: This Key Type allows to use other Key Data. It could be used to verify other key exchange mechanisms, e.g. ECDHE in combination with separate certificate validation {{RFC5280}} to achieve protection against man-in-the-middle attacks.
-{: vspace='0'}
-
+: This Key Type allows to use other Key Data and can be used to validate other key exchange mechanisms for a possible future specification.
 
 Multiple keys are only permitted in the DCCP-Request message
 of the handshake procedure for the first subflow. This allows the hosts to agree
