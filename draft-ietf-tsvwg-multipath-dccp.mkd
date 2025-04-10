@@ -1039,7 +1039,7 @@ Further security considerations around the issue of
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
 new MP_JOIN attempts are discussed in {{security}}.
 If a sending host of an MP_ADDADDR knows that no incoming subflows can
-be established at a particular address, an MP_ADDADDR SHOULD NOT
+be established at a particular address, an MP_ADDADDR MUST NOT
 announce that address unless the sending host has new knowledge about
 the possibility to do so. This information can be obtained from local
 firewall or routing settings, knowledge about availability of external
@@ -1053,7 +1053,7 @@ information.
 A host that receives an MP_ADDADDR, but finds at connection set up
 that the IP address and port number is unsuccessful, SHOULD NOT perform
 further connection attempts to this address/port combination for this
-connection. If a sender, however, wishes to trigger a new incoming
+connection to save resources. If a sender, however, wishes to trigger a new incoming
 connection attempt on a previously advertised address/port combination
 can therefore refresh the MP_ADDADDR information by sending the option again.
 
