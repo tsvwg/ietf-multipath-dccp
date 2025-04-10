@@ -1444,7 +1444,7 @@ Internet-Draft               Multipath DCCP                   March 2025
    messages that accidentally misdirect, or maliciously direct, new
    MP_JOIN attempts are discussed in Section 4.  If a sending host of an
    MP_ADDADDR knows that no incoming subflows can be established at a
-   particular address, an MP_ADDADDR SHOULD NOT announce that address
+   particular address, an MP_ADDADDR MUST NOT announce that address
    unless the sending host has new knowledge about the possibility to do
    so.  This information can be obtained from local firewall or routing
    settings, knowledge about availability of external NAT or firewall,
@@ -1465,10 +1465,10 @@ Internet-Draft               Multipath DCCP                   March 2025
    A host that receives an MP_ADDADDR, but finds at connection set up
    that the IP address and port number is unsuccessful, SHOULD NOT
    perform further connection attempts to this address/port combination
-   for this connection.  If a sender, however, wishes to trigger a new
-   incoming connection attempt on a previously advertised address/port
-   combination can therefore refresh the MP_ADDADDR information by
-   sending the option again.
+   for this connection to save resources.  If a sender, however, wishes
+   to trigger a new incoming connection attempt on a previously
+   advertised address/port combination can therefore refresh the
+   MP_ADDADDR information by sending the option again.
 
    A host MAY send an MP_ADDADDR message with an already assigned
    Address ID using the IP Address previously assigned to this Address

@@ -15,17 +15,17 @@
        Use cases for Multipath DCCP (MP-DCCP) include mobile devices (e.g., handsets, vehicles) and residential home gateways that maintain simultaneous connections to distinct network types, such as cellular and Wireless Local Area Networks (WLANs) or cellular and fixed access networks. Compared to existing multipath transport protocols, such as Multipath TCP (MPTCP), MP-DCCP is particularly suited for latency-sensitive applications with varying requirements for reliability and in-order delivery. 
        This document specifies a set of protocol extensions to DCCP that enable multipath operations. These extensions maintain the same service model as DCCP while introducing mechanisms to establish and utilize multiple concurrent DCCP flows across different network paths. 
     " name="description">
-<meta content="xml2rfc 3.28.0" name="generator">
+<meta content="xml2rfc 3.28.1" name="generator">
 <meta content="Internet-Draft" name="keyword">
 <meta content="draft-ietf-tsvwg-multipath-dccp-22" name="ietf.draft">
 <!-- Generator version information:
-  xml2rfc 3.28.0
+  xml2rfc 3.28.1
     Python 3.10.16
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
-    lxml 5.3.1
+    lxml 5.3.2
     platformdirs 4.3.7
     pycountry 24.6.1
     PyYAML 6.0.2
@@ -2681,7 +2681,7 @@ CI is unknown, the host MUST send a DCCP-Reset.<a href="#section-3.2.8-13" class
 MP_ADDADDR messages that accidentally misdirect, or maliciously direct,
 new MP_JOIN attempts are discussed in <a href="#security" class="auto internal xref">Section 4</a>.
 If a sending host of an MP_ADDADDR knows that no incoming subflows can
-be established at a particular address, an MP_ADDADDR SHOULD NOT
+be established at a particular address, an MP_ADDADDR MUST NOT
 announce that address unless the sending host has new knowledge about
 the possibility to do so. This information can be obtained from local
 firewall or routing settings, knowledge about availability of external
@@ -2693,7 +2693,7 @@ information.<a href="#section-3.2.8-15" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-16">A host that receives an MP_ADDADDR, but finds at connection set up
 that the IP address and port number is unsuccessful, SHOULD NOT perform
 further connection attempts to this address/port combination for this
-connection. If a sender, however, wishes to trigger a new incoming
+connection to save resources. If a sender, however, wishes to trigger a new incoming
 connection attempt on a previously advertised address/port combination
 can therefore refresh the MP_ADDADDR information by sending the option again.<a href="#section-3.2.8-16" class="pilcrow">¶</a></p>
 <p id="section-3.2.8-17">A host MAY send an MP_ADDADDR message with an already assigned Address
