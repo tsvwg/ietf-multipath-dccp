@@ -1777,7 +1777,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
    |  Version  | Value           | Specification  |
    |:---------:|:---------------:|:--------------:|
    |     0     |  0000 suggested | [ThisDocument] |
-   | Unassigned|    0001 - 1111  |                |
+   |    1-15   |    unassigned   |                |
 {:#ref-add-version-list title='MP-DCCP Versions Registry'}
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
@@ -1821,7 +1821,7 @@ in potential future versions of the MP-DCCP protocol.
 | Type  | Name                 | Meaning                          | Reference  |
 |:-----:|:--------------------:|:--------------------------------:|:-----------|
 |   0   | Plain Text           | Plain text key                   | {{MP_KEY}} |
-| 3-254 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
+| 1-254 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
 |  255  | Experimental         | For private use only             | {{MP_KEY}} |
 {:#ref-mp_key-sub-opt-list title='Multipath Key Type registry with the MP_KEY Key Types for key data exchange on different paths'}
 
