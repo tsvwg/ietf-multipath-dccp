@@ -1794,7 +1794,7 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
 |:-------------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | MP_OPT=0            | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
 | MP_OPT=1            | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
-| MP_OPT=2            | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
+| MP_OPT=2            | MP_FAST_CLOSE   | Close an MP-DCCP connection unconditionally      | {{MP_FAST_CLOSE}} |
 | MP_OPT=3            | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | MP_OPT=4            | MP_SEQ          | Multipath sequence number                        | {{MP_SEQ}}        |
 | MP_OPT=5            | MP_HMAC         | Hash-based message auth. code for MP-DCCP        | {{MP_HMAC}}       |
@@ -1802,9 +1802,9 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
 | MP_OPT=7            | MP_ADDADDR      | Advertise additional address(es)/port(s)         | {{MP_ADDADDR}}    |
 | MP_OPT=8            | MP_REMOVEADDR   | Remove address(es)/ port(s)                      | {{MP_REMOVEADDR}} |
 | MP_OPT=9            | MP_PRIO         | Change subflow priority                          | {{MP_PRIO}}       |
-| MP_OPT=10           | MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_CLOSE}}      |
+| MP_OPT=10           | MP_CLOSE        | Close an MP-DCCP connection                      | {{MP_CLOSE}}      |
 | MP_OPT=11           | MP_EXP          | Experimental suboption for private use           | {{MP_EXP}}        |
-| MP_OPT>11           | Unassigned      | Reserved for future Multipath Options           |                   |
+| MP_OPT>11           | Unassigned      | Reserved for future Multipath Options            |                   |
 {:#ref-add-proto-opt-list title='Multipath Options registry'}
  
 Future Multipath options with MP_OPT>11 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
