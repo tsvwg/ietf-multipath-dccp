@@ -20,12 +20,12 @@
 <meta content="draft-ietf-tsvwg-multipath-dccp-23" name="ietf.draft">
 <!-- Generator version information:
   xml2rfc 3.28.1
-    Python 3.10.16
+    Python 3.10.17
     ConfigArgParse 1.7
     google-i18n-address 3.1.1
     intervaltree 3.1.0
     Jinja2 3.1.6
-    lxml 5.3.2
+    lxml 5.4.0
     platformdirs 4.3.7
     pycountry 24.6.1
     PyYAML 6.0.2
@@ -1917,7 +1917,7 @@ and the server MUST both support MP-DCCP version 0.<a href="#section-3.1-12" cla
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">12</td>
               <td class="text-left" rowspan="1" colspan="1">1 =MP_JOIN</td>
-              <td class="text-left" rowspan="1" colspan="1">Join path to an existing MP-DCCP connection</td>
+              <td class="text-left" rowspan="1" colspan="1">Join subflow to an existing MP-DCCP connection</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
@@ -1941,49 +1941,49 @@ and the server MUST both support MP-DCCP version 0.<a href="#section-3.1-12" cla
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">23</td>
               <td class="text-left" rowspan="1" colspan="1">5 =MP_HMAC</td>
-              <td class="text-left" rowspan="1" colspan="1">HMA Code for authentication</td>
+              <td class="text-left" rowspan="1" colspan="1">Hash-based message auth. code for MP-DCCP</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">12</td>
               <td class="text-left" rowspan="1" colspan="1">6 =MP_RTT</td>
-              <td class="text-left" rowspan="1" colspan="1">Transmit RTT values</td>
+              <td class="text-left" rowspan="1" colspan="1">Transmit RTT values and calculation parameters</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">var</td>
               <td class="text-left" rowspan="1" colspan="1">7 =MP_ADDADDR</td>
-              <td class="text-left" rowspan="1" colspan="1">Advertise additional Address</td>
+              <td class="text-left" rowspan="1" colspan="1">Advertise additional address(es)/port(s)</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">8</td>
               <td class="text-left" rowspan="1" colspan="1">8 =MP_REMOVEADDR</td>
-              <td class="text-left" rowspan="1" colspan="1">Remove Address</td>
+              <td class="text-left" rowspan="1" colspan="1">Remove address(es)/ port(s)</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">4</td>
               <td class="text-left" rowspan="1" colspan="1">9 =MP_PRIO</td>
-              <td class="text-left" rowspan="1" colspan="1">Change subflow Priority</td>
+              <td class="text-left" rowspan="1" colspan="1">Change subflow priority</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">var</td>
               <td class="text-left" rowspan="1" colspan="1">10 =MP_CLOSE</td>
-              <td class="text-left" rowspan="1" colspan="1">Close an MP-DCCP subflow</td>
+              <td class="text-left" rowspan="1" colspan="1">Close an MP-DCCP connection</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">var</td>
               <td class="text-left" rowspan="1" colspan="1">11 =MP_EXP</td>
-              <td class="text-left" rowspan="1" colspan="1">Experimental for private use</td>
+              <td class="text-left" rowspan="1" colspan="1">Experimental option for private use</td>
             </tr>
             <tr>
               <td class="text-left" rowspan="1" colspan="1">46</td>
               <td class="text-left" rowspan="1" colspan="1">TBD</td>
               <td class="text-left" rowspan="1" colspan="1">&gt;11</td>
-              <td class="text-left" rowspan="1" colspan="1">Reserved for future MP options.</td>
+              <td class="text-left" rowspan="1" colspan="1">Reserved for future Multipath options.</td>
             </tr>
           </tbody>
         </table>
@@ -3608,8 +3608,8 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
               <td class="text-center" rowspan="1" colspan="1">[ThisDocument]</td>
             </tr>
             <tr>
-              <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-              <td class="text-center" rowspan="1" colspan="1">0001 - 1111</td>
+              <td class="text-center" rowspan="1" colspan="1">1-15</td>
+              <td class="text-center" rowspan="1" colspan="1">unassigned</td>
               <td class="text-center" rowspan="1" colspan="1"> </td>
             </tr>
           </tbody>
@@ -3656,7 +3656,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
             <tr>
               <td class="text-center" rowspan="1" colspan="1">MP_OPT=1</td>
               <td class="text-center" rowspan="1" colspan="1">MP_JOIN</td>
-              <td class="text-center" rowspan="1" colspan="1">Join subflow to existing MP-DCCP connection</td>
+              <td class="text-center" rowspan="1" colspan="1">Join subflow to an existing MP-DCCP connection</td>
               <td class="text-center" rowspan="1" colspan="1">
                 <a href="#MP_JOIN" class="auto internal xref">Section 3.2.2</a>
 </td>
@@ -3664,7 +3664,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
             <tr>
               <td class="text-center" rowspan="1" colspan="1">MP_OPT=2</td>
               <td class="text-center" rowspan="1" colspan="1">MP_FAST_CLOSE</td>
-              <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP connection</td>
+              <td class="text-center" rowspan="1" colspan="1">Close an MP-DCCP connection unconditionally</td>
               <td class="text-center" rowspan="1" colspan="1">
                 <a href="#MP_FAST_CLOSE" class="auto internal xref">Section 3.2.3</a>
 </td>
@@ -3728,7 +3728,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
             <tr>
               <td class="text-center" rowspan="1" colspan="1">MP_OPT=10</td>
               <td class="text-center" rowspan="1" colspan="1">MP_CLOSE</td>
-              <td class="text-center" rowspan="1" colspan="1">Close MP-DCCP subflow</td>
+              <td class="text-center" rowspan="1" colspan="1">Close an MP-DCCP connection</td>
               <td class="text-center" rowspan="1" colspan="1">
                 <a href="#MP_CLOSE" class="auto internal xref">Section 3.2.11</a>
 </td>
@@ -3736,7 +3736,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
             <tr>
               <td class="text-center" rowspan="1" colspan="1">MP_OPT=11</td>
               <td class="text-center" rowspan="1" colspan="1">MP_EXP</td>
-              <td class="text-center" rowspan="1" colspan="1">Experimental suboption for private use</td>
+              <td class="text-center" rowspan="1" colspan="1">Experimental option for private use</td>
               <td class="text-center" rowspan="1" colspan="1">
                 <a href="#MP_EXP" class="auto internal xref">Section 3.2.12</a>
 </td>
@@ -3744,7 +3744,7 @@ added to the Feature Numbers registry in the DCCP registry group according to <s
             <tr>
               <td class="text-center" rowspan="1" colspan="1">MP_OPT&gt;11</td>
               <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
-              <td class="text-center" rowspan="1" colspan="1">Reserved for future Multipath Options</td>
+              <td class="text-center" rowspan="1" colspan="1">Reserved for future Multipath options</td>
               <td class="text-center" rowspan="1" colspan="1"> </td>
             </tr>
           </tbody>
@@ -3792,7 +3792,7 @@ in potential future versions of the MP-DCCP protocol.<a href="#section-8.5-1" cl
 </td>
             </tr>
             <tr>
-              <td class="text-center" rowspan="1" colspan="1">3-254</td>
+              <td class="text-center" rowspan="1" colspan="1">1-254</td>
               <td class="text-center" rowspan="1" colspan="1">Unassigned</td>
               <td class="text-center" rowspan="1" colspan="1">Reserved for future use</td>
               <td class="text-left" rowspan="1" colspan="1">
