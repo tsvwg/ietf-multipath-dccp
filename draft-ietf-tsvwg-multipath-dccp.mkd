@@ -477,18 +477,18 @@ The fields used by the multipath option are described in {{ref-mp-option-list}}.
 |Type | Option Length | MP_OPT           | Meaning                                              |
 |:----|:--------------|:-----------------|:-----------------------------------------------------|
 | 46  |       var     |  0 =MP_CONFIRM   | Confirm reception and processing of an MP_OPT option |
-| 46  |       12      |  1 =MP_JOIN      | Join path to an existing MP-DCCP connection          |
+| 46  |       12      |  1 =MP_JOIN      | Join subflow to an existing MP-DCCP connection       |
 | 46  |       var     |  2 =MP_FAST_CLOSE| Close an MP-DCCP connection unconditionally          |
 | 46  |       var     |  3 =MP_KEY       | Exchange key material for MP_HMAC                    |
 | 46  |       9       |  4 =MP_SEQ       | Multipath Sequence Number                            |
-| 46  |       23      |  5 =MP_HMAC      | HMA Code for authentication                          |
-| 46  |       12      |  6 =MP_RTT       | Transmit RTT values                                  |
-| 46  |       var     |  7 =MP_ADDADDR   | Advertise additional Address                         |
-| 46  |       8       |  8 =MP_REMOVEADDR| Remove Address                                       |
-| 46  |       4       |  9 =MP_PRIO      | Change subflow Priority                              |
-| 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP subflow                             |
-| 46  |       var     | 11 =MP_EXP       | Experimental for private use                         |
-| 46  |       TBD     | >11              | Reserved for future MP options.                   |
+| 46  |       23      |  5 =MP_HMAC      | Hash-based message auth. code for MP-DCCP            |
+| 46  |       12      |  6 =MP_RTT       | Transmit RTT values and calculation parameters       |
+| 46  |       var     |  7 =MP_ADDADDR   | Advertise additional address(es)/port(s)             |
+| 46  |       8       |  8 =MP_REMOVEADDR| Remove address(es)/ port(s)                          |
+| 46  |       4       |  9 =MP_PRIO      | Change subflow priority                              |
+| 46  |       var     | 10 =MP_CLOSE     | Close an MP-DCCP connection                          |
+| 46  |       var     | 11 =MP_EXP       | Experimental option for private use                  |
+| 46  |       TBD     | >11              | Reserved for future Multipath options.               |
 {: #ref-mp-option-list title='MP_OPT option types'}
 
 Future MP options could be defined in a later version or extension to this specification.
@@ -1777,7 +1777,7 @@ added to the Feature Numbers registry in the DCCP registry group according to {{
    |  Version  | Value           | Specification  |
    |:---------:|:---------------:|:--------------:|
    |     0     |  0000 suggested | [ThisDocument] |
-   | Unassigned|    0001 - 1111  |                |
+   |    1-15   |    unassigned   |                |
 {:#ref-add-version-list title='MP-DCCP Versions Registry'}
 
 > Note to RFC Editor: Please replace [ThisDocument] with a reference to the final RFC
@@ -1793,8 +1793,8 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
 | Multipath Option | Name            | Description                                      | Reference         |
 |:-------------------:|:---------------:|:------------------------------------------------:|:-----------------:|
 | MP_OPT=0            | MP_CONFIRM      | Confirm reception/processing of an MP_OPT option | {{MP_CONFIRM}}    |
-| MP_OPT=1            | MP_JOIN         | Join subflow to existing MP-DCCP connection      | {{MP_JOIN}}       |
-| MP_OPT=2            | MP_FAST_CLOSE   | Close MP-DCCP connection                         | {{MP_FAST_CLOSE}} |
+| MP_OPT=1            | MP_JOIN         | Join subflow to an existing MP-DCCP connection   | {{MP_JOIN}}       |
+| MP_OPT=2            | MP_FAST_CLOSE   | Close an MP-DCCP connection unconditionally      | {{MP_FAST_CLOSE}} |
 | MP_OPT=3            | MP_KEY          | Exchange key material for MP_HMAC                | {{MP_KEY}}        |
 | MP_OPT=4            | MP_SEQ          | Multipath sequence number                        | {{MP_SEQ}}        |
 | MP_OPT=5            | MP_HMAC         | Hash-based message auth. code for MP-DCCP        | {{MP_HMAC}}       |
@@ -1802,9 +1802,9 @@ IANA is requested to create a new 'Multipath Options' registry within the DCCP r
 | MP_OPT=7            | MP_ADDADDR      | Advertise additional address(es)/port(s)         | {{MP_ADDADDR}}    |
 | MP_OPT=8            | MP_REMOVEADDR   | Remove address(es)/ port(s)                      | {{MP_REMOVEADDR}} |
 | MP_OPT=9            | MP_PRIO         | Change subflow priority                          | {{MP_PRIO}}       |
-| MP_OPT=10           | MP_CLOSE        | Close MP-DCCP subflow                            | {{MP_CLOSE}}      |
-| MP_OPT=11           | MP_EXP          | Experimental suboption for private use           | {{MP_EXP}}        |
-| MP_OPT>11           | Unassigned      | Reserved for future Multipath Options           |                   |
+| MP_OPT=10           | MP_CLOSE        | Close an MP-DCCP connection                      | {{MP_CLOSE}}      |
+| MP_OPT=11           | MP_EXP          | Experimental option for private use              | {{MP_EXP}}        |
+| MP_OPT>11           | Unassigned      | Reserved for future Multipath options            |                   |
 {:#ref-add-proto-opt-list title='Multipath Options registry'}
  
 Future Multipath options with MP_OPT>11 are assigned from this registry using the RFC Required policy (Section 4.7 of {{RFC8126}}).
@@ -1821,7 +1821,7 @@ in potential future versions of the MP-DCCP protocol.
 | Type  | Name                 | Meaning                          | Reference  |
 |:-----:|:--------------------:|:--------------------------------:|:-----------|
 |   0   | Plain Text           | Plain text key                   | {{MP_KEY}} |
-| 3-254 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
+| 1-254 | Unassigned           | Reserved for future use          | {{MP_KEY}} |
 |  255  | Experimental         | For private use only             | {{MP_KEY}} |
 {:#ref-mp_key-sub-opt-list title='Multipath Key Type registry with the MP_KEY Key Types for key data exchange on different paths'}
 
